@@ -29,7 +29,6 @@ export const ModalCrearEditarAccesorios = ({
       setValue("nombre", res.data.nombre);
       setValue("color", res.data.color);
       setValue("stock", res.data.stock);
-      setValue("peso_neto_barra_6mts", res.data.peso_neto_barra_6mts);
       setValue("categoria", res.data.categoria);
       setValue("descripcion", res.data.descripcion);
       setValue("disponible", res.data.disponible);
@@ -48,9 +47,6 @@ export const ModalCrearEditarAccesorios = ({
     );
 
     setPerfiles(perfilesActualizados);
-
-    // console.log(results);
-    console.log(perfilesActualizados);
 
     toast.success("¡Producto editado correctamente!", {
       position: "top-right",

@@ -1,12 +1,11 @@
 import axios from "./axios";
 
-export const crearFacturaNueva = (datos) => axios.post("/facturacion", datos);
+export const crearFacturaNueva = (datos) => axios.post("/pedido", datos);
 
-export const obtenerFacturas = () => axios.get("/facturacion");
+export const obtenerFacturas = () => axios.get("/pedido");
 
-export const obtenerFactura = (id) => axios.get(`/facturacion/${id}`);
+export const obtenerFactura = (id) => axios.get(`/pedido/${id}`);
 
-export const deleteFactura = (id) => axios.delete(`/facturacion/${id}`);
+export const deleteFactura = (id) => axios.delete(`/pedido/${id}`);
 
-export const actualizarFactura = (id, data) =>
-  axios.put(`/facturacion/${id}`, data);
+export const actualizarFactura = (id, data) => axios.put(`/pedido/${id}`, data);

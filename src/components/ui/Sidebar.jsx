@@ -1,15 +1,11 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
 import {
-  BiDollarCircle,
   BiHome,
   BiLogoProductHunt,
-  BiSolidBox,
   BiArea,
-  BiSolidUserAccount,
-  BiUser,
   BiMenu,
-  BiCart,
+  BiUserCircle,
 } from "react-icons/bi";
 import { useState } from "react";
 
@@ -43,6 +39,11 @@ export const Sidebar = () => {
       name: "Productos en stock",
       path: "/productos",
       icon: <BiLogoProductHunt />,
+    },
+    {
+      name: "Clientes pedidos",
+      path: "/pedidos",
+      icon: <BiUserCircle />,
     },
   ];
 
