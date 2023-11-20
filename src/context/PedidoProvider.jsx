@@ -1,13 +1,12 @@
 //imports
 import { createContext, useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import {
   crearFacturaNueva,
   deleteFactura,
   obtenerFacturas,
-  // obtenerFactura,
-  // obtenerFacturas,
+  obtenerFactura,
 } from "../api/factura.api";
 
 import { obtenerUnicoPerfil } from "../api/aberturas.api";
@@ -33,8 +32,20 @@ export const PedidoProvider = ({ children }) => {
   const [errorProducto, setErrorProducto] = useState(false);
   const [datosPresupuesto, setDatosPresupuesto] = useState([]);
   const [unicoPresupuesto, setUnicoPresupuesto] = useState([]);
+  const [cliente, setCliente] = useState("");
+  const [detalle, setDetalle] = useState("");
 
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpenProductos, setIsOpenProductos] = useState(false);
+
+  function closeModalProductos() {
+    setIsOpenProductos(false);
+  }
+
+  function openModalProductos() {
+    setIsOpenProductos(true);
+  }
+
+  const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
@@ -46,6 +57,7 @@ export const PedidoProvider = ({ children }) => {
 
   //buscador de clientes
   let results = [];
+
   //función de búsqueda
   const searcher = (e) => {
     setSearch(e.target.value);
@@ -61,32 +73,30 @@ export const PedidoProvider = ({ children }) => {
   //     );
   //   }
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setValue,
-  } = useForm();
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  //   reset,
+  //   setValue,
+  // } = useForm();
 
   const respuesta = productoSeleccionado.map(function (e) {
     return {
+      id: e.id,
       nombre: e.nombre,
       detalle: e.detalle,
-      categoria: e.categoria,
       color: e.color,
       categoria: e.categoria,
+      cantidad: e.cantidad,
     };
   });
 
   //crear factura
   const handlePedido = async () => {
-    //crear factura nueva
     const res = await crearFacturaNueva({
-      clientes: {
-        cliente: cliente,
-      },
-      pedido: { respuesta },
+      cliente: cliente,
+      productos: { respuesta },
       detalle: detalle,
     });
 
@@ -96,9 +106,7 @@ export const PedidoProvider = ({ children }) => {
 
     setProductoSeleccionado([]);
 
-    reset();
-
-    toast.success("¡Presupuesto creado correctamente!", {
+    toast.success("¡Pedido creado correctamente!", {
       position: "top-right",
       autoClose: 1500,
       hideProgressBar: false,
@@ -112,25 +120,14 @@ export const PedidoProvider = ({ children }) => {
 
   //fin crear factura
 
-  const addToProductos = (
-    id,
-    nombre,
-    detalle,
-    color,
-    barras,
-    totalKG,
-    categoria,
-    totalPrecioUnitario
-  ) => {
+  const addToProductos = (id, nombre, detalle, color, categoria, cantidad) => {
     const newProducto = {
       id,
       nombre,
       detalle,
       color,
-      barras,
-      totalKG,
       categoria,
-      totalPrecioUnitario,
+      cantidad,
     };
 
     const productoSeleccionadoItem = productoSeleccionado.find((item) => {
@@ -148,14 +145,15 @@ export const PedidoProvider = ({ children }) => {
     }
   };
 
-  const deleteProducto = (id, nombre, detalle, color, categoria) => {
+  const deleteProducto = (id, nombre, detalle, color, categoria, cantidad) => {
     const itemIndex = productoSeleccionado.findIndex(
       (item) =>
         item.id === id &&
         item.nombre === nombre &&
         item.detalle === detalle &&
         item.color === color &&
-        item.categoria === categoria
+        item.categoria === categoria &&
+        item.cantidad === cantidad
     );
 
     if (itemIndex) {
@@ -213,10 +211,10 @@ export const PedidoProvider = ({ children }) => {
   //   }, 0);
   // };
 
-  // const obtenerDatos = async (id) => {
-  //   const { data } = await obtenerFactura(id);
-  //   setUnicoPresupuesto(data);
-  // };
+  const obtenerDato = async (id) => {
+    const { data } = await obtenerFactura(id);
+    setUnicoPresupuesto(data);
+  };
 
   //eliminar presupuesto
   const handleDeletePresupuesto = (id) => {
@@ -243,13 +241,10 @@ export const PedidoProvider = ({ children }) => {
   return (
     <PedidoContext.Provider
       value={{
-        isOpen,
-        openModal,
-        closeModal,
         results,
+        obtenerDato,
         handleSeleccionarProducto,
         obtenerProductoId,
-        register,
         productoUnicoState,
         addToProductos,
         productoSeleccionado,
@@ -263,6 +258,16 @@ export const PedidoProvider = ({ children }) => {
         setDatosPresupuesto,
         handleDeletePresupuesto,
         handlePedido,
+        isOpen,
+        openModal,
+        closeModal,
+        isOpenProductos,
+        closeModalProductos,
+        openModalProductos,
+        setCliente,
+        setDetalle,
+        cliente,
+        detalle,
       }}
     >
       {children}

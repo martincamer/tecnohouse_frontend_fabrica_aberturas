@@ -13,10 +13,11 @@ import { Accesorios } from "./routes/pages/protected/Accesorios";
 import { AberturasProvider } from "./context/AluminioAberturas";
 import { Aberturas } from "./routes/pages/protected/Aberturas";
 import { Pedidos } from "./routes/pages/protected/Pedidos";
+import { PedidoProvider } from "./context/PedidoProvider";
+import { ViewPedido } from "./routes/pages/protected/ViewPedido";
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
-import { PedidoProvider } from "./context/PedidoProvider";
 
 function App() {
   const { isAuth } = useAuth();
@@ -56,6 +57,7 @@ function App() {
               <Route path="perfiles" element={<Productos />} />
               <Route path="accesorios" element={<Accesorios />} />
               <Route path="pedidos" element={<Pedidos />} />
+              <Route path="pedido/:id" element={<ViewPedido />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
