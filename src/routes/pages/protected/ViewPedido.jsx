@@ -76,10 +76,8 @@ export const ViewPedido = () => {
   //   setObtenerId(id);
   // };
 
-  console.log(obtenerId);
-
   const totalAberturas = () => {
-    return datos?.productos?.respuesta?.map.reduce((sum, b) => {
+    return datos?.productos?.respuesta?.reduce((sum, b) => {
       return sum + Number(b?.cantidad);
     }, 0);
   };
