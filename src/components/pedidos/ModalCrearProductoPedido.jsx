@@ -1,15 +1,13 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  obtenerValorUnico,
-  actualizarFacturaProductoUnico,
-} from "../../api/factura.api";
+import { crearValorPedidoUnico } from "../../api/factura.api";
 import { ToastContainer, toast } from "react-toastify";
 
 export const ModalCrearProductoPedido = ({
   isOpenPedido,
   closeModalCrearPedido,
+  datos,
 }) => {
   const {
     register,
@@ -17,6 +15,29 @@ export const ModalCrearProductoPedido = ({
     formState: { errors },
     setValue,
   } = useForm();
+
+  const onSubmit = handleSubmit(async (data) => {
+    const { data: nuevoValor } = await crearValorPedidoUnico(datos?.id, {
+      nuevoProducto: data,
+    });
+
+    toast.success("¡Producto creado correctamente!", {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
+
+    reset();
+  });
 
   return (
     <Menu as="div" className="z-50">
@@ -76,7 +97,7 @@ export const ModalCrearProductoPedido = ({
                   Crear el producto
                 </Dialog.Title>
                 <form
-                  // onSubmit={onSubmitEditar}
+                  onSubmit={onSubmit}
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
                   <div className="flex flex-col gap-2">
@@ -101,12 +122,16 @@ export const ModalCrearProductoPedido = ({
 
                   <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-bold">categoria:</label>
-                    <input
+                    <select
                       {...register("categoria", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none text-black bg-white"
                       type="text"
                       placeholder="categoria"
-                    />
+                    >
+                      <option value={"seleccionar"}>seleccionar</option>
+                      <option value={"herrero"}>herrero</option>
+                      <option value={"modena"}>modena</option>
+                    </select>
                   </div>
 
                   <div className="flex flex-col gap-2">

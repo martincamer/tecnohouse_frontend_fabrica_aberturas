@@ -117,7 +117,7 @@ export const ViewPedido = () => {
             Pedido de aberturas - Total pedido
           </p>{" "}
           -{" "}
-          <p className="text-lg">
+          <p className="text-lg font-semibold">
             Fecha de emicion: {dateTime(datos?.created_at)}
           </p>
         </div>
@@ -196,6 +196,7 @@ export const ViewPedido = () => {
         closeModal={closeModal}
       />
       <ModalCrearProductoPedido
+        datos={datos}
         isOpenPedido={isOpenPedido}
         closeModalCrearPedido={closeModalCrearPedido}
       />

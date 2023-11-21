@@ -17,3 +17,6 @@ export const actualizarFacturaProductoUnico = (id, data) =>
   axios.put(`/pedido-edit/${id}`, data);
 
 export const obtenerValorUnico = (id) => axios.get(`/pedido-unico/${id}`);
+
+export const crearValorPedidoUnico = (id, data) =>
+  axios.post(`/${id}/pedido-create`, data);

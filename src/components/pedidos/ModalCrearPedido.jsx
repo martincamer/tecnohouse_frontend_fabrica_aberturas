@@ -172,7 +172,9 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                     <button
                       type="button"
                       onClick={() => {
-                        handlePedido();
+                        {
+                          closeModal(), handlePedido();
+                        }
                       }}
                       className="bg-green-500 py-2 px-2 rounded text-white font-bold shadow-md hover:translate-x-1 transition-all ease-in-out"
                     >

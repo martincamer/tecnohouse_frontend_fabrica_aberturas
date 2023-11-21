@@ -3,7 +3,8 @@ import { TablePedidos } from "../../../components/pedidos/TablePedidos";
 import { usePedidoContext } from "../../../context/PedidoProvider";
 
 export const Pedidos = () => {
-  const { isOpen, openModal, closeModal } = usePedidoContext();
+  const { isOpen, openModal, closeModal, datosPresupuesto } =
+    usePedidoContext();
 
   return (
     <section className="w-full py-14 px-14">
@@ -15,7 +16,9 @@ export const Pedidos = () => {
         <div className="mt-5">
           <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow">
             <p>Pedidos generados: </p>{" "}
-            <span className="font-bold text-blue-400 text-lg">1</span>
+            <span className="font-bold text-blue-400 text-lg">
+              {datosPresupuesto?.length}
+            </span>
           </div>
         </div>
 
