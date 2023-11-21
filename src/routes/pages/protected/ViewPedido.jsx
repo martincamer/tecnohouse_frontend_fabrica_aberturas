@@ -186,12 +186,19 @@ export const ViewPedido = () => {
           </table>
         </div>
       </div>
-      <div className="border-[1px] shadow py-10 px-10 rounded">
+      <div className="border-[1px] shadow py-10 px-10 rounded flex gap-4">
         <button
           onClick={() => openModalCrearPedido()}
           className="bg-green-500 py-1 px-5 rounded shadow text-white font-semibold"
         >
           Crear un nuevo producto
+        </button>
+
+        <button
+          // onClick={() => openModalCrearPedido()}
+          className="bg-blue-500 py-1 px-5 rounded shadow text-white font-semibold"
+        >
+          Ver pedido - pdf
         </button>
       </div>
       <ModalEditarProductoPedido
