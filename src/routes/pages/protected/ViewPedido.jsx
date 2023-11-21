@@ -78,6 +78,12 @@ export const ViewPedido = () => {
 
   console.log(obtenerId);
 
+  const totalAberturas = () => {
+    return datos?.productos?.respuesta?.map.reduce((sum, b) => {
+      return sum + Number(b?.cantidad);
+    }, 0);
+  };
+
   return (
     <section className="w-full py-14 px-14 flex flex-col gap-10">
       <ToastContainer />
@@ -107,7 +113,7 @@ export const ViewPedido = () => {
         <div className="flex gap-2">
           <p className="text-lg">Total aberturas:</p>{" "}
           <p className="font-semibold text-blue-500 text-lg">
-            {datos?.productos?.respuesta?.length}
+            {totalAberturas()}
           </p>
         </div>
       </div>
