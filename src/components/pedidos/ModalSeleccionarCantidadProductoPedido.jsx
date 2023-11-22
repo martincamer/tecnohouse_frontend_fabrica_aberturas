@@ -111,6 +111,10 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                       </th>
 
                       <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
+                        {productoUnicoState.ancho}x{productoUnicoState.alto}
+                      </th>
+
+                      <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
                         {productoUnicoState.stock}
                       </th>
                       <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[100px]">
@@ -133,6 +137,8 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                         productoUnicoState.descripcion,
                         productoUnicoState.color,
                         productoUnicoState.categoria,
+                        productoUnicoState.ancho,
+                        productoUnicoState.alto,
                         cantidad
                       ),
                         closeModalCantidad();

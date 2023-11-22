@@ -88,6 +88,8 @@ export const PedidoProvider = ({ children }) => {
       detalle: e.detalle,
       color: e.color,
       categoria: e.categoria,
+      ancho: e.ancho,
+      alto: e.alto,
       cantidad: e.cantidad,
     };
   });
@@ -120,13 +122,24 @@ export const PedidoProvider = ({ children }) => {
 
   //fin crear factura
 
-  const addToProductos = (id, nombre, detalle, color, categoria, cantidad) => {
+  const addToProductos = (
+    id,
+    nombre,
+    detalle,
+    color,
+    categoria,
+    ancho,
+    alto,
+    cantidad
+  ) => {
     const newProducto = {
       id,
       nombre,
       detalle,
       color,
       categoria,
+      ancho,
+      alto,
       cantidad,
     };
 
@@ -145,7 +158,16 @@ export const PedidoProvider = ({ children }) => {
     }
   };
 
-  const deleteProducto = (id, nombre, detalle, color, categoria, cantidad) => {
+  const deleteProducto = (
+    id,
+    nombre,
+    detalle,
+    color,
+    categoria,
+    ancho,
+    alto,
+    cantidad
+  ) => {
     const itemIndex = productoSeleccionado.findIndex(
       (item) =>
         item.id === id &&
@@ -153,6 +175,8 @@ export const PedidoProvider = ({ children }) => {
         item.detalle === detalle &&
         item.color === color &&
         item.categoria === categoria &&
+        item.ancho === ancho &&
+        item.alto === alto &&
         item.cantidad === cantidad
     );
 

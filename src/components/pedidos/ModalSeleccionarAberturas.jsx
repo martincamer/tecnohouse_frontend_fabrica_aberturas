@@ -107,6 +107,9 @@ export const ModalSeleccionarAberturas = () => {
                           Color
                         </th>
                         <th className="p-2 text-sm font-extrabold text-center">
+                          Ancho - Alto
+                        </th>
+                        <th className="p-2 text-sm font-extrabold text-center">
                           Categoria
                         </th>
                         <th className="p-2 text-sm font-extrabold text-center">
@@ -127,6 +130,9 @@ export const ModalSeleccionarAberturas = () => {
                         </th>
                         <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
                           {c.color}
+                        </th>
+                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                          {c.ancho}x{c.alto}
                         </th>
                         <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
                           {c.categoria}

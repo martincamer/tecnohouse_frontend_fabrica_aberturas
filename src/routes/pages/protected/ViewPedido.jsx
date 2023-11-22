@@ -7,11 +7,14 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import { ModalCrearProductoPedido } from "../../../components/pedidos/ModalCrearProductoPedido";
 import { ModalEditarProductoPedido } from "../../../components/pedidos/ModalEditarProductoPedido";
+import { ButtonExcel } from "../../../components/pedidos/ButtonExcel";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
   const [obtenerId, setObtenerId] = useState("");
   const params = useParams();
+
+  console.log(datos);
 
   useEffect(() => {
     async function loadData() {
@@ -134,6 +137,7 @@ export const ViewPedido = () => {
                 <th className="p-3">Descripción del producto</th>
                 <th className="p-3">Categoria</th>
                 <th className="p-3">Color</th>
+                <th className="p-3">Ancho - Alto</th>
                 <th className="p-3">Cantidad</th>
                 <th className="p-3">Eliminar</th>
                 <th className="p-3">Editar cantidad</th>
@@ -156,6 +160,9 @@ export const ViewPedido = () => {
                   </th>
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
                     {p?.color}
+                  </th>
+                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                    {p?.ancho}x{p?.alto}
                   </th>
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
                     {p?.cantidad}
@@ -200,6 +207,14 @@ export const ViewPedido = () => {
         >
           Ver pedido - pdf
         </button>
+
+        <ButtonExcel
+          // onClick={() => openModalCrearPedido()}
+          datos={datos}
+          className="bg-blue-500 py-1 px-5 rounded shadow text-white font-semibold"
+        >
+          Excel descargar
+        </ButtonExcel>
       </div>
       <ModalEditarProductoPedido
         obtenerId={obtenerId}

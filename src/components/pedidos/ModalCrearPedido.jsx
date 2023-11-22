@@ -129,6 +129,9 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                             Color
                           </th>
                           <th className="p-2 text-sm font-extrabold text-center">
+                            Ancho - Alto
+                          </th>
+                          <th className="p-2 text-sm font-extrabold text-center">
                             Cantidad Aberturas
                           </th>
                           <th className="p-2 text-sm font-extrabold text-center">
@@ -150,6 +153,9 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                             </th>
                             <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
                               {p.color}
+                            </th>
+                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                              {p.ancho}x{p.alto}
                             </th>
                             <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
                               {p.categoria}
