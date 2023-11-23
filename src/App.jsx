@@ -18,6 +18,7 @@ import { ViewPedido } from "./routes/pages/protected/ViewPedido";
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
+import { ViewPedidoPdf } from "./routes/pages/protected/ViewPedidoPdf";
 
 function App() {
   const { isAuth } = useAuth();
@@ -58,6 +59,7 @@ function App() {
               <Route path="accesorios" element={<Accesorios />} />
               <Route path="pedidos" element={<Pedidos />} />
               <Route path="pedido/:id" element={<ViewPedido />} />
+              <Route path="pedido-pdf/:id" element={<ViewPedidoPdf />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

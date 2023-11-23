@@ -27,7 +27,12 @@ export const ModalEditarProductoPedido = ({
       setValue("detalle", res?.data?.valorUnico?.detalle);
       setValue("categoria", res?.data?.valorUnico?.categoria);
       setValue("color", res?.data?.valorUnico?.color);
+      setValue("cliente", res?.data?.valorUnico?.cliente);
+      setValue("ancho", res?.data?.valorUnico?.ancho);
+      setValue("alto", res?.data?.valorUnico?.alto);
       setValue("cantidad", res?.data?.valorUnico?.cantidad);
+
+      console.log(res.data);
     }
 
     loadData();
@@ -153,7 +158,15 @@ export const ModalEditarProductoPedido = ({
                       placeholder="color"
                     />
                   </div>
-
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">cliente:</label>
+                    <input
+                      {...register("cliente", { required: true })}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      type="text"
+                      placeholder="cliente"
+                    />
+                  </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-bold">cantidad:</label>
                     <input
@@ -161,6 +174,26 @@ export const ModalEditarProductoPedido = ({
                       className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
                       type="number"
                       placeholder="cantidad"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">ancho:</label>
+                    <input
+                      {...register("ancho", { required: true })}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      type="number"
+                      placeholder="ancho"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">alto:</label>
+                    <input
+                      {...register("alto", { required: true })}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      type="number"
+                      placeholder="alto"
                     />
                   </div>
 

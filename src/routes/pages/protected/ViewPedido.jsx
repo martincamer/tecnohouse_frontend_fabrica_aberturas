@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   deleteFacturaProducto,
   obtenerFactura,
@@ -7,14 +7,14 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import { ModalCrearProductoPedido } from "../../../components/pedidos/ModalCrearProductoPedido";
 import { ModalEditarProductoPedido } from "../../../components/pedidos/ModalEditarProductoPedido";
-import { ButtonExcel } from "../../../components/pedidos/ButtonExcel";
+import { DescargarPdfPedido } from "../../../components/pedidos/DescargarPdfPedido";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { DescargarPdfPedidoDos } from "../../../components/pedidos/DescargarPdfPedidoDos";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
   const [obtenerId, setObtenerId] = useState("");
   const params = useParams();
-
-  console.log(datos);
 
   useEffect(() => {
     async function loadData() {
@@ -85,6 +85,8 @@ export const ViewPedido = () => {
     }, 0);
   };
 
+  console.log(datos);
+
   return (
     <section className="w-full py-14 px-14 flex flex-col gap-10">
       <ToastContainer />
@@ -137,6 +139,7 @@ export const ViewPedido = () => {
                 <th className="p-3">Descripción del producto</th>
                 <th className="p-3">Categoria</th>
                 <th className="p-3">Color</th>
+                <th className="p-3">Cliente</th>
                 <th className="p-3">Ancho - Alto</th>
                 <th className="p-3">Cantidad</th>
                 <th className="p-3">Eliminar</th>
@@ -162,6 +165,9 @@ export const ViewPedido = () => {
                     {p?.color}
                   </th>
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
+                    {p?.cliente}
+                  </th>
+                  <th className="border-[1px] border-gray-300 p-3 font-medium">
                     {p?.ancho}x{p?.alto}
                   </th>
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
@@ -179,7 +185,7 @@ export const ViewPedido = () => {
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
                     <button
                       onClick={() => {
-                        setObtenerId(p.id), openModal();
+                        setObtenerId(p?.id), openModal();
                       }}
                       type="button"
                       className="font-semibold text-blue-400 border-[1px] px-4 py-1 border-blue-300 rounded bg-blue-100"
@@ -201,20 +207,28 @@ export const ViewPedido = () => {
           Crear un nuevo producto
         </button>
 
-        <button
+        <Link
+          to={`/pedido-pdf/${datos.id}`}
           // onClick={() => openModalCrearPedido()}
           className="bg-blue-500 py-1 px-5 rounded shadow text-white font-semibold"
         >
           Ver pedido - pdf
-        </button>
+        </Link>
 
-        <ButtonExcel
-          // onClick={() => openModalCrearPedido()}
-          datos={datos}
-          className="bg-blue-500 py-1 px-5 rounded shadow text-white font-semibold"
+        <PDFDownloadLink
+          fileName="asdad"
+          document={<DescargarPdfPedido datos={datos} />}
+          className="bg-orange-500 py-1 px-5 rounded text-white font-semibold"
         >
-          Excel descargar
-        </ButtonExcel>
+          Descargar Pedido Puertas
+        </PDFDownloadLink>
+        <PDFDownloadLink
+          fileName="asdad"
+          document={<DescargarPdfPedidoDos datos={datos} />}
+          className="bg-pink-400 py-1 px-5 rounded text-white font-semibold"
+        >
+          Descargar Pedido Ventanas
+        </PDFDownloadLink>
       </div>
       <ModalEditarProductoPedido
         obtenerId={obtenerId}

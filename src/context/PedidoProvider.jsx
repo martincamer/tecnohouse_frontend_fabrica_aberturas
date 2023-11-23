@@ -90,6 +90,7 @@ export const PedidoProvider = ({ children }) => {
       categoria: e.categoria,
       ancho: e.ancho,
       alto: e.alto,
+      cliente: e.cliente,
       cantidad: e.cantidad,
     };
   });
@@ -130,6 +131,7 @@ export const PedidoProvider = ({ children }) => {
     categoria,
     ancho,
     alto,
+    cliente,
     cantidad
   ) => {
     const newProducto = {
@@ -140,6 +142,7 @@ export const PedidoProvider = ({ children }) => {
       categoria,
       ancho,
       alto,
+      cliente,
       cantidad,
     };
 
@@ -166,6 +169,7 @@ export const PedidoProvider = ({ children }) => {
     categoria,
     ancho,
     alto,
+    cliente,
     cantidad
   ) => {
     const itemIndex = productoSeleccionado.findIndex(
@@ -177,6 +181,7 @@ export const PedidoProvider = ({ children }) => {
         item.categoria === categoria &&
         item.ancho === ancho &&
         item.alto === alto &&
+        item.cliente === cliente &&
         item.cantidad === cantidad
     );
 

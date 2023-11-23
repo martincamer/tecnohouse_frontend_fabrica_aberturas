@@ -36,7 +36,7 @@ export const TablePedidos = () => {
             <th className="border-[1px] border-gray-300 p-3 font-medium">
               {p?.id}
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium">
+            <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
               {p?.cliente}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium">
@@ -45,7 +45,7 @@ export const TablePedidos = () => {
             <th className="border-[1px] border-gray-300 p-3 font-medium">
               {p?.productos.respuesta.length}
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium">
+            <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
               {dateTime(p?.created_at)}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-bold ">

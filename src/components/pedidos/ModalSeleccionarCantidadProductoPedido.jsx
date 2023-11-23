@@ -7,7 +7,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
   closeModalCantidad,
 }) => {
   const [cantidad, setCantidad] = useState(0);
-
+  const [cliente, setCliente] = useState("");
   const { productoUnicoState, addToProductos } = usePedidoContext();
 
   // const generateRandomIdAsNumber = () => {
@@ -67,7 +67,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="w-1/2 inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6">
+              <div className="w-2/3 inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
@@ -92,7 +92,13 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                           Color
                         </th>
                         <th className="p-2 text-sm font-extrabold text-center">
-                          Cantidad de barras
+                          Ancho x Alto
+                        </th>
+                        <th className="p-2 text-sm font-extrabold text-center">
+                          Cliente
+                        </th>
+                        <th className="p-2 text-sm font-extrabold text-center">
+                          Seleccionar cantidad aberturas
                         </th>
                       </tr>
                     </thead>
@@ -109,13 +115,16 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                       <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
                         {productoUnicoState.color}
                       </th>
-
                       <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
                         {productoUnicoState.ancho}x{productoUnicoState.alto}
                       </th>
-
-                      <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
-                        {productoUnicoState.stock}
+                      <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[100px]">
+                        <input
+                          onChange={(e) => setCliente(e.target.value)}
+                          type="text"
+                          className="border-[1px] border-black/30 rounded p-2 w-[180px] outline-none"
+                          placeholder="Cliente"
+                        />
                       </th>
                       <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[100px]">
                         <input
@@ -139,6 +148,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                         productoUnicoState.categoria,
                         productoUnicoState.ancho,
                         productoUnicoState.alto,
+                        cliente,
                         cantidad
                       ),
                         closeModalCantidad();

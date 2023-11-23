@@ -132,6 +132,12 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                             Ancho - Alto
                           </th>
                           <th className="p-2 text-sm font-extrabold text-center">
+                            Categoria
+                          </th>
+                          <th className="p-2 text-sm font-extrabold text-center">
+                            Cliente
+                          </th>
+                          <th className="p-2 text-sm font-extrabold text-center">
                             Cantidad Aberturas
                           </th>
                           <th className="p-2 text-sm font-extrabold text-center">
@@ -159,6 +165,12 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                             </th>
                             <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
                               {p.categoria}
+                            </th>
+                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                              {p.cliente}
+                            </th>
+                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                              {p?.cantidad}
                             </th>
                             <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
                               <button
