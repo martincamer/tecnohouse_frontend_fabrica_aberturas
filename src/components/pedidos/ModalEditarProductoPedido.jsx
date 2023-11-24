@@ -8,9 +8,9 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 
 export const ModalEditarProductoPedido = ({
+  obtenerId,
   isOpen,
   closeModal,
-  obtenerId,
 }) => {
   const {
     register,
@@ -18,25 +18,6 @@ export const ModalEditarProductoPedido = ({
     formState: { errors },
     setValue,
   } = useForm();
-
-  useEffect(() => {
-    async function loadData() {
-      const res = await obtenerValorUnico(obtenerId);
-
-      setValue("nombre", res?.data?.valorUnico?.nombre);
-      setValue("detalle", res?.data?.valorUnico?.detalle);
-      setValue("categoria", res?.data?.valorUnico?.categoria);
-      setValue("color", res?.data?.valorUnico?.color);
-      setValue("cliente", res?.data?.valorUnico?.cliente);
-      setValue("ancho", res?.data?.valorUnico?.ancho);
-      setValue("alto", res?.data?.valorUnico?.alto);
-      setValue("cantidad", res?.data?.valorUnico?.cantidad);
-
-      console.log(res.data);
-    }
-
-    loadData();
-  }, [obtenerId]);
 
   const onSubmitEditar = handleSubmit(async (data) => {
     const res = await actualizarFacturaProductoUnico(obtenerId, data);
@@ -57,6 +38,25 @@ export const ModalEditarProductoPedido = ({
     }, 1500);
     console.log(res);
   });
+
+  useEffect(() => {
+    async function loadData() {
+      const res = await obtenerValorUnico(obtenerId);
+
+      setValue("nombre", res?.data?.producto?.nombre);
+      setValue("detalle", res?.data?.producto?.detalle);
+      setValue("categoria", res?.data?.producto?.categoria);
+      setValue("color", res?.data?.producto?.color);
+      setValue("cliente", res?.data?.producto?.cliente);
+      setValue("ancho", res?.data?.producto?.ancho);
+      setValue("alto", res?.data?.producto?.alto);
+      setValue("cantidad", res?.data?.producto?.cantidad);
+
+      console.log(res.data);
+    }
+
+    loadData();
+  }, [obtenerId]);
 
   return (
     <Menu as="div" className="z-50">

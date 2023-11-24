@@ -17,6 +17,8 @@ export const TablePedidos = () => {
     return new Date(data).toLocaleDateString("arg", options);
   }
 
+  // Función para sumar la cantidad de todos los objetos
+
   return (
     <table className="border-[1px]  p-[5px] table-auto w-full rounded">
       <thead>
@@ -43,7 +45,9 @@ export const TablePedidos = () => {
               {p?.detalle}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium">
-              {p?.productos.respuesta.length}
+              {p?.productos.respuesta.reduce((sum, b) => {
+                return sum + Number(b?.cantidad);
+              }, 0)}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
               {dateTime(p?.created_at)}

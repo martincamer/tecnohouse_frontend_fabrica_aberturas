@@ -82,17 +82,18 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
+    fontWeight: "normal",
     paddingTop: 8,
     paddingBottom: 8,
     textAlign: "center",
     height: "100%",
-    fontSize: "6px",
+    fontSize: "10px",
     fontFamily: "Poppins",
     fontWeight: "semibold",
   },
   row2: {
     width: "100%",
-    fontSize: "7px",
+    fontSize: "10px",
     fontFamily: "Poppins",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
@@ -202,6 +203,17 @@ export const DescargarPdfPedido = ({ datos }) => {
 
   // let resultado = sumarCantidadPorNombreODetalle();
 
+  var options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  function dateTime(data) {
+    return new Date(data).toLocaleDateString("arg", options);
+  }
+
   const sumarCantidadPorNombreODetalleQueEmpiezaConP = () => {
     const resultado = {};
 
@@ -233,9 +245,19 @@ export const DescargarPdfPedido = ({ datos }) => {
             width: "90%",
             margin: "0 auto",
             padding: "30px 0px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "5px",
+            }}
+          >
             <Text
               style={{
                 fontSize: "10px",
@@ -246,16 +268,28 @@ export const DescargarPdfPedido = ({ datos }) => {
               }}
             >
               Lugar o Cliente:{" "}
-              <Text
-                style={{
-                  fontSize: "8px",
-                  fontFamily: "Poppins",
-                  fontWeight: "normal",
-                  textTransform: "capitalize",
-                }}
-              >
-                {datos?.cliente}
-              </Text>
+            </Text>
+            <Text
+              style={{
+                fontSize: "10px",
+                fontFamily: "Poppins",
+                fontWeight: "normal",
+                textTransform: "capitalize",
+              }}
+            >
+              {datos?.cliente}
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: "10px",
+                fontFamily: "Poppins",
+                fontWeight: "normal",
+                textTransform: "capitalize",
+              }}
+            >
+              {dateTime(datos?.created_at)}
             </Text>
           </View>
         </View>
@@ -270,15 +304,45 @@ export const DescargarPdfPedido = ({ datos }) => {
 
           {resultadoFinal?.map((p) => (
             <View key={p?.id} style={styles.rowTwo}>
-              <Text style={styles.row1}>{p?.nombre}</Text>
-              <Text style={styles.row1}>{p?.detalle}</Text>
-              <Text style={styles.row1}>{p?.color}</Text>
-              <Text style={styles.row1}>
+              <Text style={styles.row2}>{p?.nombre}</Text>
+              <Text style={styles.row2}>{p?.detalle}</Text>
+              <Text style={styles.row2}>{p?.color}</Text>
+              <Text style={styles.row2}>
                 {p?.ancho}x{p?.alto}
               </Text>
-              <Text style={styles.row1}>{p?.cantidad}</Text>
+              <Text style={styles.row2}>{p?.cantidad}</Text>
             </View>
           ))}
+        </View>
+        <View
+          style={{
+            paddingTop: "20px",
+            width: "90%",
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "row",
+            gap: "5px",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: "10px",
+              fontFamily: "Poppins",
+            }}
+          >
+            Total Aberturas:
+          </Text>{" "}
+          <Text
+            style={{
+              fontSize: "10px",
+              fontFamily: "Poppins",
+              fontWeight: "semibold",
+            }}
+          >
+            {resultadoFinal?.reduce((sum, b) => {
+              return sum + Number(b?.cantidad);
+            }, 0)}
+          </Text>
         </View>
       </Page>
     </Document>

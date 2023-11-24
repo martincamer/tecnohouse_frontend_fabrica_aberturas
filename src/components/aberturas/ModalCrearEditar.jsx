@@ -182,19 +182,6 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-bold">
-                      Alto de la abertura:
-                    </label>
-                    <div>
-                      <input
-                        {...register("alto", { required: true })}
-                        className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[120px]"
-                        type="number"
-                        placeholder="alto"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">
                       Ancho de la abertura:
                     </label>
                     <div>
@@ -203,6 +190,19 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                         className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[120px]"
                         type="number"
                         placeholder="ancho"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">
+                      Alto de la abertura:
+                    </label>
+                    <div>
+                      <input
+                        {...register("alto", { required: true })}
+                        className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[120px]"
+                        type="number"
+                        placeholder="alto"
                       />
                     </div>
                   </div>

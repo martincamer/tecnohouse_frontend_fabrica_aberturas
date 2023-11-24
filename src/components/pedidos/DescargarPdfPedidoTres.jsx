@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: "semibold",
   },
   row5: {
-    width: "1480px",
+    width: "1150px",
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
     paddingTop: 8,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   row1: {
     width: "100%",
-    fontSize: "10px",
+    fontSize: "8px",
     fontFamily: "Poppins",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
@@ -112,23 +112,10 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: "center",
     height: "100%",
-    paddingHorizontal: "2px",
-  },
-  row6: {
-    width: "220px",
-    fontSize: "10px",
-    fontFamily: "Poppins",
-    paddingTop: 8,
-    borderRight: "0.5px solid #000",
-    borderLeft: "0.5px solid #000",
-    paddingBottom: 8,
-    textAlign: "center",
-    height: "100%",
-    paddingHorizontal: "2px",
   },
   row2: {
-    width: "1480px",
-    fontSize: "10px",
+    width: "1150px",
+    fontSize: "8px",
     fontFamily: "Poppins",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
@@ -139,7 +126,7 @@ const styles = StyleSheet.create({
   },
   row4: {
     width: "50%",
-    fontSize: "10px",
+    fontSize: "7px",
     fontFamily: "Poppins",
     fontWeight: "bold",
     paddingTop: 8,
@@ -205,13 +192,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const DescargarPdfPedidoDos = ({ datos }) => {
+export const DescargarPdfPedidoTres = ({ datos }) => {
   // Función para sumar la cantidad por nombre o detalle que comienza con "V"
   const sumarCantidadPorNombreODetalleQueEmpiezaConV = () => {
     const resultado = {};
 
     datos?.productos?.respuesta?.forEach((elemento) => {
-      if (elemento.detalle && elemento.detalle.startsWith("v")) {
+      if (elemento.detalle && elemento.detalle.startsWith("C")) {
         const clave = elemento.nombre || elemento.detalle;
         if (resultado[clave]) {
           resultado[clave].cantidad += parseInt(elemento.cantidad, 10);
@@ -300,7 +287,7 @@ export const DescargarPdfPedidoDos = ({ datos }) => {
         </View>
         <View style={styles.table}>
           <View style={styles.row}>
-            <Text style={styles.row6}>Cod.</Text>
+            <Text style={styles.row3}>Cod.</Text>
             <Text style={styles.row5}>Detalle</Text>
             <Text style={styles.row3}>Color</Text>
             <Text style={styles.row3}>Ancho x Alto</Text>
@@ -309,7 +296,7 @@ export const DescargarPdfPedidoDos = ({ datos }) => {
 
           {resultadoFinal?.map((p) => (
             <View key={p?.id} style={styles.rowTwo}>
-              <Text style={styles.row6}>{p?.nombre}</Text>
+              <Text style={styles.row1}>{p?.nombre}</Text>
               <Text style={styles.row2}>{p?.detalle}</Text>
               <Text style={styles.row1}>{p?.color}</Text>
               <Text style={styles.row1}>

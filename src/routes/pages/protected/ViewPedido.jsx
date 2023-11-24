@@ -10,6 +10,7 @@ import { ModalEditarProductoPedido } from "../../../components/pedidos/ModalEdit
 import { DescargarPdfPedido } from "../../../components/pedidos/DescargarPdfPedido";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { DescargarPdfPedidoDos } from "../../../components/pedidos/DescargarPdfPedidoDos";
+import { DescargarPdfPedidoTres } from "../../../components/pedidos/DescargarPdfPedidoTres";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
@@ -85,6 +86,11 @@ export const ViewPedido = () => {
     }, 0);
   };
 
+  const handleSeleccionarId = (id) => {
+    setObtenerId(id);
+    console.log(obtenerId);
+  };
+
   console.log(datos);
 
   return (
@@ -97,7 +103,7 @@ export const ViewPedido = () => {
         </div>
         <div className="flex gap-2">
           <p className="text-lg">Cliente:</p>{" "}
-          <p className="font-semibold text-blue-500 text-lg">
+          <p className="font-semibold text-blue-500 text-lg capitalize">
             {datos?.cliente}
           </p>
         </div>
@@ -107,12 +113,11 @@ export const ViewPedido = () => {
             {datos?.detalle}
           </p>
         </div>
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <p className="text-lg">Localidad - Zona:</p>{" "}
           <p className="font-semibold text-blue-500 text-lg">
-            {/* {datos?.detalle} */} Venado Tuerto
           </p>
-        </div>
+        </div> */}
         <div className="flex gap-2">
           <p className="text-lg">Total aberturas:</p>{" "}
           <p className="font-semibold text-blue-500 text-lg">
@@ -185,7 +190,7 @@ export const ViewPedido = () => {
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
                     <button
                       onClick={() => {
-                        setObtenerId(p?.id), openModal();
+                        openModal(), handleSeleccionarId(p?.id);
                       }}
                       type="button"
                       className="font-semibold text-blue-400 border-[1px] px-4 py-1 border-blue-300 rounded bg-blue-100"
@@ -216,18 +221,25 @@ export const ViewPedido = () => {
         </Link>
 
         <PDFDownloadLink
-          fileName="asdad"
+          fileName={`${datos?.cliente}_puertas`}
           document={<DescargarPdfPedido datos={datos} />}
           className="bg-orange-500 py-1 px-5 rounded text-white font-semibold"
         >
           Descargar Pedido Puertas
         </PDFDownloadLink>
         <PDFDownloadLink
-          fileName="asdad"
+          fileName={`${datos?.cliente}_ventanas`}
           document={<DescargarPdfPedidoDos datos={datos} />}
           className="bg-pink-400 py-1 px-5 rounded text-white font-semibold"
         >
           Descargar Pedido Ventanas
+        </PDFDownloadLink>
+        <PDFDownloadLink
+          fileName={`${datos?.cliente}_celosias`}
+          document={<DescargarPdfPedidoTres datos={datos} />}
+          className="bg-pink-400 py-1 px-5 rounded text-white font-semibold"
+        >
+          Descargar Pedido Celosias de abrir - corredizas
         </PDFDownloadLink>
       </div>
       <ModalEditarProductoPedido

@@ -99,7 +99,7 @@ export const Pedidos = () => {
           </button>
         </div>
 
-        <div className="mt-5">
+        <div className="mt-5 h-[600px] overflow-y-scroll">
           <TablePedidos />
         </div>
 

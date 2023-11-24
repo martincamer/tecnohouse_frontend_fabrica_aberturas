@@ -90,7 +90,7 @@ export const ModalSeleccionarAberturas = () => {
                     </span>
                   </div>
                 )}
-                <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full">
+                <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full h-[300px] overflow-y-scroll">
                   <table className="border-[1px]  p-[5px] table-auto w-full rounded">
                     <thead>
                       <tr>
