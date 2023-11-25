@@ -4,6 +4,7 @@ import { TablePedidos } from "../../../components/pedidos/TablePedidos";
 import { usePedidoContext } from "../../../context/PedidoProvider";
 import { useState } from "react";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 export const Pedidos = () => {
   const {
@@ -31,6 +32,10 @@ export const Pedidos = () => {
     // Actualizar el estado con los datos filtrados
     setDatosPresupuesto(datosFiltrados);
   }
+
+  useEffect(() => {
+    load();
+  }, [datosPresupuesto.length]);
 
   useEffect(() => {
     const total = datosPresupuesto.reduce((acumulador, objeto) => {
@@ -64,10 +69,6 @@ export const Pedidos = () => {
     return sum + Number(b);
   }, 0);
 
-  useEffect(() => {
-    load();
-  }, [resultado]);
-
   return (
     <section className="w-full py-14 px-14">
       <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow py-10 px-12 w-full">
@@ -99,8 +100,16 @@ export const Pedidos = () => {
           </button>
         </div>
 
-        <div className="mt-5 h-[600px] overflow-y-scroll">
+        <div className="mt-5 h-[500px] overflow-y-scroll">
           <TablePedidos />
+        </div>
+        <div>
+          <Link
+            className="bg-blue-500 py-1 px-6 rounded shadow text-white font-semibold"
+            to={"/pedido-completo"}
+          >
+            Ver pedido completo
+          </Link>
         </div>
 
         <ModalCrearPedido isOpen={isOpen} closeModal={closeModal} />

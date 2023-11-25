@@ -160,7 +160,7 @@ export const ViewPedido = () => {
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
                     {p?.nombre}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
                     {p?.detalle}
                   </th>
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
@@ -212,13 +212,13 @@ export const ViewPedido = () => {
           Crear un nuevo producto
         </button>
 
-        <Link
+        {/* <Link
           to={`/pedido-pdf/${datos.id}`}
           // onClick={() => openModalCrearPedido()}
           className="bg-blue-500 py-1 px-5 rounded shadow text-white font-semibold"
         >
           Ver pedido - pdf
-        </Link>
+        </Link> */}
 
         <PDFDownloadLink
           fileName={`${datos?.cliente}_puertas`}

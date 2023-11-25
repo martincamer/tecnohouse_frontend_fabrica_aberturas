@@ -178,51 +178,10 @@ export const ViewPedidoPdf = () => {
   });
 
   return (
-    <Document
-      style={{
-        width: "100%",
-        height: "100%",
-        paddingTop: "100px",
-      }}
-    >
-      <Page style={styles.content}>
-        <View
-          style={{
-            paddingBottom: "20px",
-          }}
-        >
-          <View>
-            <Text>Fabrica - Cliente</Text>
-          </View>
-        </View>
-        <View style={styles.table}>
-          <View style={styles.row}>
-            <Text style={styles.row1}>Numero</Text>
-            <Text style={styles.row1}>Cod</Text>
-            <Text style={styles.row2}>Detalle</Text>
-            <Text style={styles.row1}>Ancho - Alto</Text>
-            <Text style={styles.row1}>Cantidad</Text>
-            <Text style={styles.row1}>Cliente</Text>
-            <Text style={styles.row1}>Color</Text>
-            <Text style={styles.row1}>Categoria</Text>
-          </View>
-
-          {datos?.productos?.respuesta?.map((p) => (
-            <View key={p?.id} style={styles.rowTwo}>
-              <Text style={styles.row1}>{p?.id}</Text>
-              <Text style={styles.row1}>{p?.nombre}</Text>
-              <Text style={styles.row2}>{p?.detalle}</Text>
-              <Text style={styles.row1}>
-                {p?.ancho}x{p?.alto}
-              </Text>
-              <Text style={styles.row1}>{p?.cantidad}</Text>
-              <Text style={styles.row1}>{p?.cliente}</Text>
-              <Text style={styles.row1}>{p?.color}</Text>
-              <Text style={styles.row1}>{p?.categoria}</Text>
-            </View>
-          ))}
-        </View>
-      </Page>
-    </Document>
+    <section className="w-[100%] py-10 px-10">
+      <div className="shadow border-[1px] py-10 px-10">
+        
+      </div>
+    </section>
   );
 };
