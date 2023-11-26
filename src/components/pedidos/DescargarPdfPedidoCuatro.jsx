@@ -37,6 +37,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "90%",
   },
+  table_intro: {
+    margin: "0 auto",
+    display: "flex",
+    flexDirection: "column",
+    gap: "5px",
+    width: "90%",
+    marginBottom: "5px",
+  },
   row: {
     display: "flex",
     flexDirection: "row",
@@ -91,7 +99,7 @@ const styles = StyleSheet.create({
     fontWeight: "semibold",
   },
   row5: {
-    width: "1150px",
+    width: "900px",
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
     paddingTop: 8,
@@ -100,7 +108,6 @@ const styles = StyleSheet.create({
     height: "100%",
     fontSize: "8px",
     fontFamily: "Poppins",
-    fontWeight: "semibold",
   },
   row1: {
     width: "100%",
@@ -192,19 +199,44 @@ const styles = StyleSheet.create({
   },
 });
 
-export const DescargarPdfPedidoCuatro = ({ nuevoArregloClientes }) => {
+export const DescargarPdfPedidoCuatro = ({
+  nuevoArregloClientes,
+  datosPresupuesto,
+}) => {
   // Función para sumar la cantidad por nombre o detalle que comienza con "V"
 
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
+  // var options = {
+  //   weekday: "long",
+  //   year: "numeric",
+  //   month: "long",
+  //   day: "numeric",
+  // };
 
-  function dateTime(data) {
-    return new Date(data).toLocaleDateString("arg", options);
-  }
+  // function dateTime(data) {
+  //   return new Date(data).toLocaleDateString("arg", options);
+  // }
+
+  const tiempoTranscurrido = Date.now();
+  const hoy = new Date(tiempoTranscurrido);
+
+  const datos = datosPresupuesto?.map((c) =>
+    c.productos.respuesta.map((c) => c?.cantidad)
+  );
+
+  let data = datos?.map((c) =>
+    c?.reduce((sum, b) => {
+      return sum + Number(b);
+    }, 0)
+  );
+
+  const resultado = data?.reduce((sum, b) => {
+    return sum + Number(b);
+  }, 0);
+
+  const clientes = datosPresupuesto?.map((item) => item?.cliente);
+
+  // Convertir el array en una cadena separada por comas
+  const clientesSeparadosPorComas = clientes.join(", ");
 
   return (
     <Document pageMode="fullScreen">
@@ -236,18 +268,27 @@ export const DescargarPdfPedidoCuatro = ({ nuevoArregloClientes }) => {
                 gap: "12px",
               }}
             >
-              Lugar o Cliente:{" "}
+              Fabricas - Clientes:{" "}
             </Text>
-            <Text
+            <View
               style={{
                 fontSize: "10px",
                 fontFamily: "Poppins",
-                fontWeight: "normal",
                 textTransform: "capitalize",
+                flexDirection: "row",
+                display: "flex",
+                gap: "5px",
               }}
             >
-              {datos?.cliente}
-            </Text>
+              <Text
+                style={{
+                  fontSize: "10px",
+                  fontFamily: "Poppins",
+                }}
+              >
+                {clientesSeparadosPorComas}.
+              </Text>
+            </View>
           </View>
           <View>
             <Text
@@ -258,31 +299,72 @@ export const DescargarPdfPedidoCuatro = ({ nuevoArregloClientes }) => {
                 textTransform: "capitalize",
               }}
             >
-              {/* {dateTime(nuevoArregloClientes?.created_at)} */}
+              {hoy.toLocaleDateString()}
             </Text>
           </View>
         </View>
-        <View style={styles.table}>
-          <View style={styles.row}>
-            <Text style={styles.row3}>Cod.</Text>
-            <Text style={styles.row5}>Detalle</Text>
-            <Text style={styles.row3}>Color</Text>
-            <Text style={styles.row3}>Ancho x Alto</Text>
-            <Text style={styles.row3}>Cantidad</Text>
-          </View>
 
-          {nuevoArregloClientes?.productos?.map((p) => (
-            <View key={p?.id} style={styles.rowTwo}>
-              <Text style={styles.row1}>{p?.nombre}</Text>
-              <Text style={styles.row2}>{p?.detalle}</Text>
-              <Text style={styles.row1}>{p?.color}</Text>
-              <Text style={styles.row1}>
-                {p?.ancho}x{p?.alto}
-              </Text>
-              <Text style={styles.row1}>{p?.cantidad}</Text>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+          }}
+        >
+          {nuevoArregloClientes.map((cliente) => (
+            <View>
+              <View style={styles.table_intro}>
+                <Text
+                  style={{
+                    fontSize: "8px",
+                    fontFamily: "Poppins",
+                    fontWeight: "semibold",
+                  }}
+                >{`Cliente - Casa: ${cliente.cliente}`}</Text>
+                <Text
+                  style={{
+                    fontSize: "8px",
+                    fontFamily: "Poppins",
+                  }}
+                >
+                  {`Lugar - Entrega de las aberturas: `}
+                  <Text
+                    style={{
+                      fontSize: "8px",
+                      fontFamily: "Poppins",
+                      fontWeight: "semibold",
+                    }}
+                  >
+                    {cliente.clienteOriginal}
+                  </Text>
+                </Text>
+              </View>
+
+              <View style={styles.table}>
+                <View style={styles.row}>
+                  <Text style={styles.row1}>ID</Text>
+                  <Text style={styles.row1}>Cliente</Text>
+                  <Text style={styles.row5}>Detalle</Text>
+                  <Text style={styles.row1}>Cantidad</Text>
+                  <Text style={styles.row1}>Ancho x Alto</Text>
+                </View>
+
+                {cliente?.productos.map((p) => (
+                  <View style={styles.rowTwo}>
+                    <Text style={styles.row1}>{p?.id}</Text>
+                    <Text style={styles.row1}> {p?.cliente}</Text>
+                    <Text style={styles.row5}>{p?.detalle}</Text>
+                    <Text style={styles.row1}>{p?.cantidad}</Text>
+                    <Text style={styles.row1}>
+                      {p?.ancho}x{p?.alto}
+                    </Text>
+                  </View>
+                ))}
+              </View>
             </View>
           ))}
         </View>
+
         <View
           style={{
             paddingTop: "20px",
@@ -308,9 +390,7 @@ export const DescargarPdfPedidoCuatro = ({ nuevoArregloClientes }) => {
               fontWeight: "semibold",
             }}
           >
-            {resultadoFinal?.reduce((sum, b) => {
-              return sum + Number(b?.cantidad);
-            }, 0)}
+            {resultado}
           </Text>
         </View>
       </Page>

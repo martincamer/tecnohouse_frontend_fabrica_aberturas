@@ -208,17 +208,20 @@ export const PedidoCompletoFinal = () => {
         </div>
 
         <div className="mt-10">
-          {/* <PDFDownloadLink
-            // fileName={`${datos?.cliente}_celosias`}
+          <PDFDownloadLink
+            fileName={`${nuevoArregloClientes.map(
+              (cliente) => cliente.cliente
+            )}`}
             document={
               <DescargarPdfPedidoCuatro
-              // nuevoArregloClientes={nuevoArregloClientes}
+                nuevoArregloClientes={nuevoArregloClientes}
+                datosPresupuesto={datosPresupuesto}
               />
             }
             className="bg-green-500 py-1 px-5 rounded text-white font-semibold"
           >
             Descargar Pedido Entrega Final
-          </PDFDownloadLink> */}
+          </PDFDownloadLink>
         </div>
       </div>
     </section>
