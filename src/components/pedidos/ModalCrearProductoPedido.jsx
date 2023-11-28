@@ -3,6 +3,8 @@ import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { crearValorPedidoUnico } from "../../api/factura.api";
 import { ToastContainer, toast } from "react-toastify";
+import { ModalProductoExistente } from "./ModalProductoExistente";
+import { usePedidoContext } from "../../context/PedidoProvider";
 
 export const ModalCrearProductoPedido = ({
   isOpenPedido,
@@ -14,7 +16,10 @@ export const ModalCrearProductoPedido = ({
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm();
+
+  const { productoSeleccionado, deleteToResetProductos } = usePedidoContext();
 
   const onSubmit = handleSubmit(async (data) => {
     const { data: nuevoValor } = await crearValorPedidoUnico(datos?.id, {
@@ -32,12 +37,35 @@ export const ModalCrearProductoPedido = ({
       theme: "light",
     });
 
+    reset();
+
     setTimeout(() => {
       location.reload();
     }, 1500);
 
     reset();
   });
+
+  useEffect(() => {
+    setValue("nombre", productoSeleccionado[0]?.nombre);
+    setValue("detalle", productoSeleccionado[0]?.detalle);
+    setValue("categoria", productoSeleccionado[0]?.categoria);
+    setValue("color", productoSeleccionado[0]?.color);
+    setValue("cantidad", productoSeleccionado[0]?.cantidad);
+    setValue("ancho", productoSeleccionado[0]?.ancho);
+    setValue("alto", productoSeleccionado[0]?.alto);
+    setValue("cliente", productoSeleccionado[0]?.cliente);
+  }, [productoSeleccionado]);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const OpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <Menu as="div" className="z-50">
@@ -155,12 +183,61 @@ export const ModalCrearProductoPedido = ({
                   </div>
 
                   <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">ancho:</label>
+                    <input
+                      {...register("ancho", { required: true })}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      type="number"
+                      placeholder="ancho"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">alto:</label>
+                    <input
+                      {...register("alto", { required: true })}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      type="number"
+                      placeholder="alto"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">cliente:</label>
+                    <input
+                      {...register("cliente", { required: true })}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      type="text"
+                      placeholder="cliente"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
                     <input
                       className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer"
                       type="submit"
                       value={"Crear producto"}
                       onClick={closeModalCrearPedido}
                     />
+                  </div>
+
+                  <div>
+                    <button
+                      onClick={OpenModal}
+                      type="button"
+                      className="bg-blue-500 text-white rounded py-1 px-4 shadow font-bold mt-2"
+                    >
+                      Seleccionar producto existente
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      onClick={deleteToResetProductos}
+                      type="button"
+                      className="bg-red-100/90 border-red-300 border-[0.5px] text-red-400 rounded py-1 px-4 shadow font-bold mt-2"
+                    >
+                      Resetear producto
+                    </button>
                   </div>
                 </form>
 
@@ -175,6 +252,7 @@ export const ModalCrearProductoPedido = ({
                 </div>
               </div>
             </Transition.Child>
+            <ModalProductoExistente isOpen={isOpen} closeModal={closeModal} />
           </div>
         </Dialog>
       </Transition>

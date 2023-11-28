@@ -34,6 +34,7 @@ export const PedidoProvider = ({ children }) => {
   const [unicoPresupuesto, setUnicoPresupuesto] = useState([]);
   const [cliente, setCliente] = useState("");
   const [detalle, setDetalle] = useState("");
+  const [fecha, setFecha] = useState("");
 
   const [isOpenProductos, setIsOpenProductos] = useState(false);
 
@@ -101,6 +102,7 @@ export const PedidoProvider = ({ children }) => {
       cliente: cliente,
       productos: { respuesta },
       detalle: detalle,
+      fecha: fecha,
     });
 
     const presupuestoActualizado = [...datosPresupuesto, res.data];
@@ -297,6 +299,8 @@ export const PedidoProvider = ({ children }) => {
         setDetalle,
         cliente,
         detalle,
+        fecha,
+        setFecha,
       }}
     >
       {children}

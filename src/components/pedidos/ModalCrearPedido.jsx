@@ -14,6 +14,9 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
     detalle,
     handlePedido,
     deleteProducto,
+    fecha,
+    setFecha,
+    deleteToResetProductos,
   } = usePedidoContext();
 
   return (
@@ -184,6 +187,27 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                         ))}
                       </tbody>
                     </table>
+                  </div>
+                  <div>
+                    <button
+                      onClick={deleteToResetProductos}
+                      type="button"
+                      className="bg-red-100/90 border-red-300 border-[0.5px] text-red-400 rounded py-1 px-4 shadow font-bold mt-2"
+                    >
+                      Resetear productos
+                    </button>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">
+                      Fecha de entrega del pedido:
+                    </label>
+                    <input
+                      type="date"
+                      value={fecha}
+                      onChange={(e) => setFecha(e.target.value)}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white"
+                      placeholder="fecha"
+                    />
                   </div>
 
                   <div className="flex flex-col gap-2">

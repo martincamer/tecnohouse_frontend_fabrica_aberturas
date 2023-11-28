@@ -272,7 +272,23 @@ export const DescargarPdfPedidoTres = ({ datos }) => {
               {datos?.cliente}
             </Text>
           </View>
-          <View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "5px",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: "10px",
+                fontFamily: "Poppins",
+                fontWeight: "semibold",
+                textTransform: "capitalize",
+              }}
+            >
+              Fecha de emición:
+            </Text>
             <Text
               style={{
                 fontSize: "10px",
@@ -308,33 +324,67 @@ export const DescargarPdfPedidoTres = ({ datos }) => {
         </View>
         <View
           style={{
-            paddingTop: "20px",
             width: "90%",
             margin: "0 auto",
+            paddingTop: "20px",
             display: "flex",
             flexDirection: "row",
-            gap: "5px",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <Text
+          <View
             style={{
-              fontSize: "10px",
-              fontFamily: "Poppins",
+              display: "flex",
+              flexDirection: "row",
+              gap: "5px",
             }}
           >
-            Total Aberturas:
-          </Text>{" "}
-          <Text
+            <Text
+              style={{
+                fontSize: "10px",
+                fontFamily: "Poppins",
+              }}
+            >
+              Total Aberturas:
+            </Text>{" "}
+            <Text
+              style={{
+                fontSize: "10px",
+                fontFamily: "Poppins",
+                fontWeight: "semibold",
+              }}
+            >
+              {resultadoFinal?.reduce((sum, b) => {
+                return sum + Number(b?.cantidad);
+              }, 0)}
+            </Text>
+          </View>
+          <View
             style={{
-              fontSize: "10px",
-              fontFamily: "Poppins",
-              fontWeight: "semibold",
+              display: "flex",
+              flexDirection: "row",
+              gap: "5px",
             }}
           >
-            {resultadoFinal?.reduce((sum, b) => {
-              return sum + Number(b?.cantidad);
-            }, 0)}
-          </Text>
+            <Text
+              style={{
+                fontSize: "10px",
+                fontFamily: "Poppins",
+              }}
+            >
+              Fecha de entrega del pedido:
+            </Text>{" "}
+            <Text
+              style={{
+                fontSize: "10px",
+                fontFamily: "Poppins",
+                fontWeight: "semibold",
+              }}
+            >
+              {dateTime(datos?.fecha)}
+            </Text>
+          </View>
         </View>
       </Page>
     </Document>
