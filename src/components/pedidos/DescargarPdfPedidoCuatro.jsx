@@ -233,10 +233,25 @@ export const DescargarPdfPedidoCuatro = ({
     return sum + Number(b);
   }, 0);
 
-  const clientes = datosPresupuesto?.map((item) => item?.cliente);
+  let nuevosDatos = [];
+
+  let clientesUnicos = new Set();
+
+  // Nuevo arreglo para almacenar los objetos únicos
+
+  // Iterar sobre los datos y filtrar clientes únicos
+  datosPresupuesto?.forEach((objeto) => {
+    var cliente = objeto?.cliente;
+    if (!clientesUnicos?.has(cliente)) {
+      clientesUnicos?.add(cliente);
+      nuevosDatos?.push({ cliente: cliente }); // Añadir un nuevo objeto con solo el campo "cliente"
+    }
+  });
+
+  const clientes = nuevosDatos?.map((p) => p?.cliente);
 
   // Convertir el array en una cadena separada por comas
-  const clientesSeparadosPorComas = clientes.join(", ");
+  const clientesSeparadosPorComas = clientes?.join(", ");
 
   return (
     <Document pageMode="fullScreen">
@@ -249,13 +264,12 @@ export const DescargarPdfPedidoCuatro = ({
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
           }}
         >
           <View
             style={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: "column",
               gap: "5px",
             }}
           >
@@ -275,9 +289,9 @@ export const DescargarPdfPedidoCuatro = ({
                 fontSize: "10px",
                 fontFamily: "Poppins",
                 textTransform: "capitalize",
-                flexDirection: "row",
                 display: "flex",
-                gap: "5px",
+                flexDirection: "column-reverse",
+                gap: "3px",
               }}
             >
               <Text

@@ -3,8 +3,9 @@ import { ModalCrearPedido } from "../../../components/pedidos/ModalCrearPedido";
 import { TablePedidos } from "../../../components/pedidos/TablePedidos";
 import { usePedidoContext } from "../../../context/PedidoProvider";
 import { useState } from "react";
-import moment from "moment";
 import { Link } from "react-router-dom";
+import moment from "moment";
+import "moment/locale/es";
 
 export const Pedidos = () => {
   const {
@@ -69,6 +70,27 @@ export const Pedidos = () => {
     return sum + Number(b);
   }, 0);
 
+  let fechaActualNew = new Date();
+
+  let nombresMeses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
+  let indiceMes = fechaActualNew.getMonth();
+
+  let nombreMes = nombresMeses[indiceMes];
+
   return (
     <section className="w-full py-14 px-14">
       <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow py-10 px-12 w-full">
@@ -82,6 +104,11 @@ export const Pedidos = () => {
             <span className="font-bold text-blue-400 text-lg">
               {datosPresupuesto?.length}
             </span>
+          </div>
+
+          <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow">
+            <p>Fecha del mes:</p>{" "}
+            <span className="font-bold text-blue-400 text-lg">{nombreMes}</span>
           </div>
 
           <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow">
@@ -103,7 +130,7 @@ export const Pedidos = () => {
         <div className="mt-5 h-[500px] overflow-y-scroll">
           <TablePedidos />
         </div>
-        <div>
+        <div className="mt-5">
           <Link
             className="bg-blue-500 py-1 px-6 rounded shadow text-white font-semibold"
             to={"/pedido-completo"}

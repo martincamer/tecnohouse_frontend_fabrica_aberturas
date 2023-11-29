@@ -27,7 +27,9 @@ export const TablePedidos = () => {
           <th className="p-3">Cliente</th>
           <th className="p-3">Detalle de linea - categoria</th>
           <th className="p-3">Total aberturas</th>
-          <th className="p-3">Fecha</th>
+          {/* <th className="p-3">Fecha de emición</th> */}
+          <th className="p-3">Fecha de entrega</th>
+          <th className="p-3">Remito</th>
           <th className="p-3">Eliminar</th>
           <th className="p-3">Ver pedido</th>
         </tr>
@@ -49,8 +51,14 @@ export const TablePedidos = () => {
                 return sum + Number(b?.cantidad);
               }, 0)}
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
+            {/* <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
               {dateTime(p?.created_at)}
+            </th> */}
+            <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
+              {dateTime(p?.fecha)}
+            </th>
+            <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
+              #{p?.remito}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-bold ">
               <button

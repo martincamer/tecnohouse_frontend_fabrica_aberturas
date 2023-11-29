@@ -13,6 +13,12 @@ export const PedidoCompletoFinal = () => {
   // Obtener la fecha actual
   const fechaActual = moment();
 
+  useEffect(() => {
+    setTimeout(() => {
+      load();
+    }, 500);
+  }, [datosPresupuesto.length]);
+
   function load() {
     const datosFiltrados = datosPresupuesto.filter((objeto) => {
       const fechaCreacion = moment(objeto.created_at);
@@ -57,10 +63,6 @@ export const PedidoCompletoFinal = () => {
   const resultado = data?.reduce((sum, b) => {
     return sum + Number(b);
   }, 0);
-
-  useEffect(() => {
-    load();
-  }, [datosPresupuesto.length]);
 
   //   const nuevoArregloProductos = datosPresupuesto.reduce((acumulador, item) => {
   //     const clienteNombre = item.cliente.split("(")[0].trim();
@@ -118,7 +120,8 @@ export const PedidoCompletoFinal = () => {
       } else {
         acumulador.push({
           cliente: producto.cliente,
-          clienteOriginal: item.cliente, // Agregar el cliente original
+          clienteOriginal: item.cliente,
+          remito: item.remito, // Agregar el cliente original
           productos: [producto],
         });
       }
@@ -127,7 +130,23 @@ export const PedidoCompletoFinal = () => {
     return acumulador;
   }, []);
 
-  console.log(nuevoArregloClientes);
+  let clientesUnicos = new Set();
+
+  // Nuevo arreglo para almacenar los objetos únicos
+  let nuevosDatos = [];
+
+  // Iterar sobre los datos y filtrar clientes únicos
+  datosPresupuesto.forEach((objeto) => {
+    var cliente = objeto.cliente;
+    if (!clientesUnicos.has(cliente)) {
+      clientesUnicos.add(cliente);
+      nuevosDatos.push({ cliente: cliente }); // Añadir un nuevo objeto con solo el campo "cliente"
+    }
+  });
+
+  const nuevo = nuevosDatos?.map((p) => p?.cliente);
+
+  const resultJoin = nuevo?.join(", ");
 
   return (
     <section className="w-[100%] px-10 py-12">
@@ -138,12 +157,8 @@ export const PedidoCompletoFinal = () => {
           </div>
           <div className="font-semibold text-lg capitalize">
             Fabricas - Clientes:{" "}
-            <span className="text-blue-500 font-normal flex flex-col gap-2 mt-2">
-              {datosPresupuesto.map((p) => (
-                <>
-                  <p>{p.cliente}</p>
-                </>
-              ))}
+            <span className="text-blue-500 font-normal flex flex-row gap-5 mt-2">
+              {resultJoin}
             </span>
           </div>
         </div>
@@ -161,6 +176,10 @@ export const PedidoCompletoFinal = () => {
               <p className="text-blue-500">
                 {`Lugar - Entrega de las aberturas: `}
                 <span className="font-bold">{cliente.clienteOriginal}</span>
+              </p>
+              <p className="text-blue-500">
+                {`Remito de entrega: `}
+                <span className="font-bold">#{cliente?.remito}</span>
               </p>
               <ul>
                 {/* {cliente.productos.map((producto) => (
