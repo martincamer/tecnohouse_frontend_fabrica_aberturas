@@ -16,10 +16,10 @@ import { Pedidos } from "./routes/pages/protected/Pedidos";
 import { PedidoProvider } from "./context/PedidoProvider";
 import { ViewPedido } from "./routes/pages/protected/ViewPedido";
 import RutaProtegida from "./layouts/RutaProtejida";
-import "react-toastify/dist/ReactToastify.css";
-import "react-toastify/dist/ReactToastify.min.css";
 import { ViewPedidoPdf } from "./routes/pages/protected/ViewPedidoPdf";
 import { PedidoCompletoFinal } from "./routes/pages/protected/PedidoCompletoFinal";
+import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.min.css";
 
 function App() {
   const { isAuth } = useAuth();

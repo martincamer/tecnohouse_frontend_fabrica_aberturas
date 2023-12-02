@@ -58,7 +58,10 @@ export const TablePedidos = () => {
               {dateTime(p?.fecha)}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
-              #{p?.remito}
+              #{p?.remito} /{" "}
+              <button className="bg-orange-500 py-[1px] px-2 text-white font-semibold rounded">
+                editar
+              </button>
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-bold ">
               <button

@@ -45,6 +45,11 @@ export const Sidebar = () => {
       path: "/pedidos",
       icon: <BiUserCircle />,
     },
+    // {
+    //   name: "Pedidos realizados",
+    //   path: "/pedido-realizados",
+    //   icon: <BiUserCircle />,
+    // },
   ];
 
   return (
