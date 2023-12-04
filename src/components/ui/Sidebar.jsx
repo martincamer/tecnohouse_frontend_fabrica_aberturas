@@ -6,12 +6,13 @@ import {
   BiArea,
   BiMenu,
   BiUserCircle,
+  BiUserCheck,
 } from "react-icons/bi";
 import { useState } from "react";
 
 export const Sidebar = () => {
   const { user } = useAuth();
-  const [click, setClick] = useState(false);
+  const [click, setClick] = useState(true);
 
   const handleClick = () => {
     setClick(!click);
@@ -45,11 +46,11 @@ export const Sidebar = () => {
       path: "/pedidos",
       icon: <BiUserCircle />,
     },
-    // {
-    //   name: "Pedidos realizados",
-    //   path: "/pedido-realizados",
-    //   icon: <BiUserCircle />,
-    // },
+    {
+      name: "Pedidos realizados",
+      path: "/pedidos-realizados",
+      icon: <BiUserCheck />,
+    },
   ];
 
   return (

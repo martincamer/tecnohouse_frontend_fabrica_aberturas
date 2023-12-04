@@ -13,12 +13,6 @@ export const PedidoCompletoFinal = () => {
   // Obtener la fecha actual
   const fechaActual = moment();
 
-  useEffect(() => {
-    setTimeout(() => {
-      load();
-    }, 500);
-  }, [datosPresupuesto.length]);
-
   function load() {
     const datosFiltrados = datosPresupuesto.filter((objeto) => {
       const fechaCreacion = moment(objeto.created_at);
@@ -31,6 +25,12 @@ export const PedidoCompletoFinal = () => {
     // Actualizar el estado con los datos filtrados
     setDatosPresupuesto(datosFiltrados);
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      load();
+    }, 500);
+  }, [datosPresupuesto.length]);
 
   useEffect(() => {
     const total = datosPresupuesto.reduce((acumulador, objeto) => {
@@ -63,51 +63,6 @@ export const PedidoCompletoFinal = () => {
   const resultado = data?.reduce((sum, b) => {
     return sum + Number(b);
   }, 0);
-
-  //   const nuevoArregloProductos = datosPresupuesto.reduce((acumulador, item) => {
-  //     const clienteNombre = item.cliente.split("(")[0].trim();
-
-  //     const clienteExistente = acumulador.find(
-  //       (cliente) => cliente.clienteNombre === clienteNombre
-  //     );
-
-  //     if (clienteExistente) {
-  //       clienteExistente.productos.push(...item.productos.respuesta);
-  //     } else {
-  //       acumulador.push({
-  //         clienteNombre,
-  //         productos: [...item.productos.respuesta],
-  //       });
-  //     }
-
-  //     return acumulador;
-  //   }, []);
-
-  //   console.log(nuevoArregloProductos);
-
-  //   console.log(datosPresupuesto);
-  //   const nuevoArregloClientes = datosPresupuesto.reduce((acumulador, item) => {
-  //     item.productos.respuesta.forEach((producto) => {
-  //       const clienteExistente = acumulador.find(
-  //         (cliente) => cliente.cliente === producto.cliente
-  //       );
-
-  //       if (clienteExistente) {
-  //         clienteExistente.productos.push(producto);
-  //       } else {
-  //         acumulador.push({
-  //           cliente: producto.cliente,
-  //           productos: [producto],
-  //         });
-  //       }
-  //     });
-
-  //     return acumulador;
-  //   }, []);
-
-  //   console.log(nuevoArregloClientes);
-
-  //   console.log(datosPresupuesto);
 
   const nuevoArregloClientes = datosPresupuesto.reduce((acumulador, item) => {
     item.productos.respuesta.forEach((producto) => {
@@ -163,7 +118,7 @@ export const PedidoCompletoFinal = () => {
           </div>
         </div>
 
-        <div className="rounded shadow py-10 px-10 border-[1px] mt-6 space-y-4">
+        <div className="rounded shadow py-10 px-10 border-[1px] mt-6 space-y-4 h-[600px] overflow-y-scroll">
           <div className="font-semibold text-lg mb-4">
             Aberturas Realizadas por Cliente - Casa
           </div>
@@ -188,13 +143,14 @@ export const PedidoCompletoFinal = () => {
                   </li>
                 ))} */}
 
-                <table className="border-[1px]  p-[5px] table-auto w-full rounded">
+                <table className="border-[1px]  p-[5px] table-auto w-full rounded ">
                   <thead>
                     <tr>
                       <th className="p-3">ID</th>
                       <th className="p-3">Cliente</th>
                       <th className="p-3">Detalle de linea - categoria</th>
-                      <th className="p-3">Total aberturas</th>
+                      <th className="p-3">Total aberturas a entregar</th>
+                      <th className="p-3">Total realizadas</th>
                       <th className="p-3">Ancho x Alto</th>
                     </tr>
                   </thead>
@@ -213,7 +169,9 @@ export const PedidoCompletoFinal = () => {
                         <th className="border-[1px] border-gray-300 p-3 font-medium">
                           {p?.cantidad}
                         </th>
-
+                        <th className="border-[1px] border-gray-300 p-3 font-medium">
+                          {p?.cantidadFaltante}
+                        </th>
                         <th className="border-[1px] border-gray-300 p-3 font-medium">
                           {p?.ancho}x{p?.alto}
                         </th>

@@ -7,6 +7,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
   closeModalCantidad,
 }) => {
   const [cantidad, setCantidad] = useState(0);
+  const [cantidadFaltante, setCantidadFaltante] = useState(0);
   const [cliente, setCliente] = useState("");
   const { productoUnicoState, addToProductos } = usePedidoContext();
 
@@ -149,7 +150,8 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                         productoUnicoState.ancho,
                         productoUnicoState.alto,
                         cliente,
-                        cantidad
+                        cantidad,
+                        cantidadFaltante
                       ),
                         closeModalCantidad();
                     }}

@@ -51,12 +51,14 @@ export const ModalEditarProductoPedido = ({
       setValue("ancho", res?.data?.producto?.ancho);
       setValue("alto", res?.data?.producto?.alto);
       setValue("cantidad", res?.data?.producto?.cantidad);
-
-      console.log(res.data);
+      setValue("cantidadFaltante", res?.data?.producto?.cantidadFaltante);
     }
 
     loadData();
   }, [obtenerId]);
+
+  const [error, setError] = useState(false);
+  const [datos, setDatos] = useState([]);
 
   return (
     <Menu as="div" className="z-50">
@@ -119,6 +121,11 @@ export const ModalEditarProductoPedido = ({
                   onSubmit={onSubmitEditar}
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
+                  {error && (
+                    <p>
+                      Selecciona una cantidad menor a la cantidad a entregar
+                    </p>
+                  )}
                   <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-bold">Codigo:</label>
                     <input
@@ -194,6 +201,18 @@ export const ModalEditarProductoPedido = ({
                       className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
                       type="number"
                       placeholder="alto"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">
+                      Cantidad faltante:
+                    </label>
+                    <input
+                      {...register("cantidadFaltante", { required: true })}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      type="number"
+                      placeholder="editar cantidad - total"
                     />
                   </div>
 

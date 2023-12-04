@@ -1,72 +1,28 @@
-import { useEffect } from "react";
 import { ModalCrearPedido } from "../../../components/pedidos/ModalCrearPedido";
 import { TablePedidos } from "../../../components/pedidos/TablePedidos";
-import { usePedidoContext } from "../../../context/PedidoProvider";
+import { usePedidoContext } from "../../../context/PedidosMensualesProvider";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Search } from "../../../components/ui/Search";
 import moment from "moment";
 import "moment/locale/es";
-import { Search } from "../../../components/ui/Search";
+import { TablePedidosRealizados } from "../../../components/pedidos/TablePedidosRealizados";
 
-export const Pedidos = () => {
-  const {
-    isOpen,
-    openModal,
-    closeModal,
-    datosPresupuesto,
-    setDatosPresupuesto,
-    search,
-    searcher,
-  } = usePedidoContext();
+export const PedidosRealizados = () => {
+  const { isOpen, openModal, closeModal, datosPresupuesto, search, searcher } =
+    usePedidoContext();
 
   const [totalCantidad, setTotalCantidad] = useState(0);
 
-  // Obtener la fecha actual
-  const fechaActual = moment();
-
-  function load() {
-    const datosFiltrados = datosPresupuesto.filter((objeto) => {
-      const fechaCreacion = moment(objeto.created_at);
-      return (
-        fechaCreacion.month() === fechaActual.month() &&
-        fechaCreacion.year() === fechaActual.year()
-      );
-    });
-
-    // Actualizar el estado con los datos filtrados
-    setDatosPresupuesto(datosFiltrados);
-  }
-
-  useEffect(() => {
-    load();
-  }, [datosPresupuesto.length]);
-
-  useEffect(() => {
-    const total = datosPresupuesto.reduce((acumulador, objeto) => {
-      const fechaCreacion = moment(objeto.created_at);
-      if (
-        fechaCreacion.month() === fechaActual.month() &&
-        fechaCreacion.year() === fechaActual.year()
-      ) {
-        objeto.productos.respuesta.forEach((producto) => {
-          acumulador += parseInt(producto.cantidad, 10);
-        });
-      }
-      return acumulador;
-    }, 0);
-
-    // Actualizar el estado con el total calculado
-    setTotalCantidad(total);
-  }, []);
-
-  const datos = datosPresupuesto.map((c) =>
+  const datos = datosPresupuesto?.map((c) =>
     c.productos.respuesta.map((c) => c.cantidad)
   );
-  const datosTwo = datosPresupuesto.map((c) =>
+
+  const datosTwo = datosPresupuesto?.map((c) =>
     c.productos.respuesta.map((c) => c.cantidadFaltante)
   );
 
-  let data = datos.map((c) =>
+  let data = datos?.map((c) =>
     c?.reduce((sum, b) => {
       return sum + Number(b);
     }, 0)
@@ -111,7 +67,7 @@ export const Pedidos = () => {
     <section className="w-full py-14 px-14">
       <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow py-10 px-12 w-full">
         <div>
-          <p className="font-semibold text-[20px]">Crear pedido clientes</p>
+          <p className="font-semibold text-[20px]">Pedidos Realizados</p>
         </div>
 
         <div className="mt-5 flex gap-5">
@@ -155,15 +111,15 @@ export const Pedidos = () => {
         </div>
 
         <div className="mt-5 h-[500px] overflow-y-scroll">
-          <TablePedidos />
+          <TablePedidosRealizados />
         </div>
         <div className="mt-5">
-          <Link
+          {/* <Link
             className="bg-blue-500 py-1 px-6 rounded shadow text-white font-semibold"
             to={"/pedido-completo"}
           >
             Ver pedido completo
-          </Link>
+          </Link> */}
         </div>
 
         <ModalCrearPedido isOpen={isOpen} closeModal={closeModal} />

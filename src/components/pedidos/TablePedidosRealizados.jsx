@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { usePedidoContext } from "../../context/PedidoProvider";
+import { usePedidoContext } from "../../context/PedidosMensualesProvider";
 
-export const TablePedidos = () => {
+export const TablePedidosRealizados = () => {
   const { datosPresupuesto, handleDeletePresupuesto, results } =
     usePedidoContext();
 

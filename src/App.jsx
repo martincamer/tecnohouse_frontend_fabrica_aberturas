@@ -1,3 +1,4 @@
+//import {}
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { AluminioProvider } from "../src/context/AluminioProvider";
 import { useAuth } from "./context/AuthProvider";
@@ -15,11 +16,14 @@ import { Aberturas } from "./routes/pages/protected/Aberturas";
 import { Pedidos } from "./routes/pages/protected/Pedidos";
 import { PedidoProvider } from "./context/PedidoProvider";
 import { ViewPedido } from "./routes/pages/protected/ViewPedido";
-import RutaProtegida from "./layouts/RutaProtejida";
 import { ViewPedidoPdf } from "./routes/pages/protected/ViewPedidoPdf";
 import { PedidoCompletoFinal } from "./routes/pages/protected/PedidoCompletoFinal";
+import { PedidosMensualesProvider } from "./context/PedidosMensualesProvider";
+//import normales
+import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
+import { PedidosRealizados } from "./routes/pages/protected/PedidosRealizados";
 
 function App() {
   const { isAuth } = useAuth();
@@ -44,10 +48,12 @@ function App() {
                   <AccesoriosProvider>
                     <AberturasProvider>
                       <PedidoProvider>
-                        <main className="flex gap-2 h-full">
-                          <Sidebar />
-                          <Outlet />
-                        </main>
+                        <PedidosMensualesProvider>
+                          <main className="flex gap-2 h-full">
+                            <Sidebar />
+                            <Outlet />
+                          </main>
+                        </PedidosMensualesProvider>
                       </PedidoProvider>
                     </AberturasProvider>
                   </AccesoriosProvider>
@@ -59,6 +65,10 @@ function App() {
               <Route path="perfiles" element={<Productos />} />
               <Route path="accesorios" element={<Accesorios />} />
               <Route path="pedidos" element={<Pedidos />} />
+              <Route
+                path="pedidos-realizados"
+                element={<PedidosRealizados />}
+              />
               <Route path="pedido/:id" element={<ViewPedido />} />
               <Route path="pedido-pdf/:id" element={<ViewPedidoPdf />} />
               <Route path="pedido-completo" element={<PedidoCompletoFinal />} />

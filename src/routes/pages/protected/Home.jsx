@@ -1,14 +1,9 @@
-import React from "react";
 import { useAberturasContext } from "../../../context/AluminioAberturas";
 import { useAccesoriosContext } from "../../../context/AccesoriosProvider";
 import { useAluminioContext } from "../../../context/AluminioProvider";
-import { useState, useEffect, useParams } from "react";
-import moment from "moment";
-import {
-  deleteFacturaProducto,
-  obtenerFactura,
-} from "../../../api/factura.api";
+import { useState, useEffect } from "react";
 import { usePedidoContext } from "../../../context/PedidoProvider";
+import moment from "moment";
 
 export const Home = () => {
   const { results } = useAberturasContext();
@@ -84,6 +79,20 @@ export const Home = () => {
     return sum + Number(b);
   }, 0);
 
+  const datosTwo = datosPresupuesto.map((c) =>
+    c.productos.respuesta.map((c) => c.cantidadFaltante)
+  );
+
+  let dataTwo = datosTwo.map((c) =>
+    c?.reduce((sum, b) => {
+      return sum + Number(b);
+    }, 0)
+  );
+
+  const resultadoTwo = dataTwo?.reduce((sum, b) => {
+    return sum + Number(b);
+  }, 0);
+
   useEffect(() => {
     load();
   }, [resultado]);
@@ -116,10 +125,19 @@ export const Home = () => {
 
         <div className="border-[1px] border-black/20 py-10 px-10 rounded shadow-md shadow-black/10 flex gap-4 items-center">
           <p className="font-bold text-lg">
-            Total aberturas realizadas en el mes:
+            Total aberturas generadas en el mes:
           </p>
           <div className="font-bold text-lg text-black py-2 rounded-full bg-gray-100 px-4 shadow shadow-black/30 border-[0.5px]">
             {resultado}
+          </div>
+        </div>
+
+        <div className="border-[1px] border-black/20 py-10 px-10 rounded shadow-md shadow-black/10 flex gap-4 items-center">
+          <p className="font-bold text-lg">
+            Total aberturas realizadas en el mes:
+          </p>
+          <div className="font-bold text-lg text-black py-2 rounded-full bg-gray-100 px-4 shadow shadow-black/30 border-[0.5px]">
+            {resultadoTwo}
           </div>
         </div>
       </div>

@@ -11,10 +11,13 @@ import { DescargarPdfPedido } from "../../../components/pedidos/DescargarPdfPedi
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { DescargarPdfPedidoDos } from "../../../components/pedidos/DescargarPdfPedidoDos";
 import { DescargarPdfPedidoTres } from "../../../components/pedidos/DescargarPdfPedidoTres";
+import { Search } from "../../../components/ui/Search";
+import { DescargarPdfPedidoCinco } from "../../../components/pedidos/DescargarPdfPedidoCinco";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
   const [obtenerId, setObtenerId] = useState("");
+  const [search, setSearch] = useState("");
   const params = useParams();
 
   useEffect(() => {
@@ -86,12 +89,73 @@ export const ViewPedido = () => {
     }, 0);
   };
 
+  const totalAberturasRealizadas = () => {
+    return datos?.productos?.respuesta?.reduce((sum, b) => {
+      return sum + Number(b?.cantidadFaltante);
+    }, 0);
+  };
+
   const handleSeleccionarId = (id) => {
     setObtenerId(id);
     console.log(obtenerId);
   };
 
-  console.log(datos);
+  // let results = [];
+
+  //función de búsqueda
+  const searcher = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const performSearch = () => {
+    if (!search) {
+      return datos?.productos?.respuesta || [];
+    } else {
+      return (
+        datos?.productos?.respuesta?.filter(
+          (dato) =>
+            dato?.cliente?.toLowerCase().includes(search.toLocaleLowerCase()) ||
+            dato?.detalle?.toLowerCase().includes(search.toLocaleLowerCase())
+        ) || []
+      );
+    }
+  };
+  let datosAgrupados;
+
+  if (datos && datos.productos?.respuesta) {
+    const productosRespuesta = datos?.productos?.respuesta;
+
+    if (Array.isArray(productosRespuesta) && productosRespuesta.length > 0) {
+      // Crear un objeto para almacenar los productos agrupados por cliente
+      const productosAgrupados = productosRespuesta.reduce(
+        (acumulador, producto) => {
+          const cliente = producto.cliente;
+
+          if (!acumulador[cliente]) {
+            acumulador[cliente] = { nombre: cliente, productos: [] };
+          }
+
+          acumulador[cliente].productos.push(producto);
+
+          return acumulador;
+        },
+        {}
+      );
+
+      // Convertir el objeto en un arreglo
+      const nuevoArreglo = Object.values(productosAgrupados);
+
+      datosAgrupados = nuevoArreglo;
+
+      console.log(datosAgrupados);
+    } else {
+      console.error(
+        "La propiedad 'productos.respuesta' no es un arreglo o está vacía."
+      );
+    }
+  } else {
+    console.error("La estructura de datos no es la esperada.");
+  }
 
   return (
     <section className="w-full py-14 px-14 flex flex-col gap-10">
@@ -124,6 +188,13 @@ export const ViewPedido = () => {
             {totalAberturas()}
           </p>
         </div>
+
+        <div className="flex gap-2">
+          <p className="text-lg">Total aberturas - Realizadas:</p>{" "}
+          <p className="font-semibold text-blue-500 text-lg">
+            {totalAberturasRealizadas()}
+          </p>
+        </div>
       </div>
       <div className="border-[1px] shadow py-10 px-10 rounded flex flex-col gap-8">
         <div className="flex gap-2 items-center">
@@ -135,7 +206,10 @@ export const ViewPedido = () => {
             Fecha de emicion: {dateTime(datos?.created_at)}
           </p>
         </div>
-        <div className="overflow-y-scroll h-[500px]">
+        <div>
+          <Search searcher={searcher} search={search} />
+        </div>
+        <div className="overflow-y-scroll overflow-x-scroll h-[500px]">
           <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow">
             <thead>
               <tr>
@@ -147,12 +221,15 @@ export const ViewPedido = () => {
                 <th className="p-3">Cliente</th>
                 <th className="p-3">Ancho - Alto</th>
                 <th className="p-3">Cantidad</th>
+                <th className="p-3">Cantidad Realizada</th>
                 <th className="p-3">Eliminar</th>
-                <th className="p-3">Editar cantidad</th>
+                <th className="p-3">Editar Producto</th>
+                <th className="p-3">Realizada - Total</th>
+                <th className="p-3">Abertura realizada</th>
               </tr>
             </thead>
             <tbody>
-              {datos?.productos?.respuesta?.map((p) => (
+              {performSearch()?.map((p) => (
                 <tr key={p?.id}>
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
                     {p?.id}
@@ -178,6 +255,17 @@ export const ViewPedido = () => {
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
                     {p?.cantidad}
                   </th>
+                  <th className="border-[1px] border-gray-300 p-3 font-bold">
+                    <p
+                      className={`${
+                        p?.cantidad === p?.cantidadFaltante
+                          ? "bg-green-500"
+                          : "bg-orange-500"
+                      } rounded-full py-2 w-[40px] text-white text-center mx-auto shadow`}
+                    >
+                      {p?.cantidadFaltante}
+                    </p>
+                  </th>
                   <th className="border-[1px] border-gray-300 p-3 font-medium">
                     <button
                       type="button"
@@ -196,6 +284,31 @@ export const ViewPedido = () => {
                       className="font-semibold text-blue-400 border-[1px] px-4 py-1 border-blue-300 rounded bg-blue-100"
                     >
                       editar
+                    </button>
+                  </th>
+                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                    <button
+                      onClick={() => {
+                        openModal(), handleSeleccionarId(p?.id);
+                      }}
+                      type="button"
+                      className="font-semibold text-green-500 border-[1px] px-4 py-1 border-green-300 rounded bg-green-100"
+                    >
+                      editar
+                    </button>
+                  </th>
+                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                    <button
+                      type="button"
+                      className={`font-semibold px-4 py-1 rounded ${
+                        p?.cantidad === p?.cantidadFaltante
+                          ? "bg-green-500"
+                          : "bg-orange-500"
+                      } text-white shadow`}
+                    >
+                      {p?.cantidad === p?.cantidadFaltante
+                        ? "completada"
+                        : "pendiente"}
                     </button>
                   </th>
                 </tr>
@@ -237,9 +350,19 @@ export const ViewPedido = () => {
         <PDFDownloadLink
           fileName={`${datos?.cliente}_celosias`}
           document={<DescargarPdfPedidoTres datos={datos} />}
-          className="bg-pink-400 py-1 px-5 rounded text-white font-semibold"
+          className="bg-blue-400 py-1 px-5 rounded text-white font-semibold"
         >
           Descargar Pedido Celosias de abrir - corredizas
+        </PDFDownloadLink>
+
+        <PDFDownloadLink
+          fileName={`${datos?.cliente}-pedido-completo-mes-${dateTime(
+            datos?.created_at
+          )}`}
+          document={<DescargarPdfPedidoCinco datos={datos} />}
+          className="bg-gray-800 py-1 px-5 rounded text-white font-semibold"
+        >
+          Descargar Pedido Completo - Cliente
         </PDFDownloadLink>
       </div>
       <ModalEditarProductoPedido

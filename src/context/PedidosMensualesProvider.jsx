@@ -1,6 +1,5 @@
 //imports
 import { createContext, useContext, useEffect, useState } from "react";
-// import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import {
   crearFacturaNueva,
@@ -24,7 +23,7 @@ export const usePedidoContext = () => {
 };
 
 //provider
-export const PedidoProvider = ({ children }) => {
+export const PedidosMensualesProvider = ({ children }) => {
   const [search, setSearch] = useState("");
   const [obtenerProductoId, setObtenerProductoId] = useState("");
   const [productoSeleccionado, setProductoSeleccionado] = useState([]);
@@ -36,6 +35,7 @@ export const PedidoProvider = ({ children }) => {
   const [detalle, setDetalle] = useState("");
   const [fecha, setFecha] = useState("");
   const [remito, setRemito] = useState("");
+
   const [isOpenProductos, setIsOpenProductos] = useState(false);
 
   function closeModalProductos() {
@@ -56,7 +56,7 @@ export const PedidoProvider = ({ children }) => {
     setIsOpen(true);
   }
 
-  //buscador de pedidos
+  //buscador de clientes
   let results = [];
 
   //función de búsqueda
@@ -70,11 +70,11 @@ export const PedidoProvider = ({ children }) => {
     results = datosPresupuesto.filter(
       (dato) =>
         dato?.cliente?.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        dato?.remito?.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        dato?.fecha?.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        dato?.created_at?.toLowerCase().includes(search.toLocaleLowerCase())
+        dato?.remito?.toLowerCase().includes(search.toLocaleLowerCase())
     );
   }
+
+  console.log(results);
 
   const respuesta = productoSeleccionado.map(function (e) {
     return {
@@ -87,7 +87,6 @@ export const PedidoProvider = ({ children }) => {
       alto: e.alto,
       cliente: e.cliente,
       cantidad: e.cantidad,
-      cantidadFaltante: e.cantidadFaltante,
     };
   });
 
@@ -130,8 +129,7 @@ export const PedidoProvider = ({ children }) => {
     ancho,
     alto,
     cliente,
-    cantidad,
-    cantidadFaltante
+    cantidad
   ) => {
     const newProducto = {
       id,
@@ -143,7 +141,6 @@ export const PedidoProvider = ({ children }) => {
       alto,
       cliente,
       cantidad,
-      cantidadFaltante,
     };
 
     const productoSeleccionadoItem = productoSeleccionado.find((item) => {
@@ -170,8 +167,7 @@ export const PedidoProvider = ({ children }) => {
     ancho,
     alto,
     cliente,
-    cantidad,
-    cantidadFaltante
+    cantidad
   ) => {
     const itemIndex = productoSeleccionado.findIndex(
       (item) =>
@@ -183,8 +179,7 @@ export const PedidoProvider = ({ children }) => {
         item.ancho === ancho &&
         item.alto === alto &&
         item.cliente === cliente &&
-        item.cantidad === cantidad &&
-        item.cantidadFaltante === cantidadFaltante
+        item.cantidad === cantidad
     );
 
     if (itemIndex) {
@@ -223,6 +218,24 @@ export const PedidoProvider = ({ children }) => {
     };
     obtenerDatos();
   }, []);
+
+  // const totalKg = () => {
+  //   return productoSeleccionado.reduce((sum, b) => {
+  //     return sum + Number(b.totalKG);
+  //   }, 0);
+  // };
+
+  // const totalBarras = () => {
+  //   return productoSeleccionado.reduce((sum, b) => {
+  //     return sum + Number(b.barras);
+  //   }, 0);
+  // };
+
+  // const totalPagar = () => {
+  //   return productoSeleccionado.reduce((sum, b) => {
+  //     return sum + Number(b.totalPrecioUnitario);
+  //   }, 0);
+  // };
 
   const obtenerDato = async (id) => {
     const { data } = await obtenerFactura(id);
@@ -285,7 +298,6 @@ export const PedidoProvider = ({ children }) => {
         setFecha,
         setRemito,
         remito,
-        search,
         searcher,
       }}
     >
