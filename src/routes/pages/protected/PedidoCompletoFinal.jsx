@@ -132,10 +132,10 @@ export const PedidoCompletoFinal = () => {
                 {`Lugar - Entrega de las aberturas: `}
                 <span className="font-bold">{cliente.clienteOriginal}</span>
               </p>
-              <p className="text-blue-500">
+              {/* <p className="text-blue-500">
                 {`Remito de entrega: `}
                 <span className="font-bold">#{cliente?.remito}</span>
-              </p>
+              </p> */}
               <ul>
                 {/* {cliente.productos.map((producto) => (
                   <li key={producto.id}>

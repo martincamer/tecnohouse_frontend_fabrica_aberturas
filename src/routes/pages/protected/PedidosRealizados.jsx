@@ -1,18 +1,12 @@
-import { ModalCrearPedido } from "../../../components/pedidos/ModalCrearPedido";
-import { TablePedidos } from "../../../components/pedidos/TablePedidos";
 import { usePedidoContext } from "../../../context/PedidosMensualesProvider";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Search } from "../../../components/ui/Search";
-import moment from "moment";
 import "moment/locale/es";
 import { TablePedidosRealizados } from "../../../components/pedidos/TablePedidosRealizados";
 
 export const PedidosRealizados = () => {
   const { isOpen, openModal, closeModal, datosPresupuesto, search, searcher } =
     usePedidoContext();
-
-  const [totalCantidad, setTotalCantidad] = useState(0);
 
   const datos = datosPresupuesto?.map((c) =>
     c.productos.respuesta.map((c) => c.cantidad)
@@ -63,6 +57,8 @@ export const PedidosRealizados = () => {
 
   let nombreMes = nombresMeses[indiceMes];
 
+  console.log();
+
   return (
     <section className="w-full py-14 px-14">
       <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow py-10 px-12 w-full">
@@ -96,33 +92,13 @@ export const PedidosRealizados = () => {
           </div>
         </div>
 
-        <div className="mt-5 py-5 px-5">
-          <button
-            type="button"
-            onClick={openModal}
-            className="py-2 px-5 bg-green-500 rounded shadow font-semibold text-white"
-          >
-            Crear nuevo pedido
-          </button>
-        </div>
-
-        <div>
+        <div className="mt-5">
           <Search search={search} searcher={searcher} />
         </div>
 
         <div className="mt-5 h-[500px] overflow-y-scroll">
           <TablePedidosRealizados />
         </div>
-        <div className="mt-5">
-          {/* <Link
-            className="bg-blue-500 py-1 px-6 rounded shadow text-white font-semibold"
-            to={"/pedido-completo"}
-          >
-            Ver pedido completo
-          </Link> */}
-        </div>
-
-        <ModalCrearPedido isOpen={isOpen} closeModal={closeModal} />
       </div>
     </section>
   );

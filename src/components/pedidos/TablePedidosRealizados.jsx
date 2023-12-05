@@ -16,6 +16,8 @@ export const TablePedidosRealizados = () => {
     return new Date(data).toLocaleDateString("arg", options);
   }
 
+  console.log(results);
+
   // Función para sumar la cantidad de todos los objetos
 
   return (
@@ -36,31 +38,28 @@ export const TablePedidosRealizados = () => {
       <tbody>
         {results.map((p) => (
           <tr key={p?.id}>
-            <th className="border-[1px] border-gray-300 p-3 font-medium">
+            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
               {p?.id}
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
+            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase ">
               {p?.cliente}
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium">
+            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
               {p?.detalle}
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium">
+            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
               {p?.productos.respuesta.reduce((sum, b) => {
                 return sum + Number(b?.cantidad);
               }, 0)}
             </th>
-            {/* <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
+            {/* <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase capitalize">
               {dateTime(p?.created_at)}
             </th> */}
-            <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
+            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase ">
               {dateTime(p?.fecha)}
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
-              #{p?.remito} /{" "}
-              <button className="bg-orange-500 py-[1px] px-2 text-white font-semibold rounded">
-                editar
-              </button>
+            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase ">
+              {p?.remito}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-bold ">
               <button

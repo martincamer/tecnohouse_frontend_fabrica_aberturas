@@ -9,7 +9,6 @@ import {
   Document,
   StyleSheet,
   Font,
-  Image,
 } from "@react-pdf/renderer";
 import poppinsBold from "../../../fonts/Poppins-Bold.ttf";
 import poppinsSemiBold from "../../../fonts/Poppins-SemiBold.ttf";
@@ -179,9 +178,7 @@ export const ViewPedidoPdf = () => {
 
   return (
     <section className="w-[100%] py-10 px-10">
-      <div className="shadow border-[1px] py-10 px-10">
-        
-      </div>
+      <div className="shadow border-[1px] py-10 px-10"></div>
     </section>
   );
 };

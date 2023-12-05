@@ -97,7 +97,6 @@ export const ViewPedido = () => {
 
   const handleSeleccionarId = (id) => {
     setObtenerId(id);
-    console.log(obtenerId);
   };
 
   // let results = [];
@@ -231,31 +230,31 @@ export const ViewPedido = () => {
             <tbody>
               {performSearch()?.map((p) => (
                 <tr key={p?.id}>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
                     {p?.id}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
                     {p?.nombre}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium capitalize">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
                     {p?.detalle}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
                     {p?.categoria}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
                     {p?.color}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
                     {p?.cliente}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
                     {p?.ancho}x{p?.alto}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
                     {p?.cantidad}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-bold">
+                  <th className="border-[1px] border-gray-300 p-3 font-bold text-sm">
                     <p
                       className={`${
                         p?.cantidad === p?.cantidadFaltante
@@ -266,7 +265,7 @@ export const ViewPedido = () => {
                       {p?.cantidadFaltante}
                     </p>
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
                     <button
                       type="button"
                       onClick={() => handleEliminarProductoPedido(p?.id)}
@@ -275,13 +274,13 @@ export const ViewPedido = () => {
                       eliminar
                     </button>
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
                     <button
                       onClick={() => {
                         openModal(), handleSeleccionarId(p?.id);
                       }}
                       type="button"
-                      className="font-semibold text-blue-400 border-[1px] px-4 py-1 border-blue-300 rounded bg-blue-100"
+                      className="font-semibold text-blue-400 border-[1px] px-4 py-1 border-blue-300 rounded bg-blue-100 text-sm"
                     >
                       editar
                     </button>
@@ -292,12 +291,12 @@ export const ViewPedido = () => {
                         openModal(), handleSeleccionarId(p?.id);
                       }}
                       type="button"
-                      className="font-semibold text-green-500 border-[1px] px-4 py-1 border-green-300 rounded bg-green-100"
+                      className="font-semibold text-green-500 border-[1px] px-4 py-1 border-green-300 rounded bg-green-100 text-sm"
                     >
                       editar
                     </button>
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
                     <button
                       type="button"
                       className={`font-semibold px-4 py-1 rounded ${
