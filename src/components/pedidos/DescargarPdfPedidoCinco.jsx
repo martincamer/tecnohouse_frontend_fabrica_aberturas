@@ -29,7 +29,7 @@ Font.register({
 
 const styles = StyleSheet.create({
   table: {
-    margin: "0 auto",
+    margin: "20px auto",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -267,7 +267,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
 
   return (
     <Document pageMode="fullScreen">
-      <Page style={styles.content}>
+      <Page wrap size={"A4"} style={styles.content}>
         <View
           style={{
             width: "90%",
@@ -368,7 +368,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
                 <Text style={styles.row3}>Color</Text>
                 <Text style={styles.row3}>Ancho x Alto</Text>
                 <Text style={styles.row3}>Cantidad</Text>
-                <Text style={styles.row3}>Entregadas</Text>
+                <Text style={styles.row3}>Realizadas</Text>
               </View>
 
               {p?.productos?.map((producto) => (
@@ -442,7 +442,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
                   fontFamily: "Poppins",
                 }}
               >
-                Total Aberturas Entregadas:
+                Total Aberturas Realizadas:
               </Text>{" "}
               <Text
                 style={{

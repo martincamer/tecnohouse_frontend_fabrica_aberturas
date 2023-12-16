@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: "semibold",
   },
   row5: {
-    width: "1480px",
+    width: "1150px",
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
     paddingTop: 8,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   row1: {
     width: "100%",
-    fontSize: "10px",
+    fontSize: "8px",
     fontFamily: "Poppins",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
@@ -112,23 +112,10 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: "center",
     height: "100%",
-    paddingHorizontal: "2px",
-  },
-  row6: {
-    width: "220px",
-    fontSize: "10px",
-    fontFamily: "Poppins",
-    paddingTop: 8,
-    borderRight: "0.5px solid #000",
-    borderLeft: "0.5px solid #000",
-    paddingBottom: 8,
-    textAlign: "center",
-    height: "100%",
-    paddingHorizontal: "2px",
   },
   row2: {
-    width: "1480px",
-    fontSize: "10px",
+    width: "1150px",
+    fontSize: "8px",
     fontFamily: "Poppins",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
@@ -139,7 +126,7 @@ const styles = StyleSheet.create({
   },
   row4: {
     width: "50%",
-    fontSize: "10px",
+    fontSize: "7px",
     fontFamily: "Poppins",
     fontWeight: "bold",
     paddingTop: 8,
@@ -205,32 +192,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export const DescargarPdfPedidoDos = ({ datos }) => {
-  // Función para sumar la cantidad por nombre o detalle que comienza con "V"
-  const sumarCantidadPorNombreODetalleQueEmpiezaConV = () => {
-    const resultado = {};
-
-    datos?.productos?.respuesta?.forEach((elemento) => {
-      if (elemento.detalle && elemento.detalle.startsWith("V")) {
-        const clave = elemento.nombre || elemento.detalle;
-        if (resultado[clave]) {
-          resultado[clave].cantidad += parseInt(elemento.cantidad, 10);
-        } else {
-          resultado[clave] = { ...elemento };
-          resultado[clave].cantidad = parseInt(elemento.cantidad, 10);
-        }
-      }
-    });
-
-    return Object.values(resultado).map((elemento) => ({
-      ...elemento,
-      cantidad: elemento.cantidad.toString(), // Convertir la cantidad de nuevo a string si es necesario
-    }));
-  };
-
-  const resultadoFinal = sumarCantidadPorNombreODetalleQueEmpiezaConV();
-  // Muestra el resultado final
-
+export const DescargarPdfPedidoAberturasFaltantes = ({
+  datosAgrupadosEnUno,
+  resultadoFinalAberturas,
+}) => {
   var options = {
     weekday: "long",
     year: "numeric",
@@ -282,7 +247,7 @@ export const DescargarPdfPedidoDos = ({ datos }) => {
                 textTransform: "capitalize",
               }}
             >
-              {datos?.cliente}
+              {/* {datos?.cliente} */}
             </Text>
           </View>
           <View
@@ -310,30 +275,35 @@ export const DescargarPdfPedidoDos = ({ datos }) => {
                 textTransform: "capitalize",
               }}
             >
-              {dateTime(datos?.created_at)}
+              {/* {dateTime(datos?.created_at)} */}
             </Text>
           </View>
         </View>
         <View style={styles.table}>
           <View style={styles.row}>
-            <Text style={styles.row6}>Cod.</Text>
             <Text style={styles.row5}>Detalle</Text>
-            <Text style={styles.row3}>Color</Text>
             <Text style={styles.row3}>Ancho x Alto</Text>
             <Text style={styles.row3}>Cantidad</Text>
+            <Text style={styles.row3}>Cantidad Realizada</Text>
+            <Text style={styles.row3}>Cliente</Text>
           </View>
 
-          {resultadoFinal?.map((p) => (
-            <View key={p?.id} style={styles.rowTwo}>
-              <Text style={styles.row6}>{p?.nombre}</Text>
-              <Text style={styles.row2}>{p?.detalle}</Text>
-              <Text style={styles.row1}>{p?.color}</Text>
-              <Text style={styles.row1}>
-                {p?.ancho}x{p?.alto}
-              </Text>
-              <Text style={styles.row1}>{p?.cantidad}</Text>
-            </View>
-          ))}
+          {datosAgrupadosEnUno?.map((p, index) =>
+            p?.productos.map(
+              (d) =>
+                d?.cantidad !== d?.cantidadFaltante && (
+                  <View key={index} style={styles.rowTwo}>
+                    <Text style={styles.row2}>{d?.detalle}</Text>
+                    <Text style={styles.row1}>
+                      {d?.ancho}x{d?.alto}
+                    </Text>
+                    <Text style={styles.row1}>{d?.cantidad}</Text>
+                    <Text style={styles.row1}>{d?.cantidadFaltante}</Text>
+                    <Text style={styles.row1}>{d?.cliente}</Text>
+                  </View>
+                )
+            )
+          )}
         </View>
         <View
           style={{
@@ -368,9 +338,7 @@ export const DescargarPdfPedidoDos = ({ datos }) => {
                 fontWeight: "semibold",
               }}
             >
-              {resultadoFinal?.reduce((sum, b) => {
-                return sum + Number(b?.cantidad);
-              }, 0)}
+              {resultadoFinalAberturas}
             </Text>
           </View>
           <View
@@ -384,18 +352,10 @@ export const DescargarPdfPedidoDos = ({ datos }) => {
               style={{
                 fontSize: "10px",
                 fontFamily: "Poppins",
-              }}
-            >
-              Fecha de entrega del pedido:
-            </Text>{" "}
-            <Text
-              style={{
-                fontSize: "10px",
-                fontFamily: "Poppins",
                 fontWeight: "semibold",
               }}
             >
-              {dateTime(datos?.fecha)}
+              {/* {dateTime(datos?.fecha)} */}
             </Text>
           </View>
         </View>

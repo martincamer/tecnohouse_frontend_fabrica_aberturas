@@ -73,7 +73,7 @@ export const TablePedidos = () => {
               {dateTime(p?.fecha)}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-              #{p?.remito} /{" "}
+              {p?.remito}-{" "}
               <button
                 onClick={() => {
                   openModalRemito(), handleObtenerId(p?.id);

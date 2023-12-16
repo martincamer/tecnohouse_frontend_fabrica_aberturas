@@ -13,6 +13,7 @@ import { DescargarPdfPedidoDos } from "../../../components/pedidos/DescargarPdfP
 import { DescargarPdfPedidoTres } from "../../../components/pedidos/DescargarPdfPedidoTres";
 import { Search } from "../../../components/ui/Search";
 import { DescargarPdfPedidoCinco } from "../../../components/pedidos/DescargarPdfPedidoCinco";
+import { DescargarPdfPedidoAberturasFaltantes } from "../../../components/pedidos/DescargarPdfPedidoAberturasFaltantes";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
@@ -106,6 +107,8 @@ export const ViewPedido = () => {
     setSearch(e.target.value);
   };
 
+  let datosAgrupadosEnUno;
+
   const performSearch = () => {
     if (!search) {
       return datos?.productos?.respuesta || [];
@@ -119,6 +122,7 @@ export const ViewPedido = () => {
       );
     }
   };
+
   let datosAgrupados;
 
   if (datos && datos.productos?.respuesta) {
@@ -146,7 +150,7 @@ export const ViewPedido = () => {
 
       datosAgrupados = nuevoArreglo;
 
-      console.log(datosAgrupados);
+      datosAgrupadosEnUno = nuevoArreglo;
     } else {
       console.error(
         "La propiedad 'productos.respuesta' no es un arreglo o está vacía."
@@ -155,6 +159,21 @@ export const ViewPedido = () => {
   } else {
     console.error("La estructura de datos no es la esperada.");
   }
+
+  // console.log(datosAgrupadosEnUno);
+
+  // let resultadoFinal = datos?.map((p) =>
+  //   p.productos.map(
+  //     (prod) => prod?.cantidad !== prod?.cantidadFaltante && prod?.cantidad
+  //   )
+  // );
+
+  let resultadoFinalAberturas = datos?.productos?.respuesta?.reduce(
+    (sum, d) => {
+      return sum + Number(d.cantidad !== d.cantidadFaltante && d.cantidad);
+    },
+    0
+  );
 
   return (
     <section className="w-full py-14 px-14 flex flex-col gap-10">
@@ -316,6 +335,176 @@ export const ViewPedido = () => {
           </table>
         </div>
       </div>
+
+      <div className="font-bold text-xl text-blue-500 flex flex-col gap-1">
+        <div className="flex gap-4 items-center">
+          Clientes pedido completo:{" "}
+          <span className="font-normal text-black">
+            {datosAgrupados?.length} clientes totales.
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-4 items-center">
+          {datosAgrupadosEnUno?.map((c) => (
+            <p className="text-sm text-black font-normal">{c?.nombre}</p>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-[1px] border-gray-200 shadow rounded py-5 px-10 flex flex-col gap-4 overflow-y-scroll h-[600px]">
+        {datosAgrupadosEnUno?.map((p) => (
+          <div>
+            <div className="flex flex-col gap-5 items-center">
+              <p className="font-bold text-lg">{p?.nombre}</p>
+              {/* <Link
+              to={`/cliente/pedido/${p?.nombre}`}
+              className="text-gray-800 border-gray-200 py-2 px-4 border-[1px] shadow rounded hover:translate-x-1 transition-all ease-in-out"
+            >
+              VER ABERTURAS{" > "}
+            </Link> */}
+
+              <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow">
+                <thead>
+                  <tr>
+                    <th className="p-3">ID</th>
+                    <th className="p-3">Codigo</th>
+                    <th className="p-3">Detalle</th>
+                    <th className="p-3">Ancho x Alto</th>
+                    <th className="p-3">Cantidad</th>
+                    <th className="p-3">Realizadas</th>
+                    <th className="p-3">Abertura realizada</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {p?.productos?.map((p) => (
+                    <tr key={p?.id}>
+                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                        {p?.id}
+                      </th>
+                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                        {p?.nombre}
+                      </th>
+                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                        {p?.detalle}
+                      </th>
+                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                        {p?.ancho}x{p?.alto}
+                      </th>
+                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                        {p?.cantidad}
+                      </th>
+                      <th className="border-[1px] border-gray-300 p-3 font-bold text-sm">
+                        <p
+                          className={`${
+                            p?.cantidad === p?.cantidadFaltante
+                              ? "bg-green-500"
+                              : "bg-orange-500"
+                          } rounded-full py-2 w-[40px] text-white text-center mx-auto shadow`}
+                        >
+                          {p?.cantidadFaltante}
+                        </p>
+                      </th>
+                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
+                        <button
+                          type="button"
+                          className={`font-semibold px-4 py-1 rounded ${
+                            p?.cantidad === p?.cantidadFaltante
+                              ? "bg-green-500"
+                              : "bg-orange-500"
+                          } text-white shadow`}
+                        >
+                          {p?.cantidad === p?.cantidadFaltante
+                            ? "completada"
+                            : "pendiente"}
+                        </button>
+                      </th>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="font-bold text-xl text-blue-500 flex flex-col gap-1">
+        <div className="flex gap-4 items-center">
+          Clientes que faltan aberturas a entregar{" "}
+        </div>
+      </div>
+
+      <div className="border-[1px] border-gray-200 shadow rounded py-5 px-10 flex flex-col gap-4 overflow-y-scroll h-[600px]">
+        {datosAgrupadosEnUno?.map((p) =>
+          p?.productos.map(
+            (datos) =>
+              datos.cantidad !== datos.cantidadFaltante && (
+                <div>
+                  <div className="flex flex-col gap-5 items-center">
+                    <p className="font-bold text-lg">{p?.nombre}</p>
+                    <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow">
+                      <thead>
+                        <tr>
+                          <th className="p-3">ID</th>
+                          <th className="p-3">Codigo</th>
+                          <th className="p-3">Detalle</th>
+                          <th className="p-3">Ancho x Alto</th>
+                          <th className="p-3">Cantidad</th>
+                          <th className="p-3">Realizadas</th>
+                          <th className="p-3">Abertura realizada</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {datos.cantidad !== datos.cantidadFaltante && (
+                          <tr key={datos?.id}>
+                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                              {datos?.id}
+                            </th>
+                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                              {datos?.nombre}
+                            </th>
+                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                              {datos?.detalle}
+                            </th>
+                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                              {datos?.ancho}x{datos?.alto}
+                            </th>
+                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                              {datos?.cantidad}
+                            </th>
+                            <th className="border-[1px] border-gray-300 p-3 font-bold text-sm">
+                              <p
+                                className={`${
+                                  datos?.cantidad === datos?.cantidadFaltante
+                                    ? "bg-green-500"
+                                    : "bg-orange-500"
+                                } rounded-full py-2 w-[40px] text-white text-center mx-auto shadow`}
+                              >
+                                {datos?.cantidadFaltante}
+                              </p>
+                            </th>
+                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
+                              <button
+                                type="button"
+                                className={`font-semibold px-4 py-1 rounded ${
+                                  datos?.cantidad === datos?.cantidadFaltante
+                                    ? "bg-green-500"
+                                    : "bg-orange-500"
+                                } text-white shadow`}
+                              >
+                                {datos?.cantidad === datos?.cantidadFaltante
+                                  ? "completada"
+                                  : "pendiente"}
+                              </button>
+                            </th>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )
+          )
+        )}
+      </div>
       <div className="border-[1px] shadow py-10 px-10 rounded flex gap-4">
         <button
           onClick={() => openModalCrearPedido()}
@@ -352,6 +541,18 @@ export const ViewPedido = () => {
           className="bg-blue-400 py-1 px-5 rounded text-white font-semibold"
         >
           Descargar Pedido Celosias de abrir - corredizas
+        </PDFDownloadLink>
+        <PDFDownloadLink
+          fileName={`${datos?.cliente}_aberturas-faltan`}
+          document={
+            <DescargarPdfPedidoAberturasFaltantes
+              resultadoFinalAberturas={resultadoFinalAberturas}
+              datosAgrupadosEnUno={datosAgrupadosEnUno}
+            />
+          }
+          className="bg-red-400 py-1 px-5 rounded text-white font-semibold"
+        >
+          Descargar Aberturas faltantes
         </PDFDownloadLink>
 
         <PDFDownloadLink

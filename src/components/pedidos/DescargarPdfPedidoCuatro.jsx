@@ -374,7 +374,7 @@ export const DescargarPdfPedidoCuatro = ({
                   <Text style={styles.row1}>Cliente</Text>
                   <Text style={styles.row5}>Detalle</Text>
                   <Text style={styles.row1}>Cantidad</Text>
-                  <Text style={styles.row1}>Entregadas</Text>
+                  <Text style={styles.row1}>Realizadas</Text>
                   <Text style={styles.row1}>Ancho x Alto</Text>
                 </View>
 

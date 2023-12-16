@@ -19,11 +19,12 @@ import { ViewPedido } from "./routes/pages/protected/ViewPedido";
 import { ViewPedidoPdf } from "./routes/pages/protected/ViewPedidoPdf";
 import { PedidoCompletoFinal } from "./routes/pages/protected/PedidoCompletoFinal";
 import { PedidosMensualesProvider } from "./context/PedidosMensualesProvider";
+import { PedidosRealizados } from "./routes/pages/protected/PedidosRealizados";
+import { ClientePedidoMuestra } from "./routes/pages/protected/ClientePedidoMuestra";
 //import normales
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
-import { PedidosRealizados } from "./routes/pages/protected/PedidosRealizados";
 
 function App() {
   const { isAuth } = useAuth();
@@ -72,6 +73,10 @@ function App() {
               <Route path="pedido/:id" element={<ViewPedido />} />
               <Route path="pedido-pdf/:id" element={<ViewPedidoPdf />} />
               <Route path="pedido-completo" element={<PedidoCompletoFinal />} />
+              <Route
+                path="cliente/pedido/:cliente"
+                element={<ClientePedidoMuestra />}
+              />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
