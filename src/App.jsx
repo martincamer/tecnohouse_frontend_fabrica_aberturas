@@ -21,10 +21,12 @@ import { PedidoCompletoFinal } from "./routes/pages/protected/PedidoCompletoFina
 import { PedidosMensualesProvider } from "./context/PedidosMensualesProvider";
 import { PedidosRealizados } from "./routes/pages/protected/PedidosRealizados";
 import { ClientePedidoMuestra } from "./routes/pages/protected/ClientePedidoMuestra";
+import { Remitos } from "./routes/pages/protected/Remitos";
 //import normales
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
+import { RemitoProvider } from "./context/RemitoProvider";
 
 function App() {
   const { isAuth } = useAuth();
@@ -50,10 +52,12 @@ function App() {
                     <AberturasProvider>
                       <PedidoProvider>
                         <PedidosMensualesProvider>
-                          <main className="flex gap-2 h-full">
-                            <Sidebar />
-                            <Outlet />
-                          </main>
+                          <RemitoProvider>
+                            <main className="flex gap-2 h-full">
+                              <Sidebar />
+                              <Outlet />
+                            </main>
+                          </RemitoProvider>
                         </PedidosMensualesProvider>
                       </PedidoProvider>
                     </AberturasProvider>
@@ -73,6 +77,7 @@ function App() {
               <Route path="pedido/:id" element={<ViewPedido />} />
               <Route path="pedido-pdf/:id" element={<ViewPedidoPdf />} />
               <Route path="pedido-completo" element={<PedidoCompletoFinal />} />
+              <Route path="remitos" element={<Remitos />} />
               <Route
                 path="cliente/pedido/:cliente"
                 element={<ClientePedidoMuestra />}

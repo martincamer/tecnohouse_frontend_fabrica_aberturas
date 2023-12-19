@@ -8,6 +8,7 @@ import {
   BiUserCircle,
   BiUserCheck,
 } from "react-icons/bi";
+import { IoDocumentText } from "react-icons/io5";
 import { useState } from "react";
 
 export const Sidebar = () => {
@@ -50,6 +51,11 @@ export const Sidebar = () => {
       name: "Pedidos realizados",
       path: "/pedidos-realizados",
       icon: <BiUserCheck />,
+    },
+    {
+      name: "Remitos",
+      path: "/remitos",
+      icon: <IoDocumentText />,
     },
   ];
 
