@@ -2,7 +2,7 @@ import axios from "./axios";
 
 export const crearFacturaNueva = (datos) => axios.post("/remito", datos);
 
-export const obtenerFacturas = () => axios.get("/remito");
+export const obtenerRemitos = () => axios.get("/remito");
 
 export const obtenerFactura = (id) => axios.get(`/remito/${id}`);
 

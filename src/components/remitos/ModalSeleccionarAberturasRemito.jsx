@@ -1,22 +1,56 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Search } from "../ui/Search";
-import { Link } from "react-router-dom";
-import { useAberturasContext } from "../../context/AluminioAberturas";
 import { useRemitoContext } from "../../context/RemitoProvider";
-// import { ModalSeleccionarCantidadProductoPedido } from "./ModalSeleccionarCantidadProductoPedido";
-// import { ModalSeleccionarCantidadProductoFacturacion } from "./ModalSeleccionarCantidadProductoFacturacion";
+import { obtenerFacturas } from "../../api/factura.api";
 
 export const ModalSeleccionarAberturasRemito = () => {
-  const { search, searcher, results } = useAberturasContext();
   const {
-    handleSeleccionarProducto,
     errorProducto,
     isOpenProductos,
     closeModalProductos,
-    obtenerTodosLosDatos,
     addToProductos,
   } = useRemitoContext();
+
+  // const { search, searcher } = usePedidoContext();
+  const [search, setSearch] = useState("");
+  const [datos, setDatos] = useState([]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      try {
+        const res = await obtenerFacturas();
+
+        setDatos(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    obtenerDatos();
+  }, []);
+
+  //buscador de pedidos
+  let results = [];
+
+  //función de búsqueda
+  const searcher = (e) => {
+    setSearch(e.target.value);
+  };
+
+  if (!search) {
+    results = datos;
+  } else {
+    results = datos?.map((c) =>
+      c?.productos?.respuesta?.map(
+        (p) => p?.cliente?.toLowerCase().includes(search?.toLocaleLowerCase())
+        // dato?.remito?.toLowerCase().includ es(search.toLocaleLowerCase()) ||
+        // dato?.fecha?.toLowerCase().includes(search.toLocaleLowerCase()) ||
+        // dato?.created_at?.toLowerCase().includes(search.toLocaleLowerCase()) ||
+      )
+    );
+  }
+
+  console.log(datos.map((c) => c.productos.respuesta.map((p) => p.cliente)));
 
   const randomIdString = Math.random().toString().substring(2); // Get the random part as a string
   const randomIdNumber = parseInt(randomIdString, 10);
@@ -118,8 +152,8 @@ export const ModalSeleccionarAberturasRemito = () => {
                         </th>
                       </tr>
                     </thead>
-                    {obtenerTodosLosDatos?.map((d) =>
-                      d.productos.respuesta.map((c) => (
+                    {results?.map((d) =>
+                      d?.productos?.respuesta.map((c) => (
                         <tbody key={c.id}>
                           <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
                             {c.cliente}

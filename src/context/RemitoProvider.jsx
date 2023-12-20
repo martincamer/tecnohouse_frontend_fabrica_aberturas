@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import {
   crearFacturaNueva,
   deleteFactura,
-  // obtenerFacturas,
+  obtenerRemitos,
   obtenerFactura,
 } from "../api/remitos.api";
 import { obtenerFacturas } from "../api/factura.api";
@@ -69,10 +69,12 @@ export const RemitoProvider = ({ children }) => {
     setSearch(e.target.value);
   };
 
+  // console.log(obtenerTodosLosDatos);
+
   if (!search) {
-    results = datosPresupuesto;
+    results = obtenerTodosLosDatos;
   } else {
-    results = datosPresupuesto.filter(
+    results = obtenerTodosLosDatos.filter(
       (dato) =>
         dato?.cliente?.toLowerCase().includes(search.toLocaleLowerCase()) ||
         dato?.remito?.toLowerCase().includes(search.toLocaleLowerCase()) ||
@@ -160,7 +162,7 @@ export const RemitoProvider = ({ children }) => {
     };
 
     const productoSeleccionadoItem = productoSeleccionado.find((item) => {
-      return item.detalle === detalle && item.nombre === item.nombre;
+      // return item.nombre;
     });
 
     if (productoSeleccionadoItem) {
@@ -246,7 +248,7 @@ export const RemitoProvider = ({ children }) => {
   const handleDeletePresupuesto = (id) => {
     deleteFactura(id);
 
-    const presupuestoActualizado = datosPresupuesto.filter(
+    const presupuestoActualizado = obtenerTodosLosDatos.filter(
       (perfilState) => perfilState.id !== id
     );
 
@@ -261,12 +263,12 @@ export const RemitoProvider = ({ children }) => {
       theme: "light",
     });
 
-    setDatosPresupuesto(presupuestoActualizado);
+    setObtenerTodosLosDatos(presupuestoActualizado);
   };
 
   useEffect(() => {
     async function obtenerDatos() {
-      const res = await obtenerFacturas();
+      const res = await obtenerRemitos();
 
       setObtenerTodosLosDatos(res.data);
     }

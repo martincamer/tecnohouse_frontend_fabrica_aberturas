@@ -6,7 +6,8 @@ import { useRemitoContext } from "../../../context/RemitoProvider";
 import { TableRemitos } from "../../../components/remitos/TableRemitos";
 
 export const Remitos = () => {
-  const { isOpen, openModal, closeModal } = useRemitoContext();
+  const { isOpen, openModal, closeModal, searcher, search } =
+    useRemitoContext();
 
   return (
     <section className="w-full py-14 px-14">
@@ -48,7 +49,7 @@ export const Remitos = () => {
         </div>
 
         <div>
-          <Search />
+          <Search searcher={searcher} search={search} />
         </div>
 
         <div className="mt-5 h-[500px] overflow-y-scroll">

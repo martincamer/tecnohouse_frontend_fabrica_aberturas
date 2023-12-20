@@ -22,11 +22,12 @@ import { PedidosMensualesProvider } from "./context/PedidosMensualesProvider";
 import { PedidosRealizados } from "./routes/pages/protected/PedidosRealizados";
 import { ClientePedidoMuestra } from "./routes/pages/protected/ClientePedidoMuestra";
 import { Remitos } from "./routes/pages/protected/Remitos";
+import { RemitoProvider } from "./context/RemitoProvider";
+import { ViewRemito } from "./routes/pages/protected/ViewRemito";
 //import normales
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
-import { RemitoProvider } from "./context/RemitoProvider";
 
 function App() {
   const { isAuth } = useAuth();
@@ -78,6 +79,7 @@ function App() {
               <Route path="pedido-pdf/:id" element={<ViewPedidoPdf />} />
               <Route path="pedido-completo" element={<PedidoCompletoFinal />} />
               <Route path="remitos" element={<Remitos />} />
+              <Route path="remitos/:id" element={<ViewRemito />} />
               <Route
                 path="cliente/pedido/:cliente"
                 element={<ClientePedidoMuestra />}

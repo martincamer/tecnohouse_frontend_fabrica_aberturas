@@ -43,10 +43,10 @@ export const TableRemitos = () => {
         <tr>
           <th className="p-3">ID</th>
           <th className="p-3">Cliente</th>
-          <th className="p-3">Detalle de linea - categoria</th>
-          <th className="p-3">Total aberturas</th>
-          <th className="p-3">Fecha de entrega</th>
-          <th className="p-3">Remito</th>
+          <th className="p-3">Solicitante</th>
+          <th className="p-3">Trasladado</th>
+          <th className="p-3">dirección</th>
+          <th className="p-3">Numero - Remito</th>
           <th className="p-3">Eliminar</th>
           <th className="p-3">Ver pedido</th>
         </tr>
@@ -61,26 +61,25 @@ export const TableRemitos = () => {
               {p?.cliente}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-              {p?.detalle}
+              {p?.solicitante}
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
-              {p?.productos.respuesta.reduce((sum, b) => {
-                return sum + Number(b?.cantidad);
-              }, 0)}
+            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+              {p?.trasladado}
             </th>
+
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
               {dateTime(p?.fecha)}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-              {p?.remito}-{" "}
-              <button
+              {p?.remito}{" "}
+              {/* <button
                 onClick={() => {
                   openModalRemito(), handleObtenerId(p?.id);
                 }}
                 className="bg-orange-500 font-bold py-1 px-2 text-white rounded text-sm cursor-pointer"
               >
                 editar
-              </button>
+              </button> */}
             </th>
             <th className="border-[1px] border-gray-300 p-3">
               <button
@@ -92,7 +91,7 @@ export const TableRemitos = () => {
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-bold">
               <Link
-                to={`/pedido/${p?.id}`}
+                to={`/remitos/${p?.id}`}
                 className="bg-blue-500 py-1 px-2 text-white rounded text-sm cursor-pointer"
               >
                 ver pedido
