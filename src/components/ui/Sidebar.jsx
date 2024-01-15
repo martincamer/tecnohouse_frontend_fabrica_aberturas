@@ -12,7 +12,7 @@ import { IoDocumentText } from "react-icons/io5";
 import { useState } from "react";
 
 export const Sidebar = () => {
-  const { user } = useAuth();
+  const { user, clickProvider, setClickProvider } = useAuth();
   const [click, setClick] = useState(true);
 
   const handleClick = () => {
@@ -65,7 +65,9 @@ export const Sidebar = () => {
         click
           ? "w-[100px] transition-all ease-in-out duration-300"
           : "w-1/5 transition-all ease-in-out duration-300"
-      } w-1/5 bg-blue-400 min-h-screen max-h-full`}
+      } w-1/5 bg-blue-400 min-h-screen max-h-full block ${
+        clickProvider ? "block" : "hidden"
+      }`}
     >
       <div
         className={`${
@@ -76,7 +78,7 @@ export const Sidebar = () => {
       >
         <BiMenu
           onClick={handleClick}
-          className="text-primary text-[45px] hover:bg-white rounded-full py-[5px] transition-all ease-in-out duration-300"
+          className="text-primary text-[45px] hover:bg-white rounded-full py-[5px] transition-all ease-in-out duration-300 max-md:hidden"
         />
       </div>
       <div className={`w-full flex flex-col gap-12`}>
@@ -86,10 +88,10 @@ export const Sidebar = () => {
               key={path}
               className={`${
                 location.pathname === path && "bg-primary"
-              } w-full py-3 px-8`}
+              } w-full py-3 px-8 max-md:px-4`}
             >
-              <div className="flex items-center gap-2 hover:translate-x-2 transition-all ease duration-300">
-                <Link to={path} className="text-3xl text-white">
+              <div className="flex items-center max-md:justify-center gap-2 hover:translate-x-2 transition-all ease duration-300">
+                <Link to={path} className="text-3xl max-md:text-2xl text-white">
                   {icon}
                 </Link>
                 <Link

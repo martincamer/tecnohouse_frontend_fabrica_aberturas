@@ -98,45 +98,49 @@ export const Home = () => {
   }, [resultado]);
 
   return (
-    <section className="w-full py-12 px-12">
-      <div className="border-[1px] border-black/20 py-10 px-10 rounded shadow-md shadow-black/10 space-y-5">
-        <div className="border-[1px] border-black/20 py-10 px-10 rounded shadow-md shadow-black/10 flex gap-4 items-center">
-          <p className="font-bold text-lg">Productos Totales en stock: Cant.</p>
-          <div className="font-bold text-lg text-black py-2 rounded-full bg-gray-100 px-4 shadow shadow-black/30 border-[0.5px]">
+    <section className="w-full py-12 px-12 max-md:px-4">
+      <div className="border-[1px] border-black/20 py-10 px-10 max-md:px-2 max-md:py-4 rounded shadow-md shadow-black/10 space-y-5">
+        <div className="border-[1px] border-black/20 py-10 px-10 rounded max-md:px-2 max-md:py-4 shadow-md shadow-black/10 flex gap-4 items-center max-md:flex-col">
+          <p className="font-bold text-lg max-md:text-sm">
+            Productos Totales en stock: Cant.
+          </p>
+          <div className="font-bold text-lg max-md:text-sm py-2 rounded-full bg-blue-500 text-white px-4 shadow shadow-black/30">
             {unidadesEnStock()}
           </div>
         </div>
 
-        <div className="border-[1px] border-black/20 py-10 px-10 rounded shadow-md shadow-black/10 flex gap-4 items-center">
-          <p className="font-bold text-lg">
+        <div className="border-[1px] border-black/20 py-10 px-10 max-md:px-2 max-md:py-4 rounded shadow-md shadow-black/10 flex gap-4 items-center max-md:flex-col">
+          <p className="font-bold text-lg max-md:text-sm">
             Accesorios Totales en stock: Cant.
           </p>
-          <div className="font-bold text-lg text-black py-2 rounded-full bg-gray-100 px-4 shadow shadow-black/30 border-[0.5px]">
+          <div className="font-bold text-lg max-md:text-sm py-2 rounded-full bg-blue-500 text-white px-4 shadow shadow-black/30">
             {unidadesEnStockAccesorios()}
           </div>
         </div>
 
-        <div className="border-[1px] border-black/20 py-10 px-10 rounded shadow-md shadow-black/10 flex gap-4 items-center">
-          <p className="font-bold text-lg">Perfiles Totales en stock: Cant.</p>
-          <div className="font-bold text-lg text-black py-2 rounded-full bg-gray-100 px-4 shadow shadow-black/30 border-[0.5px]">
+        <div className="border-[1px] border-black/20 py-10 px-10 max-md:px-2 max-md:py-4 rounded shadow-md shadow-black/10 flex gap-4 items-center max-md:flex-col">
+          <p className="font-bold text-lg max-md:text-sm">
+            Perfiles Totales en stock: Cant.
+          </p>
+          <div className="font-bold text-lg max-md:text-sm py-2 rounded-full bg-blue-500 text-white px-4 shadow shadow-black/30">
             {unidadesEnStockAluminio()}
           </div>
         </div>
 
-        <div className="border-[1px] border-black/20 py-10 px-10 rounded shadow-md shadow-black/10 flex gap-4 items-center">
-          <p className="font-bold text-lg">
+        <div className="border-[1px] border-black/20 py-10 px-10 max-md:px-2 max-md:py-4 rounded shadow-md shadow-black/10 flex gap-4 items-center max-md:flex-col">
+          <p className="font-bold text-lg max-md:text-sm">
             Total aberturas generadas en el mes:
           </p>
-          <div className="font-bold text-lg text-black py-2 rounded-full bg-gray-100 px-4 shadow shadow-black/30 border-[0.5px]">
+          <div className="font-bold text-lg max-md:text-sm py-2 rounded-full bg-blue-500 text-white px-4 shadow shadow-black/30">
             {resultado}
           </div>
         </div>
 
-        <div className="border-[1px] border-black/20 py-10 px-10 rounded shadow-md shadow-black/10 flex gap-4 items-center">
-          <p className="font-bold text-lg">
+        <div className="border-[1px] border-black/20 py-10 px-10 max-md:px-2 max-md:py-4 rounded shadow-md shadow-black/10 flex gap-4 items-center max-md:flex-col">
+          <p className="font-bold text-lg max-md:text-sm">
             Total aberturas realizadas en el mes:
           </p>
-          <div className="font-bold text-lg text-black py-2 rounded-full bg-gray-100 px-4 shadow shadow-black/30 border-[0.5px]">
+          <div className="font-bold text-lg max-md:text-sm py-2 rounded-full bg-blue-500 text-white px-4 shadow shadow-black/30">
             {resultadoTwo}
           </div>
         </div>

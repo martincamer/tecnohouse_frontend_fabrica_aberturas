@@ -22,6 +22,8 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [spinner, setSpinner] = useState(false);
 
+  const [clickProvider, setClickProvider] = useState(false);
+
   useEffect(() => {
     setSpinner(true);
     setTimeout(() => {
@@ -101,6 +103,8 @@ export const AuthProvider = ({ children }) => {
         signin,
         signout,
         spinner,
+        clickProvider,
+        setClickProvider,
       }}
     >
       {children}
