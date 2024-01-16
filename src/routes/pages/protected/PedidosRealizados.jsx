@@ -100,7 +100,7 @@ export const PedidosRealizados = () => {
           <Search search={search} searcher={searcher} />
         </div>
 
-        <div className="mt-5 h-[500px] ">
+        <div className="mt-5 h-[500px] overflow-y-scroll ">
           <TablePedidosRealizados />
         </div>
       </div>

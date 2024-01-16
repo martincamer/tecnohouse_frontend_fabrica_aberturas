@@ -21,7 +21,7 @@ export const TablePedidosRealizados = () => {
   // Función para sumar la cantidad de todos los objetos
 
   return (
-    <table className="border-[1px]  p-[5px] table-auto w-full rounded overflow-y-scroll h-[600px]">
+    <table className="border-[1px]  p-[5px] table-auto w-full rounded overflow-y-scroll ">
       <thead>
         <tr>
           <th className="p-3">ID</th>
