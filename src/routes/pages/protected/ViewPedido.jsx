@@ -176,22 +176,26 @@ export const ViewPedido = () => {
   );
 
   return (
-    <section className="w-full py-14 px-14 flex flex-col gap-10">
+    <section className="w-full py-14 px-14 max-md:py-6 max-md:px-2 flex flex-col gap-10 overflow-x-scroll">
       <ToastContainer />
-      <div className="border-[1px] shadow py-10 px-10 rounded flex justify-around">
-        <div className="flex gap-2">
-          <p className="text-lg">Numero del pedido: </p>{" "}
-          <p className="font-semibold text-blue-500 text-lg">{datos?.id}</p>
+      <div className="border-[1px] shadow py-10 px-10 rounded flex justify-around max-md:flex-col">
+        <div className="flex gap-2 items-center">
+          <p className="text-lg max-md:text-sm uppercase">
+            Numero del pedido:{" "}
+          </p>{" "}
+          <p className="font-semibold text-blue-500 text-lg max-md:text-sm">
+            {datos?.id}
+          </p>
         </div>
-        <div className="flex gap-2">
-          <p className="text-lg">Cliente:</p>{" "}
-          <p className="font-semibold text-blue-500 text-lg capitalize">
+        <div className="flex gap-2 items-center">
+          <p className="text-lg max-md:text-sm uppercase">Cliente:</p>{" "}
+          <p className="font-semibold text-blue-500 text-lg uppercase max-md:text-sm">
             {datos?.cliente}
           </p>
         </div>
         <div className="flex gap-2">
-          <p className="text-lg">Detalle - Categoria:</p>{" "}
-          <p className="font-semibold text-blue-500 text-lg">
+          <p className="text-lg max-md:text-sm uppercase">Categoria:</p>{" "}
+          <p className="font-semibold text-blue-500 text-lg uppercase max-md:text-sm">
             {datos?.detalle}
           </p>
         </div>
@@ -200,27 +204,27 @@ export const ViewPedido = () => {
           <p className="font-semibold text-blue-500 text-lg">
           </p>
         </div> */}
-        <div className="flex gap-2">
-          <p className="text-lg">Total aberturas:</p>{" "}
-          <p className="font-semibold text-blue-500 text-lg">
+        <div className="flex gap-2 items-center">
+          <p className="text-lg uppercase max-md:text-sm">Total aberturas:</p>{" "}
+          <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
             {totalAberturas()}
           </p>
         </div>
 
         <div className="flex gap-2">
-          <p className="text-lg">Total aberturas - Realizadas:</p>{" "}
-          <p className="font-semibold text-blue-500 text-lg">
+          <p className="text-lg max-md:text-sm uppercase">Total realizadas:</p>{" "}
+          <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
             {totalAberturasRealizadas()}
           </p>
         </div>
       </div>
       <div className="border-[1px] shadow py-10 px-10 rounded flex flex-col gap-8">
-        <div className="flex gap-2 items-center">
-          <p className="text-lg font-semibold text-green-500">
+        <div className="flex gap-2 items-center max-md:flex-col">
+          <p className="text-lg font-semibold text-green-500 max-md:text-sm uppercase">
             Pedido de aberturas - Total pedido
           </p>{" "}
           -{" "}
-          <p className="text-lg font-semibold">
+          <p className="text-lg font-semibold max-md:text-sm uppercase">
             Fecha de emicion: {dateTime(datos?.created_at)}
           </p>
         </div>
@@ -231,49 +235,75 @@ export const ViewPedido = () => {
           <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow">
             <thead>
               <tr>
-                <th className="p-3">ID</th>
-                <th className="p-3">Codigo</th>
-                <th className="p-3">Descripción del producto</th>
-                <th className="p-3">Categoria</th>
-                <th className="p-3">Color</th>
-                <th className="p-3">Cliente</th>
-                <th className="p-3">Ancho - Alto</th>
-                <th className="p-3">Cantidad</th>
-                <th className="p-3">Cantidad Realizada</th>
-                <th className="p-3">Eliminar</th>
-                <th className="p-3">Editar Producto</th>
-                <th className="p-3">Realizada - Total</th>
-                <th className="p-3">Abertura realizada</th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  ID
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Codigo
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Descripción del producto
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Categoria
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Color
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Cliente
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Ancho - Alto
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Cantidad
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Cantidad Realizada
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Eliminar
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Editar Producto
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Realizada - Total
+                </th>
+                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                  Abertura realizada
+                </th>
               </tr>
             </thead>
             <tbody>
               {performSearch()?.map((p) => (
                 <tr key={p?.id}>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
+                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm">
                     {p?.id}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm uppercase">
                     {p?.nombre}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm uppercase">
                     {p?.detalle}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm uppercase">
                     {p?.categoria}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm uppercase">
                     {p?.color}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
+                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm">
                     {p?.cliente}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
+                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm">
                     {p?.ancho}x{p?.alto}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
+                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm">
                     {p?.cantidad}
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-bold text-sm">
+                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-bold text-sm">
                     <p
                       className={`${
                         p?.cantidad === p?.cantidadFaltante
@@ -284,7 +314,7 @@ export const ViewPedido = () => {
                       {p?.cantidadFaltante}
                     </p>
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm max-md:text-xs max-md:py-1 max-md:px-4">
                     <button
                       type="button"
                       onClick={() => handleEliminarProductoPedido(p?.id)}
@@ -293,7 +323,7 @@ export const ViewPedido = () => {
                       eliminar
                     </button>
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm max-md:text-xs max-md:py-1 max-md:px-4">
                     <button
                       onClick={() => {
                         openModal(), handleSeleccionarId(p?.id);
@@ -304,21 +334,21 @@ export const ViewPedido = () => {
                       editar
                     </button>
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium max-md:text-xs max-md:py-1 max-md:px-4">
                     <button
                       onClick={() => {
                         openModal(), handleSeleccionarId(p?.id);
                       }}
                       type="button"
-                      className="font-semibold text-green-500 border-[1px] px-4 py-1 border-green-300 rounded bg-green-100 text-sm"
+                      className="max-md:text-xs max-md:py-1 max-md:px-4 font-semibold text-green-500 border-[1px] px-4 py-1 border-green-300 rounded bg-green-100 text-sm"
                     >
                       editar
                     </button>
                   </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
+                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm max-md:text-xs max-md:py-1 max-md:px-4">
                     <button
                       type="button"
-                      className={`font-semibold px-4 py-1 rounded ${
+                      className={`font-semibold px-4 py-1 rounded max-md:text-xs max-md:py-1 max-md:px-4 ${
                         p?.cantidad === p?.cantidadFaltante
                           ? "bg-green-500"
                           : "bg-orange-500"
@@ -336,14 +366,14 @@ export const ViewPedido = () => {
         </div>
       </div>
 
-      <div className="font-bold text-xl text-blue-500 flex flex-col gap-1">
+      <div className="font-bold text-xl text-blue-500 flex flex-col gap-1 max-md:text-sm uppercase">
         <div className="flex gap-4 items-center">
           Clientes pedido completo:{" "}
           <span className="font-normal text-black">
             {datosAgrupados?.length} clientes totales.
           </span>
         </div>
-        <div className="flex flex-wrap gap-4 items-center">
+        <div className="flex flex-wrap gap-4 items-center max-md:gap-2 my-2">
           {datosAgrupadosEnUno?.map((c) => (
             <p className="text-sm text-black font-normal">{c?.nombre}</p>
           ))}
@@ -505,10 +535,10 @@ export const ViewPedido = () => {
           )
         )}
       </div>
-      <div className="border-[1px] shadow py-10 px-10 rounded flex gap-4">
+      <div className="border-[1px] shadow py-10 px-10 rounded flex gap-4 max-md:flex-col max-md:px-1 max-md:py-2">
         <button
           onClick={() => openModalCrearPedido()}
-          className="bg-green-500 py-1 px-5 rounded shadow text-white font-semibold"
+          className="bg-green-500 py-1 px-5 rounded shadow text-white font-semibold max-md:text-sm"
         >
           Crear un nuevo producto
         </button>
@@ -524,21 +554,21 @@ export const ViewPedido = () => {
         <PDFDownloadLink
           fileName={`${datos?.cliente}_puertas`}
           document={<DescargarPdfPedido datos={datos} />}
-          className="bg-orange-500 py-1 px-5 rounded text-white font-semibold"
+          className="bg-orange-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
         >
           Descargar Pedido Puertas
         </PDFDownloadLink>
         <PDFDownloadLink
           fileName={`${datos?.cliente}_ventanas`}
           document={<DescargarPdfPedidoDos datos={datos} />}
-          className="bg-pink-400 py-1 px-5 rounded text-white font-semibold"
+          className="bg-pink-400 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
         >
           Descargar Pedido Ventanas
         </PDFDownloadLink>
         <PDFDownloadLink
           fileName={`${datos?.cliente}_celosias`}
           document={<DescargarPdfPedidoTres datos={datos} />}
-          className="bg-blue-400 py-1 px-5 rounded text-white font-semibold"
+          className="bg-blue-400 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
         >
           Descargar Pedido Celosias de abrir - corredizas
         </PDFDownloadLink>
@@ -551,7 +581,7 @@ export const ViewPedido = () => {
               datos={datos}
             />
           }
-          className="bg-red-400 py-1 px-5 rounded text-white font-semibold"
+          className="bg-red-400 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
         >
           Descargar Aberturas faltantes
         </PDFDownloadLink>
@@ -561,7 +591,7 @@ export const ViewPedido = () => {
             datos?.created_at
           )}`}
           document={<DescargarPdfPedidoCinco datos={datos} />}
-          className="bg-gray-800 py-1 px-5 rounded text-white font-semibold"
+          className="bg-gray-800 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
         >
           Descargar Pedido Completo - Cliente
         </PDFDownloadLink>
