@@ -39,13 +39,11 @@ export const Aberturas = () => {
   return spinner ? (
     <Spinner />
   ) : (
-    <main className="h-screen w-full py-14 px-14 ">
-      <section className="max-md:w-full mx-auto py-[20px] px-[20px] h-full border-[1px] border-gray-300 rounded shadow-black/20 shadow-md flex flex-col gap-10 overflow-y-scroll">
+    <main className="w-full py-14 px-14 max-md:px-2 overflow-x-scroll">
+      <section className="max-md:w-full mx-auto py-[20px] px-[20px] h-full border-[1px] border-gray-300 rounded shadow-black/20 shadow-md flex flex-col gap-10">
         <IntroTitleAberturas />
 
         <IntroAberturasStock results={results} />
-
-        <Search search={search} searcher={searcher} />
 
         <CategoriasAberturas
           openModalVerCategoria={openModalVerCategoria}
@@ -53,11 +51,15 @@ export const Aberturas = () => {
           openModal={openModal}
         />
 
-        <TableAberturas
-          handlePerfilSeleccionado={handlePerfilSeleccionado}
-          openModalEditar={openModalEditar}
-          results={results}
-        />
+        <Search search={search} searcher={searcher} />
+
+        <div className="overflow-y-scroll h-[40vh]">
+          <TableAberturas
+            handlePerfilSeleccionado={handlePerfilSeleccionado}
+            openModalEditar={openModalEditar}
+            results={results}
+          />
+        </div>
 
         <ModalCrearAberturas
           openModal={openModal}

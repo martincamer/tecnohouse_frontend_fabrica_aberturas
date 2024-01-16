@@ -39,19 +39,19 @@ export const Accesorios = () => {
   return spinner ? (
     <Spinner />
   ) : (
-    <main className="w-full py-14 px-14 max-md:px-2 max-md:w-full">
-      <section className="max-md:w-full mx-auto py-[20px] px-[20px] border-[1px] border-gray-300 rounded shadow-black/20 shadow-md flex flex-col gap-10 h-full">
+    <main className="w-full py-14 px-14 max-md:px-2 overflow-x-scroll">
+      <section className="max-md:w-full mx-auto py-[20px] px-[20px] h-full border-[1px] border-gray-300 rounded shadow-black/20 shadow-md flex flex-col gap-10">
         <IntroTitleAccesorios />
 
         <IntroAccesoriosStock results={results} />
-
-        <Search search={search} searcher={searcher} />
 
         <CategoriasAccesorios
           openModalVerCategoria={openModalVerCategoria}
           openModalCrearCategoria={openModalCrearCategoria}
           openModal={openModal}
         />
+
+        <Search search={search} searcher={searcher} />
 
         <div className="overflow-y-scroll h-[40vh]">
           <TableAccesorios

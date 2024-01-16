@@ -548,6 +548,7 @@ export const ViewPedido = () => {
             <DescargarPdfPedidoAberturasFaltantes
               resultadoFinalAberturas={resultadoFinalAberturas}
               datosAgrupadosEnUno={datosAgrupadosEnUno}
+              datos={datos}
             />
           }
           className="bg-red-400 py-1 px-5 rounded text-white font-semibold"

@@ -75,10 +75,10 @@ export const ModalSeleccionarAberturas = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="w-1/2 inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6">
+              <div className="w-1/2 inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6 max-md:w-full">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
                 >
                   Elegir Abertura
                 </Dialog.Title>
@@ -94,50 +94,50 @@ export const ModalSeleccionarAberturas = () => {
                   <table className="border-[1px]  p-[5px] table-auto w-full rounded">
                     <thead>
                       <tr>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
                           Numero
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
                           Codigo
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
                           Detalle
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
                           Color
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
                           Ancho - Alto
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
                           Categoria
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
                           Seleccionar
                         </th>
                       </tr>
                     </thead>
                     {results.map((c) => (
                       <tbody key={c.id}>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
+                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[20px]">
                           {c.id}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center">
                           {c.nombre}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center">
                           {c.descripcion}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center">
                           {c.color}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center">
                           {c.ancho}x{c.alto}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center">
                           {c.categoria}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm w-[120px] text-center">
+                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs w-[120px] text-center">
                           <Link
                             onClick={() => {
                               openModalCantidad(),

@@ -71,33 +71,35 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-[1220px] p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+              <div className="inline-block w-[1220px] max-md:px-3 p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl max-md:w-full">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
                 >
                   Crear el pedido
                 </Dialog.Title>
                 <form className="mt-2 border-t pt-4 pb-4 space-y-5">
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">Cliente:</label>
+                    <label className="text-[14px] font-bold max-md:text-sm">
+                      Cliente:
+                    </label>
                     <input
                       value={cliente}
                       onChange={(e) => setCliente(e.target.value)}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px]"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] max-md:text-sm"
                       type="text"
                       placeholder="nombre del cliente"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">
+                    <label className="text-[14px] font-bold max-md:text-sm">
                       Categoria del pedido:
                     </label>
                     <select
                       value={detalle}
                       onChange={(e) => setDetalle(e.target.value)}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm"
                       type="text"
                       placeholder="detalle"
                     >
@@ -109,7 +111,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
 
                   <div>
                     <button
-                      className="font-semibold bg-green-500 py-2 px-6 rounded text-white shadow"
+                      className="font-bold bg-green-500 py-2 px-6 rounded text-white shadow max-md:text-xs"
                       type="button"
                       onClick={openModalProductos}
                     >
@@ -117,35 +119,35 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                     </button>
                   </div>
 
-                  <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full">
+                  <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll">
                     <table className="border-[1px]  p-[5px] table-auto w-full rounded">
                       <thead>
                         <tr>
-                          <th className="p-2 text-sm font-extrabold text-center w-[20px]">
+                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center w-[20px]">
                             Numero
                           </th>
-                          <th className="p-2 text-sm font-extrabold text-center">
+                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
                             Codigo
                           </th>
-                          <th className="p-2 text-sm font-extrabold text-center">
+                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
                             Detalle
                           </th>
-                          <th className="p-2 text-sm font-extrabold text-center">
+                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
                             Color
                           </th>
-                          <th className="p-2 text-sm font-extrabold text-center">
+                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
                             Ancho - Alto
                           </th>
-                          <th className="p-2 text-sm font-extrabold text-center">
+                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
                             Categoria
                           </th>
-                          <th className="p-2 text-sm font-extrabold text-center">
+                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
                             Cliente
                           </th>
-                          <th className="p-2 text-sm font-extrabold text-center">
-                            Cantidad Aberturas
+                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
+                            Cantidad
                           </th>
-                          <th className="p-2 text-sm font-extrabold text-center">
+                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
                             Eliminar
                           </th>
                         </tr>
@@ -194,33 +196,33 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                     <button
                       onClick={deleteToResetProductos}
                       type="button"
-                      className="bg-red-100/90 border-red-300 border-[0.5px] text-red-400 rounded py-1 px-4 shadow font-bold mt-2"
+                      className="bg-red-100/90 border-red-300 border-[0.5px] text-red-400 rounded py-1 px-4 shadow font-bold mt-2 max-md:text-sm"
                     >
                       Resetear productos
                     </button>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">
+                    <label className="text-[14px] font-bold max-md:text-sm">
                       Fecha de entrega del pedido:
                     </label>
                     <input
                       type="date"
                       value={fecha}
                       onChange={(e) => setFecha(e.target.value)}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm"
                       placeholder="fecha"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">
+                    <label className="text-[14px] font-bold max-md:text-sm">
                       Numero del remito:
                     </label>
                     <input
                       type="text"
                       value={remito}
                       onChange={(e) => setRemito(e.target.value)}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm"
                       placeholder="Numero del remito"
                     />
                   </div>
@@ -233,7 +235,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                           closeModal(), handlePedido();
                         }
                       }}
-                      className="bg-green-500 py-2 px-2 rounded text-white font-bold shadow-md hover:translate-x-1 transition-all ease-in-out"
+                      className="bg-green-500 py-2 px-2 rounded text-white font-bold shadow-md hover:translate-x-1 transition-all ease-in-out max-md:text-xs"
                     >
                       Generar pedido
                     </button>
@@ -243,7 +245,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
+                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer max-md:text-xs"
                     onClick={closeModal}
                   >
                     Cerrar Ventana

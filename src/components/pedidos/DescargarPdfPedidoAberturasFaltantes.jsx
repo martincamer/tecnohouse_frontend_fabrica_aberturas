@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     fontSize: "8px",
     fontFamily: "Poppins",
     fontWeight: "semibold",
+    textTransform: "uppercase",
   },
   row5: {
     width: "1150px",
@@ -101,6 +102,7 @@ const styles = StyleSheet.create({
     fontSize: "8px",
     fontFamily: "Poppins",
     fontWeight: "semibold",
+    textTransform: "uppercase",
   },
   row1: {
     width: "100%",
@@ -111,6 +113,7 @@ const styles = StyleSheet.create({
     borderLeft: "0.5px solid #000",
     paddingBottom: 8,
     textAlign: "center",
+    textTransform: "uppercase",
     height: "100%",
   },
   row2: {
@@ -122,6 +125,7 @@ const styles = StyleSheet.create({
     borderLeft: "0.5px solid #000",
     paddingBottom: 8,
     textAlign: "center",
+    textTransform: "uppercase",
     height: "100%",
   },
   row4: {
@@ -135,6 +139,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: "center",
     height: "100%",
+    textTransform: "uppercase",
   },
   contentFactura: {
     width: "95%",
@@ -195,6 +200,7 @@ const styles = StyleSheet.create({
 export const DescargarPdfPedidoAberturasFaltantes = ({
   datosAgrupadosEnUno,
   resultadoFinalAberturas,
+  datos,
 }) => {
   var options = {
     weekday: "long",
@@ -235,6 +241,7 @@ export const DescargarPdfPedidoAberturasFaltantes = ({
                 fontWeight: "bold",
                 display: "flex",
                 gap: "12px",
+                textTransform: "uppercase",
               }}
             >
               Lugar o Cliente:{" "}
@@ -247,7 +254,7 @@ export const DescargarPdfPedidoAberturasFaltantes = ({
                 textTransform: "capitalize",
               }}
             >
-              {/* {datos?.cliente} */}
+              {datos?.cliente}
             </Text>
           </View>
           <View
@@ -262,7 +269,7 @@ export const DescargarPdfPedidoAberturasFaltantes = ({
                 fontSize: "10px",
                 fontFamily: "Poppins",
                 fontWeight: "semibold",
-                textTransform: "capitalize",
+                textTransform: "uppercase",
               }}
             >
               Fecha de emición:
@@ -273,9 +280,10 @@ export const DescargarPdfPedidoAberturasFaltantes = ({
                 fontFamily: "Poppins",
                 fontWeight: "normal",
                 textTransform: "capitalize",
+                textTransform: "uppercase",
               }}
             >
-              {/* {dateTime(datos?.created_at)} */}
+              {dateTime(datos?.created_at)}
             </Text>
           </View>
         </View>
@@ -284,7 +292,7 @@ export const DescargarPdfPedidoAberturasFaltantes = ({
             <Text style={styles.row5}>Detalle</Text>
             <Text style={styles.row3}>Ancho x Alto</Text>
             <Text style={styles.row3}>Cantidad</Text>
-            <Text style={styles.row3}>Cantidad Realizada</Text>
+            <Text style={styles.row3}>Realizadas</Text>
             <Text style={styles.row3}>Cliente</Text>
           </View>
 
@@ -327,6 +335,7 @@ export const DescargarPdfPedidoAberturasFaltantes = ({
               style={{
                 fontSize: "10px",
                 fontFamily: "Poppins",
+                textTransform: "uppercase",
               }}
             >
               Total Aberturas:

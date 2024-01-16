@@ -63,10 +63,10 @@ export const Sidebar = () => {
     <div
       className={`${
         click
-          ? "w-[100px] transition-all ease-in-out duration-300"
+          ? "w-[100px] max-md:w-[44px] transition-all ease-in-out duration-300"
           : "w-1/5 transition-all ease-in-out duration-300"
       } w-1/5 bg-blue-400 min-h-screen max-h-full block ${
-        clickProvider ? "block" : "hidden"
+        clickProvider ? "max-md:block" : "max-md:hidden"
       }`}
     >
       <div
@@ -90,7 +90,7 @@ export const Sidebar = () => {
                 location.pathname === path && "bg-primary"
               } w-full py-3 px-8 max-md:px-4`}
             >
-              <div className="flex items-center max-md:justify-center gap-2 hover:translate-x-2 transition-all ease duration-300">
+              <div className="flex items-center max-md:justify-center gap-2 hover:translate-x-2 max-md:hover:translate-x-1 transition-all ease duration-300">
                 <Link to={path} className="text-3xl max-md:text-2xl text-white">
                   {icon}
                 </Link>

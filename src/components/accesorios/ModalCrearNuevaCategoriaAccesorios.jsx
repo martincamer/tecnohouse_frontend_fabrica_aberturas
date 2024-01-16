@@ -94,7 +94,7 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
                 >
                   Crear nueva categoria
                 </Dialog.Title>
@@ -103,19 +103,19 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">
+                    <label className="text-[14px] font-bold max-md:text-sm">
                       Nombre de la categoria:
                     </label>
                     <input
                       {...register("categoria", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="nombre de la categoria"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer"
+                      className="max-md:text-xs bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer"
                       type="submit"
                       value={"Crear categoria"}
                       onClick={closeModalCrearCategoria}
@@ -126,7 +126,7 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
+                    className="max-md:text-xs inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
                     onClick={closeModalCrearCategoria}
                   >
                     Cerrar Ventana

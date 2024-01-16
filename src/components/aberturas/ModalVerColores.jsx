@@ -65,30 +65,32 @@ export const ModalVerColores = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl w-[1000px]">
+              <div className="inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl w-[1000px] max-md:w-full">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
                   Editar o eliminar colores
                 </Dialog.Title>
-                <div className="grid grid-cols-4 gap-4 my-5 h-[120px] overflow-y-scroll w-full">
+                <div className="grid grid-cols-4 gap-4 my-5 h-[120px] overflow-y-scroll w-full max-md:grid-cols-1">
                   {colores.map((c) => (
                     <div
-                      className="bg-white border-[1px] border-gray-200 py-2 px-2 rounded shadow flex justify-around items-center h-[58px]"
+                      className="bg-white max-md:text-sm border-[1px] border-gray-200 py-2 px-2 rounded shadow flex justify-around items-center h-[58px]"
                       key={c.id}
                     >
-                      <p className="text-black font-bold">{c.color}</p>
+                      <p className="text-black font-bold max-md:text-sm">
+                        {c.color}
+                      </p>
                       <BiEdit
                         onClick={() => {
                           handleColorSeleccionada(c.id);
                           openModalEditarColor();
                         }}
-                        className="text-[35px] text-green-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
+                        className="text-[35px] max-md:text-[30px] text-green-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
                       />
                       <AiFillDelete
                         onClick={() => handleEliminarColor(c.id)}
-                        className="text-[35px] text-red-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
+                        className="text-[35px] max-md:text-[30px] text-red-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
                       />
                     </div>
                   ))}
@@ -99,7 +101,7 @@ export const ModalVerColores = () => {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
+                    className="max-md:text-xs inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
                     onClick={closeModalEditarColores}
                   >
                     Cerrar Ventana

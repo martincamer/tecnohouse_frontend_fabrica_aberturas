@@ -94,10 +94,10 @@ export const ModalEditarColor = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl w-[350px]">
+              <div className="inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl w-[350px] max-md:w-full">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
                 >
                   Editar color
                 </Dialog.Title>
@@ -106,23 +106,23 @@ export const ModalEditarColor = () => {
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">
+                    <label className="text-[14px] font-bold max-md:text-sm">
                       Editar el color:
                     </label>
                     <input
                       {...register("color", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="Editar color"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">
+                    <label className="text-[14px] font-bold max-md:text-sm">
                       No modificar el ID color:
                     </label>
                     <input
                       {...register("id", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="id no tocar"
                       disabled
@@ -130,7 +130,7 @@ export const ModalEditarColor = () => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer"
+                      className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer max-md:text-xs"
                       type="submit"
                       value={"Editar color"}
                       onClick={closeModalEditarColor}
@@ -141,7 +141,7 @@ export const ModalEditarColor = () => {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
+                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer max-md:text-xs"
                     onClick={closeModalEditarColor}
                   >
                     Cerrar Ventana

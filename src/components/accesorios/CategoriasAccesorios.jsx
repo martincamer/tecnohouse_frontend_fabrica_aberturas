@@ -10,7 +10,7 @@ export const CategoriasAccesorios = ({
 
   return (
     <div className="">
-      <div className="flex gap-4 max-md:flex-col">
+      <div className="flex gap-4 max-md:gap-2 max-md:flex-col">
         <button
           onClick={openModal}
           className="bg-green-500 text-primary max-md:text-sm max-md:py-1 max-md:px-2 font-bold py-2 px-3 rounded cursor-pointer hover:shadow hover:shadow-black/20 transition-all ease-in-out"

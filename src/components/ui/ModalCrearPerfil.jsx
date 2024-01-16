@@ -91,7 +91,7 @@ export const ModalCrearPerfil = ({ closeModal, isOpen }) => {
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
                 >
                   Crear nuevo perfil
                 </Dialog.Title>
@@ -100,19 +100,23 @@ export const ModalCrearPerfil = ({ closeModal, isOpen }) => {
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">Codigo:</label>
+                    <label className="text-[14px] font-bold max-md:text-sm">
+                      Codigo:
+                    </label>
                     <input
                       {...register("nombre", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="nombre del codigo"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">Color:</label>
+                    <label className="text-[14px] font-bold max-md:text-sm">
+                      Color:
+                    </label>
                     <select
                       {...register("color", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none bg-white"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none bg-white max-md:text-sm"
                     >
                       <option className="text-black">Seleccionar color</option>
                       {colores.map((c) => (
@@ -123,21 +127,23 @@ export const ModalCrearPerfil = ({ closeModal, isOpen }) => {
                     </select>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">
+                    <label className="text-[14px] font-bold max-md:text-sm">
                       Stock total:
                     </label>
                     <input
                       {...register("stock", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
                       type="number"
                       placeholder="cantidad de productos"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">Categoria:</label>
+                    <label className="text-[14px] font-bold max-md:text-sm">
+                      Categoria:
+                    </label>
                     <select
                       {...register("categoria", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none bg-white"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none bg-white max-md:text-sm"
                     >
                       <option className="text-black" key={categorias.id}>
                         Seleccionar categoria
@@ -150,17 +156,19 @@ export const ModalCrearPerfil = ({ closeModal, isOpen }) => {
                     </select>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">Detalle:</label>
+                    <label className="text-[14px] font-bold max-md:text-sm">
+                      Detalle:
+                    </label>
                     <input
                       {...register("descripcion", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="detalle ej perfil pesado ventana"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer"
+                      className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer max-md:text-xs"
                       type="submit"
                       value={"Crear producto"}
                       onClick={closeModal}
@@ -171,7 +179,7 @@ export const ModalCrearPerfil = ({ closeModal, isOpen }) => {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
+                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer max-md:text-xs"
                     onClick={closeModal}
                   >
                     Cerrar Ventana

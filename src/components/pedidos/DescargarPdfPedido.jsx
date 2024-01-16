@@ -182,27 +182,6 @@ const styles = StyleSheet.create({
 });
 
 export const DescargarPdfPedido = ({ datos }) => {
-  // Función para sumar la cantidad por nombre y cliente
-
-  // Función para sumar la cantidad por nombre o detalle
-  // const sumarCantidadPorNombreODetalle = () => {
-  //   const resultado = {};
-
-  //   datos?.productos?.respuesta?.forEach((elemento) => {
-  //     const clave = elemento.nombre || elemento.detalle;
-  //     if (resultado[clave]) {
-  //       resultado[clave].cantidad += parseInt(elemento.cantidad, 10);
-  //     } else {
-  //       resultado[clave] = { ...elemento };
-  //       resultado[clave].cantidad = parseInt(elemento.cantidad, 10);
-  //     }
-  //   });
-
-  //   return Object.values(resultado);
-  // };
-
-  // let resultado = sumarCantidadPorNombreODetalle();
-
   var options = {
     weekday: "long",
     year: "numeric",
@@ -236,6 +215,7 @@ export const DescargarPdfPedido = ({ datos }) => {
   };
 
   const resultadoFinal = sumarCantidadPorNombreODetalleQueEmpiezaConP();
+
   // Muestra el resultado final
   const opcionesFecha = {
     day: "numeric",

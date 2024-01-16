@@ -68,7 +68,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="w-2/3 inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6">
+              <div className="w-2/3 max-md:w-full inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
@@ -76,50 +76,50 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                   Elegir Cantidad Producto
                 </Dialog.Title>
 
-                <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full">
+                <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll">
                   <table className="border-[1px]  p-[5px] table-auto w-full rounded">
                     <thead>
                       <tr>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
                           Numero
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
                           Codigo
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
                           Detalle
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
                           Color
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
                           Ancho x Alto
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
                           Cliente
                         </th>
-                        <th className="p-2 text-sm font-extrabold text-center">
+                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
                           Seleccionar cantidad aberturas
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
+                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[20px]">
                         {productoUnicoState.id}
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
+                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[20px]">
                         {productoUnicoState.nombre}
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[50px]">
+                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[50px]">
                         {productoUnicoState.descripcion}
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
+                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[20px]">
                         {productoUnicoState.color}
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
+                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[20px]">
                         {productoUnicoState.ancho}x{productoUnicoState.alto}
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[100px]">
+                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[100px]">
                         <input
                           onChange={(e) => setCliente(e.target.value)}
                           type="text"
@@ -127,7 +127,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                           placeholder="Cliente"
                         />
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[100px]">
+                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[100px]">
                         <input
                           onChange={(e) => setCantidad(e.target.value)}
                           type="number"
@@ -155,14 +155,14 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                       ),
                         closeModalCantidad();
                     }}
-                    className="bg-secondary text-white py-2 px-2 rounded font-bold hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
+                    className="bg-secondary max-md:text-xs text-white py-2 px-2 rounded font-bold hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
                   >
                     Crear producto facturar
                   </button>
                 </div>
                 <button
                   type="button"
-                  className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
+                  className="max-md:text-xs inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
                   onClick={closeModalCantidad}
                 >
                   Cerrar Ventana
