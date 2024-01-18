@@ -25,6 +25,11 @@ export const ViewRemito = () => {
   }, 0);
 
   // console.log(data);s
+  const totalAberturas = () => {
+    return datos?.productos?.respuesta?.reduce((sum, b) => {
+      return sum + Number(b?.cantidad);
+    }, 0);
+  };
 
   return (
     <section className="py-14 px-14 w-full">
@@ -44,9 +49,7 @@ export const ViewRemito = () => {
         <div className="font-bold mb-12 text-xl">
           TOTAL ABERTURAS ENTREGADAS:{" "}
           <span className="text-blue-500 uppercase text-lg">
-            {datos?.productos?.respuesta?.map((p) => {
-              <>{p?.cantidad}</>;
-            })}
+            {totalAberturas()}
           </span>
         </div>
         <article className="w-[1220px] mx-auto border-[1px] shadow py-5 px-10 rounded flex flex-col gap-12">

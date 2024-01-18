@@ -37,22 +37,19 @@ export const ModalSeleccionarAberturasRemito = () => {
     setSearch(e.target.value);
   };
 
+  const datosNew = datos?.map((p) => p.productos);
+
   if (!search) {
-    results = datos;
+    results = datosNew;
   } else {
-    results = datos?.map((c) =>
-      c?.productos?.respuesta?.map(
-        (p) => p?.cliente?.toLowerCase().includes(search?.toLocaleLowerCase())
-        // dato?.remito?.toLowerCase().includ es(search.toLocaleLowerCase()) ||
-        // dato?.fecha?.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        // dato?.created_at?.toLowerCase().includes(search.toLocaleLowerCase()) ||
+    results = datosNew?.map((p) =>
+      p?.respuesta?.filter((c) =>
+        c?.cliente?.toLowerCase().includes(search?.toLowerCase())
       )
     );
   }
 
-  console.log(datos.map((c) => c.productos.respuesta.map((p) => p.cliente)));
-
-  const randomIdString = Math.random().toString().substring(2); // Get the random part as a string
+  const randomIdString = Math.random().toString().substring(2);
   const randomIdNumber = parseInt(randomIdString, 10);
 
   return (
@@ -153,31 +150,31 @@ export const ModalSeleccionarAberturasRemito = () => {
                       </tr>
                     </thead>
                     {results?.map((d) =>
-                      d?.productos?.respuesta.map((c) => (
+                      d?.respuesta?.map((c) => (
                         <tbody key={c.id}>
                           <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
-                            {c.cliente}
+                            {c?.cliente}
                           </th>
                           <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c.nombre}
+                            {c?.nombre}
                           </th>
                           <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c.detalle}
+                            {c?.detalle}
                           </th>
                           <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c.color}
+                            {c?.color}
                           </th>
                           <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c.ancho}x{c.alto}
+                            {c?.ancho}x{c?.alto}
                           </th>
                           <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c.categoria}
+                            {c?.categoria}
                           </th>
                           <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c.cantidad}
+                            {c?.cantidad}
                           </th>
                           <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c.cantidad === c.cantidadFaltante ? (
+                            {c?.cantidad === c?.cantidadFaltante ? (
                               <span className="bg-green-500 py-1 px-2 rounded text-white shadow font-semibold">
                                 realizada
                               </span>
