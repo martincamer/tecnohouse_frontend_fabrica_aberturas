@@ -67,7 +67,7 @@ export const Login = () => {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-bold">Password</label>
+            <label className="text-lg font-bold">Contraseña</label>
             <input
               {...register("password", { required: true })}
               type="password"
@@ -88,18 +88,18 @@ export const Login = () => {
             />
           </div>
           <div className="flex justify-between text-sm font-semibold">
-            <Link
+            {/* <Link
               className="hover:underline transition-all ease-in-out"
               to={"/password-change"}
             >
               ¿Olvidaste tu contraseña?
-            </Link>
-            <Link
+            </Link> */}
+            {/* <Link
               className="hover:underline transition-all ease-in-out"
               to={"/register"}
             >
               ¿No te registraste? Registrase
-            </Link>
+            </Link> */}
           </div>
         </div>
       </form>

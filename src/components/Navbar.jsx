@@ -34,14 +34,14 @@ const rutasuno = [
 ];
 
 const rutasdos = [
-  {
-    name: "Login",
-    path: "/",
-  },
-  {
-    name: "Registrarse",
-    path: "/register",
-  },
+  // {
+  //   name: "Login",
+  //   path: "/",
+  // },
+  // {
+  //   name: "Registrarse",
+  //   path: "/register",
+  // },
 ];
 
 export const Navbar = () => {

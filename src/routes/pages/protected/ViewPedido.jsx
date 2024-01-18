@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   deleteFacturaProducto,
   obtenerFactura,
@@ -175,6 +175,18 @@ export const ViewPedido = () => {
     0
   );
 
+  const datosPuertas = datos?.productos?.respuesta
+    .filter((item) => item.detalle.toUpperCase().startsWith("P"))
+    .reduce((total, item) => total + parseInt(item.cantidad), 0);
+
+  const datosVentanas = datos?.productos?.respuesta
+    .filter((item) => item.detalle.toUpperCase().startsWith("V"))
+    .reduce((total, item) => total + parseInt(item.cantidad), 0);
+
+  const datosCelosias = datos?.productos?.respuesta
+    .filter((item) => item.detalle.toUpperCase().startsWith("C"))
+    .reduce((total, item) => total + parseInt(item.cantidad), 0);
+
   return (
     <section className="w-full py-14 px-14 max-md:py-6 max-md:px-2 flex flex-col gap-10 overflow-x-scroll">
       <ToastContainer />
@@ -228,11 +240,41 @@ export const ViewPedido = () => {
             Fecha de emicion: {dateTime(datos?.created_at)}
           </p>
         </div>
+        <div className="flex gap-5 items-center">
+          {" "}
+          <div className="flex gap-2">
+            <p className="text-lg max-md:text-sm uppercase">Total puertas:</p>{" "}
+            <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
+              {datosPuertas}
+            </p>
+          </div>
+          -
+          <div className="flex gap-2">
+            <p className="text-lg max-md:text-sm uppercase">Total ventanas:</p>{" "}
+            <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
+              {datosVentanas}
+            </p>
+          </div>
+          -
+          <div className="flex gap-2">
+            <p className="text-lg max-md:text-sm uppercase">Total celosias:</p>{" "}
+            <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
+              {datosCelosias}
+            </p>
+          </div>
+          -
+          <div className="flex gap-2 items-center">
+            <p className="text-lg uppercase max-md:text-sm">Total aberturas:</p>{" "}
+            <p className="font-semibold text-white text-lg max-md:text-sm uppercase bg-blue-500 px-3 py-1 rounded-full shadow">
+              {totalAberturas()}
+            </p>
+          </div>
+        </div>
         <div>
           <Search searcher={searcher} search={search} />
         </div>
         <div className="overflow-y-scroll overflow-x-scroll h-[500px]">
-          <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow">
+          <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow uppercase">
             <thead>
               <tr>
                 <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
@@ -392,7 +434,7 @@ export const ViewPedido = () => {
               VER ABERTURAS{" > "}
             </Link> */}
 
-              <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow">
+              <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow uppercase">
                 <thead>
                   <tr>
                     <th className="p-3">ID</th>
@@ -470,7 +512,7 @@ export const ViewPedido = () => {
                 <div>
                   <div className="flex flex-col gap-5 items-center">
                     <p className="font-bold text-lg">{p?.nombre}</p>
-                    <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow">
+                    <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow uppercase">
                       <thead>
                         <tr>
                           <th className="p-3">ID</th>

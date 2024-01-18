@@ -9,7 +9,7 @@ export const TableAberturas = ({
 
   return (
     <div className="rounded shadow-black/10 shadow max-md:shadow-none max-md:flex-none flex flex-col gap-3 w-full">
-      <table className="border-[1px] border-gray-200  p-[5px] w-full rounded">
+      <table className="border-[1px] border-gray-200  p-[5px] w-full rounded uppercase">
         <thead>
           <tr>
             <th className="p-3 max-md:p-2 text-sm">ID</th>
@@ -25,7 +25,7 @@ export const TableAberturas = ({
         </thead>
         <tbody>
           {results.map((p) => (
-            <tr key={p.id}>
+            <tr key={p.id} className="uppercase">
               <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
                 {p.id}
               </th>

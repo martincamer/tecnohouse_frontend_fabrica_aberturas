@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { usePedidoContext } from "../../../context/PedidoProvider";
-import moment from "moment";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { DescargarPdfPedidoTres } from "../../../components/pedidos/DescargarPdfPedidoTres";
 import { DescargarPdfPedidoCuatro } from "../../../components/pedidos/DescargarPdfPedidoCuatro";
+import moment from "moment";
 
 export const PedidoCompletoFinal = () => {
   const { datosPresupuesto, setDatosPresupuesto } = usePedidoContext();
@@ -29,7 +28,7 @@ export const PedidoCompletoFinal = () => {
   useEffect(() => {
     setTimeout(() => {
       load();
-    }, 500);
+    }, 100);
   }, [datosPresupuesto.length]);
 
   useEffect(() => {
@@ -107,14 +106,13 @@ export const PedidoCompletoFinal = () => {
     <section className="w-[100%] px-10 py-12">
       <div className="rounded shadow py-10 px-10 border-[1px]">
         <div className="space-y-2">
-          <div className="font-semibold text-lg">
+          <div className="font-semibold text-lg uppercase">
             Total aberturas: {resultado}
           </div>
-          <div className="font-semibold text-lg capitalize">
+
+          <div className="font-semibold text-lg uppercase flex items-center gap-2">
             Fabricas - Clientes:{" "}
-            <span className="text-blue-500 font-normal flex flex-row gap-5 mt-2">
-              {resultJoin}
-            </span>
+            <span className="text-blue-500 font-normal">{resultJoin}</span>
           </div>
         </div>
 

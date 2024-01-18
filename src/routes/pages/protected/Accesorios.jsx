@@ -13,6 +13,8 @@ import { ModalVerCategoriasAccesorios } from "../../../components/accesorios/Mod
 import { ModalVerColoresAccesorios } from "../../../components/accesorios/ModalVerColoresAccesorios";
 import { ModalCrearEditarAccesorios } from "../../../components/accesorios/ModalCrearEditarAccesorios";
 import { CategoriasAccesorios } from "../../../components/accesorios/CategoriasAccesorios";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { AccesoriosPdf } from "../../../components/viewpdfpedidos/AccesoriosPdf";
 
 export const Accesorios = () => {
   const {
@@ -35,6 +37,8 @@ export const Accesorios = () => {
   } = useAccesoriosContext();
 
   const { spinner } = useAuth();
+
+  console.log(results);
 
   return spinner ? (
     <Spinner />
@@ -88,6 +92,16 @@ export const Accesorios = () => {
         />
 
         <ToastContainer />
+
+        <div>
+          <PDFDownloadLink
+            fileName={`Accesorios`}
+            document={<AccesoriosPdf results={results} />}
+            className="bg-blue-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+          >
+            DESCARGAR ACCESORIOS STOCK
+          </PDFDownloadLink>
+        </div>
       </section>
     </main>
   );

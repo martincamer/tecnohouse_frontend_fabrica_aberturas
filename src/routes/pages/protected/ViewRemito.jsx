@@ -26,11 +26,29 @@ export const ViewRemito = () => {
 
   // console.log(data);s
 
-  console.log(data);
-
   return (
     <section className="py-14 px-14 w-full">
       <div className="border-[1px] border-gray-200 py-10 px-10 shadow rounded">
+        <div className="font-bold mb-2 text-xl">
+          REMITO INTERNO - CLIENTE:{" "}
+          <span className="text-blue-500 uppercase text-lg underline">
+            {datos?.cliente}
+          </span>
+        </div>
+        <div className="font-bold mb-2 text-xl">
+          REMITO NUMERO:{" "}
+          <span className="text-blue-500 uppercase text-lg">
+            #{datos?.remito}
+          </span>
+        </div>
+        <div className="font-bold mb-12 text-xl">
+          TOTAL ABERTURAS ENTREGADAS:{" "}
+          <span className="text-blue-500 uppercase text-lg">
+            {datos?.productos?.respuesta?.map((p) => {
+              <>{p?.cantidad}</>;
+            })}
+          </span>
+        </div>
         <article className="w-[1220px] mx-auto border-[1px] shadow py-5 px-10 rounded flex flex-col gap-12">
           <div className="flex justify-around gap-10 items-center border-[1px] border-gray-300 py-5 shadow">
             {/* logo */}
@@ -46,33 +64,65 @@ export const ViewRemito = () => {
             <div className="flex flex-col gap-3 text-center">
               <div className="">
                 <h4 className="font-bold text-xl">REMITO INTERNO</h4>
-                <p className="font-semibold text-lg">N°: 0001212</p>
+                <p className="font-semibold text-lg">
+                  N°: <span className="font-bold">{datos?.remito}</span>
+                </p>
               </div>
               <div>
-                <p className="font-semibold">FECHA: 16/12/23</p>
-                <p className="font-semibold">CUIT: 30-71083448-9</p>
                 <p className="font-semibold">
-                  Ing.Brutos: 032-03413-4 D.R.I:008840/4{" "}
+                  <span className="font-bold">FECHA</span>: 16/12/23
                 </p>
-                <p className="font-semibold">Inic.Act: 01/12/2008</p>
+                <p className="font-semibold">
+                  <span className="font-bold">CUIT</span>: 30-71083448-9
+                </p>
+                <p className="font-semibold">
+                  <span className="font-bold uppercase">Ing.Brutos</span>:
+                  032-03413-4 D.R.I:008840/4{" "}
+                </p>
+                <p className="font-semibold">
+                  <span className="font-bold uppercase">Inic.Act</span>:
+                  01/12/2008
+                </p>
               </div>
             </div>
           </div>
           <div className="flex justify-around gap-10 items-center border-[1px] border-gray-300 py-5 shadow">
             <div className="flex flex-col gap-1">
-              <p className="font-semibold">ENTREGA A:</p>
-              <p className="font-semibold">Fabrica: IRAOLA</p>
+              <p className="font-bold">
+                ENTREGA A:{" "}
+                <span className="uppercase font-semibold text-sm">
+                  {datos?.direccion}
+                </span>{" "}
+              </p>
+              <p className="font-bold">
+                FABRICA: <span>-</span>
+              </p>
             </div>
             <div className="flex flex-col gap-1">
-              <p className="font-semibold">SOLICITADO POR:</p>
-              <p className="font-semibold">Nombre y Apellido: Matias Loyola</p>
+              <p className="font-bold">
+                SOLICITADO POR:{" "}
+                <span className="font-semibold uppercase text-sm">
+                  {datos?.cliente}
+                </span>{" "}
+              </p>
+              <p className="font-bold">
+                NOMBRE Y APELLIDO:{" "}
+                <span className="font-semibold uppercase text-sm">
+                  {datos?.cliente}
+                </span>{" "}
+              </p>
               <p className="font-semibold">Condición de entrega: -</p>
-              <p className="font-semibold">Dirección de entrega: Iraola 925</p>
+              <p className="font-bold">
+                DIRECCIÓN DE ENTREGA:{" "}
+                <span className="font-semibold uppercase text-sm">
+                  {datos?.direccion}
+                </span>{" "}
+              </p>
             </div>
           </div>
 
           <div className="overflow-y-scroll h-[600px]">
-            <table className="border-[1px]  p-[5px] table-auto w-full rounded shadow border-gray-300">
+            <table className="border-[1px]  p-[5px] table-auto w-full rounded shadow border-gray-300 uppercase text-sm">
               <thead>
                 <tr>
                   <th className="p-3">Cliente - Casa</th>
@@ -98,12 +148,11 @@ export const ViewRemito = () => {
                     <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
                       {p?.color}
                     </th>
-
-                    <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                      {p?.cantidad}
-                    </th>
                     <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
                       {p?.categoria}
+                    </th>
+                    <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+                      {p?.cantidad}
                     </th>
                   </tr>
                 ))}
@@ -125,8 +174,11 @@ export const ViewRemito = () => {
             </div>
             <div className="border-[1px] border-gray-300 w-full">
               <div>
-                <p className="bg-gray-300 py-1 px-1 text-center font-bold">
+                <p className="bg-gray-300 py-1 px-1 text-center font-bold h-auto">
                   TRASLADADO POR
+                </p>
+                <p className="text-center mt-5 font-bold text-2xl  uppercase">
+                  {datos?.trasladado}
                 </p>
               </div>
               <div className="py-6"></div>

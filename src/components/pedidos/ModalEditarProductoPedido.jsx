@@ -58,7 +58,6 @@ export const ModalEditarProductoPedido = ({
   }, [obtenerId]);
 
   const [error, setError] = useState(false);
-  const [datos, setDatos] = useState([]);
 
   return (
     <Menu as="div" className="z-50">
@@ -115,7 +114,7 @@ export const ModalEditarProductoPedido = ({
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Editar el perfil
+                  Editar la abertura
                 </Dialog.Title>
                 <form
                   onSubmit={onSubmitEditar}

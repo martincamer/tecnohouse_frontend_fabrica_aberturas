@@ -13,6 +13,9 @@ import { ModalCrearNuevoColor } from "../../../components/ui/ModalCrearNuevoColo
 import { ModalVerColores } from "../../../components/ui/ModalVerColores";
 import { useAuth } from "../../../context/AuthProvider";
 import { Spinner } from "../../../components/Spinner";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { AccesoriosPdf } from "../../../components/viewpdfpedidos/AccesoriosPdf";
+import { ProductosPdf } from "../../../components/viewpdfpedidos/ProductosPdf";
 
 export const Productos = () => {
   const {
@@ -86,6 +89,16 @@ export const Productos = () => {
           closeModalEditar={closeModalEditar}
           isOpenEditar={isOpenEditar}
         />
+
+        <div>
+          <PDFDownloadLink
+            fileName={`Accesorios`}
+            document={<ProductosPdf results={results} />}
+            className="bg-blue-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+          >
+            DESCARGAR PERFILES STOCK
+          </PDFDownloadLink>
+        </div>
 
         <ToastContainer />
       </section>

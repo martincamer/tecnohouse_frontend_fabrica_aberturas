@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     height: "100%",
     fontSize: "8px",
     fontFamily: "Poppins",
+    textTransform: "uppercase",
   },
   row1: {
     width: "100%",
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: "center",
     height: "100%",
+    textTransform: "uppercase",
   },
   row2: {
     width: "1150px",
@@ -294,9 +296,10 @@ export const DescargarPdfPedidoCuatro = ({
                 fontWeight: "bold",
                 display: "flex",
                 gap: "12px",
+                textTransform: "uppercase",
               }}
             >
-              Fabricas - Clientes:{" "}
+              Fabricas - Clientes{" "}
             </Text>
             <View
               style={{
@@ -324,7 +327,7 @@ export const DescargarPdfPedidoCuatro = ({
                 fontSize: "10px",
                 fontFamily: "Poppins",
                 fontWeight: "normal",
-                textTransform: "capitalize",
+                textTransform: "uppercase",
               }}
             >
               {hoy.toLocaleDateString()}
@@ -370,7 +373,7 @@ export const DescargarPdfPedidoCuatro = ({
 
               <View style={styles.table}>
                 <View style={styles.row}>
-                  <Text style={styles.row1}>ID</Text>
+                  {/* <Text style={styles.row1}>ID</Text> */}
                   <Text style={styles.row1}>Cliente</Text>
                   <Text style={styles.row5}>Detalle</Text>
                   <Text style={styles.row1}>Cantidad</Text>
@@ -380,7 +383,7 @@ export const DescargarPdfPedidoCuatro = ({
 
                 {cliente?.productos?.map((p) => (
                   <View style={styles.rowTwo}>
-                    <Text style={styles.row1}>{p?.id}</Text>
+                    {/* <Text style={styles.row1}>{p?.id}</Text> */}
                     <Text style={styles.row1}> {p?.cliente}</Text>
                     <Text style={styles.row5}>{p?.detalle}</Text>
                     <Text style={styles.row1}>{p?.cantidad}</Text>
@@ -416,6 +419,7 @@ export const DescargarPdfPedidoCuatro = ({
               style={{
                 fontSize: "10px",
                 fontFamily: "Poppins",
+                textTransform: "uppercase",
               }}
             >
               Total Aberturas:
@@ -442,6 +446,7 @@ export const DescargarPdfPedidoCuatro = ({
               style={{
                 fontSize: "10px",
                 fontFamily: "Poppins",
+                textTransform: "uppercase",
               }}
             >
               Total Aberturas Entregadas:
@@ -451,6 +456,7 @@ export const DescargarPdfPedidoCuatro = ({
                 fontSize: "10px",
                 fontFamily: "Poppins",
                 fontWeight: "semibold",
+                textTransform: "uppercase",
               }}
             >
               {resultadoTwo}

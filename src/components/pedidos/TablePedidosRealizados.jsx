@@ -31,6 +31,7 @@ export const TablePedidosRealizados = () => {
           {/* <th className="p-3">Fecha de emición</th> */}
           <th className="p-3">Fecha de entrega</th>
           <th className="p-3">Remito</th>
+          <th className="p-3"> Estado del pedido</th>
           <th className="p-3">Eliminar</th>
           <th className="p-3">Ver pedido</th>
         </tr>
@@ -60,6 +61,27 @@ export const TablePedidosRealizados = () => {
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase ">
               {p?.remito}
+            </th>
+            <th
+              className={`${
+                p?.productos.respuesta.reduce((sum, b) => {
+                  return sum + Number(b?.cantidad);
+                }, 0) ===
+                p?.productos.respuesta.reduce((sum, b) => {
+                  return sum + Number(b?.cantidadFaltante);
+                }, 0)
+                  ? "bg-green-500 text-white"
+                  : "bg-orange-500 text-white"
+              } border-[1px] border-gray-300 p-3 font-bold max-md:text-xs text-sm uppercase`}
+            >
+              {p?.productos.respuesta.reduce((sum, b) => {
+                return sum + Number(b?.cantidad);
+              }, 0) ===
+              p?.productos.respuesta.reduce((sum, b) => {
+                return sum + Number(b?.cantidadFaltante);
+              }, 0)
+                ? "realizado"
+                : "pendiente"}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-bold ">
               <button

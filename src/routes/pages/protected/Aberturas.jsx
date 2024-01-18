@@ -13,6 +13,8 @@ import { ModalCrearNuevoColor } from "../../../components/aberturas/ModalCrearNu
 import { ModalVerColores } from "../../../components/aberturas/ModalVerColores";
 import { ModalCrearEditar } from "../../../components/aberturas/ModalCrearEditar";
 import { ModalVerCategorias } from "../../../components/aberturas/ModalVerCategorias";
+import { AberturasPdf } from "../../../components/viewpdfpedidos/AberturasPdf";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export const Aberturas = () => {
   const {
@@ -86,6 +88,16 @@ export const Aberturas = () => {
           closeModalEditar={closeModalEditar}
           isOpenEditar={isOpenEditar}
         />
+
+        <div>
+          <PDFDownloadLink
+            fileName={`Accesorios`}
+            document={<AberturasPdf results={results} />}
+            className="bg-blue-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+          >
+            DESCARGAR ABERTURAS STOCK
+          </PDFDownloadLink>
+        </div>
 
         <ToastContainer />
       </section>

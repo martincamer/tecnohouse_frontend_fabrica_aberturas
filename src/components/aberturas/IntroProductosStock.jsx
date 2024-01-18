@@ -20,6 +20,14 @@ export const IntroAberturasStock = ({ results }) => {
           {unidadesEnStock()}
         </p>
       </div>
+      <div className="py-[10px] px-[10px] border-gray-200 flex flex-col gap-2 border-r-[1px] w-full">
+        <p className="font-semibold text-lg max-md:text-md">
+          Unidades cargadas
+        </p>
+        <p className="text-2xl font-bold text-blue-500 max-md:text-sm">
+          {results.length}
+        </p>
+      </div>
       {/* <div className="py-[10px] px-[10px] border-gray-200 flex flex-col gap-2 border-r-[1px] w-full">
         <p>Unidades vendidas</p>
         <p>27</p>
