@@ -6,7 +6,8 @@ import { useAccesoriosContext } from "../../context/AccesoriosProvider";
 import { crearAccesorioNuevo } from "../../api/accesorios.api";
 
 export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
-  const { results, setPerfiles, categorias, colores } = useAccesoriosContext();
+  const { resultadosFiltrados, setPerfiles, categorias, colores } =
+    useAccesoriosContext();
 
   const {
     register,
@@ -20,7 +21,7 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
   const onSubmit = handleSubmit(async (data) => {
     const { data: nuevoValor } = await crearAccesorioNuevo(data);
 
-    const proyectoActualizado = [...results, nuevoValor];
+    const proyectoActualizado = [...resultadosFiltrados, nuevoValor];
 
     setPerfiles(proyectoActualizado);
 
@@ -36,6 +37,10 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
     });
 
     reset();
+
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
   });
 
   return (

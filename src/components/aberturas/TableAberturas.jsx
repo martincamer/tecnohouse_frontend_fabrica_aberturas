@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useAberturasContext } from "../../context/AluminioAberturas";
+import { ModalEliminarAccesorio } from "../accesorios/ModalEliminarAccesorio";
 
 export const TableAberturas = ({
   results,
@@ -6,6 +8,16 @@ export const TableAberturas = ({
   handlePerfilSeleccionado,
 }) => {
   const { handleEliminar } = useAberturasContext();
+
+  const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
+
+  const handleBorrarAccesorioOpen = () => {
+    setOpenBorrarAccesorio(true);
+  };
+
+  const handleBorrarAccesorioClose = () => {
+    setOpenBorrarAccesorio(false);
+  };
 
   return (
     <div className="rounded shadow-black/10 shadow max-md:shadow-none max-md:flex-none flex flex-col gap-3 w-full">
@@ -47,16 +59,21 @@ export const TableAberturas = ({
               <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
                 {p.ancho} x {p.alto}
               </th>
-              {/* <th className="border-[1px] border-gray-300 p-3 font-medium">
-                {p.disponible ? "SI" : "NO"}
-              </th> */}
+
               <th className="border-[1px] border-gray-300 p-3 font-bold ">
                 <button
                   className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal"
-                  onClick={() => handleEliminar(p.id)}
+                  // onClick={() => handleEliminar(p.id)}
+                  onClick={() => handleBorrarAccesorioOpen()}
                 >
                   eliminar
                 </button>
+                <ModalEliminarAccesorio
+                  p={p.id}
+                  handleEliminar={handleEliminar}
+                  openBorrarAccesorio={openBorrarAccesorio}
+                  handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+                />
               </th>
               <th className="border-[1px] border-gray-300 p-3 font-bold ">
                 <button

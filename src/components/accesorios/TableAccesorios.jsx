@@ -1,11 +1,24 @@
+import { useState } from "react";
 import { useAccesoriosContext } from "../../context/AccesoriosProvider";
+import { ModalEliminarAccesorio } from "./ModalEliminarAccesorio";
 
 export const TableAccesorios = ({
   results,
   openModalEditar,
   handlePerfilSeleccionado,
+  resultadosFiltrados,
 }) => {
   const { handleEliminar } = useAccesoriosContext();
+
+  const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
+
+  const handleBorrarAccesorioOpen = () => {
+    setOpenBorrarAccesorio(true);
+  };
+
+  const handleBorrarAccesorioClose = () => {
+    setOpenBorrarAccesorio(false);
+  };
 
   return (
     <div className=" rounded shadow-black/10 shadow max-md:shadow-none max-md:flex-none flex flex-col gap-3 w-full">
@@ -23,7 +36,7 @@ export const TableAccesorios = ({
           </tr>
         </thead>
         <tbody>
-          {results.map((p) => (
+          {resultadosFiltrados?.map((p) => (
             <tr key={p.id}>
               <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
                 {p.id}
@@ -50,7 +63,8 @@ export const TableAccesorios = ({
                 <button
                   className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal 
 "
-                  onClick={() => handleEliminar(p.id)}
+                  // onClick={() => handleEliminar(p.id)}
+                  onClick={() => handleBorrarAccesorioOpen()}
                 >
                   eliminar
                 </button>
@@ -65,6 +79,12 @@ export const TableAccesorios = ({
                   editar
                 </button>
               </th>
+              <ModalEliminarAccesorio
+                p={p.id}
+                handleEliminar={handleEliminar}
+                openBorrarAccesorio={openBorrarAccesorio}
+                handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+              />
             </tr>
           ))}
         </tbody>

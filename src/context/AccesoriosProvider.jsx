@@ -38,6 +38,8 @@ export const AccesoriosProvider = ({ children }) => {
   let [isOpenVerColores, setIsOpenVerColores] = useState(false);
   let [isOpenEditarColores, setIsOpenEditarColores] = useState(false);
   let [isOpenEditarColor, setIsOpenEditarColor] = useState(false);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
+  const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
 
   const handlePerfilSeleccionado = (id) => {
     setObtenerId(id);
@@ -117,21 +119,41 @@ export const AccesoriosProvider = ({ children }) => {
     setIsOpenEditarColor(true);
   }
 
-  let results = [];
-  //función de búsqueda
-  const searcher = (e) => {
-    setSearch(e.target.value);
+  let results;
+
+  const handleCategoriaChange = (e) => {
+    const nuevaCategoria = e.target.value;
+    setCategoriaSeleccionada(nuevaCategoria);
+
+    // Filtrar los resultados por la nueva categoría y término de búsqueda
+    const resultadosFiltrados = perfiles.filter(
+      (dato) =>
+        (nuevaCategoria === "" || dato.categoria === nuevaCategoria) &&
+        (search === "" ||
+          dato.nombre.toLowerCase().includes(search.toLowerCase()) ||
+          dato.descripcion.toLowerCase().includes(search.toLowerCase()))
+    );
+
+    setResultadosFiltrados(resultadosFiltrados);
   };
 
-  if (!search) {
-    results = perfiles;
-  } else {
-    results = perfiles.filter(
+  results = perfiles;
+
+  const searcher = (e) => {
+    setSearch(e.target.value);
+
+    // Filtrar los resultados por término de búsqueda y categoría seleccionada
+    const resultadosFiltrados = perfiles.filter(
       (dato) =>
-        dato.nombre.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        dato.descripcion.toLowerCase().includes(search.toLocaleLowerCase())
+        (categoriaSeleccionada === "" ||
+          dato.categoria === categoriaSeleccionada) &&
+        (e.target.value === "" ||
+          dato.nombre.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          dato.descripcion.toLowerCase().includes(e.target.value.toLowerCase()))
     );
-  }
+
+    setResultadosFiltrados(resultadosFiltrados);
+  };
 
   useEffect(() => {
     obtenerDatosAccesorios().then((response) => {
@@ -160,6 +182,9 @@ export const AccesoriosProvider = ({ children }) => {
     });
 
     setPerfiles(perfilActualizado);
+    setTimeout(() => {
+      location.reload();
+    }, 500);
   };
 
   useEffect(() => {
@@ -262,6 +287,10 @@ export const AccesoriosProvider = ({ children }) => {
         closeModalEditarColor,
         openModalEditarColor,
         isOpenEditarColor,
+        handleCategoriaChange,
+        resultadosFiltrados,
+        handleCategoriaChange,
+        categoriaSeleccionada,
       }}
     >
       {children}

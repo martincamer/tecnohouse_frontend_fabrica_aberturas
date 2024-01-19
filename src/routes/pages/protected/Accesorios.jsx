@@ -15,6 +15,7 @@ import { ModalCrearEditarAccesorios } from "../../../components/accesorios/Modal
 import { CategoriasAccesorios } from "../../../components/accesorios/CategoriasAccesorios";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { AccesoriosPdf } from "../../../components/viewpdfpedidos/AccesoriosPdf";
+import { useState } from "react";
 
 export const Accesorios = () => {
   const {
@@ -34,11 +35,13 @@ export const Accesorios = () => {
     isOpenVerCategorias,
     closeModalVerCategoria,
     openModalVerCategoria,
+    categorias,
+    handleCategoriaChange,
+    resultadosFiltrados,
+    categoriaSeleccionada,
   } = useAccesoriosContext();
 
   const { spinner } = useAuth();
-
-  console.log(results);
 
   return spinner ? (
     <Spinner />
@@ -57,11 +60,34 @@ export const Accesorios = () => {
 
         <Search search={search} searcher={searcher} />
 
+        <div className="flex gap-2 items-center">
+          <label className="font-bold text-lg" htmlFor="categoria">
+            Buscar por categoría:
+          </label>
+          <select
+            className="font-semibold py-2 uppercase px-3 rounded shadow cursor-pointer"
+            id="categoria"
+            onChange={handleCategoriaChange}
+            value={categoriaSeleccionada}
+          >
+            <option value="">Todas las categorías</option>
+            {/* Asegúrate de obtener todas las categorías únicas de tus resultados */}
+            {[
+              ...new Set(categorias?.map((resultado) => resultado.categoria)),
+            ].map((categoria) => (
+              <option key={categoria} value={categoria}>
+                {categoria}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="overflow-y-scroll h-[40vh]">
           <TableAccesorios
             handlePerfilSeleccionado={handlePerfilSeleccionado}
             openModalEditar={openModalEditar}
             results={results}
+            resultadosFiltrados={resultadosFiltrados}
           />
         </div>
 

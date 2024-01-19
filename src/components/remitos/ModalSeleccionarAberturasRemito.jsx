@@ -29,26 +29,23 @@ export const ModalSeleccionarAberturasRemito = () => {
     obtenerDatos();
   }, []);
 
-  //buscador de pedidos
-  let results = [];
+  const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
 
-  //función de búsqueda
+  // Función de búsqueda
   const searcher = (e) => {
     setSearch(e.target.value);
-  };
 
-  const datosNew = datos?.map((p) => p.productos);
+    // Obtener la lista de productos de todos los datos
+    const listaDeProductos =
+      datos?.map((p) => p.productos.respuesta).flat() || [];
 
-  if (!search) {
-    results = datosNew;
-  } else {
-    results = datosNew?.map((p) =>
-      p?.respuesta?.filter((c) =>
-        c?.cliente?.toLowerCase().includes(search?.toLowerCase())
-      )
+    // Filtrar los resultados por cliente
+    const resultadosFiltrados = listaDeProductos.filter((producto) =>
+      producto.cliente.toLowerCase().includes(e.target.value.toLowerCase())
     );
-  }
 
+    setResultadosFiltrados(resultadosFiltrados);
+  };
   const randomIdString = Math.random().toString().substring(2);
   const randomIdNumber = parseInt(randomIdString, 10);
 
@@ -149,64 +146,62 @@ export const ModalSeleccionarAberturasRemito = () => {
                         </th>
                       </tr>
                     </thead>
-                    {results?.map((d) =>
-                      d?.respuesta?.map((c) => (
-                        <tbody key={c.id}>
-                          <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
-                            {c?.cliente}
-                          </th>
-                          <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c?.nombre}
-                          </th>
-                          <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c?.detalle}
-                          </th>
-                          <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c?.color}
-                          </th>
-                          <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c?.ancho}x{c?.alto}
-                          </th>
-                          <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c?.categoria}
-                          </th>
-                          <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c?.cantidad}
-                          </th>
-                          <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            {c?.cantidad === c?.cantidadFaltante ? (
-                              <span className="bg-green-500 py-1 px-2 rounded text-white shadow font-semibold">
-                                realizada
-                              </span>
-                            ) : (
-                              <span className="bg-red-500 py-1 px-2 rounded text-white shadow font-semibold">
-                                falta
-                              </span>
-                            )}
-                          </th>
-                          <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
-                            <button
-                              onClick={() =>
-                                addToProductos(
-                                  c.id + randomIdNumber,
-                                  c.nombre,
-                                  c.detalle,
-                                  c.color,
-                                  c.categoria,
-                                  c.ancho,
-                                  c.alto,
-                                  c.cantidad,
-                                  c.cliente
-                                )
-                              }
-                              className="bg-secondary py-1 px-2 text-white rounded font-bold hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
-                            >
-                              Seleccionar
-                            </button>
-                          </th>
-                        </tbody>
-                      ))
-                    )}
+                    {resultadosFiltrados.map((c) => (
+                      <tbody key={c.id}>
+                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
+                          {c?.cliente}
+                        </th>
+                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                          {c?.nombre}
+                        </th>
+                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                          {c?.detalle}
+                        </th>
+                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                          {c?.color}
+                        </th>
+                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                          {c?.ancho}x{c?.alto}
+                        </th>
+                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                          {c?.categoria}
+                        </th>
+                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                          {c?.cantidad}
+                        </th>
+                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                          {c?.cantidad === c?.cantidadFaltante ? (
+                            <span className="bg-green-500 py-1 px-2 rounded text-white shadow font-semibold">
+                              realizada
+                            </span>
+                          ) : (
+                            <span className="bg-red-500 py-1 px-2 rounded text-white shadow font-semibold">
+                              falta
+                            </span>
+                          )}
+                        </th>
+                        <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                          <button
+                            onClick={() =>
+                              addToProductos(
+                                c.id + randomIdNumber,
+                                c.nombre,
+                                c.detalle,
+                                c.color,
+                                c.categoria,
+                                c.ancho,
+                                c.alto,
+                                c.cantidad,
+                                c.cliente
+                              )
+                            }
+                            className="bg-secondary py-1 px-2 text-white rounded font-bold hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
+                          >
+                            Seleccionar
+                          </button>
+                        </th>
+                      </tbody>
+                    ))}
                   </table>
                 </div>
                 <button

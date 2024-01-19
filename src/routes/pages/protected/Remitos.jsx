@@ -6,8 +6,16 @@ import { useRemitoContext } from "../../../context/RemitoProvider";
 import { TableRemitos } from "../../../components/remitos/TableRemitos";
 
 export const Remitos = () => {
-  const { isOpen, openModal, closeModal, searcher, search } =
-    useRemitoContext();
+  const {
+    isOpen,
+    openModal,
+    closeModal,
+    searcher,
+    search,
+    resultadosFiltrados,
+    handleMesChange,
+    mesSeleccionado,
+  } = useRemitoContext();
 
   return (
     <section className="w-full py-14 px-14">
@@ -50,6 +58,33 @@ export const Remitos = () => {
 
         <div>
           <Search searcher={searcher} search={search} />
+        </div>
+
+        <div className="flex gap-2 items-center my-4">
+          <label className="font-bold text-lg" htmlFor="mes">
+            Selecciona el mes:
+          </label>
+          <select
+            className="font-semibold py-1 px-4 rounded shadow uppercase"
+            id="mes"
+            onChange={handleMesChange}
+            value={mesSeleccionado}
+          >
+            <option value="">Todos los meses</option>
+            <option value="1">Enero</option>
+            <option value="2">Febrero</option>
+            <option value="3">Marzo</option>
+            <option value="4">Abril</option>
+            <option value="5">Mayo</option>
+            <option value="6">Junio</option>
+            <option value="7">Julio</option>
+            <option value="8">Agosto</option>
+            <option value="9">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+            {/* Agregar opciones para los demás meses */}
+          </select>
         </div>
 
         <div className="mt-5 h-[500px] overflow-y-scroll">

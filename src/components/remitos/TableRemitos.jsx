@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useRemitoContext } from "../../context/RemitoProvider";
 
 export const TableRemitos = () => {
-  const { handleDeletePresupuesto, results } = useRemitoContext();
+  const { handleDeletePresupuesto, resultadosFiltrados, results } =
+    useRemitoContext();
   const [obtenerId, setObtenerId] = useState("");
 
   var options = {
@@ -31,20 +32,18 @@ export const TableRemitos = () => {
     setObtenerId(id);
   };
 
-  console.log(obtenerId);
-
-  console.log(results);
-
+  console.log(resultadosFiltrados);
   // Función para sumar la cantidad de todos los objetos
 
   return (
-    <table className="border-[1px]  p-[5px] table-auto w-full rounded">
+    <table className="border-[1px]  p-[5px] table-auto w-full rounded uppercase">
       <thead>
         <tr>
           <th className="p-3">ID</th>
           <th className="p-3">Cliente</th>
           <th className="p-3">Solicitante</th>
           <th className="p-3">Trasladado</th>
+          <th className="p-3">fecha</th>
           <th className="p-3">dirección</th>
           <th className="p-3">Numero - Remito</th>
           <th className="p-3">Eliminar</th>
@@ -52,7 +51,7 @@ export const TableRemitos = () => {
         </tr>
       </thead>
       <tbody>
-        {results.map((p) => (
+        {results?.map((p) => (
           <tr key={p?.id}>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
               {p?.id}
@@ -71,19 +70,14 @@ export const TableRemitos = () => {
               {dateTime(p?.fecha)}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+              {p?.direccion}
+            </th>
+            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
               {p?.remito}{" "}
-              {/* <button
-                onClick={() => {
-                  openModalRemito(), handleObtenerId(p?.id);
-                }}
-                className="bg-orange-500 font-bold py-1 px-2 text-white rounded text-sm cursor-pointer"
-              >
-                editar
-              </button> */}
             </th>
             <th className="border-[1px] border-gray-300 p-3">
               <button
-                className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer"
+                className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer uppercase"
                 onClick={() => handleDeletePresupuesto(p.id)}
               >
                 eliminar
@@ -99,11 +93,6 @@ export const TableRemitos = () => {
             </th>
           </tr>
         ))}
-        {/* <ModalEditarRemito
-          obtenerId={obtenerId}
-          isOpen={isOpen}
-          closeModalRemito={closeModalRemito}
-        /> */}
       </tbody>
     </table>
   );

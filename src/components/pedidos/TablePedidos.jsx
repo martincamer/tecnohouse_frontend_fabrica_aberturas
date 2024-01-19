@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { usePedidoContext } from "../../context/PedidoProvider";
 import { ModalEditarRemito } from "./ModalEditarRemito";
 import { useState } from "react";
+import { ModalEliminarPedido } from "./ModalEliminarPedido";
 
 export const TablePedidos = () => {
   const { handleDeletePresupuesto, results } = usePedidoContext();
@@ -35,6 +36,16 @@ export const TablePedidos = () => {
   console.log(obtenerId);
 
   console.log(results);
+
+  const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
+
+  const handleBorrarAccesorioOpen = () => {
+    setOpenBorrarAccesorio(true);
+  };
+
+  const handleBorrarAccesorioClose = () => {
+    setOpenBorrarAccesorio(false);
+  };
 
   // Función para sumar la cantidad de todos los objetos
 
@@ -122,11 +133,14 @@ export const TablePedidos = () => {
             <th className="border-[1px] border-gray-300 p-3 max-md:py-1 max-md:px-4">
               <button
                 className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
-                onClick={() => handleDeletePresupuesto(p.id)}
+                // onClick={() => handleDeletePresupuesto(p.id)}
+
+                onClick={handleBorrarAccesorioOpen}
               >
                 eliminar
               </button>
             </th>
+
             <th className="border-[1px] border-gray-300 p-3 max-md:py-1 max-md:px-4 font-bold ">
               <Link
                 to={`/pedido/${p?.id}`}
@@ -135,6 +149,13 @@ export const TablePedidos = () => {
                 ver pedido
               </Link>
             </th>
+
+            <ModalEliminarPedido
+              p={p.id}
+              handleEliminar={handleDeletePresupuesto}
+              openBorrarAccesorio={openBorrarAccesorio}
+              handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+            />
           </tr>
         ))}
         <ModalEditarRemito

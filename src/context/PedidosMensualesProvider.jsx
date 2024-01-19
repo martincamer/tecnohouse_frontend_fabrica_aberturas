@@ -56,25 +56,47 @@ export const PedidosMensualesProvider = ({ children }) => {
     setIsOpen(true);
   }
 
+  const [mesSeleccionado, setMesSeleccionado] = useState("");
+  const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
+
   //buscador de clientes
   let results = [];
 
-  //función de búsqueda
+  results = datosPresupuesto;
+
   const searcher = (e) => {
     setSearch(e.target.value);
+
+    // Filtrar los resultados por término de búsqueda y mes seleccionado
+    const resultadosFiltrados = datosPresupuesto.filter(
+      (dato) =>
+        (mesSeleccionado === "" ||
+          new Date(dato.created_at).getUTCMonth() + 1 ===
+            parseInt(mesSeleccionado)) &&
+        (e.target.value === "" ||
+          dato?.cliente?.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          dato?.remito?.toLowerCase().includes(e.target.value.toLowerCase()))
+    );
+
+    setResultadosFiltrados(resultadosFiltrados);
   };
 
-  if (!search) {
-    results = datosPresupuesto;
-  } else {
-    results = datosPresupuesto.filter(
-      (dato) =>
-        dato?.cliente?.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        dato?.remito?.toLowerCase().includes(search.toLocaleLowerCase())
-    );
-  }
+  const handleMesChange = (e) => {
+    setMesSeleccionado(e.target.value);
 
-  console.log(results);
+    // Filtrar los resultados por mes y término de búsqueda
+    const resultadosFiltrados = datosPresupuesto.filter(
+      (dato) =>
+        (e.target.value === "" ||
+          new Date(dato.created_at).getUTCMonth() + 1 ===
+            parseInt(e.target.value)) &&
+        (search === "" ||
+          dato?.cliente?.toLowerCase().includes(search.toLowerCase()) ||
+          dato?.remito?.toLowerCase().includes(search.toLowerCase()))
+    );
+
+    setResultadosFiltrados(resultadosFiltrados);
+  };
 
   const respuesta = productoSeleccionado.map(function (e) {
     return {
@@ -299,6 +321,9 @@ export const PedidosMensualesProvider = ({ children }) => {
         setRemito,
         remito,
         searcher,
+        resultadosFiltrados,
+        handleMesChange,
+        mesSeleccionado,
       }}
     >
       {children}

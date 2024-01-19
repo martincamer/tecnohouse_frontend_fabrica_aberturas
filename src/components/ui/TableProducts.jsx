@@ -1,4 +1,6 @@
 import { useAluminioContext } from "../../context/AluminioProvider";
+import { ModalEliminarAccesorio } from "../accesorios/ModalEliminarAccesorio";
+import { useState } from "react";
 
 export const TableProducts = ({
   results,
@@ -6,6 +8,16 @@ export const TableProducts = ({
   handlePerfilSeleccionado,
 }) => {
   const { handleEliminar } = useAluminioContext();
+
+  const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
+
+  const handleBorrarAccesorioOpen = () => {
+    setOpenBorrarAccesorio(true);
+  };
+
+  const handleBorrarAccesorioClose = () => {
+    setOpenBorrarAccesorio(false);
+  };
 
   return (
     <div className="rounded shadow-black/10 shadow max-md:shadow-none max-md:flex-none flex flex-col gap-3 w-full">
@@ -48,8 +60,9 @@ export const TableProducts = ({
               </th> */}
               <th className="border-[1px] border-gray-300 p-3 font-bold ">
                 <button
+                  onClick={() => handleBorrarAccesorioOpen()}
                   className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal"
-                  onClick={() => handleEliminar(p.id)}
+                  // onClick={() => handleEliminar(p.id)}
                 >
                   eliminar
                 </button>
@@ -64,6 +77,12 @@ export const TableProducts = ({
                   editar
                 </button>
               </th>
+              <ModalEliminarAccesorio
+                p={p.id}
+                handleEliminar={handleEliminar}
+                openBorrarAccesorio={openBorrarAccesorio}
+                handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+              />
             </tr>
           ))}
         </tbody>

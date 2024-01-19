@@ -77,9 +77,7 @@ export const RemitoProvider = ({ children }) => {
     results = obtenerTodosLosDatos.filter(
       (dato) =>
         dato?.cliente?.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        dato?.remito?.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        dato?.fecha?.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        dato?.created_at?.toLowerCase().includes(search.toLocaleLowerCase())
+        dato?.remito?.toLowerCase().includes(search.toLocaleLowerCase())
     );
   }
 
@@ -175,8 +173,6 @@ export const RemitoProvider = ({ children }) => {
       setErrorProducto(false);
     }
   };
-
-  console.log(productoSeleccionado);
 
   const deleteProducto = (
     id,
