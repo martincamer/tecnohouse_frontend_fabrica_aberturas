@@ -14,6 +14,7 @@ import { DescargarPdfPedidoTres } from "../../../components/pedidos/DescargarPdf
 import { Search } from "../../../components/ui/Search";
 import { DescargarPdfPedidoCinco } from "../../../components/pedidos/DescargarPdfPedidoCinco";
 import { DescargarPdfPedidoAberturasFaltantes } from "../../../components/pedidos/DescargarPdfPedidoAberturasFaltantes";
+import { ModalEditarProductoPedidoEstado } from "../../../components/pedidos/ModalEditarProductoPedidoEstado";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
@@ -61,6 +62,7 @@ export const ViewPedido = () => {
   };
 
   let [isOpen, setIsOpen] = useState(false);
+  let [isOpenEstado, setIsOpenEstado] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
@@ -68,6 +70,14 @@ export const ViewPedido = () => {
 
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  const openModalEstado = () => {
+    setIsOpenEstado(true);
+  };
+
+  const closeModalEstado = () => {
+    setIsOpenEstado(false);
   };
 
   let [isOpenPedido, setIsOpenPedido] = useState(false);
@@ -379,7 +389,7 @@ export const ViewPedido = () => {
                   <th className="border-[1px] border-gray-300 p-3 font-medium max-md:text-xs max-md:py-1 max-md:px-4">
                     <button
                       onClick={() => {
-                        openModal(), handleSeleccionarId(p?.id);
+                        openModalEstado(), handleSeleccionarId(p?.id);
                       }}
                       type="button"
                       className="max-md:text-xs max-md:py-1 max-md:px-4 font-semibold text-green-500 border-[1px] px-4 py-1 border-green-300 rounded bg-green-100 text-sm"
@@ -642,6 +652,11 @@ export const ViewPedido = () => {
         obtenerId={obtenerId}
         isOpen={isOpen}
         closeModal={closeModal}
+      />
+      <ModalEditarProductoPedidoEstado
+        obtenerId={obtenerId}
+        isOpenEstado={isOpenEstado}
+        closeModalEstado={closeModalEstado}
       />
       <ModalCrearProductoPedido
         datos={datos}

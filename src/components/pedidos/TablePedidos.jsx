@@ -64,9 +64,9 @@ export const TablePedidos = () => {
             Total aberturas
           </th>
           <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
-            Fecha de entrega
+            Fecha de creación
           </th>
-          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">Remito</th>
+          {/* <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">Remito</th> */}
           <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
             Estado del pedido
           </th>{" "}
@@ -96,18 +96,7 @@ export const TablePedidos = () => {
               }, 0)}
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs">
-              {dateTime(p?.fecha)}
-            </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs">
-              {p?.remito}-{" "}
-              <button
-                onClick={() => {
-                  openModalRemito(), handleObtenerId(p?.id);
-                }}
-                className="bg-orange-500 font-bold py-1 px-2 text-white rounded text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
-              >
-                editar
-              </button>
+              {new Date(p?.created_at).toLocaleDateString("es-AR")}
             </th>
             <th
               className={`${
@@ -133,8 +122,6 @@ export const TablePedidos = () => {
             <th className="border-[1px] border-gray-300 p-3 max-md:py-1 max-md:px-4">
               <button
                 className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
-                // onClick={() => handleDeletePresupuesto(p.id)}
-
                 onClick={handleBorrarAccesorioOpen}
               >
                 eliminar

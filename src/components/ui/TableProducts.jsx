@@ -1,6 +1,6 @@
 import { useAluminioContext } from "../../context/AluminioProvider";
-import { ModalEliminarAccesorio } from "../accesorios/ModalEliminarAccesorio";
 import { useState } from "react";
+import { ModalEliminarProducto } from "../productos/ModalEliminarProducto";
 
 export const TableProducts = ({
   results,
@@ -77,7 +77,7 @@ export const TableProducts = ({
                   editar
                 </button>
               </th>
-              <ModalEliminarAccesorio
+              <ModalEliminarProducto
                 p={p.id}
                 handleEliminar={handleEliminar}
                 openBorrarAccesorio={openBorrarAccesorio}

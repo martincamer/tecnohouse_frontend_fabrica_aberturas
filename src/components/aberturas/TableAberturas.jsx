@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAberturasContext } from "../../context/AluminioAberturas";
-import { ModalEliminarAccesorio } from "../accesorios/ModalEliminarAccesorio";
+import { ModalEliminarAberturas } from "./ModalEliminarAbertura";
 
 export const TableAberturas = ({
   results,
@@ -10,6 +10,7 @@ export const TableAberturas = ({
   const { handleEliminar } = useAberturasContext();
 
   const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
+  const [guardarId, setGuardarId] = useState(false);
 
   const handleBorrarAccesorioOpen = () => {
     setOpenBorrarAccesorio(true);
@@ -37,7 +38,7 @@ export const TableAberturas = ({
         </thead>
         <tbody>
           {results.map((p) => (
-            <tr key={p.id} className="uppercase">
+            <tr key={p.id}>
               <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
                 {p.id}
               </th>
@@ -59,21 +60,16 @@ export const TableAberturas = ({
               <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
                 {p.ancho} x {p.alto}
               </th>
-
               <th className="border-[1px] border-gray-300 p-3 font-bold ">
                 <button
+                  onClick={() => {
+                    handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                  }}
                   className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal"
                   // onClick={() => handleEliminar(p.id)}
-                  onClick={() => handleBorrarAccesorioOpen()}
                 >
                   eliminar
                 </button>
-                <ModalEliminarAccesorio
-                  p={p.id}
-                  handleEliminar={handleEliminar}
-                  openBorrarAccesorio={openBorrarAccesorio}
-                  handleBorrarAccesorioClose={handleBorrarAccesorioClose}
-                />
               </th>
               <th className="border-[1px] border-gray-300 p-3 font-bold ">
                 <button
@@ -87,6 +83,13 @@ export const TableAberturas = ({
               </th>
             </tr>
           ))}
+
+          <ModalEliminarAberturas
+            p={guardarId}
+            handleEliminar={handleEliminar}
+            openBorrarAccesorio={openBorrarAccesorio}
+            handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+          />
         </tbody>
       </table>
     </div>
