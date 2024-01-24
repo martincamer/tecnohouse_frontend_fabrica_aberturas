@@ -15,6 +15,8 @@ import { Search } from "../../../components/ui/Search";
 import { DescargarPdfPedidoCinco } from "../../../components/pedidos/DescargarPdfPedidoCinco";
 import { DescargarPdfPedidoAberturasFaltantes } from "../../../components/pedidos/DescargarPdfPedidoAberturasFaltantes";
 import { ModalEditarProductoPedidoEstado } from "../../../components/pedidos/ModalEditarProductoPedidoEstado";
+import { DescargarPdfPedidoAberturasEmbalaje } from "../../../components/pedidos/DescargarPdfPedidoAberturasEmbalaje";
+import { DescargarPdfPedidoSeis } from "../../../components/pedidos/DescargarPdfPedidoSeis";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
@@ -197,9 +199,26 @@ export const ViewPedido = () => {
     .filter((item) => item.detalle.toUpperCase().startsWith("C"))
     .reduce((total, item) => total + parseInt(item.cantidad), 0);
 
+  const datosMosquiteros = datos?.productos?.respuesta
+    .filter((item) => item.detalle.toUpperCase().startsWith("M"))
+    .reduce((total, item) => total + parseInt(item.cantidad), 0);
+
   return (
-    <section className="w-full py-14 px-14 max-md:py-6 max-md:px-2 flex flex-col gap-10 overflow-x-scroll">
+    <section className="w-full py-2 px-14 max-md:py-6 max-md:px-2 flex flex-col gap-10 overflow-x-scroll">
       <ToastContainer />
+      <div className="flex gap-2 items-center">
+        <p
+          className={`${
+            totalAberturasRealizadas() === totalAberturas()
+              ? "bg-green-500"
+              : "bg-orange-500"
+          } font-semibold text-white text-xl max-md:text-sm uppercase  px-3 py-1 rounded-full shadow`}
+        >
+          {totalAberturasRealizadas() === totalAberturas()
+            ? "estado del pedido finalizado"
+            : "estado del pedido pendiente"}
+        </p>
+      </div>
       <div className="border-[1px] shadow py-10 px-10 rounded flex justify-around max-md:flex-col">
         <div className="flex gap-2 items-center">
           <p className="text-lg max-md:text-sm uppercase">
@@ -240,6 +259,7 @@ export const ViewPedido = () => {
           </p>
         </div>
       </div>
+
       <div className="border-[1px] shadow py-10 px-10 rounded flex flex-col gap-8">
         <div className="flex gap-2 items-center max-md:flex-col">
           <p className="text-lg font-semibold text-green-500 max-md:text-sm uppercase">
@@ -253,23 +273,30 @@ export const ViewPedido = () => {
         <div className="flex gap-5 items-center">
           {" "}
           <div className="flex gap-2">
-            <p className="text-lg max-md:text-sm uppercase">Total puertas:</p>{" "}
+            <p className="text-lg max-md:text-sm uppercase">puertas:</p>{" "}
             <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
               {datosPuertas}
             </p>
           </div>
           -
           <div className="flex gap-2">
-            <p className="text-lg max-md:text-sm uppercase">Total ventanas:</p>{" "}
+            <p className="text-lg max-md:text-sm uppercase">ventanas:</p>{" "}
             <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
               {datosVentanas}
             </p>
           </div>
           -
           <div className="flex gap-2">
-            <p className="text-lg max-md:text-sm uppercase">Total celosias:</p>{" "}
+            <p className="text-lg max-md:text-sm uppercase">celosias:</p>{" "}
             <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
               {datosCelosias}
+            </p>
+          </div>
+          -
+          <div className="flex gap-2">
+            <p className="text-lg max-md:text-sm uppercase">mosquiteros:</p>{" "}
+            <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
+              {datosMosquiteros}
             </p>
           </div>
           -
@@ -279,7 +306,27 @@ export const ViewPedido = () => {
               {totalAberturas()}
             </p>
           </div>
+          -
+          <div className="flex gap-2 items-center">
+            <p className="text-lg uppercase max-md:text-sm">
+              Total realizadas:
+            </p>{" "}
+            <p
+              className={`${
+                totalAberturasRealizadas() === totalAberturas()
+                  ? "bg-green-500"
+                  : "bg-orange-500"
+              } font-semibold text-white text-lg max-md:text-sm uppercase  px-3 py-1 rounded-full shadow`}
+            >
+              {totalAberturasRealizadas()}
+              {" - "}
+              {totalAberturasRealizadas() === totalAberturas()
+                ? "estado finalizado"
+                : "estado pendiente"}
+            </p>
+          </div>
         </div>
+
         <div>
           <Search searcher={searcher} search={search} />
         </div>
@@ -624,6 +671,15 @@ export const ViewPedido = () => {
         >
           Descargar Pedido Celosias de abrir - corredizas
         </PDFDownloadLink>
+
+        <PDFDownloadLink
+          fileName={`${datos?.cliente}_celosias`}
+          document={<DescargarPdfPedidoSeis datos={datos} />}
+          className="bg-zinc-400 py-1 px-5 rounded text-black font-semibold max-md:text-sm"
+        >
+          Descargar Pedido Mosquiteros
+        </PDFDownloadLink>
+
         <PDFDownloadLink
           fileName={`${datos?.cliente}_aberturas-faltan`}
           document={
@@ -636,6 +692,20 @@ export const ViewPedido = () => {
           className="bg-red-400 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
         >
           Descargar Aberturas faltantes
+        </PDFDownloadLink>
+
+        <PDFDownloadLink
+          fileName={`${datos?.cliente}_aberturas-faltan`}
+          document={
+            <DescargarPdfPedidoAberturasEmbalaje
+              resultadoFinalAberturas={resultadoFinalAberturas}
+              datosAgrupadosEnUno={datosAgrupadosEnUno}
+              datos={datos}
+            />
+          }
+          className="bg-yellow-400 text-black py-1 px-5 rounded font-semibold max-md:text-sm"
+        >
+          Descargar Aberturas - Control y Embalaje
         </PDFDownloadLink>
 
         <PDFDownloadLink

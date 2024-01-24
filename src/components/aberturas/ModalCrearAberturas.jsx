@@ -1,5 +1,5 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { crearPerfilNuevo } from "../../api/aberturas.api";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,6 +7,7 @@ import { useAberturasContext } from "../../context/AluminioAberturas";
 
 export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
   const { results, setPerfiles, categorias, colores } = useAberturasContext();
+  const [error, setError] = useState(null);
 
   const {
     register,
@@ -15,27 +16,33 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
     reset,
   } = useForm();
 
-  console.log(colores);
-
   const onSubmit = handleSubmit(async (data) => {
-    const { data: nuevoValor } = await crearPerfilNuevo(data);
+    try {
+      const { data: nuevoValor } = await crearPerfilNuevo(data);
 
-    const proyectoActualizado = [...results, nuevoValor];
+      const proyectoActualizado = [...results, nuevoValor];
 
-    setPerfiles(proyectoActualizado);
+      setPerfiles(proyectoActualizado);
 
-    toast.success("¡Producto creado correctamente!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+      toast.success("¡Producto creado correctamente!", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
 
-    reset();
+      reset();
+
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    } catch (error) {
+      setError([error.response.data.message]);
+    }
   });
 
   return (
@@ -99,7 +106,18 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                   onSubmit={onSubmit}
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
+                  {error &&
+                    error?.map((err) => (
+                      <p className="text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-2/3 mx-auto text-center border-[1px] border-red-200">
+                        {err}
+                      </p>
+                    ))}
                   <div className="flex flex-col gap-2">
+                    {errors.nombre && (
+                      <span className=" text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-1/2 text-center shadow border-[1px] border-red-200">
+                        El codigo es requerido
+                      </span>
+                    )}
                     <label className="text-[14px] font-bold">Codigo:</label>
                     <input
                       {...register("nombre", { required: true })}
@@ -109,6 +127,11 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
+                    {errors.descripcion && (
+                      <span className=" text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-1/2 text-center shadow border-[1px] border-red-200">
+                        El color es requerido
+                      </span>
+                    )}
                     <label className="text-[14px] font-bold max-md:text-sm">
                       Color:
                     </label>
@@ -125,6 +148,11 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                     </select>
                   </div>
                   <div className="flex flex-col gap-2">
+                    {errors.stock && (
+                      <span className=" text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-1/2 text-center shadow border-[1px] border-red-200">
+                        El stock es requerido
+                      </span>
+                    )}
                     <label className="text-[14px] font-bold max-md:text-sm">
                       Stock total:
                     </label>
@@ -137,6 +165,11 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                   </div>
 
                   <div className="flex flex-col gap-2">
+                    {errors.ancho && (
+                      <span className=" text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-1/2 text-center shadow border-[1px] border-red-200">
+                        El ancho es requerido
+                      </span>
+                    )}
                     <label className="text-[14px] font-bold max-md:text-sm">
                       Ancho de la abertura:
                     </label>
@@ -150,6 +183,11 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                     </div>
                   </div>
                   <div className="flex flex-col gap-2">
+                    {errors.alto && (
+                      <span className=" text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-1/2 text-center shadow border-[1px] border-red-200">
+                        El alto es requerido
+                      </span>
+                    )}
                     <label className="text-[14px] font-bold max-md:text-sm">
                       Alto de la abertura:
                     </label>
@@ -181,6 +219,11 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                     </select>
                   </div>
                   <div className="flex flex-col gap-2">
+                    {errors.descripcion && (
+                      <span className=" text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-1/2 text-center shadow border-[1px] border-red-200">
+                        La descripcion es requerida
+                      </span>
+                    )}
                     <label className="text-[14px] font-bold max-md:text-sm">
                       Detalle:
                     </label>
@@ -196,7 +239,7 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                       className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer max-md:text-xs"
                       type="submit"
                       value={"Crear producto"}
-                      onClick={closeModal}
+                      // onClick={() => closeModal()}
                     />
                   </div>
                 </form>

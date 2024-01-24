@@ -61,14 +61,16 @@ export const ModalEliminarPedido = ({
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <div className="flex gap-5">
                   <button
-                    onClick={() => handleEliminar(p)}
+                    onClick={() => {
+                      handleEliminar(p), handleBorrarAccesorioClose();
+                    }}
                     className="bg-red-500 py-1 px-4 rounded text-white font-bold"
                   >
                     SI ELIMINAR
                   </button>
                   <button
                     type="button"
-                    onClick={handleBorrarAccesorioClose}
+                    onClick={() => handleBorrarAccesorioClose}
                     className="bg-green-500 py-1 px-4 rounded text-white font-bold"
                   >
                     NO ELIMINAR - CERRAR

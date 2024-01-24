@@ -3,14 +3,15 @@ import { useAccesoriosContext } from "../../context/AccesoriosProvider";
 import { ModalEliminarAccesorio } from "./ModalEliminarAccesorio";
 
 export const TableAccesorios = ({
-  results,
   openModalEditar,
   handlePerfilSeleccionado,
   resultadosFiltrados,
+  results,
 }) => {
   const { handleEliminar } = useAccesoriosContext();
 
   const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
+  const [guardarId, setGuardarId] = useState(false);
 
   const handleBorrarAccesorioOpen = () => {
     setOpenBorrarAccesorio(true);
@@ -36,7 +37,7 @@ export const TableAccesorios = ({
           </tr>
         </thead>
         <tbody>
-          {resultadosFiltrados?.map((p) => (
+          {results?.map((p) => (
             <tr key={p.id}>
               <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
                 {p.id}
@@ -64,7 +65,9 @@ export const TableAccesorios = ({
                   className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal 
 "
                   // onClick={() => handleEliminar(p.id)}
-                  onClick={() => handleBorrarAccesorioOpen()}
+                  onClick={() => {
+                    handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                  }}
                 >
                   eliminar
                 </button>
@@ -78,15 +81,16 @@ export const TableAccesorios = ({
                 >
                   editar
                 </button>
+                |
               </th>
-              <ModalEliminarAccesorio
-                p={p.id}
-                handleEliminar={handleEliminar}
-                openBorrarAccesorio={openBorrarAccesorio}
-                handleBorrarAccesorioClose={handleBorrarAccesorioClose}
-              />
             </tr>
           ))}
+          <ModalEliminarAccesorio
+            p={guardarId}
+            handleEliminar={handleEliminar}
+            openBorrarAccesorio={openBorrarAccesorio}
+            handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+          />
         </tbody>
       </table>
     </div>

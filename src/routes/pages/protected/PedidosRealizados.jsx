@@ -12,13 +12,14 @@ export const PedidosRealizados = () => {
     datosPresupuesto,
     search,
     searcher,
+    results,
   } = usePedidoContext();
 
-  const datos = datosPresupuesto?.map((c) =>
+  const datos = results?.map((c) =>
     c.productos.respuesta.map((c) => c.cantidad)
   );
 
-  const datosTwo = datosPresupuesto?.map((c) =>
+  const datosTwo = results?.map((c) =>
     c.productos.respuesta.map((c) => c.cantidadFaltante)
   );
 
@@ -74,7 +75,7 @@ export const PedidosRealizados = () => {
           <div className="border-[1px] py-5 px-5 flex gap-2 items-center  shadow max-md:justify-center max-md:py-2 max-md:px-3 max-md:text-sm">
             <p>Pedidos generados:</p>{" "}
             <span className="font-bold text-blue-400 text-lg max-md:text-sm">
-              {datosPresupuesto?.length}
+              {results?.length}
             </span>
           </div>
 
@@ -127,7 +128,6 @@ export const PedidosRealizados = () => {
             <option value="10">Octubre</option>
             <option value="11">Noviembre</option>
             <option value="12">Diciembre</option>
-            {/* Agregar opciones para los demás meses */}
           </select>
         </div>
 

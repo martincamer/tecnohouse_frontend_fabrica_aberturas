@@ -119,14 +119,22 @@ export const AccesoriosProvider = ({ children }) => {
     setIsOpenEditarColor(true);
   }
 
-  let results;
+  const [results, setResults] = useState([]); // State to hold filtered results
+
+  // let results;
+
+  // results = perfiles;
+
+  useEffect(() => {
+    setResults(perfiles);
+  }, [perfiles]);
 
   const handleCategoriaChange = (e) => {
     const nuevaCategoria = e.target.value;
     setCategoriaSeleccionada(nuevaCategoria);
 
     // Filtrar los resultados por la nueva categoría y término de búsqueda
-    const resultadosFiltrados = perfiles.filter(
+    const resultadosFiltrados = perfiles?.filter(
       (dato) =>
         (nuevaCategoria === "" || dato.categoria === nuevaCategoria) &&
         (search === "" ||
@@ -135,9 +143,10 @@ export const AccesoriosProvider = ({ children }) => {
     );
 
     setResultadosFiltrados(resultadosFiltrados);
-  };
 
-  results = perfiles;
+    // Update results with filtered data
+    setResults(nuevaCategoria === "" ? perfiles : resultadosFiltrados);
+  };
 
   const searcher = (e) => {
     setSearch(e.target.value);
@@ -152,7 +161,7 @@ export const AccesoriosProvider = ({ children }) => {
           dato.descripcion.toLowerCase().includes(e.target.value.toLowerCase()))
     );
 
-    setResultadosFiltrados(resultadosFiltrados);
+    setResults(resultadosFiltrados);
   };
 
   useEffect(() => {

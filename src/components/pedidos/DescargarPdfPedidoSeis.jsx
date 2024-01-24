@@ -5,6 +5,7 @@ import {
   Document,
   StyleSheet,
   Font,
+  Image,
 } from "@react-pdf/renderer";
 import poppinsBold from "../../fonts/Poppins-Bold.ttf";
 import poppinsSemiBold from "../../fonts/Poppins-SemiBold.ttf";
@@ -29,7 +30,7 @@ Font.register({
 
 const styles = StyleSheet.create({
   table: {
-    margin: "20px auto",
+    margin: "0 auto",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -88,10 +89,10 @@ const styles = StyleSheet.create({
     fontSize: "8px",
     fontFamily: "Poppins",
     fontWeight: "semibold",
-    textTransform: "uppercase",
+    textTransform: "capitalize",
   },
   row5: {
-    width: "1480px",
+    width: "1150px",
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
     paddingTop: 8,
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: "8px",
     fontFamily: "Poppins",
     fontWeight: "semibold",
-    textTransform: "uppercase",
+    textTransform: "capitalize",
   },
   row1: {
     width: "100%",
@@ -113,10 +114,10 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: "center",
     height: "100%",
-    paddingHorizontal: "2px",
+    textTransform: "capitalize",
   },
-  row6: {
-    width: "220px",
+  row2: {
+    width: "1150px",
     fontSize: "8px",
     fontFamily: "Poppins",
     paddingTop: 8,
@@ -125,24 +126,11 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: "center",
     height: "100%",
-    paddingHorizontal: "2px",
-    textTransform: "uppercase",
-  },
-  row2: {
-    width: "1480px",
-    fontSize: "10px",
-    fontFamily: "Poppins",
-    paddingTop: 8,
-    borderRight: "0.5px solid #000",
-    borderLeft: "0.5px solid #000",
-    paddingBottom: 8,
-    textAlign: "center",
-    height: "100%",
-    textTransform: "uppercase",
+    textTransform: "capitalize",
   },
   row4: {
     width: "50%",
-    fontSize: "10px",
+    fontSize: "7px",
     fontFamily: "Poppins",
     fontWeight: "bold",
     paddingTop: 8,
@@ -151,7 +139,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: "center",
     height: "100%",
-    textTransform: "uppercase",
+    textTransform: "capitalize",
   },
   contentFactura: {
     width: "95%",
@@ -166,6 +154,7 @@ const styles = StyleSheet.create({
     borderRadius: "3px",
     padding: "0px 0px 50px 0px",
     position: "relative",
+    textTransform: "capitalize",
   },
   content_uno: {
     width: "100%",
@@ -209,8 +198,31 @@ const styles = StyleSheet.create({
   },
 });
 
-export const DescargarPdfPedidoCinco = ({ datos }) => {
+export const DescargarPdfPedidoSeis = ({ datos }) => {
   // Función para sumar la cantidad por nombre o detalle que comienza con "V"
+  const sumarCantidadPorNombreODetalleQueEmpiezaConV = () => {
+    const resultado = {};
+
+    datos?.productos?.respuesta?.forEach((elemento) => {
+      if (elemento.detalle && elemento.detalle.startsWith("M")) {
+        const clave = elemento.nombre || elemento.detalle;
+        if (resultado[clave]) {
+          resultado[clave].cantidad += parseInt(elemento.cantidad, 10);
+        } else {
+          resultado[clave] = { ...elemento };
+          resultado[clave].cantidad = parseInt(elemento.cantidad, 10);
+        }
+      }
+    });
+
+    return Object.values(resultado).map((elemento) => ({
+      ...elemento,
+      cantidad: elemento.cantidad.toString(), // Convertir la cantidad de nuevo a string si es necesario
+    }));
+  };
+
+  const resultadoFinal = sumarCantidadPorNombreODetalleQueEmpiezaConV();
+  // Muestra el resultado final
 
   var options = {
     weekday: "long",
@@ -223,56 +235,9 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
     return new Date(data).toLocaleDateString("arg", options);
   }
 
-  let datosAgrupados;
-
-  if (datos && datos.productos?.respuesta) {
-    const productosRespuesta = datos?.productos?.respuesta;
-
-    if (Array.isArray(productosRespuesta) && productosRespuesta.length > 0) {
-      // Crear un objeto para almacenar los productos agrupados por cliente
-      const productosAgrupados = productosRespuesta.reduce(
-        (acumulador, producto) => {
-          const cliente = producto.cliente;
-
-          if (!acumulador[cliente]) {
-            acumulador[cliente] = { nombre: cliente, productos: [] };
-          }
-
-          acumulador[cliente].productos.push(producto);
-
-          return acumulador;
-        },
-        {}
-      );
-
-      // Convertir el objeto en un arreglo
-      const nuevoArreglo = Object.values(productosAgrupados);
-
-      datosAgrupados = nuevoArreglo;
-    } else {
-      console.error(
-        "La propiedad 'productos.respuesta' no es un arreglo o está vacía."
-      );
-    }
-  } else {
-    console.error("La estructura de datos no es la esperada.");
-  }
-
-  const totalAberturas = () => {
-    return datos?.productos?.respuesta?.reduce((sum, b) => {
-      return sum + Number(b?.cantidad);
-    }, 0);
-  };
-
-  const totalAberturasEntregadas = () => {
-    return datos?.productos?.respuesta?.reduce((sum, b) => {
-      return sum + Number(b?.cantidadFaltante);
-    }, 0);
-  };
-
   return (
     <Document pageMode="fullScreen">
-      <Page wrap size={"A4"} style={styles.content}>
+      <Page style={styles.content}>
         <View
           style={{
             width: "90%",
@@ -343,52 +308,24 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
             </Text>
           </View>
         </View>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-          }}
-        >
-          {datosAgrupados?.map((p) => (
-            <View style={styles.table}>
-              <View
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: "Poppins",
-                    fontWeight: "semibold",
-                    fontSize: "10px",
-                    textAlign: "left",
-                  }}
-                >
-                  {p?.nombre}
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <Text style={styles.row6}>Cod.</Text>
-                <Text style={styles.row5}>Detalle</Text>
-                <Text style={styles.row3}>Color</Text>
-                <Text style={styles.row3}>Ancho x Alto</Text>
-                <Text style={styles.row3}>Cantidad</Text>
-                <Text style={styles.row3}>Realizadas</Text>
-              </View>
+        <View style={styles.table}>
+          <View style={styles.row}>
+            <Text style={styles.row3}>Cod.</Text>
+            <Text style={styles.row5}>Detalle</Text>
+            <Text style={styles.row3}>Color</Text>
+            <Text style={styles.row3}>Ancho x Alto</Text>
+            <Text style={styles.row3}>Cantidad</Text>
+          </View>
 
-              {p?.productos?.map((producto) => (
-                <View key={p?.id} style={styles.rowTwo}>
-                  <Text style={styles.row6}>{producto?.nombre}</Text>
-                  <Text style={styles.row2}>{producto?.detalle}</Text>
-                  <Text style={styles.row1}>{producto?.color}</Text>
-                  <Text style={styles.row1}>
-                    {producto?.ancho}x{producto?.alto}
-                  </Text>
-                  <Text style={styles.row1}>{producto?.cantidad}</Text>
-                  <Text style={styles.row1}>{producto?.cantidadFaltante}</Text>
-                </View>
-              ))}
+          {resultadoFinal?.map((p) => (
+            <View key={p?.id} style={styles.rowTwo}>
+              <Text style={styles.row1}>{p?.nombre}</Text>
+              <Text style={styles.row2}>{p?.detalle}</Text>
+              <Text style={styles.row1}>{p?.color}</Text>
+              <Text style={styles.row1}>
+                {p?.ancho}x{p?.alto}
+              </Text>
+              <Text style={styles.row1}>{p?.cantidad}</Text>
             </View>
           ))}
         </View>
@@ -406,65 +343,31 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
           <View
             style={{
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
               gap: "5px",
-              textTransform: "uppercase",
             }}
           >
-            <View
+            <Text
               style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "5px",
+                fontSize: "10px",
+                fontFamily: "Poppins",
                 textTransform: "uppercase",
               }}
             >
-              <Text
-                style={{
-                  fontSize: "10px",
-                  fontFamily: "Poppins",
-                  textTransform: "uppercase",
-                }}
-              >
-                Total Aberturas:
-              </Text>{" "}
-              <Text
-                style={{
-                  fontSize: "10px",
-                  fontFamily: "Poppins",
-                  fontWeight: "semibold",
-                  textTransform: "uppercase",
-                }}
-              >
-                {totalAberturas()}
-              </Text>
-            </View>
-            <View
+              Total Aberturas:
+            </Text>{" "}
+            <Text
               style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "5px",
+                fontSize: "10px",
+                fontFamily: "Poppins",
+                fontWeight: "semibold",
+                textTransform: "uppercase",
               }}
             >
-              <Text
-                style={{
-                  fontSize: "10px",
-                  fontFamily: "Poppins",
-                }}
-              >
-                Total Aberturas Realizadas:
-              </Text>{" "}
-              <Text
-                style={{
-                  fontSize: "10px",
-                  fontFamily: "Poppins",
-                  fontWeight: "semibold",
-                  textTransform: "uppercase",
-                }}
-              >
-                {totalAberturasEntregadas()}
-              </Text>
-            </View>
+              {resultadoFinal?.reduce((sum, b) => {
+                return sum + Number(b?.cantidad);
+              }, 0)}
+            </Text>
           </View>
           <View
             style={{
@@ -480,7 +383,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
                 textTransform: "uppercase",
               }}
             >
-              Fecha de creación del pedido:
+              Fecha de entrega del pedido:
             </Text>{" "}
             <Text
               style={{
@@ -490,7 +393,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
                 textTransform: "uppercase",
               }}
             >
-              {dateTime(datos?.created_at)}
+              {dateTime(datos?.fecha)}
             </Text>
           </View>
         </View>

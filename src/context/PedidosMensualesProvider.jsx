@@ -59,10 +59,29 @@ export const PedidosMensualesProvider = ({ children }) => {
   const [mesSeleccionado, setMesSeleccionado] = useState("");
   const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
 
-  //buscador de clientes
-  let results = [];
+  const [results, setResults] = useState([]); // State to hold filtered results
 
-  results = datosPresupuesto;
+  useEffect(() => {
+    setResults(datosPresupuesto);
+  }, [datosPresupuesto]);
+
+  const handleMesChange = (e) => {
+    const mesCategoria = e.target.value;
+    setMesSeleccionado(mesCategoria);
+
+    // Filtrar los resultados por mes y término de búsqueda
+    const resultadosFiltrados = datosPresupuesto.filter(
+      (dato) =>
+        (mesCategoria === "" ||
+          new Date(dato.created_at).getUTCMonth() + 1 ===
+            parseInt(mesCategoria)) &&
+        (search === "" ||
+          dato?.cliente?.toLowerCase().includes(search.toLowerCase()) ||
+          dato?.remito?.toLowerCase().includes(search.toLowerCase()))
+    );
+
+    setResults(mesCategoria === "" ? datosPresupuesto : resultadosFiltrados);
+  };
 
   const searcher = (e) => {
     setSearch(e.target.value);
@@ -78,24 +97,7 @@ export const PedidosMensualesProvider = ({ children }) => {
           dato?.remito?.toLowerCase().includes(e.target.value.toLowerCase()))
     );
 
-    setResultadosFiltrados(resultadosFiltrados);
-  };
-
-  const handleMesChange = (e) => {
-    setMesSeleccionado(e.target.value);
-
-    // Filtrar los resultados por mes y término de búsqueda
-    const resultadosFiltrados = datosPresupuesto.filter(
-      (dato) =>
-        (e.target.value === "" ||
-          new Date(dato.created_at).getUTCMonth() + 1 ===
-            parseInt(e.target.value)) &&
-        (search === "" ||
-          dato?.cliente?.toLowerCase().includes(search.toLowerCase()) ||
-          dato?.remito?.toLowerCase().includes(search.toLowerCase()))
-    );
-
-    setResultadosFiltrados(resultadosFiltrados);
+    setResults(resultadosFiltrados);
   };
 
   const respuesta = productoSeleccionado.map(function (e) {

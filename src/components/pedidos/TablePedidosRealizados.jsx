@@ -2,9 +2,13 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { usePedidoContext } from "../../context/PedidosMensualesProvider";
 import { ModalEliminarPedidoRealizado } from "./ModalEliminarPedidoRealizado";
+import { IoCloseCircle } from "react-icons/io5";
 
 export const TablePedidosRealizados = () => {
-  const { handleDeletePresupuesto, resultadosFiltrados } = usePedidoContext();
+  const { handleDeletePresupuesto, resultadosFiltrados, results } =
+    usePedidoContext();
+
+  const [click, setClick] = useState(false);
 
   var options = {
     weekday: "long",
@@ -45,11 +49,14 @@ export const TablePedidosRealizados = () => {
           <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
             Total aberturas
           </th>
+          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
+            Clientes
+          </th>
           {/* <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">Fecha de emición</th> */}
           <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
             Fecha de creación
           </th>
-          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">Remito</th>
+          {/* <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">Remito</th> */}
           <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
             Estado del pedido
           </th>
@@ -62,7 +69,7 @@ export const TablePedidosRealizados = () => {
         </tr>
       </thead>
       <tbody>
-        {resultadosFiltrados?.map((p) => (
+        {results?.map((p) => (
           <tr key={p?.id}>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs">
               {p?.id}
@@ -78,12 +85,34 @@ export const TablePedidosRealizados = () => {
                 return sum + Number(b?.cantidad);
               }, 0)}
             </th>
+            <th
+              onClick={() => setClick(!click)}
+              className="border-[1px] border-gray-300 p-2 font-medium text-sm"
+            >
+              {!click ? (
+                <p className="p-3 font-bold bg-gray-100 rounded shadow shadow-black/50 cursor-pointer">
+                  VER CLIENTE - CLICK
+                </p>
+              ) : (
+                <div className="relative">
+                  <div className="absolute top-0 right-3 cursor-pointer">
+                    <IoCloseCircle className="text-2xl text-red-500" />
+                  </div>
+                  {[
+                    ...new Set(p?.productos.respuesta.map((c) => c.cliente)),
+                  ].map((uniqueClient, index) => (
+                    <div className="pt-3 cursor-pointer" key={index}>
+                      {index > 0 ? " - " : ""}
+                      {uniqueClient}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </th>
             <th className=" border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs ">
               {new Date(p?.created_at).toLocaleDateString("es-AR")}
             </th>
-            <th className=" border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs ">
-              {p?.remito}
-            </th>
+
             <th
               className={`${
                 p?.productos.respuesta.reduce((sum, b) => {

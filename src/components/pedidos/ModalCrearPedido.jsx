@@ -79,17 +79,25 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                   Crear el pedido
                 </Dialog.Title>
                 <form className="mt-2 border-t pt-4 pb-4 space-y-5">
-                  <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2">
                     <label className="text-[14px] font-bold max-md:text-sm">
                       Cliente:
                     </label>
-                    <input
+                    <select
                       value={cliente}
                       onChange={(e) => setCliente(e.target.value)}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] max-md:text-sm"
-                      type="text"
-                      placeholder="nombre del cliente"
-                    />
+                      className="border-gray-300 border-[1px] text-sm py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm uppercase"
+                    >
+                      <option>SELECCIONAR</option>
+                      <option>IRAOLA</option>
+                      <option>BURZACO</option>
+                      <option>LONG</option>
+                      <option>BARRANQUERAS</option>
+                      <option>MAR DEL PLATA</option>
+                      <option>URUGUAY</option>
+                      <option>POST VENTA</option>
+                      <option>OSVALDO - DUEÑO</option>
+                    </select>
                   </div>
 
                   <div className="flex flex-col gap-2">
@@ -99,13 +107,14 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                     <select
                       value={detalle}
                       onChange={(e) => setDetalle(e.target.value)}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm"
+                      className="border-gray-300 border-[1px] text-sm py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm uppercase"
                       type="text"
                       placeholder="detalle"
                     >
-                      <option>seleccionar</option>
-                      <option>herrero</option>
-                      <option>modena</option>
+                      <option>SELECCIONAR</option>
+                      <option>HERRERO</option>
+                      <option>MODENA</option>
+                      <option>MODENA A30</option>
                     </select>
                   </div>
 
@@ -120,7 +129,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                   </div>
 
                   <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll">
-                    <table className="border-[1px]  p-[5px] table-auto w-full rounded">
+                    <table className="border-[1px]  p-[5px] table-auto w-full rounded uppercase">
                       <thead>
                         <tr>
                           <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center w-[20px]">
@@ -201,7 +210,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                       Resetear productos
                     </button>
                   </div>
-                  <div className="flex flex-col gap-2">
+                  {/* <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-bold max-md:text-sm">
                       Fecha de entrega del pedido:
                     </label>
@@ -212,9 +221,9 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                       className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm"
                       placeholder="fecha"
                     />
-                  </div>
+                  </div> */}
 
-                  <div className="flex flex-col gap-2">
+                  {/* <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-bold max-md:text-sm">
                       Numero del remito:
                     </label>
@@ -225,7 +234,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                       className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm"
                       placeholder="Numero del remito"
                     />
-                  </div>
+                  </div> */}
 
                   <div className="flex flex-col gap-2">
                     <button

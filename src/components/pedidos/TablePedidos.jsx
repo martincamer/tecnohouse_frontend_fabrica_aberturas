@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { usePedidoContext } from "../../context/PedidoProvider";
-import { ModalEditarRemito } from "./ModalEditarRemito";
 import { useState } from "react";
 import { ModalEliminarPedido } from "./ModalEliminarPedido";
+import { IoCloseCircle } from "react-icons/io5";
 
 export const TablePedidos = () => {
   const { handleDeletePresupuesto, results } = usePedidoContext();
   const [obtenerId, setObtenerId] = useState("");
+  const [click, setClick] = useState(false);
 
   var options = {
     weekday: "long",
@@ -38,6 +39,7 @@ export const TablePedidos = () => {
   console.log(results);
 
   const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
+  const [guardarId, setGuardarId] = useState(false);
 
   const handleBorrarAccesorioOpen = () => {
     setOpenBorrarAccesorio(true);
@@ -48,6 +50,8 @@ export const TablePedidos = () => {
   };
 
   // Función para sumar la cantidad de todos los objetos
+
+  const [flattenedArray, setFlattenedArray] = useState([]);
 
   return (
     <table className="border-[1px] w-full rounded">
@@ -62,6 +66,9 @@ export const TablePedidos = () => {
           </th>
           <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
             Total aberturas
+          </th>
+          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
+            Clientes
           </th>
           <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
             Fecha de creación
@@ -95,6 +102,30 @@ export const TablePedidos = () => {
                 return sum + Number(b?.cantidad);
               }, 0)}
             </th>
+            <th
+              onClick={() => setClick(!click)}
+              className="border-[1px] border-gray-300 p-2 font-medium text-sm"
+            >
+              {!click ? (
+                <p className="p-3 font-bold bg-gray-100 rounded shadow shadow-black/50 cursor-pointer">
+                  VER CLIENTE - CLICK
+                </p>
+              ) : (
+                <div className="relative">
+                  <div className="absolute top-0 right-3 cursor-pointer">
+                    <IoCloseCircle className="text-2xl text-red-500" />
+                  </div>
+                  {[
+                    ...new Set(p?.productos.respuesta.map((c) => c.cliente)),
+                  ].map((uniqueClient, index) => (
+                    <div className="pt-3 cursor-pointer" key={index}>
+                      {index > 0 ? " - " : ""}
+                      {uniqueClient}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs">
               {new Date(p?.created_at).toLocaleDateString("es-AR")}
             </th>
@@ -122,7 +153,9 @@ export const TablePedidos = () => {
             <th className="border-[1px] border-gray-300 p-3 max-md:py-1 max-md:px-4">
               <button
                 className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
-                onClick={handleBorrarAccesorioOpen}
+                onClick={() => {
+                  handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                }}
               >
                 eliminar
               </button>
@@ -136,19 +169,13 @@ export const TablePedidos = () => {
                 ver pedido
               </Link>
             </th>
-
-            <ModalEliminarPedido
-              p={p.id}
-              handleEliminar={handleDeletePresupuesto}
-              openBorrarAccesorio={openBorrarAccesorio}
-              handleBorrarAccesorioClose={handleBorrarAccesorioClose}
-            />
           </tr>
         ))}
-        <ModalEditarRemito
-          obtenerId={obtenerId}
-          isOpen={isOpen}
-          closeModalRemito={closeModalRemito}
+        <ModalEliminarPedido
+          p={guardarId}
+          handleEliminar={handleDeletePresupuesto}
+          openBorrarAccesorio={openBorrarAccesorio}
+          handleBorrarAccesorioClose={handleBorrarAccesorioClose}
         />
       </tbody>
     </table>

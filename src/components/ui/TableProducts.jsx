@@ -10,6 +10,7 @@ export const TableProducts = ({
   const { handleEliminar } = useAluminioContext();
 
   const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
+  const [guardarId, setGuardarId] = useState(false);
 
   const handleBorrarAccesorioOpen = () => {
     setOpenBorrarAccesorio(true);
@@ -60,7 +61,9 @@ export const TableProducts = ({
               </th> */}
               <th className="border-[1px] border-gray-300 p-3 font-bold ">
                 <button
-                  onClick={() => handleBorrarAccesorioOpen()}
+                  onClick={() => {
+                    handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                  }}
                   className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal"
                   // onClick={() => handleEliminar(p.id)}
                 >
@@ -77,14 +80,15 @@ export const TableProducts = ({
                   editar
                 </button>
               </th>
-              <ModalEliminarProducto
-                p={p.id}
-                handleEliminar={handleEliminar}
-                openBorrarAccesorio={openBorrarAccesorio}
-                handleBorrarAccesorioClose={handleBorrarAccesorioClose}
-              />
             </tr>
           ))}
+
+          <ModalEliminarProducto
+            p={guardarId}
+            handleEliminar={handleEliminar}
+            openBorrarAccesorio={openBorrarAccesorio}
+            handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+          />
         </tbody>
       </table>
     </div>
