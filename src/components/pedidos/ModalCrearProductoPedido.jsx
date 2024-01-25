@@ -55,6 +55,7 @@ export const ModalCrearProductoPedido = ({
     setValue("ancho", productoSeleccionado[0]?.ancho);
     setValue("alto", productoSeleccionado[0]?.alto);
     setValue("cliente", productoSeleccionado[0]?.cliente);
+    setValue("cantidadFaltante", productoSeleccionado[0]?.cantidadFaltante);
   }, [productoSeleccionado]);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -209,6 +210,19 @@ export const ModalCrearProductoPedido = ({
                       className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
                       type="text"
                       placeholder="cliente"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">
+                      cantidad faltante:
+                    </label>
+                    <input
+                      {...register("cantidadFaltante", { required: true })}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      type="text"
+                      placeholder="cliente"
+                      value={0}
                     />
                   </div>
 

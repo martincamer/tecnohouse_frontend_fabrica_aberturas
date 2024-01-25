@@ -150,6 +150,7 @@ export const ModalProductoExistente = ({ isOpen, closeModal }) => {
                 <ModalSeleccionarCantidadProductoPedido
                   isOpenModalCantidad={isOpenModalCantidad}
                   closeModalCantidad={closeModalCantidad}
+                  closeModal={closeModal}
                 />
                 <button
                   type="button"

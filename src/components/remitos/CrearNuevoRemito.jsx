@@ -22,6 +22,10 @@ export const CrearNuevoRemito = ({ closeModal, isOpen }) => {
     setDireccion,
     trasladado,
     setTrasladado,
+    setRemito,
+    remito,
+    tipo,
+    setTipo,
   } = useRemitoContext();
 
   return (
@@ -92,7 +96,7 @@ export const CrearNuevoRemito = ({ closeModal, isOpen }) => {
                         onChange={(e) => setCliente(e.target.value)}
                         className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-full"
                         type="text"
-                        placeholder="nombre del cliente"
+                        placeholder="nombre de la fabrica"
                       />
                     </div>
                     <div className="flex flex-col gap-2 w-full">
@@ -224,6 +228,30 @@ export const CrearNuevoRemito = ({ closeModal, isOpen }) => {
                       className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white"
                       placeholder="fecha"
                     />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">Remito:</label>
+                    <input
+                      type="text"
+                      value={remito}
+                      onChange={(e) => setRemito(e.target.value)}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white"
+                      placeholder="num remito"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-bold">Tipo:</label>
+                    <select
+                      onChange={(e) => setTipo(e.target.value)}
+                      value={tipo}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white"
+                    >
+                      <option>SELECCIONAR</option>
+                      <option>INTERNO</option>
+                      <option>SALIDA</option>
+                    </select>
                   </div>
 
                   <div className="flex flex-col gap-2">

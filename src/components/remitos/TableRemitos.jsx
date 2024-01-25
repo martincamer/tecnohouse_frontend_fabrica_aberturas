@@ -32,7 +32,6 @@ export const TableRemitos = () => {
     setObtenerId(id);
   };
 
-  console.log(resultadosFiltrados);
   // Función para sumar la cantidad de todos los objetos
 
   return (
@@ -46,6 +45,7 @@ export const TableRemitos = () => {
           <th className="p-3">fecha</th>
           <th className="p-3">dirección</th>
           <th className="p-3">Numero - Remito</th>
+          <th className="p-3">Tipo</th>
           <th className="p-3">Eliminar</th>
           <th className="p-3">Ver pedido</th>
         </tr>
@@ -74,6 +74,9 @@ export const TableRemitos = () => {
             </th>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
               {p?.remito}{" "}
+            </th>
+            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
+              {p?.tipo}{" "}
             </th>
             <th className="border-[1px] border-gray-300 p-3">
               <button

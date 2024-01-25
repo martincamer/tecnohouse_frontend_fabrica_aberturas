@@ -40,8 +40,14 @@ export const RemitoProvider = ({ children }) => {
   const [trasladado, setTrasladado] = useState("");
   const [fecha, setFecha] = useState("");
   const [remito, setRemito] = useState("");
+  const [tipo, setTipo] = useState("");
   const [isOpenProductos, setIsOpenProductos] = useState(false);
   const [obtenerTodosLosDatos, setObtenerTodosLosDatos] = useState([]);
+
+  const [mesSeleccionado, setMesSeleccionado] = useState("");
+  const [resultadosFiltrados, setResultadosFiltrados] = useState([]);
+
+  const [results, setResults] = useState([]); // State to hold filtered results
 
   function closeModalProductos() {
     setIsOpenProductos(false);
@@ -61,25 +67,46 @@ export const RemitoProvider = ({ children }) => {
     setIsOpen(true);
   }
 
-  //buscador de pedidos
-  let results = [];
+  useEffect(() => {
+    setResults(obtenerTodosLosDatos);
+  }, [obtenerTodosLosDatos]);
 
-  //función de búsqueda
-  const searcher = (e) => {
-    setSearch(e.target.value);
+  const handleMesChange = (e) => {
+    const mesCategoria = e.target.value;
+    setMesSeleccionado(mesCategoria);
+
+    // Filtrar los resultados por mes y término de búsqueda
+    const resultadosFiltrados = obtenerTodosLosDatos.filter(
+      (dato) =>
+        (mesCategoria === "" ||
+          new Date(dato.created_at).getUTCMonth() + 1 ===
+            parseInt(mesCategoria)) &&
+        (search === "" ||
+          dato?.cliente?.toLowerCase().includes(search.toLowerCase()) ||
+          dato?.remito?.toLowerCase().includes(search.toLowerCase()))
+    );
+
+    setResults(
+      mesCategoria === "" ? obtenerTodosLosDatos : resultadosFiltrados
+    );
   };
 
-  // console.log(obtenerTodosLosDatos);
+  const searcher = (e) => {
+    setSearch(e.target.value);
 
-  if (!search) {
-    results = obtenerTodosLosDatos;
-  } else {
-    results = obtenerTodosLosDatos.filter(
+    // Filtrar los resultados por término de búsqueda y mes seleccionado
+    const resultadosFiltrados = obtenerTodosLosDatos.filter(
       (dato) =>
-        dato?.cliente?.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        dato?.remito?.toLowerCase().includes(search.toLocaleLowerCase())
+        (mesSeleccionado === "" ||
+          new Date(dato.created_at).getUTCMonth() + 1 ===
+            parseInt(mesSeleccionado)) &&
+        (e.target.value === "" ||
+          dato?.cliente?.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          dato?.remito?.toLowerCase().includes(e.target.value.toLowerCase()))
     );
-  }
+
+    setResults(resultadosFiltrados);
+  };
 
   const respuesta = productoSeleccionado.map(function (e) {
     return {
@@ -101,7 +128,7 @@ export const RemitoProvider = ({ children }) => {
     return numeroEntero;
   };
 
-  const numeroRemito = generarNumeroRandom();
+  // const numeroRemito = generarNumeroRandom();
 
   //crear factura
   const handlePedido = async () => {
@@ -110,10 +137,11 @@ export const RemitoProvider = ({ children }) => {
       productos: { respuesta },
       detalle: detalle,
       fecha: fecha,
-      remito: numeroRemito,
+      remito: remito,
       solicitante: solicitante,
       direccion: direccion,
       trasladado: trasladado,
+      tipo: tipo,
     });
 
     const presupuestoActualizado = [...datosPresupuesto, res.data];
@@ -274,7 +302,6 @@ export const RemitoProvider = ({ children }) => {
   return (
     <RemitoContext.Provider
       value={{
-        results,
         obtenerDato,
         handleSeleccionarProducto,
         obtenerProductoId,
@@ -314,6 +341,11 @@ export const RemitoProvider = ({ children }) => {
         setDireccion,
         trasladado,
         setTrasladado,
+        tipo,
+        setTipo,
+        resultadosFiltrados,
+        handleMesChange,
+        results,
       }}
     >
       {children}

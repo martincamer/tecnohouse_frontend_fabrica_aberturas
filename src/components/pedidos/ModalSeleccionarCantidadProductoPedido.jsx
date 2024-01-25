@@ -5,6 +5,7 @@ import { usePedidoContext } from "../../context/PedidoProvider";
 export const ModalSeleccionarCantidadProductoPedido = ({
   isOpenModalCantidad,
   closeModalCantidad,
+  closeModal,
 }) => {
   const [cantidad, setCantidad] = useState(0);
   const [cantidadFaltante, setCantidadFaltante] = useState(0);
@@ -154,6 +155,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                         cantidadFaltante
                       ),
                         closeModalCantidad();
+                      closeModal();
                     }}
                     className="bg-secondary max-md:text-xs text-white py-2 px-2 rounded font-bold hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
                   >

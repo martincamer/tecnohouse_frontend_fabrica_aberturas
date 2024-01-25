@@ -46,6 +46,7 @@ export const ModalSeleccionarAberturasRemito = () => {
 
     setResultadosFiltrados(resultadosFiltrados);
   };
+
   const randomIdString = Math.random().toString().substring(2);
   const randomIdNumber = parseInt(randomIdString, 10);
 

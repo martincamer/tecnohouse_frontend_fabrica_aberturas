@@ -40,6 +40,14 @@ export const ViewRemito = () => {
             {datos?.cliente}
           </span>
         </div>
+
+        <div className="font-bold mb-2 text-xl">
+          TRASLADADO POR:{" "}
+          <span className="text-blue-500 text-lg uppercase">
+            {datos?.trasladado}
+          </span>
+        </div>
+
         <div className="font-bold mb-2 text-xl">
           REMITO NUMERO:{" "}
           <span className="text-blue-500 uppercase text-lg">
@@ -66,7 +74,7 @@ export const ViewRemito = () => {
 
             <div className="flex flex-col gap-3 text-center">
               <div className="">
-                <h4 className="font-bold text-xl">REMITO INTERNO</h4>
+                <h4 className="font-bold text-xl">REMITO {datos?.tipo}</h4>
                 <p className="font-semibold text-lg">
                   N°: <span className="font-bold">{datos?.remito}</span>
                 </p>
@@ -180,9 +188,7 @@ export const ViewRemito = () => {
                 <p className="bg-gray-300 py-1 px-1 text-center font-bold h-auto">
                   TRASLADADO POR
                 </p>
-                <p className="text-center mt-5 font-bold text-2xl  uppercase">
-                  {datos?.trasladado}
-                </p>
+                <p className="text-center mt-5 font-bold text-2xl  uppercase"></p>
               </div>
               <div className="py-6"></div>
               <div>

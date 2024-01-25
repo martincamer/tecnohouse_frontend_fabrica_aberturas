@@ -4,9 +4,9 @@ import { TablePedidos } from "../../../components/pedidos/TablePedidos";
 import { usePedidoContext } from "../../../context/PedidoProvider";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Search } from "../../../components/ui/Search";
 import moment from "moment";
 import "moment/locale/es";
-import { Search } from "../../../components/ui/Search";
 
 export const Pedidos = () => {
   const {

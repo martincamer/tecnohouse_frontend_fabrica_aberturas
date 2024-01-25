@@ -7,7 +7,14 @@ import { IoCloseCircle } from "react-icons/io5";
 export const TablePedidos = () => {
   const { handleDeletePresupuesto, results } = usePedidoContext();
   const [obtenerId, setObtenerId] = useState("");
-  const [click, setClick] = useState(false);
+
+  const [clickStates, setClickStates] = useState(results.map(() => false));
+
+  const handleToggleClick = (index) => {
+    setClickStates((prevClickStates) =>
+      prevClickStates.map((state, i) => (i === index ? !state : state))
+    );
+  };
 
   var options = {
     weekday: "long",
@@ -22,22 +29,6 @@ export const TablePedidos = () => {
 
   let [isOpen, setIsOpen] = useState(false);
 
-  const openModalRemito = () => {
-    setIsOpen(true);
-  };
-
-  const closeModalRemito = () => {
-    setIsOpen(false);
-  };
-
-  const handleObtenerId = (id) => {
-    setObtenerId(id);
-  };
-
-  console.log(obtenerId);
-
-  console.log(results);
-
   const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
   const [guardarId, setGuardarId] = useState(false);
 
@@ -50,8 +41,6 @@ export const TablePedidos = () => {
   };
 
   // Función para sumar la cantidad de todos los objetos
-
-  const [flattenedArray, setFlattenedArray] = useState([]);
 
   return (
     <table className="border-[1px] w-full rounded">
@@ -86,7 +75,7 @@ export const TablePedidos = () => {
         </tr>
       </thead>
       <tbody>
-        {results.map((p) => (
+        {results.map((p, index) => (
           <tr key={p?.id}>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs">
               {p?.id}
@@ -103,10 +92,10 @@ export const TablePedidos = () => {
               }, 0)}
             </th>
             <th
-              onClick={() => setClick(!click)}
+              onClick={() => handleToggleClick(index)}
               className="border-[1px] border-gray-300 p-2 font-medium text-sm"
             >
-              {!click ? (
+              {!clickStates[index] ? (
                 <p className="p-3 font-bold bg-gray-100 rounded shadow shadow-black/50 cursor-pointer">
                   VER CLIENTE - CLICK
                 </p>
@@ -115,14 +104,27 @@ export const TablePedidos = () => {
                   <div className="absolute top-0 right-3 cursor-pointer">
                     <IoCloseCircle className="text-2xl text-red-500" />
                   </div>
-                  {[
-                    ...new Set(p?.productos.respuesta.map((c) => c.cliente)),
-                  ].map((uniqueClient, index) => (
-                    <div className="pt-3 cursor-pointer" key={index}>
-                      {index > 0 ? " - " : ""}
-                      {uniqueClient}
-                    </div>
-                  ))}
+                  {Array.from(
+                    new Set(
+                      p?.productos?.respuesta?.map((item) => item.cliente)
+                    )
+                  ).map((uniqueClient, i) => {
+                    const hasF = p?.productos?.respuesta?.some(
+                      (item) =>
+                        item.cliente === uniqueClient &&
+                        item.cantidad !== item.cantidadFaltante
+                    );
+
+                    return (
+                      <div className="pt-3 cursor-pointer" key={i}>
+                        {i > 0 ? " - " : ""}
+                        {uniqueClient}
+                        <span className="font-bold underline text-red-500 mx-1">
+                          {hasF && "FALTA REALIZAR"}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </th>

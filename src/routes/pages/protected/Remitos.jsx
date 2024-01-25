@@ -12,11 +12,12 @@ export const Remitos = () => {
     closeModal,
     searcher,
     search,
-    resultadosFiltrados,
+    results,
     handleMesChange,
     mesSeleccionado,
   } = useRemitoContext();
 
+  console.log(results);
   return (
     <section className="w-full py-14 px-14">
       <div className="border-[1px] shadow border-gray-200 py-14 px-14 rounded">
@@ -26,23 +27,28 @@ export const Remitos = () => {
 
         <div className="mt-5 flex gap-5">
           <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow">
-            <p>Pedidos generados:</p>{" "}
-            <span className="font-bold text-blue-400 text-lg"></span>
+            <p>Remitos generados:</p>{" "}
+            <span className="font-bold text-blue-400 text-lg">
+              {results?.length}
+            </span>
           </div>
 
           <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow">
             <p>Fecha del mes:</p>{" "}
-            <span className="font-bold text-blue-400 text-lg"></span>
+            <span className="font-bold text-blue-400 text-lg">
+              {new Date().toLocaleDateString()}
+            </span>
           </div>
 
           <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow">
-            <p>Total remitos generados:</p>{" "}
-            <span className="font-bold text-blue-400 text-lg"></span>
-          </div>
-
-          <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow">
-            <p>Total remitos realizados:</p>{" "}
-            <span className="font-bold text-blue-400 text-lg"></span>
+            <p>Total aberturas realizadas:</p>{" "}
+            <span className="font-bold text-blue-400 text-lg">
+              {results.map((p) =>
+                p.productos.respuesta.reduce((sum, b) => {
+                  return sum + Number(b?.cantidad);
+                }, 0)
+              )}
+            </span>
           </div>
         </div>
 

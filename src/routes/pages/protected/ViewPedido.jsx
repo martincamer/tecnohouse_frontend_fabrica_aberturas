@@ -17,6 +17,7 @@ import { DescargarPdfPedidoAberturasFaltantes } from "../../../components/pedido
 import { ModalEditarProductoPedidoEstado } from "../../../components/pedidos/ModalEditarProductoPedidoEstado";
 import { DescargarPdfPedidoAberturasEmbalaje } from "../../../components/pedidos/DescargarPdfPedidoAberturasEmbalaje";
 import { DescargarPdfPedidoSeis } from "../../../components/pedidos/DescargarPdfPedidoSeis";
+import { ModalEliminarPedido } from "../../../components/pedidos/ModalEliminarPedido";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
@@ -202,6 +203,17 @@ export const ViewPedido = () => {
   const datosMosquiteros = datos?.productos?.respuesta
     .filter((item) => item.detalle.toUpperCase().startsWith("M"))
     .reduce((total, item) => total + parseInt(item.cantidad), 0);
+
+  const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
+  const [guardarId, setGuardarId] = useState(false);
+
+  const handleBorrarAccesorioOpen = () => {
+    setOpenBorrarAccesorio(true);
+  };
+
+  const handleBorrarAccesorioClose = () => {
+    setOpenBorrarAccesorio(false);
+  };
 
   return (
     <section className="w-full py-2 px-14 max-md:py-6 max-md:px-2 flex flex-col gap-10 overflow-x-scroll">
@@ -416,7 +428,10 @@ export const ViewPedido = () => {
                   <th className="border-[1px] border-gray-300 p-3 font-medium text-sm max-md:text-xs max-md:py-1 max-md:px-4">
                     <button
                       type="button"
-                      onClick={() => handleEliminarProductoPedido(p?.id)}
+                      // onClick={() => handleEliminarProductoPedido(p?.id)}
+                      onClick={() => {
+                        handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                      }}
                       className="font-semibold text-red-400 border-[1px] px-4 py-1 border-red-300 rounded bg-red-100"
                     >
                       eliminar
@@ -460,6 +475,12 @@ export const ViewPedido = () => {
                   </th>
                 </tr>
               ))}
+              <ModalEliminarPedido
+                p={guardarId}
+                handleEliminar={handleEliminarProductoPedido}
+                openBorrarAccesorio={openBorrarAccesorio}
+                handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+              />
             </tbody>
           </table>
         </div>
