@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
 import { usePedidoContext } from "../../context/PedidoProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ModalEliminarPedido } from "./ModalEliminarPedido";
 import { IoCloseCircle } from "react-icons/io5";
 
 export const TablePedidos = () => {
   const { handleDeletePresupuesto, results } = usePedidoContext();
-  const [obtenerId, setObtenerId] = useState("");
+
+  useEffect(() => {
+    setClickStates(results.map(() => true));
+    setTimeout(() => {
+      setClickStates(results.map(() => false));
+    }, 100);
+  }, [results]);
 
   const [clickStates, setClickStates] = useState(results.map(() => false));
 

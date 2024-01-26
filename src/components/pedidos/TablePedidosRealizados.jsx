@@ -1,32 +1,26 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePedidoContext } from "../../context/PedidosMensualesProvider";
 import { ModalEliminarPedidoRealizado } from "./ModalEliminarPedidoRealizado";
 import { IoCloseCircle } from "react-icons/io5";
 
 export const TablePedidosRealizados = () => {
-  const { handleDeletePresupuesto, resultadosFiltrados, results } =
-    usePedidoContext();
+  const { handleDeletePresupuesto, results } = usePedidoContext();
+  const [clickState, setClickState] = useState(results?.map(() => false));
+  const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
 
-  const [clickState, setClickState] = useState(results.map(() => false));
+  useEffect(() => {
+    setClickState(results.map(() => true));
+    setTimeout(() => {
+      setClickState(results.map(() => false));
+    }, 100);
+  }, [results]);
+
   const handleToggle = (index) => {
     setClickState((prevClickStates) =>
-      prevClickStates.map((state, i) => (i === index ? !state : state))
+      prevClickStates?.map((state, i) => (i === index ? !state : state))
     );
   };
-
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-
-  function dateTime(data) {
-    return new Date(data).toLocaleDateString("arg", options);
-  }
-
-  const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
 
   const handleBorrarAccesorioOpen = () => {
     setOpenBorrarAccesorio(true);
@@ -35,10 +29,6 @@ export const TablePedidosRealizados = () => {
   const handleBorrarAccesorioClose = () => {
     setOpenBorrarAccesorio(false);
   };
-
-  console.log(resultadosFiltrados);
-
-  // Función para sumar la cantidad de todos los objetos
 
   return (
     <table className="border-[1px] w-full rounded">

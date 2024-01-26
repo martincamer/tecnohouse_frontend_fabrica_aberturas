@@ -18,6 +18,8 @@ import { ModalEditarProductoPedidoEstado } from "../../../components/pedidos/Mod
 import { DescargarPdfPedidoAberturasEmbalaje } from "../../../components/pedidos/DescargarPdfPedidoAberturasEmbalaje";
 import { DescargarPdfPedidoSeis } from "../../../components/pedidos/DescargarPdfPedidoSeis";
 import { ModalEliminarPedido } from "../../../components/pedidos/ModalEliminarPedido";
+import { DescargarPedidoCompletoJefeFabrica } from "../../../components/pedidos/DescargarPedidoCompletoJefeFabrica";
+import { DescargarPedidoIncompletoJefeFabrica } from "../../../components/pedidos/DescargarPedidoIncompletoJefeFabrica";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
@@ -700,6 +702,31 @@ export const ViewPedido = () => {
         >
           Descargar Pedido Mosquiteros
         </PDFDownloadLink>
+      </div>
+      <div className="border-[1px] shadow py-10 px-10 rounded flex gap-4 max-md:flex-col max-md:px-1 max-md:py-2">
+        <PDFDownloadLink
+          fileName={`${datos?.cliente}-pedido-completo-mes-${dateTime(
+            datos?.created_at
+          )}`}
+          document={<DescargarPdfPedidoCinco datos={datos} />}
+          className="bg-gray-800 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+        >
+          Descargar Pedido Completo - Cliente
+        </PDFDownloadLink>
+
+        <PDFDownloadLink
+          fileName={`${datos?.cliente}_aberturas-faltan`}
+          document={
+            <DescargarPdfPedidoAberturasEmbalaje
+              resultadoFinalAberturas={resultadoFinalAberturas}
+              datosAgrupadosEnUno={datosAgrupadosEnUno}
+              datos={datos}
+            />
+          }
+          className="bg-yellow-400 text-black py-1 px-5 rounded font-semibold max-md:text-sm"
+        >
+          Descargar Aberturas - Control y Embalaje
+        </PDFDownloadLink>
 
         <PDFDownloadLink
           fileName={`${datos?.cliente}_aberturas-faltan`}
@@ -718,25 +745,29 @@ export const ViewPedido = () => {
         <PDFDownloadLink
           fileName={`${datos?.cliente}_aberturas-faltan`}
           document={
-            <DescargarPdfPedidoAberturasEmbalaje
+            <DescargarPedidoIncompletoJefeFabrica
               resultadoFinalAberturas={resultadoFinalAberturas}
               datosAgrupadosEnUno={datosAgrupadosEnUno}
               datos={datos}
             />
           }
-          className="bg-yellow-400 text-black py-1 px-5 rounded font-semibold max-md:text-sm"
+          className="bg-orange-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm capitalize"
         >
-          Descargar Aberturas - Control y Embalaje
+          Descargar pedido incompleto entrega - Encargado Fabrica.
         </PDFDownloadLink>
 
         <PDFDownloadLink
-          fileName={`${datos?.cliente}-pedido-completo-mes-${dateTime(
-            datos?.created_at
-          )}`}
-          document={<DescargarPdfPedidoCinco datos={datos} />}
-          className="bg-gray-800 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+          fileName={`${datos?.cliente}_aberturas-faltan`}
+          document={
+            <DescargarPedidoCompletoJefeFabrica
+              resultadoFinalAberturas={resultadoFinalAberturas}
+              datosAgrupadosEnUno={datosAgrupadosEnUno}
+              datos={datos}
+            />
+          }
+          className="bg-green-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm capitalize"
         >
-          Descargar Pedido Completo - Cliente
+          Descargar pedido completo entrega - Encargado Fabrica.
         </PDFDownloadLink>
       </div>
       <ModalEditarProductoPedido

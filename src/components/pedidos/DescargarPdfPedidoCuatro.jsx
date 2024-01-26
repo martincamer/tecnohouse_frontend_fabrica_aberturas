@@ -54,6 +54,10 @@ const styles = StyleSheet.create({
     borderTop: "0.5px solid #000",
     borderBottom: "0.5px solid #000",
     width: "100%",
+    textTransform: "uppercase",
+    fontWeight: "bold",
+    backgroundColor: "#11212d",
+    color: "white",
   },
   rowTwo: {
     display: "flex",
@@ -63,6 +67,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderBottom: "0.5px solid #000",
     width: "100%",
+    textTransform: "uppercase",
+    backgroundColor: "#ccd0cf",
+    color: "black",
   },
   content_row: {
     border: "0.7px solid #000",
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: "center",
     height: "100%",
-    fontSize: "8px",
+    fontSize: "7px",
     fontFamily: "Poppins",
     fontWeight: "semibold",
   },
@@ -106,13 +113,13 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
     textAlign: "center",
     height: "100%",
-    fontSize: "8px",
+    fontSize: "7px",
     fontFamily: "Poppins",
     textTransform: "uppercase",
   },
   row1: {
     width: "100%",
-    fontSize: "8px",
+    fontSize: "7px",
     fontFamily: "Poppins",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
@@ -124,7 +131,7 @@ const styles = StyleSheet.create({
   },
   row2: {
     width: "1150px",
-    fontSize: "8px",
+    fontSize: "7px",
     fontFamily: "Poppins",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
@@ -204,20 +211,9 @@ const styles = StyleSheet.create({
 export const DescargarPdfPedidoCuatro = ({
   nuevoArregloClientes,
   datosPresupuesto,
+  clientesConCantidadInsuficiente,
+  clientesConCantidadSuficiente,
 }) => {
-  // Función para sumar la cantidad por nombre o detalle que comienza con "V"
-
-  // var options = {
-  //   weekday: "long",
-  //   year: "numeric",
-  //   month: "long",
-  //   day: "numeric",
-  // };
-
-  // function dateTime(data) {
-  //   return new Date(data).toLocaleDateString("arg", options);
-  // }
-
   const tiempoTranscurrido = Date.now();
   const hoy = new Date(tiempoTranscurrido);
 
@@ -252,8 +248,6 @@ export const DescargarPdfPedidoCuatro = ({
   let nuevosDatos = [];
 
   let clientesUnicos = new Set();
-
-  // Nuevo arreglo para almacenar los objetos únicos
 
   // Iterar sobre los datos y filtrar clientes únicos
   datosPresupuesto?.forEach((objeto) => {
@@ -309,6 +303,10 @@ export const DescargarPdfPedidoCuatro = ({
                 display: "flex",
                 flexDirection: "column-reverse",
                 gap: "3px",
+                backgroundColor: "#4a5c6a",
+                padding: "5px 10px",
+                borderRadius: "3px",
+                color: "white",
               }}
             >
               <Text
@@ -326,12 +324,40 @@ export const DescargarPdfPedidoCuatro = ({
               style={{
                 fontSize: "10px",
                 fontFamily: "Poppins",
-                fontWeight: "normal",
+                fontWeight: "semibold",
                 textTransform: "uppercase",
+                backgroundColor: "#ccd0cf",
+                padding: "5px 10px",
+                borderRadius: "3px",
+                color: "black",
               }}
             >
               {hoy.toLocaleDateString()}
             </Text>
+          </View>
+        </View>
+
+        <View>
+          <Text
+            style={{
+              fontFamily: "Poppins",
+              fontWeight: "semibold",
+              fontSize: "12px",
+              color: "#9babab",
+              width: "90%",
+              textAlign: "center",
+              backgroundColor: "#06141b",
+              margin: "0 auto",
+              padding: "3px 0px",
+              marginBottom: "5px",
+            }}
+          >
+            Aberturas entregadas a los clientes - casa
+          </Text>
+          <View className="grid grid-cols-6 text-sm">
+            {/* {clientesConCantidadInsuficiente?.map((c) => (
+              <View>{<Text>{` ${c.cliente}`}</Text>}</View>
+            ))} */}
           </View>
         </View>
 
@@ -342,7 +368,7 @@ export const DescargarPdfPedidoCuatro = ({
             gap: "15px",
           }}
         >
-          {nuevoArregloClientes.map((cliente) => (
+          {clientesConCantidadSuficiente?.map((cliente) => (
             <View>
               <View style={styles.table_intro}>
                 <Text
@@ -369,6 +395,18 @@ export const DescargarPdfPedidoCuatro = ({
                     {cliente.clienteOriginal}
                   </Text>
                 </Text>
+                <Text
+                  style={{
+                    fontSize: "8px",
+                    fontFamily: "Poppins",
+                    fontWeight: "semibold",
+                  }}
+                >
+                  Total Aberturas:{" "}
+                  {cliente?.productos?.reduce((sum, b) => {
+                    return sum + Number(b.cantidad);
+                  }, 0)}
+                </Text>
               </View>
 
               <View style={styles.table}>
@@ -377,7 +415,112 @@ export const DescargarPdfPedidoCuatro = ({
                   <Text style={styles.row1}>Cliente</Text>
                   <Text style={styles.row5}>Detalle</Text>
                   <Text style={styles.row1}>Cantidad</Text>
-                  <Text style={styles.row1}>Realizadas</Text>
+                  <Text style={styles.row1}>Entregadas</Text>
+                  <Text style={styles.row1}>Ancho x Alto</Text>
+                </View>
+
+                {cliente?.productos?.map((p) => (
+                  <View style={styles.rowTwo}>
+                    {/* <Text style={styles.row1}>{p?.id}</Text> */}
+                    <Text style={styles.row1}> {p?.cliente}</Text>
+                    <Text style={styles.row5}>{p?.detalle}</Text>
+                    <Text style={styles.row1}>{p?.cantidad}</Text>
+                    <Text style={styles.row1}>{p?.cantidadFaltante}</Text>
+                    <Text style={styles.row1}>
+                      {p?.ancho}x{p?.alto}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ))}
+        </View>
+
+        {/* // clientes insuficiente */}
+
+        <View
+          style={{
+            marginTop: "20px",
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "Poppins",
+              fontWeight: "semibold",
+              fontSize: "12px",
+              color: "#9babab",
+              width: "90%",
+              textAlign: "center",
+              backgroundColor: "#06141b",
+              margin: "0 auto",
+              padding: "3px 0px",
+              marginBottom: "5px",
+            }}
+          >
+            Aberturas no realiazadas pedido del mes a los clientes - casa
+          </Text>
+          <View className="grid grid-cols-6 text-sm">
+            {/* {clientesConCantidadInsuficiente?.map((c) => (
+              <View>{<Text>{` ${c.cliente}`}</Text>}</View>
+            ))} */}
+          </View>
+        </View>
+
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+          }}
+        >
+          {clientesConCantidadInsuficiente?.map((cliente) => (
+            <View>
+              <View style={styles.table_intro}>
+                <Text
+                  style={{
+                    fontSize: "8px",
+                    fontFamily: "Poppins",
+                    fontWeight: "semibold",
+                  }}
+                >{`Cliente - Casa: ${cliente.cliente}`}</Text>
+                <Text
+                  style={{
+                    fontSize: "8px",
+                    fontFamily: "Poppins",
+                  }}
+                >
+                  {`Lugar - Entrega de las aberturas: `}
+                  <Text
+                    style={{
+                      fontSize: "8px",
+                      fontFamily: "Poppins",
+                      fontWeight: "semibold",
+                    }}
+                  >
+                    {cliente.clienteOriginal}
+                  </Text>
+                </Text>
+                <Text
+                  style={{
+                    fontSize: "8px",
+                    fontFamily: "Poppins",
+                    fontWeight: "semibold",
+                  }}
+                >
+                  Total Aberturas:{" "}
+                  {cliente?.productos?.reduce((sum, b) => {
+                    return sum + Number(b.cantidad);
+                  }, 0)}
+                </Text>
+              </View>
+
+              <View style={styles.table}>
+                <View style={styles.row}>
+                  {/* <Text style={styles.row1}>ID</Text> */}
+                  <Text style={styles.row1}>Cliente</Text>
+                  <Text style={styles.row5}>Detalle</Text>
+                  <Text style={styles.row1}>Cantidad</Text>
+                  <Text style={styles.row1}>Entregadas</Text>
                   <Text style={styles.row1}>Ancho x Alto</Text>
                 </View>
 
@@ -402,10 +545,14 @@ export const DescargarPdfPedidoCuatro = ({
           style={{
             paddingTop: "20px",
             width: "90%",
-            margin: "0 auto",
+            margin: "30px auto 0px auto",
             display: "flex",
             flexDirection: "column",
             gap: "5px",
+            backgroundColor: "#ccd0cf",
+            padding: "20px",
+            color: "#11212d",
+            borderRadius: "5px",
           }}
         >
           <View
@@ -462,6 +609,140 @@ export const DescargarPdfPedidoCuatro = ({
               {resultadoTwo}
             </Text>
           </View>
+        </View>
+
+        <View
+          style={{
+            width: "90%",
+            margin: "20px auto",
+            padding: "10px 10px",
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "Poppins",
+              fontWeight: "semibold",
+              fontSize: "12px",
+              color: "#9babab",
+              width: "90%",
+              textAlign: "center",
+              backgroundColor: "#06141b",
+              margin: "0 auto",
+              padding: "3px 0px",
+              marginBottom: "5px",
+            }}
+          >
+            TODAS LAS ABERTURAS REALIZADAS Y NO REALIZADAS REVISAR.
+          </Text>
+        </View>
+
+        <View
+          style={{
+            width: "90%",
+            margin: "0px auto",
+            // padding: "30px 0px",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: "12px",
+            fontStyle: "Poppins",
+          }}
+        >
+          {nuevoArregloClientes.map((cliente) => (
+            <View
+              style={{
+                fontSize: "8px",
+                border: "1px solid black",
+                padding: "5px 5px",
+                borderRadius: "3px",
+                width: "200px",
+                flexDirection: "column",
+                gap: "3px",
+                display: "flex",
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: "#253745",
+                }}
+              >
+                {cliente.cliente}
+              </Text>
+              /
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 2,
+                }}
+              >
+                <Text>Lugar - entregas:</Text>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  {cliente.clienteOriginal}
+                </Text>
+              </View>
+              /
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "2px",
+                }}
+              >
+                <Text>Cantidad Aberturas:</Text>
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: "#9ba8ab",
+                  }}
+                >
+                  {cliente?.productos?.reduce((sum, b) => {
+                    return sum + Number(b?.cantidad);
+                  }, 0)}
+                </Text>
+              </View>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: "2px",
+                }}
+              >
+                <Text>Entregadas:</Text>
+                <Text
+                  style={{
+                    color: "#9ba8ab",
+                  }}
+                >
+                  {cliente?.productos?.reduce((sum, b) => {
+                    return sum + Number(b?.cantidadFaltante);
+                  }, 0)}
+                </Text>
+              </View>
+              /
+              <Text
+                style={
+                  cliente?.productos?.reduce((sum, b) => {
+                    return sum + (b?.cantidad !== b?.cantidadFaltante ? 1 : 0);
+                  }, 0) > 0
+                    ? { color: "red" }
+                    : { color: "green" }
+                }
+              >
+                {cliente?.productos?.reduce((sum, b) => {
+                  return sum + (b?.cantidad !== b?.cantidadFaltante ? 1 : 0);
+                }, 0) > 0
+                  ? "FALTA REALIZAR"
+                  : "ENTREGADO"}
+              </Text>
+            </View>
+          ))}
         </View>
       </Page>
     </Document>
