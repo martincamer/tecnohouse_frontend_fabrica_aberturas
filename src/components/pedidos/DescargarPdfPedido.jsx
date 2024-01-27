@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     borderTop: "0.5px solid #000",
     borderBottom: "0.5px solid #000",
     width: "100%",
+    textTransform: "uppercase",
   },
   rowTwo: {
     display: "flex",
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderBottom: "0.5px solid #000",
     width: "100%",
+    textTransform: "uppercase",
   },
   content_row: {
     border: "0.7px solid #000",
@@ -256,6 +258,7 @@ export const DescargarPdfPedido = ({ datos }) => {
                 fontWeight: "bold",
                 display: "flex",
                 gap: "12px",
+                textTransform: "uppercase",
               }}
             >
               Lugar o Cliente:{" "}
@@ -265,7 +268,7 @@ export const DescargarPdfPedido = ({ datos }) => {
                 fontSize: "10px",
                 fontFamily: "Poppins",
                 fontWeight: "normal",
-                textTransform: "capitalize",
+                textTransform: "uppercase",
               }}
             >
               {datos?.cliente}
@@ -283,7 +286,7 @@ export const DescargarPdfPedido = ({ datos }) => {
                 fontSize: "10px",
                 fontFamily: "Poppins",
                 fontWeight: "semibold",
-                textTransform: "capitalize",
+                textTransform: "uppercase",
               }}
             >
               Fecha de emición:
@@ -293,7 +296,7 @@ export const DescargarPdfPedido = ({ datos }) => {
                 fontSize: "10px",
                 fontFamily: "Poppins",
                 fontWeight: "normal",
-                textTransform: "capitalize",
+                textTransform: "uppercase",
               }}
             >
               {dateTime(datos?.created_at)}
@@ -343,6 +346,7 @@ export const DescargarPdfPedido = ({ datos }) => {
               style={{
                 fontSize: "10px",
                 fontFamily: "Poppins",
+                textTransform: "uppercase",
               }}
             >
               Total Aberturas:
@@ -352,6 +356,7 @@ export const DescargarPdfPedido = ({ datos }) => {
                 fontSize: "10px",
                 fontFamily: "Poppins",
                 fontWeight: "semibold",
+                textTransform: "uppercase",
               }}
             >
               {resultadoFinal?.reduce((sum, b) => {
@@ -370,18 +375,20 @@ export const DescargarPdfPedido = ({ datos }) => {
               style={{
                 fontSize: "10px",
                 fontFamily: "Poppins",
+                textTransform: "uppercase",
               }}
             >
-              Fecha de entrega del pedido:
+              CATEGORIA:
             </Text>{" "}
             <Text
               style={{
                 fontSize: "10px",
                 fontFamily: "Poppins",
                 fontWeight: "semibold",
+                textTransform: "uppercase",
               }}
             >
-              {dateTime(datos?.fecha)}
+              {datos?.detalle}
             </Text>
           </View>
         </View>

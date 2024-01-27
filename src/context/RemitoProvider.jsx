@@ -1,5 +1,6 @@
 //imports
 import { createContext, useContext, useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 // import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import {
@@ -8,8 +9,7 @@ import {
   obtenerRemitos,
   obtenerFactura,
 } from "../api/remitos.api";
-import { obtenerFacturas } from "../api/factura.api";
-
+// import { obtenerFacturas } from "../api/factura.api";
 import { obtenerUnicoPerfil } from "../api/aberturas.api";
 
 //context
@@ -95,7 +95,7 @@ export const RemitoProvider = ({ children }) => {
     setSearch(e.target.value);
 
     // Filtrar los resultados por término de búsqueda y mes seleccionado
-    const resultadosFiltrados = obtenerTodosLosDatos.filter(
+    const resultadosFiltrados = obtenerTodosLosDatos?.filter(
       (dato) =>
         (mesSeleccionado === "" ||
           new Date(dato.created_at).getUTCMonth() + 1 ===
@@ -122,17 +122,10 @@ export const RemitoProvider = ({ children }) => {
     };
   });
 
-  const generarNumeroRandom = () => {
-    const numeroDecimal = Math.random();
-    const numeroEntero = Math.floor(numeroDecimal * 1000000);
-    return numeroEntero;
-  };
-
-  // const numeroRemito = generarNumeroRandom();
-
   //crear factura
   const handlePedido = async () => {
     const res = await crearFacturaNueva({
+      id: uuidv4(),
       cliente: cliente,
       productos: { respuesta },
       detalle: detalle,
@@ -146,9 +139,9 @@ export const RemitoProvider = ({ children }) => {
 
     const presupuestoActualizado = [...datosPresupuesto, res.data];
 
-    setDatosPresupuesto(presupuestoActualizado);
+    setResults(presupuestoActualizado);
 
-    setProductoSeleccionado([]);
+    // setProductoSeleccionado([]);
 
     toast.success("¡Pedido creado correctamente!", {
       position: "top-right",
@@ -160,6 +153,12 @@ export const RemitoProvider = ({ children }) => {
       progress: undefined,
       theme: "light",
     });
+
+    console.log("Selected Products:", productoSeleccionado);
+
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
   };
 
   //fin crear factura
@@ -188,7 +187,7 @@ export const RemitoProvider = ({ children }) => {
     };
 
     const productoSeleccionadoItem = productoSeleccionado.find((item) => {
-      // return item.nombre;
+      return item.id === id; // Uncomment this line
     });
 
     if (productoSeleccionadoItem) {

@@ -81,7 +81,7 @@ export const TablePedidos = () => {
         </tr>
       </thead>
       <tbody>
-        {results.map((p, index) => (
+        {results?.map((p, index) => (
           <tr key={p?.id}>
             <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs">
               {p?.id}

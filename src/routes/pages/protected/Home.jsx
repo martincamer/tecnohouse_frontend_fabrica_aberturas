@@ -4,6 +4,7 @@ import { useAluminioContext } from "../../../context/AluminioProvider";
 import { useState, useEffect } from "react";
 import { usePedidoContext } from "../../../context/PedidoProvider";
 import moment from "moment";
+import { ChartJs } from "../../../components/ChartJs";
 
 export const Home = () => {
   const { results } = useAberturasContext();
@@ -16,6 +17,8 @@ export const Home = () => {
       return sum + Number(b.stock);
     }, 0);
   };
+
+  console.log(datosPresupuesto);
 
   const unidadesEnStockAccesorios = () => {
     return accesorios.reduce((sum, b) => {
@@ -145,6 +148,7 @@ export const Home = () => {
           </div>
         </div>
       </div>
+      <ChartJs />
     </section>
   );
 };

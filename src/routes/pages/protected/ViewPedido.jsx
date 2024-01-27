@@ -696,7 +696,7 @@ export const ViewPedido = () => {
         </PDFDownloadLink>
 
         <PDFDownloadLink
-          fileName={`${datos?.cliente}_celosias`}
+          fileName={`${datos?.cliente}_mosquiteros`}
           document={<DescargarPdfPedidoSeis datos={datos} />}
           className="bg-zinc-400 py-1 px-5 rounded text-black font-semibold max-md:text-sm"
         >

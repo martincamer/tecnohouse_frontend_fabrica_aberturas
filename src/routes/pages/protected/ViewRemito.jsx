@@ -204,11 +204,12 @@ export const ViewRemito = () => {
         </article>
       </div>
 
+      {console.log(datos)}
       <div className="mt-5">
         <PDFDownloadLink
           fileName={`REMITO N° ${datos?.remito}`}
           document={<DescargarPdfPedidoTres datos={datos} />}
-          className="bg-green-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm capitalize"
+          className="bg-green-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm capitalize cursor-pointer"
         >
           Descargar remito
         </PDFDownloadLink>

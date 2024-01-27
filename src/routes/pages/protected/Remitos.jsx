@@ -1,6 +1,5 @@
 import "moment/locale/es";
 import { Search } from "../../../components/ui/Search";
-import { TablePedidos } from "../../../components/pedidos/TablePedidos";
 import { CrearNuevoRemito } from "../../../components/remitos/CrearNuevoRemito";
 import { useRemitoContext } from "../../../context/RemitoProvider";
 import { TableRemitos } from "../../../components/remitos/TableRemitos";
@@ -43,11 +42,12 @@ export const Remitos = () => {
           <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow">
             <p>Total aberturas realizadas:</p>{" "}
             <span className="font-bold text-blue-400 text-lg">
-              {results.map((p) =>
+              {results?.map((p) =>
                 p.productos.respuesta.reduce((sum, b) => {
                   return sum + Number(b?.cantidad);
                 }, 0)
-              )}
+              )}{" "}
+              {results.length === 0 ? 0 : ""}
             </span>
           </div>
         </div>

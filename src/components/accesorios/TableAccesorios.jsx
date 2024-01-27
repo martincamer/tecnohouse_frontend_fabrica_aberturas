@@ -57,14 +57,11 @@ export const TableAccesorios = ({
               <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
                 {p.descripcion}
               </th>
-              {/* <th className="border-[1px] border-gray-300 p-3 font-medium">
-                {p.disponible ? "SI" : "NO"}
-              </th> */}
+
               <th className="border-[1px] border-gray-300 p-3 font-bold max-md:p-2">
                 <button
                   className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal 
 "
-                  // onClick={() => handleEliminar(p.id)}
                   onClick={() => {
                     handleBorrarAccesorioOpen(), setGuardarId(p.id);
                   }}
@@ -81,7 +78,6 @@ export const TableAccesorios = ({
                 >
                   editar
                 </button>
-                |
               </th>
             </tr>
           ))}

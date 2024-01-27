@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useRemitoContext } from "../../context/RemitoProvider";
 
 export const TableRemitos = () => {
-  const { handleDeletePresupuesto, resultadosFiltrados, results } =
-    useRemitoContext();
+  const { handleDeletePresupuesto, results } = useRemitoContext();
   const [obtenerId, setObtenerId] = useState("");
 
   var options = {
