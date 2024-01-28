@@ -128,7 +128,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                     </button>
                   </div>
 
-                  <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll">
+                  <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll h-[400px] overflow-y-scroll">
                     <table className="border-[1px]  p-[5px] table-auto w-full rounded uppercase">
                       <thead>
                         <tr>
