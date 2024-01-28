@@ -7,13 +7,13 @@ import {
   Font,
   Image,
 } from "@react-pdf/renderer";
-import poppinsBold from "../../fonts/Poppins-Bold.ttf";
-import poppinsSemiBold from "../../fonts/Poppins-SemiBold.ttf";
-import poppinsRegular from "../../fonts/Poppins-Regular.ttf";
+import poppinsBold from "../../fonts/Montserrat-Bold.ttf";
+import poppinsSemiBold from "../../fonts/Montserrat-SemiBold.ttf";
+import poppinsRegular from "../../fonts/Montserrat-Regular.ttf";
 import imagen from "../../../public/logo.png";
 
 Font.register({
-  family: "Poppins",
+  family: "Montserrat",
   fonts: [
     {
       src: poppinsRegular,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     height: "100%",
     fontSize: "8px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     fontWeight: "semibold",
     textTransform: "uppercase",
   },
@@ -107,14 +107,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     height: "100%",
     fontSize: "8px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     fontWeight: "semibold",
     textTransform: "uppercase",
   },
   row1: {
     width: "100%",
     fontSize: "8px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   row6: {
     width: "220px",
     fontSize: "8px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   row2: {
     width: "1000px",
     fontSize: "8px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   row4: {
     width: "50%",
     fontSize: "10px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     fontWeight: "bold",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
@@ -294,6 +294,38 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
           style={{
             width: "90%",
             margin: "0 auto",
+            padding: "20px 0px 0px 0px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "Montserrat",
+              fontWeight: "bold",
+              fontSize: "15px",
+              textDecoration: "underline",
+            }}
+          >
+            PEDIDO ABERTURAS REALIZADAS - {datos?.cliente}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Montserrat",
+              fontWeight: "bold",
+              fontSize: "15px",
+              textDecoration: "underline",
+            }}
+          >
+            PEDIDO - N°{datos?.id}
+          </Text>
+        </View>
+        <View
+          style={{
+            width: "90%",
+            margin: "0 auto",
             padding: "30px 0px 0px 0px",
             display: "flex",
             alignItems: "center",
@@ -331,7 +363,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontWeight: "semibold",
                 display: "flex",
                 alignItems: "center",
@@ -344,7 +376,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontWeight: "bold",
               }}
             >
@@ -367,7 +399,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontWeight: "semibold",
                 textTransform: "uppercase",
               }}
@@ -377,7 +409,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontWeight: "normal",
                 textTransform: "uppercase",
                 textDecoration: "underline",
@@ -407,7 +439,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
               >
                 <Text
                   style={{
-                    fontFamily: "Poppins",
+                    fontFamily: "Montserrat",
                     fontWeight: "semibold",
                     fontSize: "10px",
                     textAlign: "left",
@@ -469,7 +501,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
               <Text
                 style={{
                   fontSize: "10px",
-                  fontFamily: "Poppins",
+                  fontFamily: "Montserrat",
                   textTransform: "uppercase",
                 }}
               >
@@ -478,7 +510,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
               <Text
                 style={{
                   fontSize: "10px",
-                  fontFamily: "Poppins",
+                  fontFamily: "Montserrat",
                   fontWeight: "semibold",
                   textTransform: "uppercase",
                 }}
@@ -496,7 +528,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
               <Text
                 style={{
                   fontSize: "10px",
-                  fontFamily: "Poppins",
+                  fontFamily: "Montserrat",
                 }}
               >
                 Total Aberturas Realizadas:
@@ -504,7 +536,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
               <Text
                 style={{
                   fontSize: "10px",
-                  fontFamily: "Poppins",
+                  fontFamily: "Montserrat",
                   fontWeight: "semibold",
                   textTransform: "uppercase",
                 }}
@@ -523,7 +555,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 textTransform: "uppercase",
               }}
             >
@@ -532,7 +564,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontWeight: "semibold",
                 textTransform: "uppercase",
               }}

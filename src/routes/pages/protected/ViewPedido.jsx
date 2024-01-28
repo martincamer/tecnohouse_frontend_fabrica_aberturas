@@ -20,6 +20,7 @@ import { DescargarPdfPedidoSeis } from "../../../components/pedidos/DescargarPdf
 import { ModalEliminarPedido } from "../../../components/pedidos/ModalEliminarPedido";
 import { DescargarPedidoCompletoJefeFabrica } from "../../../components/pedidos/DescargarPedidoCompletoJefeFabrica";
 import { DescargarPedidoIncompletoJefeFabrica } from "../../../components/pedidos/DescargarPedidoIncompletoJefeFabrica";
+import { CrearNuevoPedidoViewPedido } from "../../../components/pedidos/CrearNuevoPedidoViewPedido";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
@@ -67,6 +68,7 @@ export const ViewPedido = () => {
   };
 
   let [isOpen, setIsOpen] = useState(false);
+  let [isOpenCrarPedido, setIsOpenCrearPedido] = useState(false);
   let [isOpenEstado, setIsOpenEstado] = useState(false);
 
   const openModal = () => {
@@ -75,6 +77,14 @@ export const ViewPedido = () => {
 
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  const openModalCrearPedidos = () => {
+    setIsOpenCrearPedido(true);
+  };
+
+  const closeModalCrearPedidos = () => {
+    setIsOpenCrearPedido(false);
   };
 
   const openModalEstado = () => {
@@ -186,6 +196,13 @@ export const ViewPedido = () => {
   let resultadoFinalAberturas = datos?.productos?.respuesta?.reduce(
     (sum, d) => {
       return sum + Number(d.cantidad !== d.cantidadFaltante && d.cantidad);
+    },
+    0
+  );
+
+  let resultadoFinalAberturasEmbalaje = datos?.productos?.respuesta?.reduce(
+    (sum, d) => {
+      return sum + Number(d.cantidad);
     },
     0
   );
@@ -660,37 +677,35 @@ export const ViewPedido = () => {
       <div className="border-[1px] shadow py-10 px-10 rounded flex gap-4 max-md:flex-col max-md:px-1 max-md:py-2">
         <button
           onClick={() => openModalCrearPedido()}
-          className="bg-green-500 py-1 px-5 rounded shadow text-white font-semibold max-md:text-sm"
+          className="bg-green-500 py-1 px-5 rounded shadow text-white font-bold max-md:text-sm"
         >
           Crear un nuevo producto
         </button>
-
-        {/* <Link
-          to={`/pedido-pdf/${datos.id}`}
-          // onClick={() => openModalCrearPedido()}
-          className="bg-blue-500 py-1 px-5 rounded shadow text-white font-semibold"
+        <button
+          onClick={() => openModalCrearPedidos()}
+          className="bg-red-500 py-1 px-5 rounded shadow text-white max-md:text-sm font-bold"
         >
-          Ver pedido - pdf
-        </Link> */}
+          Crear nuevo pedido
+        </button>
 
         <PDFDownloadLink
           fileName={`${datos?.cliente}_puertas`}
           document={<DescargarPdfPedido datos={datos} />}
-          className="bg-orange-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+          className="bg-orange-500 py-1 px-5 rounded text-white font-bold max-md:text-sm"
         >
           Descargar Pedido Puertas
         </PDFDownloadLink>
         <PDFDownloadLink
           fileName={`${datos?.cliente}_ventanas`}
           document={<DescargarPdfPedidoDos datos={datos} />}
-          className="bg-pink-400 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+          className="bg-pink-400 py-1 px-5 rounded text-white font-bold max-md:text-sm"
         >
           Descargar Pedido Ventanas
         </PDFDownloadLink>
         <PDFDownloadLink
           fileName={`${datos?.cliente}_celosias`}
           document={<DescargarPdfPedidoTres datos={datos} />}
-          className="bg-blue-400 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+          className="bg-blue-400 py-1 px-5 rounded text-white font-bold max-md:text-sm"
         >
           Descargar Pedido Celosias de abrir - corredizas
         </PDFDownloadLink>
@@ -698,7 +713,7 @@ export const ViewPedido = () => {
         <PDFDownloadLink
           fileName={`${datos?.cliente}_mosquiteros`}
           document={<DescargarPdfPedidoSeis datos={datos} />}
-          className="bg-zinc-400 py-1 px-5 rounded text-black font-semibold max-md:text-sm"
+          className="bg-zinc-400 py-1 px-5 rounded text-black font-bold max-md:text-sm"
         >
           Descargar Pedido Mosquiteros
         </PDFDownloadLink>
@@ -709,7 +724,7 @@ export const ViewPedido = () => {
             datos?.created_at
           )}`}
           document={<DescargarPdfPedidoCinco datos={datos} />}
-          className="bg-gray-800 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+          className="bg-gray-800 py-1 px-5 rounded text-white font-bold max-md:text-sm"
         >
           Descargar Pedido Completo - Cliente
         </PDFDownloadLink>
@@ -718,12 +733,12 @@ export const ViewPedido = () => {
           fileName={`${datos?.cliente}_aberturas-faltan`}
           document={
             <DescargarPdfPedidoAberturasEmbalaje
-              resultadoFinalAberturas={resultadoFinalAberturas}
+              resultadoFinalAberturas={resultadoFinalAberturasEmbalaje}
               datosAgrupadosEnUno={datosAgrupadosEnUno}
               datos={datos}
             />
           }
-          className="bg-yellow-400 text-black py-1 px-5 rounded font-semibold max-md:text-sm"
+          className="bg-yellow-400 text-black py-1 px-5 rounded font-bold max-md:text-sm"
         >
           Descargar Aberturas - Control y Embalaje
         </PDFDownloadLink>
@@ -737,7 +752,7 @@ export const ViewPedido = () => {
               datos={datos}
             />
           }
-          className="bg-red-400 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+          className="bg-red-400 py-1 px-5 rounded text-white font-bold max-md:text-sm"
         >
           Descargar Aberturas faltantes
         </PDFDownloadLink>
@@ -751,7 +766,7 @@ export const ViewPedido = () => {
               datos={datos}
             />
           }
-          className="bg-orange-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm capitalize"
+          className="bg-orange-500 py-1 px-5 rounded text-white font-bold max-md:text-sm capitalize"
         >
           Descargar pedido incompleto entrega - Encargado Fabrica.
         </PDFDownloadLink>
@@ -765,7 +780,7 @@ export const ViewPedido = () => {
               datos={datos}
             />
           }
-          className="bg-green-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm capitalize"
+          className="bg-green-500 py-1 px-5 rounded text-white font-bold max-md:text-sm capitalize"
         >
           Descargar pedido completo entrega - Encargado Fabrica.
         </PDFDownloadLink>
@@ -784,6 +799,11 @@ export const ViewPedido = () => {
         datos={datos}
         isOpenPedido={isOpenPedido}
         closeModalCrearPedido={closeModalCrearPedido}
+      />
+      <CrearNuevoPedidoViewPedido
+        datos={datos}
+        isOpenCrarPedido={isOpenCrarPedido}
+        closeModalCrearPedidos={closeModalCrearPedidos}
       />
     </section>
   );

@@ -6,12 +6,12 @@ import {
   StyleSheet,
   Font,
 } from "@react-pdf/renderer";
-import poppinsBold from "../../fonts/Poppins-Bold.ttf";
-import poppinsSemiBold from "../../fonts/Poppins-SemiBold.ttf";
-import poppinsRegular from "../../fonts/Poppins-Regular.ttf";
+import poppinsBold from "../../fonts/Montserrat-Bold.ttf";
+import poppinsSemiBold from "../../fonts/Montserrat-SemiBold.ttf";
+import poppinsRegular from "../../fonts/Montserrat-Regular.ttf";
 
 Font.register({
-  family: "Poppins",
+  family: "Montserrat",
   fonts: [
     {
       src: poppinsRegular,
@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
     borderTop: "0.5px solid #000",
     borderBottom: "0.5px solid #000",
     width: "100%",
+    textTransform: "uppercase",
+    fontWeight: "semibold",
   },
   rowTwo: {
     display: "flex",
@@ -54,6 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderBottom: "0.5px solid #000",
     width: "100%",
+    textTransform: "uppercase",
   },
   content_row: {
     border: "0.7px solid #000",
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     height: "100%",
     fontSize: "8px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     fontWeight: "semibold",
     textTransform: "uppercase",
   },
@@ -99,14 +102,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     height: "100%",
     fontSize: "8px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     fontWeight: "semibold",
     textTransform: "uppercase",
   },
   row1: {
     width: "100%",
     fontSize: "8px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
@@ -116,9 +119,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: "2px",
   },
   row6: {
-    width: "220px",
+    width: "100%",
     fontSize: "8px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
   row2: {
     width: "1480px",
     fontSize: "10px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
     borderLeft: "0.5px solid #000",
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
   row4: {
     width: "50%",
     fontSize: "10px",
-    fontFamily: "Poppins",
+    fontFamily: "Montserrat",
     fontWeight: "bold",
     paddingTop: 8,
     borderRight: "0.5px solid #000",
@@ -277,6 +280,38 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
           style={{
             width: "90%",
             margin: "0 auto",
+            padding: "20px 0px 0px 0px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: "Montserrat",
+              fontWeight: "bold",
+              fontSize: "15px",
+              textDecoration: "underline",
+            }}
+          >
+            LINEA - {datos?.detalle}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Montserrat",
+              fontWeight: "bold",
+              fontSize: "15px",
+              textDecoration: "underline",
+            }}
+          >
+            PEDIDO - N°{datos?.id}
+          </Text>
+        </View>
+        <View
+          style={{
+            width: "90%",
+            margin: "0 auto",
             padding: "30px 0px",
             display: "flex",
             flexDirection: "row",
@@ -294,7 +329,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontWeight: "bold",
                 display: "flex",
                 gap: "12px",
@@ -306,7 +341,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontWeight: "normal",
                 textTransform: "uppercase",
               }}
@@ -324,7 +359,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontWeight: "semibold",
                 textTransform: "uppercase",
               }}
@@ -334,7 +369,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontWeight: "normal",
                 textTransform: "uppercase",
               }}
@@ -359,7 +394,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
               >
                 <Text
                   style={{
-                    fontFamily: "Poppins",
+                    fontFamily: "Montserrat",
                     fontWeight: "semibold",
                     fontSize: "10px",
                     textAlign: "left",
@@ -369,9 +404,9 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
                 </Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.row6}>Cod.</Text>
+                <Text style={styles.row6}>Categoria</Text>
                 <Text style={styles.row5}>Detalle</Text>
-                <Text style={styles.row3}>Color</Text>
+                {/* <Text style={styles.row3}>Color</Text> */}
                 <Text style={styles.row3}>Ancho x Alto</Text>
                 <Text style={styles.row3}>Cantidad</Text>
                 <Text style={styles.row3}>Realizadas</Text>
@@ -379,9 +414,9 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
 
               {p?.productos?.map((producto) => (
                 <View key={p?.id} style={styles.rowTwo}>
-                  <Text style={styles.row6}>{producto?.nombre}</Text>
+                  <Text style={styles.row6}>{producto?.categoria}</Text>
                   <Text style={styles.row2}>{producto?.detalle}</Text>
-                  <Text style={styles.row1}>{producto?.color}</Text>
+                  {/* <Text style={styles.row1}>{producto?.color}</Text> */}
                   <Text style={styles.row1}>
                     {producto?.ancho}x{producto?.alto}
                   </Text>
@@ -400,7 +435,6 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
           }}
         >
           <View
@@ -422,16 +456,16 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
               <Text
                 style={{
                   fontSize: "10px",
-                  fontFamily: "Poppins",
+                  fontFamily: "Montserrat",
                   textTransform: "uppercase",
                 }}
               >
-                Total Aberturas:
+                Total:
               </Text>{" "}
               <Text
                 style={{
                   fontSize: "10px",
-                  fontFamily: "Poppins",
+                  fontFamily: "Montserrat",
                   fontWeight: "semibold",
                   textTransform: "uppercase",
                 }}
@@ -449,15 +483,15 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
               <Text
                 style={{
                   fontSize: "10px",
-                  fontFamily: "Poppins",
+                  fontFamily: "Montserrat",
                 }}
               >
-                Total Aberturas Realizadas:
+                Total Realizadas:
               </Text>{" "}
               <Text
                 style={{
                   fontSize: "10px",
-                  fontFamily: "Poppins",
+                  fontFamily: "Montserrat",
                   fontWeight: "semibold",
                   textTransform: "uppercase",
                 }}
@@ -476,7 +510,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 textTransform: "uppercase",
               }}
             >
@@ -485,7 +519,7 @@ export const DescargarPdfPedidoCinco = ({ datos }) => {
             <Text
               style={{
                 fontSize: "10px",
-                fontFamily: "Poppins",
+                fontFamily: "Montserrat",
                 fontWeight: "semibold",
                 textTransform: "uppercase",
               }}

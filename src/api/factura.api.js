@@ -21,3 +21,6 @@ export const obtenerValorUnico = (obtenerId) =>
 
 export const crearValorPedidoUnico = (id, data) =>
   axios.post(`/${id}/pedido-create`, data);
+
+export const crearValorPedidoUnicos = (id, data) =>
+  axios.post(`/pedido/${id}/crear-productos`, data);
