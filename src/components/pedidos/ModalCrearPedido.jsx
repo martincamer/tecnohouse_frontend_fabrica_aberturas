@@ -80,13 +80,13 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                 </Dialog.Title>
                 <form className="mt-2 border-t pt-4 pb-4 space-y-5">
                   <div className="flex items-center gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal max-md:text-sm text-slate-700">
                       Cliente:
                     </label>
                     <select
                       value={cliente}
                       onChange={(e) => setCliente(e.target.value)}
-                      className="border-gray-300 border-[1px] text-sm py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm uppercase"
+                      className="border-slate-300 border-[1px] text-sm py-2 px-2 rounded-xl text-slate-700 shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm uppercase"
                     >
                       <option>SELECCIONAR</option>
                       <option>IRAOLA</option>
@@ -101,13 +101,13 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal max-md:text-sm text-slate-700">
                       Categoria del pedido:
                     </label>
                     <select
                       value={detalle}
                       onChange={(e) => setDetalle(e.target.value)}
-                      className="border-gray-300 border-[1px] text-sm py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm uppercase"
+                      className="border-slate-300 border-[1px] text-sm py-2 px-2 rounded-xl text-slate-700 shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm uppercase"
                       type="text"
                       placeholder="detalle"
                     >
@@ -120,7 +120,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
 
                   <div>
                     <button
-                      className="font-bold bg-green-500 py-2 px-6 rounded text-white shadow max-md:text-xs"
+                      className="font-normal bg-indigo-500 py-2 px-6 rounded-xl text-white shadow max-md:text-xs"
                       type="button"
                       onClick={openModalProductos}
                     >
@@ -128,74 +128,77 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                     </button>
                   </div>
 
-                  <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll h-[400px] overflow-y-scroll">
-                    <table className="border-[1px]  p-[5px] table-auto w-full rounded uppercase">
+                  <div className="overflow-x-auto rounded-lg border border-gray-200 mt-5">
+                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                       <thead>
                         <tr>
-                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center w-[20px]">
+                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                             Numero
                           </th>
-                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
+                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                             Codigo
                           </th>
-                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
+                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                             Detalle
                           </th>
-                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
+                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                             Color
                           </th>
-                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
+                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                             Ancho - Alto
                           </th>
-                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
+                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                             Categoria
                           </th>
-                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
+                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                             Cliente
                           </th>
-                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
+                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                             Cantidad
                           </th>
-                          <th className="p-2 max-md:p-1 max-md:px-4 max-md:text-xs text-sm font-extrabold text-center">
+                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                             Eliminar
                           </th>
                         </tr>
                       </thead>
                       <tbody>
                         {productoSeleccionado.map((p) => (
-                          <tr key={p.id}>
-                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center w-[20px]">
+                          <tr
+                            key={p.id}
+                            className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
+                          >
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.id}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                            </td>
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.nombre}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                            </td>
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.detalle}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                            </td>
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.color}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                            </td>
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.ancho}x{p.alto}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                            </td>
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.categoria}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                            </td>
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.cliente}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                            </td>
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p?.cantidad}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-2 text-sm text-center">
+                            </td>
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               <button
-                                className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer font-bold text-center"
+                                className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 rounded-xl hover:bg-red-50 duration-300 cursor-pointer font-normal text-center border-red-900 border-[1px]"
                                 onClick={() => deleteProducto(p.id)}
                               >
                                 eliminar producto
                               </button>
-                            </th>
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -205,7 +208,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                     <button
                       onClick={deleteToResetProductos}
                       type="button"
-                      className="bg-red-100/90 border-red-300 border-[0.5px] text-red-400 rounded py-1 px-4 shadow font-bold mt-2 max-md:text-sm"
+                      className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 rounded-xl hover:bg-red-50 duration-300 cursor-pointer font-normal text-center border-red-900 border-[1px]"
                     >
                       Resetear productos
                     </button>
@@ -218,7 +221,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                       type="date"
                       value={fecha}
                       onChange={(e) => setFecha(e.target.value)}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm"
                       placeholder="fecha"
                     />
                   </div>
@@ -236,7 +239,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                     />
                   </div> */}
 
-                  <div className="flex flex-col gap-2">
+                  <div className="flex gap-2">
                     <button
                       type="button"
                       onClick={() => {
@@ -244,7 +247,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                           closeModal(), handlePedido();
                         }
                       }}
-                      className="bg-green-500 py-2 px-2 rounded text-white font-bold shadow-md hover:translate-x-1 transition-all ease-in-out max-md:text-xs"
+                      className="bg-indigo-500 py-2 px-6 rounded-xl text-white font-normal shadow-md hover:translate-x-1 transition-all ease-in-out max-md:text-xs"
                     >
                       Generar pedido
                     </button>

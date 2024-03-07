@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
   content: {
     height: "100%",
     width: "100%",
+    padding: "30px 30px",
   },
   content_page: {
     height: "100%",

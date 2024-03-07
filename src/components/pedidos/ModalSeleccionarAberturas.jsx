@@ -82,7 +82,7 @@ export const ModalSeleccionarAberturas = () => {
                 >
                   Elegir Abertura
                 </Dialog.Title>
-                <Search search={search} searcher={searcher} />
+                <Search variable="w-2/5" search={search} searcher={searcher} />
                 {errorProducto && (
                   <div>
                     <span className="bg-red-500 py-2 px-2 text-white font-bold rounded-md">
@@ -90,60 +90,60 @@ export const ModalSeleccionarAberturas = () => {
                     </span>
                   </div>
                 )}
-                <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full h-[300px] overflow-y-scroll">
+                <div className="border-[1px] border-gray-200 rounded-xl shadow-black/10 shadow flex flex-col gap-3 w-full h-[300px] overflow-y-scroll">
                   <table className="border-[1px]  p-[5px] table-auto w-full rounded uppercase">
                     <thead>
                       <tr>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
+                        {/* <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
                           Numero
-                        </th>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
+                        </th> */}
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
                           Codigo
                         </th>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
                           Detalle
                         </th>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
                           Color
                         </th>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
                           Ancho - Alto
                         </th>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
                           Categoria
                         </th>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
                           Seleccionar
                         </th>
                       </tr>
                     </thead>
                     {results.map((c) => (
                       <tbody key={c.id}>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[20px]">
+                        {/* <th className="border-b-[1px] border-gray-300 py-3 px-3 text-sm max-md:text-xs text-center w-[20px]">
                           {c.id}
-                        </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center">
+                        </th> */}
+                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
                           {c.nombre}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center">
+                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
                           {c.descripcion}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center">
+                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
                           {c.color}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center">
+                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
                           {c.ancho}x{c.alto}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center">
+                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
                           {c.categoria}
                         </th>
-                        <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs w-[120px] text-center">
+                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs w-[120px] text-center font-normal">
                           <Link
                             onClick={() => {
                               openModalCantidad(),
                                 handleSeleccionarProducto(c.id);
                             }}
-                            className="bg-secondary py-1 px-2 text-center text-white rounded-md text-center"
+                            className="bg-slate-700 py-2 px-2 text-white rounded-xl shadow text-center"
                           >
                             Seleccionar
                           </Link>

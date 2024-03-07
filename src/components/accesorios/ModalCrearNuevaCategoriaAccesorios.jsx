@@ -94,7 +94,7 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
+                  className="text-base font-normal text-slate-800 leading-6  max-md:text-md"
                 >
                   Crear nueva categoria
                 </Dialog.Title>
@@ -103,7 +103,7 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
                       Nombre de la categoria:
                     </label>
                     <input
@@ -115,7 +115,7 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="max-md:text-xs bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer"
+                      className="max-md:text-xs bg-indigo-500 text-sm font-normal hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white text-center cursor-pointer"
                       type="submit"
                       value={"Crear categoria"}
                       onClick={closeModalCrearCategoria}

@@ -1,8 +1,9 @@
 //import {}
+// import { Productos } from "./routes/pages/protected/Productos";
+// import { Accesorios } from "./routes/pages/protected/Accesorios";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { AluminioProvider } from "../src/context/AluminioProvider";
 import { useAuth } from "./context/AuthProvider";
-import { Productos } from "./routes/pages/protected/Productos";
 import { Sidebar } from "./components/ui/Sidebar";
 import { Navbar } from "./components/Navbar";
 import { NotFound } from "./routes/pages/protected/NotFound";
@@ -10,24 +11,21 @@ import { Login } from "./routes/pages/Login";
 import { Register } from "./routes/pages/Register";
 import { Home } from "./routes/pages/protected/Home";
 import { AccesoriosProvider } from "./context/AccesoriosProvider";
-import { Accesorios } from "./routes/pages/protected/Accesorios";
 import { AberturasProvider } from "./context/AluminioAberturas";
 import { Aberturas } from "./routes/pages/protected/Aberturas";
 import { Pedidos } from "./routes/pages/protected/Pedidos";
 import { PedidoProvider } from "./context/PedidoProvider";
 import { ViewPedido } from "./routes/pages/protected/ViewPedido";
-import { ViewPedidoPdf } from "./routes/pages/protected/ViewPedidoPdf";
-import { PedidoCompletoFinal } from "./routes/pages/protected/PedidoCompletoFinal";
 import { PedidosMensualesProvider } from "./context/PedidosMensualesProvider";
 import { PedidosRealizados } from "./routes/pages/protected/PedidosRealizados";
 import { ClientePedidoMuestra } from "./routes/pages/protected/ClientePedidoMuestra";
-import { Remitos } from "./routes/pages/protected/Remitos";
 import { RemitoProvider } from "./context/RemitoProvider";
-import { ViewRemito } from "./routes/pages/protected/ViewRemito";
+import { ViewPdf } from "./routes/pages/protected/ViewPdf";
 //import normales
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
+import { VerClientesFinalizados } from "./routes/pages/protected/VerClientesFinalizados";
 
 function App() {
   const { isAuth } = useAuth();
@@ -68,21 +66,20 @@ function App() {
             >
               <Route index path="/" element={<Home />} />
               <Route path="productos" element={<Aberturas />} />
-              <Route path="perfiles" element={<Productos />} />
-              <Route path="accesorios" element={<Accesorios />} />
               <Route path="pedidos" element={<Pedidos />} />
               <Route
                 path="pedidos-realizados"
                 element={<PedidosRealizados />}
               />
               <Route path="pedido/:id" element={<ViewPedido />} />
-              <Route path="pedido-pdf/:id" element={<ViewPedidoPdf />} />
-              <Route path="pedido-completo" element={<PedidoCompletoFinal />} />
-              <Route path="remitos" element={<Remitos />} />
-              <Route path="remitos/:id" element={<ViewRemito />} />
               <Route
                 path="cliente/pedido/:cliente"
                 element={<ClientePedidoMuestra />}
+              />
+              <Route path="view-pdf" element={<ViewPdf />} />
+              <Route
+                path="clientes-finalizados"
+                element={<VerClientesFinalizados />}
               />
             </Route>
           </Route>

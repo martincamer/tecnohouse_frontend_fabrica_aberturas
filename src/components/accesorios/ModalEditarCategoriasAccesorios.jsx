@@ -99,7 +99,7 @@ export const ModalEditarCategoriasAccesorios = () => {
               <div className="inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl w-[350px] max-md:w-full">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
+                  className="text-base font-medium text-slate-800 leading-6 text-gray-900 max-md:text-md"
                 >
                   Editar categoria
                 </Dialog.Title>
@@ -108,7 +108,7 @@ export const ModalEditarCategoriasAccesorios = () => {
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
                       Editar la categoria:
                     </label>
                     <input
@@ -119,12 +119,12 @@ export const ModalEditarCategoriasAccesorios = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slae-700 max-md:text-sm">
                       No modificar el ID categoria:
                     </label>
                     <input
                       {...register("id", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-gray-300 text-slate-700 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="id no tocar"
                       disabled
@@ -132,7 +132,7 @@ export const ModalEditarCategoriasAccesorios = () => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="max-md:text-xs bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer"
+                      className="max-md:text-xs bg-indigo-500 text-sm font-normal hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white text-center cursor-pointer"
                       type="submit"
                       value={"Editar categoria"}
                       onClick={closeModalEditarCategoria}

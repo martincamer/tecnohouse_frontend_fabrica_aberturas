@@ -2,8 +2,6 @@ import logo from "../../../../public/logo.png";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { obtenerFactura } from "../../../api/remitos.api";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { DescargarPdfPedidoTres } from "../../../components/pedidos/DescargarPdfRemito";
 
 export const ViewRemito = () => {
   //   const { obtenerDato, unicoPresupuesto } = useRemitoContext();
@@ -202,17 +200,6 @@ export const ViewRemito = () => {
             </div>
           </div>
         </article>
-      </div>
-
-      {console.log(datos)}
-      <div className="mt-5">
-        <PDFDownloadLink
-          fileName={`REMITO N° ${datos?.remito}`}
-          document={<DescargarPdfPedidoTres datos={datos} />}
-          className="bg-green-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm capitalize cursor-pointer"
-        >
-          Descargar remito
-        </PDFDownloadLink>
       </div>
     </section>
   );

@@ -11,20 +11,20 @@ export const IntroAberturasStock = ({ results }) => {
   console.log(results);
 
   return (
-    <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex gap-2 w-full text-center">
-      <div className="py-[10px] px-[10px] border-gray-200 flex flex-col gap-2 border-r-[1px] w-full">
-        <p className="font-semibold text-lg max-md:text-md">
+    <div className="border-[1px] border-slate-300 bg-slate-100 rounded shadow-black/10 shadow flex gap-2 w-full text-center items-center">
+      <div className="py-[20px] px-[0px] border-slate-300 flex flex-col gap-2 border-r-[1px] w-full">
+        <p className="text-slate-700 text-sm max-md:text-md">
           Unidades en Stock
         </p>
-        <p className="text-2xl font-bold text-blue-500 max-md:text-sm">
+        <p className="text-xl font-bold text-indigo-600 max-md:text-sm">
           {unidadesEnStock()}
         </p>
       </div>
       <div className="py-[10px] px-[10px] border-gray-200 flex flex-col gap-2 border-r-[1px] w-full">
-        <p className="font-semibold text-lg max-md:text-md">
+        <p className="text-slate-700 text-sm max-md:text-md">
           Unidades cargadas
         </p>
-        <p className="text-2xl font-bold text-blue-500 max-md:text-sm">
+        <p className="text-xl font-bold text-indigo-600 max-md:text-sm">
           {results.length}
         </p>
       </div>

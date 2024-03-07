@@ -41,8 +41,8 @@ export const Aberturas = () => {
   return spinner ? (
     <Spinner />
   ) : (
-    <main className="w-full py-14 px-14 max-md:px-2 overflow-x-scroll">
-      <section className="max-md:w-full mx-auto py-[20px] px-[20px] h-full border-[1px] border-gray-300 rounded shadow-black/20 shadow-md flex flex-col gap-10">
+    <main className="w-full py-20 px-14 max-md:px-2 overflow-x-scroll">
+      <section className="max-md:w-full mx-auto py-[30px] px-[40px] h-full border-[1px] border-slate-300 rounded-xl shadow-black/20 shadow-md flex flex-col gap-10">
         <IntroTitleAberturas />
 
         <IntroAberturasStock results={results} />
@@ -55,13 +55,13 @@ export const Aberturas = () => {
 
         <Search search={search} searcher={searcher} />
 
-        <div className="overflow-y-scroll h-[40vh]">
-          <TableAberturas
-            handlePerfilSeleccionado={handlePerfilSeleccionado}
-            openModalEditar={openModalEditar}
-            results={results}
-          />
-        </div>
+        {/* <div className="overflow-y-scroll h-[40vh]"> */}
+        <TableAberturas
+          handlePerfilSeleccionado={handlePerfilSeleccionado}
+          openModalEditar={openModalEditar}
+          results={results}
+        />
+        {/* </div> */}
 
         <ModalCrearAberturas
           openModal={openModal}
@@ -93,7 +93,7 @@ export const Aberturas = () => {
           <PDFDownloadLink
             fileName={`Accesorios`}
             document={<AberturasPdf results={results} />}
-            className="bg-blue-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
+            className="bg-indigo-500 py-2  px-5 rounded-xl text-white  text-sm max-md:text-sm"
           >
             DESCARGAR ABERTURAS STOCK
           </PDFDownloadLink>

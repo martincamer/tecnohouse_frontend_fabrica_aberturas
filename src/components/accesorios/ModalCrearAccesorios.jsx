@@ -96,7 +96,7 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
+                  className="text-base font-medium leading-6 text-slate-800 max-md:text-md"
                 >
                   Crear nuevo accesorio
                 </Dialog.Title>
@@ -110,7 +110,7 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
                         El codigo es requerido
                       </span>
                     )}
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
                       Codigo:
                     </label>
                     <input
@@ -121,7 +121,7 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
                       Color:
                     </label>
                     <select
@@ -142,7 +142,7 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
                         El stock es requerido
                       </span>
                     )}
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
                       Stock total:
                     </label>
                     <input
@@ -153,7 +153,7 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
                       Categoria:
                     </label>
                     <select
@@ -176,7 +176,7 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
                         La descripcion es requerida
                       </span>
                     )}
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
                       Detalle:
                     </label>
                     <input
@@ -188,7 +188,7 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer max-md:text-xs"
+                      className="bg-indigo-500 text-sm font-normal hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white text-center cursor-pointer max-md:text-xs"
                       type="submit"
                       value={"Crear producto"}
                       onClick={closeModal && errors}

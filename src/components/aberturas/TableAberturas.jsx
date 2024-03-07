@@ -30,95 +30,191 @@ export const TableAberturas = ({
     setOpenModalEditarStock(false);
   };
 
+  const itemsPerPage = 10; // Cantidad de elementos por página
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentResults = results?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(results.length / itemsPerPage);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
   return (
-    <div className="rounded shadow-black/10 shadow max-md:shadow-none max-md:flex-none flex flex-col gap-3 w-full">
-      <table className="border-[1px] border-gray-200  p-[5px] w-full rounded uppercase">
+    <div className="overflow-x-auto rounded-lg border border-gray-200 mt-5">
+      <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
         <thead>
           <tr>
-            <th className="p-3 max-md:p-2 text-sm">ID</th>
-            <th className="p-3 max-md:p-2 text-sm">Codigo</th>
-            <th className="p-3 max-md:p-2 text-sm">Stock</th>
-            <th className="p-3 max-md:p-2 text-sm">Categoria</th>
-            <th className="p-3 max-md:p-2 text-sm">Color</th>
-            <th className="p-3 max-md:p-2 text-sm">Detalle</th>
-            <th className="p-3 max-md:p-2 text-sm">Ancho x Alto</th>
-            <th className="p-3 max-md:p-2 text-sm">Eliminar</th>
-            <th className="p-3 max-md:p-2 text-sm">Editar</th>
-            <th className="p-3 max-md:p-2 text-sm">STOCK</th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              ID
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Codigo
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Stock
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Categoria
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Color
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Detalle
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Ancho x Alto
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Eliminar
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Editar
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              STOCK
+            </th>
           </tr>
         </thead>
-        <tbody>
-          {results.map((p, index) => (
-            <tr key={p.id}>
-              <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
+        <tbody className="divide-y divide-gray-200 text-left">
+          {currentResults.map((p) => (
+            <tr
+              key={p.id}
+              className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
+            >
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                 {p.id}
-              </th>
-              <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                 {p.nombre}
-              </th>
-              <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                 {p.stock}
-              </th>
-              <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                 {p.categoria}
-              </th>
-              <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                 {p.color}
-              </th>
-              <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                 {p.descripcion}
-              </th>
-              <th className="border-[1px] border-gray-300 p-3 font-medium max-md:p-2 max-md:text-sm">
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                 {p.ancho} x {p.alto}
-              </th>
-              <th className="border-[1px] border-gray-300 p-3 font-bold ">
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                 <button
                   onClick={() => {
                     handleBorrarAccesorioOpen(), setGuardarId(p.id);
                   }}
-                  className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal"
+                  className="bg-red-500/10 border-red-200 border-[1px] py-1 px-2 text-red-500 rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal"
                   // onClick={() => handleEliminar(p.id)}
                 >
                   ELIMINAR
                 </button>
-              </th>
-              <th className="border-[1px] border-gray-300 p-3 font-bold ">
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700">
                 <button
                   onClick={() => {
                     openModalEditar(), handlePerfilSeleccionado(p.id);
                   }}
-                  className="bg-blue-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal"
+                  className="bg-indigo-500/10 border-indigo-200 border-[1px] py-1 px-2 text-indigo-500 rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal"
                 >
                   EDITAR
                 </button>
-              </th>
-              <th className="border-[1px] border-gray-300 p-3 font-bold ">
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700">
                 <button
                   onClick={() => {
                     handleModalEditarStockOpen(),
                       handlePerfilSeleccionado(p.id);
                   }}
-                  className="bg-green-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal"
+                  className="bg-slate-500/10 border-slate-200 border-[1px] py-1 px-2 text-slate-700 rounded text-sm cursor-pointer max-md:text-xs max-md:font-normal"
                 >
                   EDITAR
                 </button>
-              </th>
+              </td>
             </tr>
           ))}
-
-          <ModalEliminarAberturas
-            p={guardarId}
-            handleEliminar={handleEliminar}
-            openBorrarAccesorio={openBorrarAccesorio}
-            handleBorrarAccesorioClose={handleBorrarAccesorioClose}
-          />
-          <ModalEditaStock
-            closeModalEditar={handleModalEditarStockClose}
-            isOpenEditar={openModalEditarStock}
-            p={guardarId}
-          />
         </tbody>
       </table>
+
+      <ModalEliminarAberturas
+        p={guardarId}
+        handleEliminar={handleEliminar}
+        openBorrarAccesorio={openBorrarAccesorio}
+        handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+      />
+      <ModalEditaStock
+        closeModalEditar={handleModalEditarStockClose}
+        isOpenEditar={openModalEditarStock}
+        p={guardarId}
+      />
+
+      {totalPages > 1 && (
+        <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
+          <button
+            className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+            Anterior
+          </button>
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <button
+              key={index}
+              className={`mx-1 px-3 py-1 rounded ${
+                currentPage === index + 1
+                  ? "bg-indigo-500 hover:bg-primary transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
+                  : "bg-gray-100 shadow shadow-black/20 text-sm"
+              }`}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente{" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </button>
+        </div>
+      )}
     </div>
   );
 };

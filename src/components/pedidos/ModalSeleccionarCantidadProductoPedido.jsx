@@ -77,62 +77,62 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                   Elegir Cantidad Producto
                 </Dialog.Title>
 
-                <div className="border-[1px] border-gray-200 rounded shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll">
-                  <table className="border-[1px]  p-[5px] table-auto w-full rounded">
+                <div className="border-[1px] border-slate-300 rounded-xl shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll">
+                  <table className="">
                     <thead>
-                      <tr>
-                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
+                      <tr className="border-b-[1px] border-slate-300">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
                           Numero
                         </th>
-                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
                           Codigo
                         </th>
-                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
                           Detalle
                         </th>
-                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
                           Color
                         </th>
-                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
                           Ancho x Alto
                         </th>
-                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
                           Cliente
                         </th>
-                        <th className="p-2 text-sm max-md:text-xs font-extrabold text-center">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
                           Seleccionar cantidad aberturas
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[20px]">
+                      <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
                         {productoUnicoState.id}
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[20px]">
+                      <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
                         {productoUnicoState.nombre}
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[50px]">
+                      <th className="p-2 text-sm max-md:text-xs text-center w-[50px] font-normal text-slate-800">
                         {productoUnicoState.descripcion}
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[20px]">
+                      <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
                         {productoUnicoState.color}
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[20px]">
+                      <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
                         {productoUnicoState.ancho}x{productoUnicoState.alto}
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[100px]">
+                      <th className="p-2 text-sm max-md:text-xs text-center w-[100px] font-normal text-slate-800">
                         <input
                           onChange={(e) => setCliente(e.target.value)}
                           type="text"
-                          className="border-[1px] border-black/30 rounded p-2 w-[180px] outline-none"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[180px] outline-none"
                           placeholder="Cliente"
                         />
                       </th>
-                      <th className="border-[1px] border-gray-300 p-2 text-sm max-md:text-xs text-center w-[100px]">
+                      <th className="p-2 text-sm max-md:text-xs text-center w-[100px] font-normal text-slate-800">
                         <input
                           onChange={(e) => setCantidad(e.target.value)}
                           type="number"
-                          className="border-[1px] border-black/30 rounded p-2 w-[100px] outline-none"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[180px] outline-none"
                           placeholder="cantidad"
                         />
                       </th>
@@ -155,9 +155,9 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                         cantidadFaltante
                       ),
                         closeModalCantidad();
-                      closeModal();
+                      // closeModal();
                     }}
-                    className="bg-secondary max-md:text-xs text-white py-2 px-2 rounded font-bold hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
+                    className="bg-indigo-500 max-md:text-xs text-white py-2 px-5 text-sm rounded-xl font-normal hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
                   >
                     Crear producto facturar
                   </button>

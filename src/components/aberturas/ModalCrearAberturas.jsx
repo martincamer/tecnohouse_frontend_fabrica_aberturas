@@ -118,10 +118,12 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                         El codigo es requerido
                       </span>
                     )}
-                    <label className="text-[14px] font-bold">Codigo:</label>
+                    <label className="text-[14px] font-normal text-slate-800">
+                      Codigo:
+                    </label>
                     <input
                       {...register("nombre", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none"
                       type="text"
                       placeholder="nombre del codigo"
                     />
@@ -132,12 +134,12 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                         El color es requerido
                       </span>
                     )}
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-800 max-md:text-sm">
                       Color:
                     </label>
                     <select
                       {...register("color", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none bg-white max-md:text-sm"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none  max-md:text-sm"
                     >
                       <option className="text-black">Seleccionar color</option>
                       {colores.map((c) => (
@@ -153,12 +155,12 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                         El stock es requerido
                       </span>
                     )}
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-800 max-md:text-sm">
                       Stock total:
                     </label>
                     <input
                       {...register("stock", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none max-md:text-sm"
                       type="number"
                       placeholder="cantidad de productos"
                     />
@@ -170,13 +172,13 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                         El ancho es requerido
                       </span>
                     )}
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-800 max-md:text-sm">
                       Ancho de la abertura:
                     </label>
                     <div>
                       <input
                         {...register("ancho", { required: true })}
-                        className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[120px] max-md:text-sm"
+                        className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none w-[120px] max-md:text-sm"
                         type="number"
                         placeholder="ancho"
                       />
@@ -188,25 +190,25 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                         El alto es requerido
                       </span>
                     )}
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-800 max-md:text-sm">
                       Alto de la abertura:
                     </label>
                     <div>
                       <input
                         {...register("alto", { required: true })}
-                        className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[120px] max-md:text-sm"
+                        className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none w-[120px] max-md:text-sm"
                         type="number"
                         placeholder="alto"
                       />
                     </div>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-800 max-md:text-sm">
                       Categoria:
                     </label>
                     <select
                       {...register("categoria", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none bg-white max-md:text-sm"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none bg-white max-md:text-sm"
                     >
                       <option className="text-black" key={categorias.id}>
                         Seleccionar categoria
@@ -224,19 +226,19 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                         La descripcion es requerida
                       </span>
                     )}
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-800 max-md:text-sm">
                       Detalle:
                     </label>
                     <textarea
                       {...register("descripcion", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="detalle ej perfil pesado ventana"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer max-md:text-xs"
+                      className="bg-indigo-500 hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white text-sm text-center cursor-pointer max-md:text-xs"
                       type="submit"
                       value={"Crear producto"}
                       // onClick={() => closeModal()}

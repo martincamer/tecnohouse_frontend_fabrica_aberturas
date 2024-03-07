@@ -103,19 +103,19 @@ export const ModalCrearNuevaCategoria = ({
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
+                    <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
                       Nombre de la categoria:
                     </label>
                     <input
                       {...register("categoria", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none"
                       type="text"
                       placeholder="nombre de la categoria"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer max-md:text-xs"
+                      className="bg-indigo-500 text-sm hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-normal text-center cursor-pointer max-md:text-xs"
                       type="submit"
                       value={"Crear categoria"}
                       onClick={closeModalCrearCategoria}

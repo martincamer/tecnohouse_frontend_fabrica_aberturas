@@ -2,8 +2,8 @@ import React from "react";
 
 export const IntroTitleAccesorios = () => {
   return (
-    <div className="">
-      <h3 className="text-2xl max-md:text-xl font-semibold text-gray-800">
+    <div className="flex">
+      <h3 className="text-xl max-md:text-xl font-normal border-b-[3px] border-indigo-500 text-slate-700">
         Accesorios
       </h3>
     </div>

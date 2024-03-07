@@ -3,14 +3,30 @@ import { useAccesoriosContext } from "../../../context/AccesoriosProvider";
 import { useAluminioContext } from "../../../context/AluminioProvider";
 import { useState, useEffect } from "react";
 import { usePedidoContext } from "../../../context/PedidoProvider";
-import moment from "moment";
-import { ChartJs } from "../../../components/ChartJs";
+import { obtenerFacturasMensual } from "../../../api/factura.api";
+import { Charts } from "../../../components/home/Charts";
 
 export const Home = () => {
   const { results } = useAberturasContext();
   const { results: accesorios } = useAccesoriosContext();
   const { results: perfiles } = useAluminioContext();
   const { datosPresupuesto, setDatosPresupuesto } = usePedidoContext();
+
+  const [datosMensuales, setDatosMensuales] = useState([]);
+
+  console.log(datosMensuales);
+
+  useEffect(() => {
+    async function loadData() {
+      const res = await obtenerFacturasMensual();
+
+      setDatosMensuales(res.data);
+
+      console.log(res.data);
+    }
+
+    loadData();
+  }, []);
 
   const unidadesEnStock = () => {
     return results.reduce((sum, b) => {
@@ -34,41 +50,7 @@ export const Home = () => {
 
   const [totalCantidad, setTotalCantidad] = useState(0);
 
-  // Obtener la fecha actual
-  const fechaActual = moment();
-
-  function load() {
-    const datosFiltrados = datosPresupuesto.filter((objeto) => {
-      const fechaCreacion = moment(objeto.created_at);
-      return (
-        fechaCreacion.month() === fechaActual.month() &&
-        fechaCreacion.year() === fechaActual.year()
-      );
-    });
-
-    // Actualizar el estado con los datos filtrados
-    setDatosPresupuesto(datosFiltrados);
-  }
-
-  useEffect(() => {
-    const total = datosPresupuesto.reduce((acumulador, objeto) => {
-      const fechaCreacion = moment(objeto.created_at);
-      if (
-        fechaCreacion.month() === fechaActual.month() &&
-        fechaCreacion.year() === fechaActual.year()
-      ) {
-        objeto.productos.respuesta.forEach((producto) => {
-          acumulador += parseInt(producto.cantidad, 10);
-        });
-      }
-      return acumulador;
-    }, 0);
-
-    // Actualizar el estado con el total calculado
-    setTotalCantidad(total);
-  }, []);
-
-  const datos = datosPresupuesto.map((c) =>
+  const datos = datosMensuales.map((c) =>
     c.productos.respuesta.map((c) => c.cantidad)
   );
 
@@ -82,9 +64,11 @@ export const Home = () => {
     return sum + Number(b);
   }, 0);
 
-  const datosTwo = datosPresupuesto.map((c) =>
+  const datosTwo = datosMensuales.map((c) =>
     c.productos.respuesta.map((c) => c.cantidadFaltante)
   );
+
+  console.log(datosMensuales);
 
   let dataTwo = datosTwo.map((c) =>
     c?.reduce((sum, b) => {
@@ -96,59 +80,57 @@ export const Home = () => {
     return sum + Number(b);
   }, 0);
 
-  useEffect(() => {
-    load();
-  }, [resultado]);
-
   return (
-    <section className="w-full py-12 px-12 max-md:px-4">
-      <div className="border-[1px] border-black/20 py-10 px-10 max-md:px-2 max-md:py-4 rounded shadow-md shadow-black/10 space-y-5">
-        <div className="border-[1px] border-black/20 py-10 px-10 rounded max-md:px-2 max-md:py-4 shadow-md shadow-black/10 flex gap-4 items-center max-md:flex-col">
-          <p className="font-bold text-lg max-md:text-sm">
-            Productos Totales en stock: Cant.
+    <section className="w-full py-20 px-12 max-md:px-4">
+      <div className="bg-slate-0 grid grid-cols-5 border-[1px] gap-3 items-center border-black/20 py-6 px-10  max-md:px-2 max-md:py-4 rounded-xl shadow-md shadow-black/10">
+        <div className="border-[1px] border-black/20 py-5 px-2 rounded-xl shadow-md shadow-black/10 flex flex-col gap-3 items-center bg-white">
+          <p className="font-normal text-slate-700 text-base max-md:text-lg">
+            Productos Totales en stock
           </p>
-          <div className="font-bold text-lg max-md:text-sm py-2 rounded-full bg-blue-500 text-white px-4 shadow shadow-black/30">
+          <div className="font-bold max-md:text-sm text-indigo-500 text-lg">
             {unidadesEnStock()}
           </div>
         </div>
 
-        <div className="border-[1px] border-black/20 py-10 px-10 max-md:px-2 max-md:py-4 rounded shadow-md shadow-black/10 flex gap-4 items-center max-md:flex-col">
-          <p className="font-bold text-lg max-md:text-sm">
-            Accesorios Totales en stock: Cant.
+        <div className="border-[1px] border-black/20 py-5 px-2 rounded-xl shadow-md shadow-black/10 flex flex-col gap-3 items-center bg-white">
+          <p className="font-normal text-slate-700 text-base max-md:text-lg">
+            Accesorios Totales en stock
           </p>
-          <div className="font-bold text-lg max-md:text-sm py-2 rounded-full bg-blue-500 text-white px-4 shadow shadow-black/30">
+          <div className="font-bold max-md:text-sm text-indigo-500 text-lg">
             {unidadesEnStockAccesorios()}
           </div>
         </div>
 
-        <div className="border-[1px] border-black/20 py-10 px-10 max-md:px-2 max-md:py-4 rounded shadow-md shadow-black/10 flex gap-4 items-center max-md:flex-col">
-          <p className="font-bold text-lg max-md:text-sm">
-            Perfiles Totales en stock: Cant.
+        <div className="border-[1px] border-black/20 py-5 px-2 rounded-xl shadow-md shadow-black/10 flex flex-col gap-3 items-center bg-white">
+          <p className="font-normal text-slate-700 text-base max-md:text-lg">
+            Perfiles Totales en stock
           </p>
-          <div className="font-bold text-lg max-md:text-sm py-2 rounded-full bg-blue-500 text-white px-4 shadow shadow-black/30">
+          <div className="font-bold max-md:text-sm text-indigo-500 text-lg">
             {unidadesEnStockAluminio()}
           </div>
         </div>
 
-        <div className="border-[1px] border-black/20 py-10 px-10 max-md:px-2 max-md:py-4 rounded shadow-md shadow-black/10 flex gap-4 items-center max-md:flex-col">
-          <p className="font-bold text-lg max-md:text-sm">
-            Total aberturas generadas en el mes:
+        <div className="border-[1px] border-black/20 py-5 px-2 rounded-xl shadow-md shadow-black/10 flex flex-col gap-3 items-center bg-white">
+          <p className="font-normal text-slate-700 text-base max-md:text-lg">
+            Total aberturas generadas en el mes
           </p>
-          <div className="font-bold text-lg max-md:text-sm py-2 rounded-full bg-blue-500 text-white px-4 shadow shadow-black/30">
+          <div className="font-bold max-md:text-sm text-indigo-500 text-lg">
             {resultado}
           </div>
         </div>
 
-        <div className="border-[1px] border-black/20 py-10 px-10 max-md:px-2 max-md:py-4 rounded shadow-md shadow-black/10 flex gap-4 items-center max-md:flex-col">
-          <p className="font-bold text-lg max-md:text-sm">
-            Total aberturas realizadas en el mes:
+        <div className="border-[1px] border-black/20 py-5 px-2 rounded-xl shadow-md shadow-black/10 flex flex-col gap-3 items-center bg-white">
+          <p className="font-normal text-slate-700 text-base max-md:text-lg">
+            Total aberturas realizadas en el mes
           </p>
-          <div className="font-bold text-lg max-md:text-sm py-2 rounded-full bg-blue-500 text-white px-4 shadow shadow-black/30">
+          <div className="font-bold max-md:text-sm text-indigo-500 text-lg">
             {resultadoTwo}
           </div>
         </div>
       </div>
-      {/* <ChartJs /> */}
+      <div className="mt-20 bg-white py-20 rounded-lg shadow-md border-[1px] border-slate-300">
+        <Charts datosMensuales={datosMensuales} />
+      </div>
     </section>
   );
 };

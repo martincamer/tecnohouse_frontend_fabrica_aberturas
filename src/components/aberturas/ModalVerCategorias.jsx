@@ -73,13 +73,13 @@ export const ModalVerCategorias = ({
                 >
                   Editar o eliminar categorias
                 </Dialog.Title>
-                <div className="grid grid-cols-4 gap-4 my-5 h-[120px] overflow-y-scroll w-full max-md:grid-cols-1">
+                <div className="grid grid-cols-5 gap-4 my-5 h-[120px] overflow-y-scroll w-full max-md:grid-cols-1">
                   {categorias.map((cat) => (
                     <div
-                      className="bg-white max-md:text-sm border-[1px] border-gray-200 py-2 px-2 rounded shadow shadow-black/20 flex justify-around items-center h-[58px]"
+                      className="bg-slate-100 max-md:text-sm border-[1px] border-slate-300  py-2 px-2 rounded-xl shadow shadow-black/20 flex gap-2 justify-center items-center h-[58px] text-sm"
                       key={cat.id}
                     >
-                      <p className="text-black font-bold max-md:text-sm">
+                      <p className="text-slate-700 font-normal uppercase max-md:text-sm">
                         {cat.categoria}
                       </p>
                       <BiEdit
@@ -87,11 +87,11 @@ export const ModalVerCategorias = ({
                           handleCategoriaSeleccionada(cat.id),
                             openModalEditarCategoria();
                         }}
-                        className="text-[35px] max-md:text-[30px] text-green-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
+                        className="text-[30px] max-md:text-[30px] text-indigo-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
                       />
                       <AiFillDelete
                         onClick={() => handleEliminarCategoria(cat.id)}
-                        className="text-[35px] max-md:text-[30px] text-red-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
+                        className="text-[30px] max-md:text-[30px] text-red-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
                       />
                     </div>
                   ))}

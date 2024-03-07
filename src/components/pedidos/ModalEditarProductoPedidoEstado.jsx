@@ -11,6 +11,8 @@ export const ModalEditarProductoPedidoEstado = ({
   obtenerId,
   isOpenEstado,
   closeModalEstado,
+  datos,
+  setDatos,
 }) => {
   const {
     register,
@@ -21,6 +23,30 @@ export const ModalEditarProductoPedidoEstado = ({
 
   const onSubmitEditar = handleSubmit(async (data) => {
     const res = await actualizarFacturaProductoUnico(obtenerId, data);
+
+    const tipoExistenteIndexTwo = datos.findIndex(
+      (tipo) => tipo.id === obtenerId
+    );
+
+    setDatos((prevTipos) => {
+      const newTipos = [...prevTipos];
+      const updatedTipo = JSON.parse(res.config.data); // Convierte el JSON a objeto
+
+      newTipos[tipoExistenteIndexTwo] = {
+        id: obtenerId,
+        nombre: updatedTipo.nombre,
+        detalle: updatedTipo.detalle,
+        categoria: updatedTipo.categoria,
+        color: updatedTipo.color,
+        ancho: updatedTipo.ancho,
+        alto: updatedTipo.alto,
+        cantidad: updatedTipo.cantidad,
+        cliente: updatedTipo.cliente,
+        cantidadFaltante: updatedTipo.cantidadFaltante,
+      };
+      console.log("Estado después de la actualización:", newTipos);
+      return newTipos;
+    });
 
     toast.success("¡Producto editado correctamente!", {
       position: "top-right",
@@ -33,9 +59,9 @@ export const ModalEditarProductoPedidoEstado = ({
       theme: "light",
     });
 
-    setTimeout(() => {
-      location.reload();
-    }, 1500);
+    // setTimeout(() => {
+    //   location.reload();
+    // }, 1500);
     console.log(res);
   });
 
@@ -127,23 +153,25 @@ export const ModalEditarProductoPedidoEstado = ({
                   )}
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">cantidad:</label>
+                    <label className="text-[14px] font-normal capitalize text-slate-700">
+                      cantidad:
+                    </label>
                     <input
                       disabled
                       {...register("cantidad", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-3 rounded-xl shadow text-slate-600 outline-none"
                       type="number"
                       placeholder="cantidad"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">
+                    <label className="text-[14px] font-normal capitalize text-slate-700">
                       Cantidad faltante:
                     </label>
                     <input
                       {...register("cantidadFaltante", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-3 rounded-xl shadow text-slate-600 outline-none"
                       type="number"
                       placeholder="editar cantidad - total"
                     />
@@ -151,7 +179,7 @@ export const ModalEditarProductoPedidoEstado = ({
 
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer"
+                      className="bg-indigo-500 hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl shadow outline-none text-white font-normal text-sm text-center cursor-pointer"
                       type="submit"
                       value={"Editar producto"}
                       onClick={closeModalEstado}

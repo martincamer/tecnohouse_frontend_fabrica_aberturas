@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ModalEliminarPedido } from "./ModalEliminarPedido";
 import { IoCloseCircle } from "react-icons/io5";
 
-export const TablePedidos = () => {
+export const TablePedidos = ({ datosMensuales }) => {
   const { handleDeletePresupuesto, results } = usePedidoContext();
 
   useEffect(() => {
@@ -29,12 +29,6 @@ export const TablePedidos = () => {
     day: "numeric",
   };
 
-  function dateTime(data) {
-    return new Date(data).toLocaleDateString("arg", options);
-  }
-
-  let [isOpen, setIsOpen] = useState(false);
-
   const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
   const [guardarId, setGuardarId] = useState(false);
 
@@ -46,146 +40,223 @@ export const TablePedidos = () => {
     setOpenBorrarAccesorio(false);
   };
 
-  // Función para sumar la cantidad de todos los objetos
+  const itemsPerPage = 10; // Cantidad de elementos por página
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentResults = datosMensuales?.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const totalPages = Math.ceil(datosMensuales?.length / itemsPerPage);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
 
   return (
-    <table className="border-[1px] w-full rounded">
-      <thead>
-        <tr>
-          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">ID</th>
-          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
-            Cliente
-          </th>
-          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
-            Detalle de linea - categoria
-          </th>
-          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
-            Total aberturas
-          </th>
-          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
-            Clientes
-          </th>
-          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
-            Fecha de creación
-          </th>
-          {/* <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">Remito</th> */}
-          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
-            Estado del pedido
-          </th>{" "}
-          <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">
-            Eliminar
-          </th>
-          <th className="p-3 max-md:py-1 max-md:px-10 max-md:text-sm">
-            Ver pedido
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {results?.map((p, index) => (
-          <tr key={p?.id}>
-            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs">
-              {p?.id}
+    <div className="overflow-x-auto rounded-lg border border-gray-200 mt-5">
+      <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+        <thead>
+          <tr>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Numero
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs">
-              {p?.cliente}
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Cliente
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs">
-              {p?.detalle}
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Detalle de linea - categoria
             </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
-              {p?.productos.respuesta.reduce((sum, b) => {
-                return sum + Number(b?.cantidad);
-              }, 0)}
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Total aberturas
             </th>
-            <th
-              onClick={() => handleToggleClick(index)}
-              className="border-[1px] border-gray-300 p-2 font-medium text-sm"
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Clientes
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Fecha de creación
+            </th>
+            {/* <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">Remito</th> */}
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Estado del pedido
+            </th>{" "}
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Eliminar
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Ver pedido
+            </th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200 text-left">
+          {currentResults?.map((p, index) => (
+            <tr
+              key={p.id}
+              className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
             >
-              {!clickStates[index] ? (
-                <p className="p-3 font-bold bg-gray-100 rounded shadow shadow-black/50 cursor-pointer">
-                  VER CLIENTE - CLICK
-                </p>
-              ) : (
-                <div className="relative">
-                  <div className="absolute top-0 right-3 cursor-pointer">
-                    <IoCloseCircle className="text-2xl text-red-500" />
-                  </div>
-                  {Array.from(
-                    new Set(
-                      p?.productos?.respuesta?.map((item) => item.cliente)
-                    )
-                  ).map((uniqueClient, i) => {
-                    const hasF = p?.productos?.respuesta?.some(
-                      (item) =>
-                        item.cliente === uniqueClient &&
-                        item.cantidad !== item.cantidadFaltante
-                    );
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                {p?.id}
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                {p?.cliente}
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                {p?.detalle}
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                {p?.productos.respuesta.reduce((sum, b) => {
+                  return sum + Number(b?.cantidad);
+                }, 0)}
+              </td>
+              <td
+                onClick={() => handleToggleClick(index)}
+                className="py-3 px-3 text-sm text-left text-slate-700 uppercase"
+              >
+                {!clickStates[index] ? (
+                  <p className="p-3 border-slate-300 border-[1px] rounded-xl shadow cursor-pointer text-center">
+                    VER CLIENTE - CLICK
+                  </p>
+                ) : (
+                  <div className="relative">
+                    <div className="absolute top-0 right-3 cursor-pointer">
+                      <IoCloseCircle className="text-2xl text-red-500 border-red-800 border-[1px] rounded-full" />
+                    </div>
+                    {Array.from(
+                      new Set(
+                        p?.productos?.respuesta?.map((item) => item.cliente)
+                      )
+                    ).map((uniqueClient, i) => {
+                      const hasF = p?.productos?.respuesta?.some(
+                        (item) =>
+                          item.cliente === uniqueClient &&
+                          item.cantidad !== item.cantidadFaltante
+                      );
 
-                    return (
-                      <div className="pt-3 cursor-pointer" key={i}>
-                        {i > 0 ? " - " : ""}
-                        {uniqueClient}
-                        <span className="font-bold underline text-red-500 mx-1">
-                          {hasF && "FALTA REALIZAR"}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </th>
-            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase max-md:py-1 max-md:px-4 max-md:text-xs">
-              {new Date(p?.created_at).toLocaleDateString("es-AR")}
-            </th>
-            <th
-              className={`${
-                p?.productos.respuesta.reduce((sum, b) => {
+                      return (
+                        <div className="pt-3 cursor-pointer" key={i}>
+                          {i > 0 ? " - " : ""}
+                          {uniqueClient}
+                          <span className="font-bold underline text-red-500 mx-1">
+                            {hasF && "FALTA REALIZAR"}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                {new Date(p?.created_at).toLocaleDateString("es-AR")}
+              </td>
+              <th
+                className={`font-bold max-md:text-xs text-sm uppercase rounded-lg text-center`}
+              >
+                {p?.productos.respuesta.reduce((sum, b) => {
                   return sum + Number(b?.cantidad);
                 }, 0) ===
                 p?.productos.respuesta.reduce((sum, b) => {
                   return sum + Number(b?.cantidadFaltante);
-                }, 0)
-                  ? "bg-green-500 text-white"
-                  : "bg-orange-500 text-white"
-              } border-[1px] border-gray-300 p-3 font-bold max-md:text-xs text-sm uppercase`}
-            >
-              {p?.productos.respuesta.reduce((sum, b) => {
-                return sum + Number(b?.cantidad);
-              }, 0) ===
-              p?.productos.respuesta.reduce((sum, b) => {
-                return sum + Number(b?.cantidadFaltante);
-              }, 0)
-                ? "realizado"
-                : "pendiente"}
-            </th>
-            <th className="border-[1px] border-gray-300 p-3 max-md:py-1 max-md:px-4">
-              <button
-                className="bg-red-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
-                onClick={() => {
-                  handleBorrarAccesorioOpen(), setGuardarId(p.id);
-                }}
-              >
-                eliminar
-              </button>
-            </th>
+                }, 0) ? (
+                  <p className="bg-green-500 text-white py-3 rounded-xl">
+                    realizado
+                  </p>
+                ) : (
+                  <p className="bg-orange-500 text-white py-3 rounded-xl">
+                    pendiente
+                  </p>
+                )}
+              </th>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                <button
+                  className="bg-red-500/10 border-red-200 border-[1px] py-2 px-4 text-red-500 rounded-xl text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
+                  onClick={() => {
+                    handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                  }}
+                >
+                  Eliminar
+                </button>
+              </td>
 
-            <th className="border-[1px] border-gray-300 p-3 max-md:py-1 max-md:px-4 font-bold ">
-              <Link
-                to={`/pedido/${p?.id}`}
-                className="bg-blue-500 py-1 px-2 text-white rounded text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
-              >
-                ver pedido
-              </Link>
-            </th>
-          </tr>
-        ))}
-        <ModalEliminarPedido
-          p={guardarId}
-          handleEliminar={handleDeletePresupuesto}
-          openBorrarAccesorio={openBorrarAccesorio}
-          handleBorrarAccesorioClose={handleBorrarAccesorioClose}
-        />
-      </tbody>
-    </table>
+              <td className="py-3 px-3 text-sm text-left text-slate-700">
+                <Link
+                  to={`/pedido/${p?.id}`}
+                  className="bg-indigo-600/10 border-indigo-300 border-[1px] py-2 px-4 text-indigo-600 rounded-xl text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
+                >
+                  Ver pedido
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <ModalEliminarPedido
+        p={guardarId}
+        handleEliminar={handleDeletePresupuesto}
+        openBorrarAccesorio={openBorrarAccesorio}
+        handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+      />
+      {totalPages > 1 && (
+        <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
+          <button
+            className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+            Anterior
+          </button>
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <button
+              key={index}
+              className={`mx-1 px-3 py-1 rounded ${
+                currentPage === index + 1
+                  ? "bg-indigo-500 hover:bg-primary transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
+                  : "bg-gray-100 shadow shadow-black/20 text-sm"
+              }`}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente{" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </button>
+        </div>
+      )}
+    </div>
   );
 };

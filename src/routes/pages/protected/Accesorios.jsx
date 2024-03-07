@@ -15,7 +15,6 @@ import { ModalCrearEditarAccesorios } from "../../../components/accesorios/Modal
 import { CategoriasAccesorios } from "../../../components/accesorios/CategoriasAccesorios";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { AccesoriosPdf } from "../../../components/viewpdfpedidos/AccesoriosPdf";
-import { useState } from "react";
 
 export const Accesorios = () => {
   const {
@@ -61,11 +60,14 @@ export const Accesorios = () => {
         <Search search={search} searcher={searcher} />
 
         <div className="flex gap-2 items-center">
-          <label className="font-bold text-lg" htmlFor="categoria">
-            Buscar por categoría:
+          <label
+            className="font-normal text-slate-700 text-md"
+            htmlFor="categoria"
+          >
+            Buscar por categoría
           </label>
           <select
-            className="font-semibold py-2 uppercase px-3 rounded shadow cursor-pointer"
+            className="bg-slate-100 border-[1px] border-slate-300 text-slate-800 text-sm font-normal py-2 uppercase px-3 rounded shadow cursor-pointer"
             id="categoria"
             onChange={handleCategoriaChange}
             value={categoriaSeleccionada}

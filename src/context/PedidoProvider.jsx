@@ -161,35 +161,12 @@ export const PedidoProvider = ({ children }) => {
     }
   };
 
-  const deleteProducto = (
-    id,
-    nombre,
-    detalle,
-    color,
-    categoria,
-    ancho,
-    alto,
-    cliente,
-    cantidad,
-    cantidadFaltante
-  ) => {
-    const itemIndex = productoSeleccionado.findIndex(
-      (item) =>
-        item.id === id &&
-        item.nombre === nombre &&
-        item.detalle === detalle &&
-        item.color === color &&
-        item.categoria === categoria &&
-        item.ancho === ancho &&
-        item.alto === alto &&
-        item.cliente === cliente &&
-        item.cantidad === cantidad &&
-        item.cantidadFaltante === cantidadFaltante
-    );
+  const deleteProducto = (id) => {
+    const itemIndex = productoSeleccionado.findIndex((item) => item.id === id);
 
-    if (itemIndex) {
+    if (itemIndex !== -1) {
       const newItem = [...productoSeleccionado];
-      newItem.splice(itemIndex);
+      newItem.splice(itemIndex, 1); // Corrected line
       setProductoSeleccionado(newItem);
     }
   };

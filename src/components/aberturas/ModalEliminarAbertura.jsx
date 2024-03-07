@@ -68,14 +68,14 @@ export const ModalEliminarAberturas = ({
                         }
                       }
                     }}
-                    className="bg-red-500 py-1 px-4 rounded text-white font-bold"
+                    className="border-red-500 bg-red-500/10 text-red-600 py-1 px-4 rounded border-[1px] font-bold"
                   >
                     SI ELIMINAR
                   </button>
                   <button
                     type="button"
                     onClick={handleBorrarAccesorioClose}
-                    className="bg-green-500 py-1 px-4 rounded text-white font-bold"
+                    className="border-green-500 bg-green-500/10 text-green-500 py-1 px-4 rounded border-[1px] font-bold"
                   >
                     NO ELIMINAR - CERRAR
                   </button>

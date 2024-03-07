@@ -7,32 +7,26 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import { ModalCrearProductoPedido } from "../../../components/pedidos/ModalCrearProductoPedido";
 import { ModalEditarProductoPedido } from "../../../components/pedidos/ModalEditarProductoPedido";
-import { DescargarPdfPedido } from "../../../components/pedidos/DescargarPdfPedido";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { DescargarPdfPedidoDos } from "../../../components/pedidos/DescargarPdfPedidoDos";
-import { DescargarPdfPedidoTres } from "../../../components/pedidos/DescargarPdfPedidoTres";
 import { Search } from "../../../components/ui/Search";
-import { DescargarPdfPedidoCinco } from "../../../components/pedidos/DescargarPdfPedidoCinco";
-import { DescargarPdfPedidoAberturasFaltantes } from "../../../components/pedidos/DescargarPdfPedidoAberturasFaltantes";
 import { ModalEditarProductoPedidoEstado } from "../../../components/pedidos/ModalEditarProductoPedidoEstado";
-import { DescargarPdfPedidoAberturasEmbalaje } from "../../../components/pedidos/DescargarPdfPedidoAberturasEmbalaje";
-import { DescargarPdfPedidoSeis } from "../../../components/pedidos/DescargarPdfPedidoSeis";
 import { ModalEliminarPedido } from "../../../components/pedidos/ModalEliminarPedido";
-import { DescargarPedidoCompletoJefeFabrica } from "../../../components/pedidos/DescargarPedidoCompletoJefeFabrica";
-import { DescargarPedidoIncompletoJefeFabrica } from "../../../components/pedidos/DescargarPedidoIncompletoJefeFabrica";
 import { CrearNuevoPedidoViewPedido } from "../../../components/pedidos/CrearNuevoPedidoViewPedido";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
+  const [datosCliente, setDatosCliente] = useState([]);
   const [obtenerId, setObtenerId] = useState("");
   const [search, setSearch] = useState("");
   const params = useParams();
+
+  console.log("datos", datosCliente.id);
 
   useEffect(() => {
     async function loadData() {
       const res = await obtenerFactura(params.id);
 
-      setDatos(res.data);
+      setDatos(res.data.productos.respuesta);
+      setDatosCliente(res.data);
     }
     loadData();
   }, []);
@@ -51,6 +45,9 @@ export const ViewPedido = () => {
   const handleEliminarProductoPedido = (id) => {
     deleteFacturaProducto(id);
 
+    const updatedTipos = datos.filter((tipo) => tipo.id !== guardarId);
+    setDatos(updatedTipos);
+
     toast.error("¡Producto eliminado correctamente!", {
       position: "top-right",
       autoClose: 1500,
@@ -62,9 +59,9 @@ export const ViewPedido = () => {
       theme: "light",
     });
 
-    setTimeout(() => {
-      location.reload();
-    }, 1500);
+    // setTimeout(() => {
+    //   location.reload();
+    // }, 1500);
   };
 
   let [isOpen, setIsOpen] = useState(false);
@@ -110,13 +107,13 @@ export const ViewPedido = () => {
   // };
 
   const totalAberturas = () => {
-    return datos?.productos?.respuesta?.reduce((sum, b) => {
+    return datos?.reduce((sum, b) => {
       return sum + Number(b?.cantidad);
     }, 0);
   };
 
   const totalAberturasRealizadas = () => {
-    return datos?.productos?.respuesta?.reduce((sum, b) => {
+    return datos?.reduce((sum, b) => {
       return sum + Number(b?.cantidadFaltante);
     }, 0);
   };
@@ -136,10 +133,10 @@ export const ViewPedido = () => {
 
   const performSearch = () => {
     if (!search) {
-      return datos?.productos?.respuesta || [];
+      return datos || [];
     } else {
       return (
-        datos?.productos?.respuesta?.filter(
+        datos.filter(
           (dato) =>
             dato?.cliente?.toLowerCase().includes(search.toLocaleLowerCase()) ||
             dato?.detalle?.toLowerCase().includes(search.toLocaleLowerCase())
@@ -150,8 +147,8 @@ export const ViewPedido = () => {
 
   let datosAgrupados;
 
-  if (datos && datos.productos?.respuesta) {
-    const productosRespuesta = datos?.productos?.respuesta;
+  if (datos && datos) {
+    const productosRespuesta = datos;
 
     if (Array.isArray(productosRespuesta) && productosRespuesta.length > 0) {
       // Crear un objeto para almacenar los productos agrupados por cliente
@@ -193,34 +190,28 @@ export const ViewPedido = () => {
   //   )
   // );
 
-  let resultadoFinalAberturas = datos?.productos?.respuesta?.reduce(
-    (sum, d) => {
-      return sum + Number(d.cantidad !== d.cantidadFaltante && d.cantidad);
-    },
-    0
-  );
+  let resultadoFinalAberturas = datos.reduce((sum, d) => {
+    return sum + Number(d.cantidad !== d.cantidadFaltante && d.cantidad);
+  }, 0);
 
-  let resultadoFinalAberturasEmbalaje = datos?.productos?.respuesta?.reduce(
-    (sum, d) => {
-      return sum + Number(d.cantidad);
-    },
-    0
-  );
+  let resultadoFinalAberturasEmbalaje = datos?.reduce((sum, d) => {
+    return sum + Number(d.cantidad);
+  }, 0);
 
-  const datosPuertas = datos?.productos?.respuesta
-    .filter((item) => item.detalle.toUpperCase().startsWith("P"))
+  const datosPuertas = datos
+    ?.filter((item) => item.detalle.toUpperCase().startsWith("P"))
     .reduce((total, item) => total + parseInt(item.cantidad), 0);
 
-  const datosVentanas = datos?.productos?.respuesta
-    .filter((item) => item.detalle.toUpperCase().startsWith("V"))
+  const datosVentanas = datos
+    ?.filter((item) => item.detalle.toUpperCase().startsWith("V"))
     .reduce((total, item) => total + parseInt(item.cantidad), 0);
 
-  const datosCelosias = datos?.productos?.respuesta
-    .filter((item) => item.detalle.toUpperCase().startsWith("C"))
+  const datosCelosias = datos
+    ?.filter((item) => item.detalle.toUpperCase().startsWith("C"))
     .reduce((total, item) => total + parseInt(item.cantidad), 0);
 
-  const datosMosquiteros = datos?.productos?.respuesta
-    .filter((item) => item.detalle.toUpperCase().startsWith("M"))
+  const datosMosquiteros = datos
+    ?.filter((item) => item.detalle.toUpperCase().startsWith("M"))
     .reduce((total, item) => total + parseInt(item.cantidad), 0);
 
   const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
@@ -234,120 +225,144 @@ export const ViewPedido = () => {
     setOpenBorrarAccesorio(false);
   };
 
+  const itemsPerPage = 10; // Cantidad de elementos por página
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentResults = performSearch()?.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const totalPages = Math.ceil(performSearch()?.length / itemsPerPage);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
   return (
     <section className="w-full py-2 px-14 max-md:py-6 max-md:px-2 flex flex-col gap-10 overflow-x-scroll">
       <ToastContainer />
+
       <div className="flex gap-2 items-center">
         <p
           className={`${
             totalAberturasRealizadas() === totalAberturas()
-              ? "bg-green-500"
+              ? "bg-indigo-500"
               : "bg-orange-500"
-          } font-semibold text-white text-xl max-md:text-sm uppercase  px-3 py-1 rounded-full shadow`}
+          } font-normal text-white text-xl max-md:text-sm uppercase  px-4 py-2 rounded-2xl shadow`}
         >
           {totalAberturasRealizadas() === totalAberturas()
             ? "estado del pedido finalizado"
             : "estado del pedido pendiente"}
         </p>
       </div>
-      <div className="border-[1px] shadow py-10 px-10 rounded flex justify-around max-md:flex-col">
-        <div className="flex gap-2 items-center">
-          <p className="text-lg max-md:text-sm uppercase">
+      <div className="border-[1px] border-slate-300 shadow py-8 px-10 rounded-2xl flex justify-around max-md:flex-col">
+        <div className="flex gap-2 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+          <p className="text-sm max-md:text-sm uppercase">
             Numero del pedido:{" "}
           </p>{" "}
-          <p className="font-semibold text-blue-500 text-lg max-md:text-sm">
-            {datos?.id}
+          <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
+            {datosCliente?.id}
           </p>
         </div>
-        <div className="flex gap-2 items-center">
-          <p className="text-lg max-md:text-sm uppercase">Cliente:</p>{" "}
-          <p className="font-semibold text-blue-500 text-lg uppercase max-md:text-sm">
-            {datos?.cliente}
+        <div className="flex gap-2 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+          <p className="text-sm max-md:text-sm uppercase">Cliente: </p>{" "}
+          <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
+            {datosCliente?.cliente}
           </p>
         </div>
-        <div className="flex gap-2">
-          <p className="text-lg max-md:text-sm uppercase">Categoria:</p>{" "}
-          <p className="font-semibold text-blue-500 text-lg uppercase max-md:text-sm">
-            {datos?.detalle}
+        <div className="flex gap-2 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+          <p className="text-sm max-md:text-sm uppercase">Categoria: </p>{" "}
+          <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
+            {datosCliente?.detalle}
           </p>
         </div>
-        {/* <div className="flex gap-2">
-          <p className="text-lg">Localidad - Zona:</p>{" "}
-          <p className="font-semibold text-blue-500 text-lg">
-          </p>
-        </div> */}
-        <div className="flex gap-2 items-center">
-          <p className="text-lg uppercase max-md:text-sm">Total aberturas:</p>{" "}
-          <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
+
+        <div className="flex gap-2 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+          <p className="text-sm max-md:text-sm uppercase">Total aberturas:</p>{" "}
+          <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
             {totalAberturas()}
           </p>
         </div>
 
-        <div className="flex gap-2">
-          <p className="text-lg max-md:text-sm uppercase">Total realizadas:</p>{" "}
-          <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
+        <div className="flex gap-2 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+          <p className="text-sm max-md:text-sm uppercase">Total realizadas:</p>{" "}
+          <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
             {totalAberturasRealizadas()}
           </p>
         </div>
       </div>
 
-      <div className="border-[1px] shadow py-10 px-10 rounded flex flex-col gap-8">
+      <div className="flex ml-6">
+        <button
+          onClick={() => openModalCrearPedidos()}
+          className="bg-slate-500/10 text-slate-700 border-[1px] border-slate-400 rounded-xl py-2 px-8 shadow max-md:text-sm"
+        >
+          Generar Nuevos Clientes
+        </button>
+      </div>
+
+      <div className="border-[1px] shadow py-10 px-10 rounded-2xl flex flex-col gap-8 border-slate-300">
         <div className="flex gap-2 items-center max-md:flex-col">
-          <p className="text-lg font-semibold text-green-500 max-md:text-sm uppercase">
+          <p className="text-sm font-semibold text-indigo-500 max-md:text-sm uppercase">
             Pedido de aberturas - Total pedido
           </p>{" "}
           -{" "}
-          <p className="text-lg font-semibold max-md:text-sm uppercase">
-            Fecha de emicion: {dateTime(datos?.created_at)}
+          <p className="text-sm font-normal max-md:text-sm uppercase text-slate-600">
+            Fecha de emicion: {dateTime(datosCliente?.created_at)}
           </p>
         </div>
         <div className="flex gap-5 items-center">
           {" "}
-          <div className="flex gap-2">
-            <p className="text-lg max-md:text-sm uppercase">puertas:</p>{" "}
-            <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
+          <div className="flex gap-2 items-center">
+            <p className="text-base max-md:text-sm uppercase">puertas:</p>{" "}
+            <p className="font-semibold text-indigo-500 text-base max-md:text-sm uppercase">
               {datosPuertas}
             </p>
           </div>
           -
-          <div className="flex gap-2">
-            <p className="text-lg max-md:text-sm uppercase">ventanas:</p>{" "}
-            <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
+          <div className="flex gap-2 items-center">
+            <p className="text-base max-md:text-sm uppercase">ventanas:</p>{" "}
+            <p className="font-semibold text-indigo-500 text-base max-md:text-sm uppercase">
               {datosVentanas}
             </p>
           </div>
           -
-          <div className="flex gap-2">
-            <p className="text-lg max-md:text-sm uppercase">celosias:</p>{" "}
-            <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
+          <div className="flex gap-2 items-center">
+            <p className="text-base max-md:text-sm uppercase">celosias:</p>{" "}
+            <p className="font-semibold text-indigo-500 text-base max-md:text-sm uppercase">
               {datosCelosias}
             </p>
           </div>
           -
-          <div className="flex gap-2">
-            <p className="text-lg max-md:text-sm uppercase">mosquiteros:</p>{" "}
-            <p className="font-semibold text-blue-500 text-lg max-md:text-sm uppercase">
+          <div className="flex gap-2 items-center">
+            <p className="text-base max-md:text-sm uppercase">mosquiteros:</p>{" "}
+            <p className="font-semibold text-indigo-500 text-base max-md:text-sm uppercase">
               {datosMosquiteros}
             </p>
           </div>
           -
           <div className="flex gap-2 items-center">
-            <p className="text-lg uppercase max-md:text-sm">Total aberturas:</p>{" "}
-            <p className="font-semibold text-white text-lg max-md:text-sm uppercase bg-blue-500 px-3 py-1 rounded-full shadow">
+            <p className="text-base max-md:text-sm uppercase">
+              Total Aberturas:
+            </p>{" "}
+            <p className="font-semibold text-indigo-500 text-base max-md:text-sm uppercase">
               {totalAberturas()}
             </p>
           </div>
           -
           <div className="flex gap-2 items-center">
-            <p className="text-lg uppercase max-md:text-sm">
+            <p className="text-base max-md:text-sm uppercase">
               Total realizadas:
             </p>{" "}
             <p
               className={`${
                 totalAberturasRealizadas() === totalAberturas()
-                  ? "bg-green-500"
+                  ? "bg-indigo-500"
                   : "bg-orange-500"
-              } font-semibold text-white text-lg max-md:text-sm uppercase  px-3 py-1 rounded-full shadow`}
+              } font-normal text-white text-base max-md:text-sm uppercase  px-4 py-1 rounded-xl shadow`}
             >
               {totalAberturasRealizadas()}
               {" - "}
@@ -361,79 +376,82 @@ export const ViewPedido = () => {
         <div>
           <Search searcher={searcher} search={search} />
         </div>
-        <div className="overflow-y-scroll overflow-x-scroll h-[500px]">
-          <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow uppercase">
+        <div className="overflow-x-auto rounded-lg border border-gray-200 mt-5">
+          <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm uppercase">
             <thead>
               <tr>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                {/* <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
                   ID
-                </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                </th> */}
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Codigo
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Descripción del producto
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Categoria
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Color
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Cliente
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Ancho - Alto
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Cantidad
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Cantidad Realizada
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Eliminar
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Editar Producto
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Realizada - Total
                 </th>
-                <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Abertura realizada
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {performSearch()?.map((p) => (
-                <tr key={p?.id}>
-                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm">
+            <tbody className="divide-y divide-gray-200 text-left">
+              {currentResults?.map((p) => (
+                <tr
+                  key={p.id}
+                  className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
+                >
+                  {/* <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm">
                     {p?.id}
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm uppercase">
+                  </th> */}
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     {p?.nombre}
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm uppercase">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     {p?.detalle}
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm uppercase">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     {p?.categoria}
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm uppercase">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     {p?.color}
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     {p?.cliente}
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     {p?.ancho}x{p?.alto}
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     {p?.cantidad}
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-bold text-sm">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     <p
                       className={`${
                         p?.cantidad === p?.cantidadFaltante
@@ -443,347 +461,150 @@ export const ViewPedido = () => {
                     >
                       {p?.cantidadFaltante}
                     </p>
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm max-md:text-xs max-md:py-1 max-md:px-4">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     <button
                       type="button"
                       // onClick={() => handleEliminarProductoPedido(p?.id)}
                       onClick={() => {
                         handleBorrarAccesorioOpen(), setGuardarId(p.id);
                       }}
-                      className="font-semibold text-red-400 border-[1px] px-4 py-1 border-red-300 rounded bg-red-100"
+                      className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-red-500/10  text-red-900 py-1 px-5 rounded-xl shadow border-[1px] border-red-800 text-sm"
                     >
                       eliminar
                     </button>
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm max-md:text-xs max-md:py-1 max-md:px-4">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     <button
                       onClick={() => {
                         openModal(), handleSeleccionarId(p?.id);
                       }}
                       type="button"
-                      className="font-semibold text-blue-400 border-[1px] px-4 py-1 border-blue-300 rounded bg-blue-100 text-sm"
+                      className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-white py-1 px-5 rounded-xl shadow border-[1px] border-slate-300 text-sm"
                     >
                       editar
                     </button>
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium max-md:text-xs max-md:py-1 max-md:px-4">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     <button
                       onClick={() => {
                         openModalEstado(), handleSeleccionarId(p?.id);
                       }}
                       type="button"
-                      className="max-md:text-xs max-md:py-1 max-md:px-4 font-semibold text-green-500 border-[1px] px-4 py-1 border-green-300 rounded bg-green-100 text-sm"
+                      className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-slate-500/10 py-1 px-5 rounded-xl shadow border-[1px] border-slate-300 text-sm"
                     >
                       editar
                     </button>
-                  </th>
-                  <th className="border-[1px] border-gray-300 p-3 font-medium text-sm max-md:text-xs max-md:py-1 max-md:px-4">
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left  uppercase">
                     <button
                       type="button"
-                      className={`font-semibold px-4 py-1 rounded max-md:text-xs max-md:py-1 max-md:px-4 ${
+                      className={`font-normal capitalize px-4 py-1 rounded max-md:text-xs max-md:py-1 max-md:px-4 ${
                         p?.cantidad === p?.cantidadFaltante
-                          ? "bg-green-500"
-                          : "bg-orange-500"
-                      } text-white shadow`}
+                          ? "bg-indigo-500/10 rounded-xl border-[1px] border-indigo-500 text-indigo-600"
+                          : "bg-orange-500/10 rounded-xl border-[1px] border-orange-500 text-orange-600"
+                      } shadow`}
                     >
                       {p?.cantidad === p?.cantidadFaltante
                         ? "completada"
                         : "pendiente"}
                     </button>
-                  </th>
+                  </td>
                 </tr>
               ))}
-              <ModalEliminarPedido
-                p={guardarId}
-                handleEliminar={handleEliminarProductoPedido}
-                openBorrarAccesorio={openBorrarAccesorio}
-                handleBorrarAccesorioClose={handleBorrarAccesorioClose}
-              />
             </tbody>
           </table>
-        </div>
-      </div>
 
-      <div className="font-bold text-xl text-blue-500 flex flex-col gap-1 max-md:text-sm uppercase">
-        <div className="flex gap-4 items-center">
-          Clientes pedido completo:{" "}
-          <span className="font-normal text-black">
-            {datosAgrupados?.length} clientes totales.
-          </span>
-        </div>
-        <div className="flex flex-wrap gap-4 items-center max-md:gap-2 my-2">
-          {datosAgrupadosEnUno?.map((c) => (
-            <p className="text-sm text-black font-normal">{c?.nombre}</p>
-          ))}
-        </div>
-      </div>
-
-      <div className="border-[1px] border-gray-200 shadow rounded py-5 px-10 flex flex-col gap-4 overflow-y-scroll h-[600px]">
-        {datosAgrupadosEnUno?.map((p) => (
-          <div>
-            <div className="flex flex-col gap-5 items-center">
-              <p className="font-bold text-lg">{p?.nombre}</p>
-              {/* <Link
-              to={`/cliente/pedido/${p?.nombre}`}
-              className="text-gray-800 border-gray-200 py-2 px-4 border-[1px] shadow rounded hover:translate-x-1 transition-all ease-in-out"
-            >
-              VER ABERTURAS{" > "}
-            </Link> */}
-
-              <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow uppercase">
-                <thead>
-                  <tr>
-                    <th className="p-3">ID</th>
-                    <th className="p-3">Codigo</th>
-                    <th className="p-3">Detalle</th>
-                    <th className="p-3">Ancho x Alto</th>
-                    <th className="p-3">Cantidad</th>
-                    <th className="p-3">Realizadas</th>
-                    <th className="p-3">Abertura realizada</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {p?.productos?.map((p) => (
-                    <tr key={p?.id}>
-                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                        {p?.id}
-                      </th>
-                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                        {p?.nombre}
-                      </th>
-                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                        {p?.detalle}
-                      </th>
-                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                        {p?.ancho}x{p?.alto}
-                      </th>
-                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                        {p?.cantidad}
-                      </th>
-                      <th className="border-[1px] border-gray-300 p-3 font-bold text-sm">
-                        <p
-                          className={`${
-                            p?.cantidad === p?.cantidadFaltante
-                              ? "bg-green-500"
-                              : "bg-orange-500"
-                          } rounded-full py-2 w-[40px] text-white text-center mx-auto shadow`}
-                        >
-                          {p?.cantidadFaltante}
-                        </p>
-                      </th>
-                      <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
-                        <button
-                          type="button"
-                          className={`font-semibold px-4 py-1 rounded ${
-                            p?.cantidad === p?.cantidadFaltante
-                              ? "bg-green-500"
-                              : "bg-orange-500"
-                          } text-white shadow`}
-                        >
-                          {p?.cantidad === p?.cantidadFaltante
-                            ? "completada"
-                            : "pendiente"}
-                        </button>
-                      </th>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          {totalPages > 1 && (
+            <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
+              <button
+                className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 19.5 8.25 12l7.5-7.5"
+                  />
+                </svg>
+                Anterior
+              </button>
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <button
+                  key={index}
+                  className={`mx-1 px-3 py-1 rounded ${
+                    currentPage === index + 1
+                      ? "bg-indigo-500 hover:bg-primary transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
+                      : "bg-gray-100 shadow shadow-black/20 text-sm"
+                  }`}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+              <button
+                className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                Siguiente{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </button>
             </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="font-bold text-xl text-blue-500 flex flex-col gap-1">
-        <div className="flex gap-4 items-center">
-          Clientes que faltan aberturas a entregar{" "}
+          )}
         </div>
       </div>
 
-      <div className="border-[1px] border-gray-200 shadow rounded py-5 px-10 flex flex-col gap-4 overflow-y-scroll h-[600px]">
-        {datosAgrupadosEnUno?.map((p) =>
-          p?.productos.map(
-            (datos) =>
-              datos.cantidad !== datos.cantidadFaltante && (
-                <div>
-                  <div className="flex flex-col gap-5 items-center">
-                    <p className="font-bold text-lg">{p?.nombre}</p>
-                    <table className="border-[1px] border-black/20 p-[5px] table-auto w-full rounded shadow uppercase">
-                      <thead>
-                        <tr>
-                          <th className="p-3">ID</th>
-                          <th className="p-3">Codigo</th>
-                          <th className="p-3">Detalle</th>
-                          <th className="p-3">Ancho x Alto</th>
-                          <th className="p-3">Cantidad</th>
-                          <th className="p-3">Realizadas</th>
-                          <th className="p-3">Abertura realizada</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {datos.cantidad !== datos.cantidadFaltante && (
-                          <tr key={datos?.id}>
-                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                              {datos?.id}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                              {datos?.nombre}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                              {datos?.detalle}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                              {datos?.ancho}x{datos?.alto}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm uppercase">
-                              {datos?.cantidad}
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-3 font-bold text-sm">
-                              <p
-                                className={`${
-                                  datos?.cantidad === datos?.cantidadFaltante
-                                    ? "bg-green-500"
-                                    : "bg-orange-500"
-                                } rounded-full py-2 w-[40px] text-white text-center mx-auto shadow`}
-                              >
-                                {datos?.cantidadFaltante}
-                              </p>
-                            </th>
-                            <th className="border-[1px] border-gray-300 p-3 font-medium text-sm">
-                              <button
-                                type="button"
-                                className={`font-semibold px-4 py-1 rounded ${
-                                  datos?.cantidad === datos?.cantidadFaltante
-                                    ? "bg-green-500"
-                                    : "bg-orange-500"
-                                } text-white shadow`}
-                              >
-                                {datos?.cantidad === datos?.cantidadFaltante
-                                  ? "completada"
-                                  : "pendiente"}
-                              </button>
-                            </th>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )
-          )
-        )}
-      </div>
+      <ModalEliminarPedido
+        p={guardarId}
+        handleEliminar={handleEliminarProductoPedido}
+        openBorrarAccesorio={openBorrarAccesorio}
+        handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+      />
+
       <div className="border-[1px] shadow py-10 px-10 rounded flex gap-4 max-md:flex-col max-md:px-1 max-md:py-2">
         <button
           onClick={() => openModalCrearPedido()}
-          className="bg-green-500 py-1 px-5 rounded shadow text-white font-bold max-md:text-sm"
+          className="py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
         >
           Crear un nuevo producto
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+            />
+          </svg>
         </button>
-        <button
-          onClick={() => openModalCrearPedidos()}
-          className="bg-red-500 py-1 px-5 rounded shadow text-white max-md:text-sm font-bold"
-        >
-          Crear nuevo pedido
-        </button>
-
-        <PDFDownloadLink
-          fileName={`${datos?.cliente}_puertas`}
-          document={<DescargarPdfPedido datos={datos} />}
-          className="bg-orange-500 py-1 px-5 rounded text-white font-bold max-md:text-sm"
-        >
-          Descargar Pedido Puertas
-        </PDFDownloadLink>
-        <PDFDownloadLink
-          fileName={`${datos?.cliente}_ventanas`}
-          document={<DescargarPdfPedidoDos datos={datos} />}
-          className="bg-pink-400 py-1 px-5 rounded text-white font-bold max-md:text-sm"
-        >
-          Descargar Pedido Ventanas
-        </PDFDownloadLink>
-        <PDFDownloadLink
-          fileName={`${datos?.cliente}_celosias`}
-          document={<DescargarPdfPedidoTres datos={datos} />}
-          className="bg-blue-400 py-1 px-5 rounded text-white font-bold max-md:text-sm"
-        >
-          Descargar Pedido Celosias de abrir - corredizas
-        </PDFDownloadLink>
-
-        <PDFDownloadLink
-          fileName={`${datos?.cliente}_mosquiteros`}
-          document={<DescargarPdfPedidoSeis datos={datos} />}
-          className="bg-zinc-400 py-1 px-5 rounded text-black font-bold max-md:text-sm"
-        >
-          Descargar Pedido Mosquiteros
-        </PDFDownloadLink>
-      </div>
-      <div className="border-[1px] shadow py-10 px-10 rounded flex gap-4 max-md:flex-col max-md:px-1 max-md:py-2">
-        <PDFDownloadLink
-          fileName={`${datos?.cliente}-pedido-completo-mes-${dateTime(
-            datos?.created_at
-          )}`}
-          document={<DescargarPdfPedidoCinco datos={datos} />}
-          className="bg-gray-800 py-1 px-5 rounded text-white font-bold max-md:text-sm"
-        >
-          Descargar Pedido Completo - Cliente
-        </PDFDownloadLink>
-
-        <PDFDownloadLink
-          fileName={`${datos?.cliente}_aberturas-faltan`}
-          document={
-            <DescargarPdfPedidoAberturasEmbalaje
-              resultadoFinalAberturas={resultadoFinalAberturasEmbalaje}
-              datosAgrupadosEnUno={datosAgrupadosEnUno}
-              datos={datos}
-            />
-          }
-          className="bg-yellow-400 text-black py-1 px-5 rounded font-bold max-md:text-sm"
-        >
-          Descargar Aberturas - Control y Embalaje
-        </PDFDownloadLink>
-
-        <PDFDownloadLink
-          fileName={`${datos?.cliente}_aberturas-faltan`}
-          document={
-            <DescargarPdfPedidoAberturasFaltantes
-              resultadoFinalAberturas={resultadoFinalAberturas}
-              datosAgrupadosEnUno={datosAgrupadosEnUno}
-              datos={datos}
-            />
-          }
-          className="bg-red-400 py-1 px-5 rounded text-white font-bold max-md:text-sm"
-        >
-          Descargar Aberturas faltantes
-        </PDFDownloadLink>
-
-        <PDFDownloadLink
-          fileName={`${datos?.cliente}_aberturas-faltan`}
-          document={
-            <DescargarPedidoIncompletoJefeFabrica
-              resultadoFinalAberturas={resultadoFinalAberturas}
-              datosAgrupadosEnUno={datosAgrupadosEnUno}
-              datos={datos}
-            />
-          }
-          className="bg-orange-500 py-1 px-5 rounded text-white font-bold max-md:text-sm capitalize"
-        >
-          Descargar pedido incompleto entrega - Encargado Fabrica.
-        </PDFDownloadLink>
-
-        <PDFDownloadLink
-          fileName={`${datos?.cliente}_aberturas-faltan`}
-          document={
-            <DescargarPedidoCompletoJefeFabrica
-              resultadoFinalAberturas={resultadoFinalAberturas}
-              datosAgrupadosEnUno={datosAgrupadosEnUno}
-              datos={datos}
-            />
-          }
-          className="bg-green-500 py-1 px-5 rounded text-white font-bold max-md:text-sm capitalize"
-        >
-          Descargar pedido completo entrega - Encargado Fabrica.
-        </PDFDownloadLink>
       </div>
       <ModalEditarProductoPedido
         obtenerId={obtenerId}
@@ -791,6 +612,8 @@ export const ViewPedido = () => {
         closeModal={closeModal}
       />
       <ModalEditarProductoPedidoEstado
+        datos={datos}
+        setDatos={setDatos}
         obtenerId={obtenerId}
         isOpenEstado={isOpenEstado}
         closeModalEstado={closeModalEstado}
@@ -801,7 +624,7 @@ export const ViewPedido = () => {
         closeModalCrearPedido={closeModalCrearPedido}
       />
       <CrearNuevoPedidoViewPedido
-        datos={datos}
+        datosCliente={datosCliente}
         isOpenCrarPedido={isOpenCrarPedido}
         closeModalCrearPedidos={closeModalCrearPedidos}
       />

@@ -68,7 +68,7 @@ export const ModalVerColoresAccesorios = () => {
               <div className="inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl w-[1000px] max-md:w-full">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
+                  className="text-base font-medium leading-6 text-slate-700 max-md:text-md"
                 >
                   Editar o eliminar colores
                 </Dialog.Title>
@@ -78,7 +78,7 @@ export const ModalVerColoresAccesorios = () => {
                       className="bg-white border-[1px] border-gray-200 py-2 px-2 rounded shadow flex justify-around items-center h-[58px]"
                       key={c.id}
                     >
-                      <p className="text-black font-bold max-md:text-sm">
+                      <p className="text-slate-700 font-normal text-sm max-md:text-sm">
                         {c.color}
                       </p>
                       <BiEdit
@@ -86,11 +86,11 @@ export const ModalVerColoresAccesorios = () => {
                           handleColorSeleccionada(c.id);
                           openModalEditarColor();
                         }}
-                        className="text-[35px] max-md:text-[30px] text-green-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
+                        className="text-[30px] max-md:text-[20px] text-indigo-500 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
                       />
                       <AiFillDelete
                         onClick={() => handleEliminarColor(c.id)}
-                        className="text-[35px] max-md:text-[30px] text-red-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
+                        className="text-[30px] max-md:text-[30px] text-red-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
                       />
                     </div>
                   ))}
