@@ -37,16 +37,25 @@ export const ModalEditaStock = ({ closeModalEditar, isOpenEditar }) => {
   const onSubmitEditar = handleSubmit(async (data) => {
     const res = await editarPerfil(obtenerId, data);
 
-    const objetEN = JSON.parse(res.config.data);
-
-    const perfilesActualizados = results.map((perfilState) =>
-      perfilState.id === objetEN.id ? objetEN : perfilState
+    const tipoExistenteIndex = results.findIndex(
+      (tipo) => tipo.id == obtenerId
     );
 
-    setPerfiles(perfilesActualizados);
+    setPerfiles((prevTipos) => {
+      const newTipos = [...prevTipos];
+      const updatePerfil = JSON.parse(res.config.data); // Convierte el JSON a objeto
 
-    // console.log(results);
-    console.log(perfilesActualizados);
+      newTipos[tipoExistenteIndex] = {
+        id: obtenerId,
+        nombre: updatePerfil.nombre,
+        stock: updatePerfil.stock,
+        categoria: updatePerfil.categoria,
+        color: updatePerfil.color,
+        ancho: updatePerfil.ancho,
+        alto: updatePerfil.alto,
+      };
+      return newTipos;
+    });
 
     toast.success("¡Producto editado correctamente!", {
       position: "top-right",

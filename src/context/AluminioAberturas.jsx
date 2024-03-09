@@ -144,9 +144,8 @@ export const AberturasProvider = ({ children }) => {
   const handleEliminar = (id) => {
     eliminarPerfil(id);
 
-    const perfilActualizado = perfiles.filter(
-      (perfilState) => perfilState.id !== id
-    );
+    const updatedTipos = perfiles.filter((tipo) => tipo.id !== id);
+    setPerfiles(updatedTipos);
 
     toast.error("¡Producto eliminado correctamente!", {
       position: "top-right",

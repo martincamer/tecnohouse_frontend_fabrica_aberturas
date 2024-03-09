@@ -117,6 +117,10 @@ export const PedidoProvider = ({ children }) => {
       progress: undefined,
       theme: "light",
     });
+
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
   };
 
   //fin crear factura
@@ -210,10 +214,6 @@ export const PedidoProvider = ({ children }) => {
   const handleDeletePresupuesto = (id) => {
     deleteFactura(id);
 
-    const presupuestoActualizado = datosPresupuesto.filter(
-      (perfilState) => perfilState.id !== id
-    );
-
     toast.error("¡Pedido eliminado correctamente!", {
       position: "top-right",
       autoClose: 1500,
@@ -225,7 +225,9 @@ export const PedidoProvider = ({ children }) => {
       theme: "light",
     });
 
-    setDatosPresupuesto(presupuestoActualizado);
+    setTimeout(() => {
+      location.reload();
+    }, 1500);
   };
 
   return (

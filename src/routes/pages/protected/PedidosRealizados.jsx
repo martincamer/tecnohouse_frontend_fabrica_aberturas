@@ -1,15 +1,14 @@
 import { usePedidoContext } from "../../../context/PedidosMensualesProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search } from "../../../components/ui/Search";
-import "moment/locale/es";
 import { TablePedidosRealizados } from "../../../components/pedidos/TablePedidosRealizados";
 import { DescargarPedidoCompletoJefeFabrica } from "../../../components/pedidos/DescargarPedidoIncompletoJefeFabrica";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import client from "../../../api/axios";
+import "moment/locale/es";
+import * as XLSX from "xlsx";
 
 export const PedidosRealizados = () => {
-  const { search, searcher } = usePedidoContext();
-
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
   const [dataNew, setDatos] = useState([]);
@@ -118,7 +117,8 @@ export const PedidosRealizados = () => {
               p.categoria === producto.categoria &&
               p.ancho === producto.ancho &&
               p.alto === producto.alto &&
-              p.color === producto.color
+              p.color === producto.color &&
+              p.detalle === producto.detalle
           );
 
           if (existenteProducto) {
@@ -146,8 +146,8 @@ export const PedidosRealizados = () => {
             ancho: producto.ancho,
             alto: producto.alto,
             color: producto.color,
-            cantidad_total: parseInt(producto.cantidad),
             detalle: producto.detalle,
+            cantidad_total: parseInt(producto.cantidad),
           });
         });
 
@@ -158,21 +158,43 @@ export const PedidosRealizados = () => {
     return resultado;
   }
 
-  function mostrarAgrupacion(datosAgrupados) {
-    datosAgrupados.forEach((grupo) => {
-      console.log(`Detalle: ${grupo.detalle}`);
-      grupo.productos.forEach((producto) => {
-        console.log(
-          `  Categoria: ${producto.categoria}, Ancho: ${producto.ancho}, Alto: ${producto.alto}, Color: ${producto.color}, Cantidad Total: ${producto.cantidad_total}`
-        );
-      });
-      console.log("\n");
-    });
-  }
-
   const datosAgrupados = agruparPorDetalle(dataNew);
 
-  console.log(datosAgrupados);
+  const descargarExcel = () => {
+    const wsData = datosAgrupados.flatMap((grupo) =>
+      grupo.productos.map((producto) => ({
+        DETALLE: producto.detalle.toUpperCase(),
+        CATEGORIA: producto.categoria.toUpperCase(),
+        COLOR: producto.color.toUpperCase(),
+        CANTIDAD: producto.cantidad_total,
+      }))
+    );
+
+    const ws = XLSX.utils.json_to_sheet(wsData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "DatosAgrupados");
+    XLSX.writeFile(wb, "datos_agrupados.xlsx");
+  };
+
+  const [search, setSearch] = useState("");
+  const [resultadoFiltrados, setResultadosFiltrados] = useState([]);
+
+  const searcher = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    setSearch(searchTerm);
+
+    // Filtrar los resultados por término de búsqueda y mes seleccionado
+    const filteredResults = dataNew.filter((dato) =>
+      dato?.cliente?.toLowerCase().includes(searchTerm)
+    );
+
+    setResultadosFiltrados(searchTerm === "" ? dataNew : filteredResults);
+  };
+
+  // Use useEffect to update filtered results when the search term changes
+  useEffect(() => {
+    setResultadosFiltrados(search === "" ? dataNew : resultadoFiltrados);
+  }, [dataNew, search]);
 
   return (
     <section className="w-full py-20 px-14 max-md:px-2 overflow-x-scroll">
@@ -384,33 +406,45 @@ export const PedidosRealizados = () => {
               </button>
             </div>
           </div>
-          <Search search={search} searcher={searcher} />
         </div>
 
-        <div className="mt-5 flex gap-3">
+        <div className="mt-5 flex gap-3 w-full items-center">
+          <div className="w-1/3">
+            <Search variable="w-full" search={search} searcher={searcher} />
+          </div>
           <PDFDownloadLink
             fileName="Pedido Completo Fabrica Aberturas"
-            className=" bg-indigo-500 px-6 py-2 rounded-xl shadow text-white capitalize"
+            className=" bg-indigo-500 px-6 py-2 text-sm rounded-xl shadow text-white uppercase"
             document={<DescargarPedidoCompletoJefeFabrica datos={dataNew} />}
           >
-            Descargar pedido completo
+            Descargar pedido completo PDF
           </PDFDownloadLink>
 
-          <PDFDownloadLink
+          {/* <PDFDownloadLink
             className=" bg-black/90 px-6 py-2 rounded-xl shadow text-white capitalize"
             document={<DescargarPedidoCompletoJefeFabrica datos={dataNew} />}
           >
             Descargar el total aberturas
-          </PDFDownloadLink>
+          </PDFDownloadLink> */}
         </div>
 
         <div className="mt-5 h-[500px] overflow-y-scroll w-full">
-          <TablePedidosRealizados loading={loading} dataNew={dataNew} />
+          <TablePedidosRealizados
+            resultadoFiltrados={resultadoFiltrados}
+            loading={loading}
+            dataNew={dataNew}
+          />
         </div>
       </div>
 
-      <div className="w-full h-full mt-10 rounded-xl">
-        <div className="border-[1px] border-gray-200 rounded-xl shadow w-full">
+      <div className="mt-12 font-semibold text-base text-slate-600 flex">
+        <h3 className="border-b-[3px] border-slate-600">
+          Aberturas total realizadas.
+        </h3>
+      </div>
+
+      <div className="w-full mt-5 rounded-xl h-[50vh] overflow-y-scroll">
+        <div className="border-[1px] border-slate-300 rounded-xl shadow w-full">
           <table className="w-full">
             <thead>
               <tr>
@@ -432,13 +466,13 @@ export const PedidosRealizados = () => {
               {datosAgrupados.map((c) =>
                 c.productos.map((c, index) => (
                   <tr key={index}>
-                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal">
+                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal uppercase">
                       {c.detalle}
                     </th>
-                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal">
+                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal uppercase">
                       {c.categoria}
                     </th>
-                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal">
+                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal uppercase">
                       {c.color}
                     </th>
                     <th className="border-[1px] border-gray-300 p-2 text-sm font-bold">
@@ -450,6 +484,15 @@ export const PedidosRealizados = () => {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="mt-5 w-full">
+        <button
+          className="bg-black rounded-xl text-white py-2 px-6 shadow uppercase text-sm"
+          type="button"
+          onClick={descargarExcel}
+        >
+          Descargar excel aberturas entregadas
+        </button>
       </div>
     </section>
   );

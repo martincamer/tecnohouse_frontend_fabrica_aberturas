@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   deleteFacturaProducto,
   obtenerFactura,
@@ -11,6 +11,7 @@ import { Search } from "../../../components/ui/Search";
 import { ModalEditarProductoPedidoEstado } from "../../../components/pedidos/ModalEditarProductoPedidoEstado";
 import { ModalEliminarPedido } from "../../../components/pedidos/ModalEliminarPedido";
 import { CrearNuevoPedidoViewPedido } from "../../../components/pedidos/CrearNuevoPedidoViewPedido";
+import * as XLSX from "xlsx";
 
 export const ViewPedido = () => {
   const [datos, setDatos] = useState([]);
@@ -241,9 +242,50 @@ export const ViewPedido = () => {
     setCurrentPage(newPage);
   };
 
+  const descargarExcel = () => {
+    const wsData = datos?.map((p) => ({
+      CATEGORIA: p?.categoria.toUpperCase(),
+      COLOR: p?.color.toUpperCase(),
+      CLIENTE: p?.cliente.toUpperCase(),
+      ANCHOXALTO: `${p?.ancho}x${p?.alto}`,
+      Cantidad: p?.cantidad.toUpperCase(),
+      "CANTIDAD REALIZADA": p?.cantidadFaltante.toUpperCase(),
+      "REALIZADA TOTAL":
+        p?.cantidad === p?.cantidadFaltante ? "COMPLETADA" : "PENDIENTE",
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(wsData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "DatosPedidos");
+    XLSX.writeFile(wb, "datos_pedidos.xlsx");
+  };
+
   return (
     <section className="w-full py-2 px-14 max-md:py-6 max-md:px-2 flex flex-col gap-10 overflow-x-scroll">
       <ToastContainer />
+
+      <div className="flex mt-5">
+        <Link
+          className="bg-black py-2 px-8 rounded-xl shadow text-white flex  gap-2 items-center"
+          to="/pedidos"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+            />
+          </svg>
+          VOLVER A LA PEDIDOS
+        </Link>
+      </div>
 
       <div className="flex gap-2 items-center">
         <p
@@ -373,9 +415,21 @@ export const ViewPedido = () => {
           </div>
         </div>
 
-        <div>
-          <Search searcher={searcher} search={search} />
+        <div className="flex gap-4">
+          <div className="w-1/3">
+            <Search variable="w-full" searcher={searcher} search={search} />
+          </div>
+
+          <div className="flex">
+            <button
+              onClick={descargarExcel}
+              className="bg-indigo-500 py-2 rounded-xl text-white uppercase px-6"
+            >
+              Descargar Excel
+            </button>
+          </div>
         </div>
+
         <div className="overflow-x-auto rounded-lg border border-gray-200 mt-5">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm uppercase">
             <thead>
@@ -610,6 +664,8 @@ export const ViewPedido = () => {
         obtenerId={obtenerId}
         isOpen={isOpen}
         closeModal={closeModal}
+        datos={datos}
+        setDatos={setDatos}
       />
       <ModalEditarProductoPedidoEstado
         datos={datos}

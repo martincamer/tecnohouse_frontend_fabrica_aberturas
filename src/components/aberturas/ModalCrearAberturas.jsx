@@ -18,11 +18,19 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const { data: nuevoValor } = await crearPerfilNuevo(data);
+      const res = await crearPerfilNuevo(data);
 
-      const proyectoActualizado = [...results, nuevoValor];
+      // Verificar si el tipo ya existe antes de agregarlo al estado
+      const tipoExistente = results.find((tipo) => tipo.id === res.data.id);
 
-      setPerfiles(proyectoActualizado);
+      if (!tipoExistente) {
+        // Actualizar el estado de tipos agregando el nuevo tipo al final
+        setPerfiles((prevTipos) => [...prevTipos, res.data]);
+      }
+
+      // const proyectoActualizado = [...results, nuevoValor];
+
+      // setPerfiles(proyectoActualizado);
 
       toast.success("¡Producto creado correctamente!", {
         position: "top-right",
@@ -37,9 +45,9 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
 
       reset();
 
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 1000);
     } catch (error) {
       setError([error.response.data.message]);
     }

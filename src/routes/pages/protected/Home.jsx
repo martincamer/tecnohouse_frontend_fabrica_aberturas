@@ -79,6 +79,33 @@ export const Home = () => {
   const resultadoTwo = dataTwo?.reduce((sum, b) => {
     return sum + Number(b);
   }, 0);
+  const diasSemana = [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+  ];
+  const meses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
+  const fechaActual = new Date();
+  const diaActual = diasSemana[fechaActual.getDay()];
+  const mesActual = meses[fechaActual.getMonth()];
 
   return (
     <section className="w-full py-20 px-12 max-md:px-4">
@@ -94,10 +121,12 @@ export const Home = () => {
 
         <div className="border-[1px] border-black/20 py-5 px-2 rounded-xl shadow-md shadow-black/10 flex flex-col gap-3 items-center bg-white">
           <p className="font-normal text-slate-700 text-base max-md:text-lg">
-            Accesorios Totales en stock
+            Fecha del mes
           </p>
           <div className="font-bold max-md:text-sm text-indigo-500 text-lg">
-            {unidadesEnStockAccesorios()}
+            <p>
+              Hoy es {diaActual} {fechaActual.getDate()} de {mesActual}.
+            </p>
           </div>
         </div>
 

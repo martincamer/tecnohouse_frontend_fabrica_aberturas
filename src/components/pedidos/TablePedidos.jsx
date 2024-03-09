@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ModalEliminarPedido } from "./ModalEliminarPedido";
 import { IoCloseCircle } from "react-icons/io5";
 
-export const TablePedidos = ({ datosMensuales }) => {
+export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
   const { handleDeletePresupuesto, results } = usePedidoContext();
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export const TablePedidos = ({ datosMensuales }) => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 text-left">
-          {currentResults?.map((p, index) => (
+          {resultadoFiltrados?.map((p, index) => (
             <tr
               key={p.id}
               className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
@@ -183,6 +183,8 @@ export const TablePedidos = ({ datosMensuales }) => {
               <td className="py-3 px-3 text-sm text-left text-slate-700">
                 <Link
                   to={`/pedido/${p?.id}`}
+                  // target="_blank"
+                  // rel="noopener noreferrer"
                   className="bg-indigo-600/10 border-indigo-300 border-[1px] py-2 px-4 text-indigo-600 rounded-xl text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
                 >
                   Ver pedido

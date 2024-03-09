@@ -9,15 +9,7 @@ import moment from "moment";
 import "moment/locale/es";
 
 export const Pedidos = () => {
-  const {
-    isOpen,
-    openModal,
-    closeModal,
-    datosPresupuesto,
-    setDatosPresupuesto,
-    search,
-    searcher,
-  } = usePedidoContext();
+  const { isOpen, openModal, closeModal } = usePedidoContext();
 
   const [datosMensuales, setDatosMensuales] = useState([]);
 
@@ -34,46 +26,6 @@ export const Pedidos = () => {
 
     loadData();
   }, []);
-
-  const [totalCantidad, setTotalCantidad] = useState(0);
-
-  // Obtener la fecha actual
-  const fechaActual = moment();
-
-  // function load() {
-  //   const datosFiltrados = datosMensuales.filter((objeto) => {
-  //     const fechaCreacion = moment(objeto.created_at);
-  //     return (
-  //       fechaCreacion.month() === fechaActual.month() &&
-  //       fechaCreacion.year() === fechaActual.year()
-  //     );
-  //   });
-
-  //   Actualizar el estado con los datos filtrados
-  //   setDatosPresupuesto(datosFiltrados);
-  // }
-
-  // useEffect(() => {
-  //   load();
-  // }, [datosPresupuesto.length]);
-
-  // useEffect(() => {
-  //   const total = datosMensuales.reduce((acumulador, objeto) => {
-  //     const fechaCreacion = moment(objeto.created_at);
-  //     if (
-  //       fechaCreacion.month() === fechaActual.month() &&
-  //       fechaCreacion.year() === fechaActual.year()
-  //     ) {
-  //       objeto.productos.respuesta.forEach((producto) => {
-  //         acumulador += parseInt(producto.cantidad, 10);
-  //       });
-  //     }
-  //     return acumulador;
-  //   }, 0);
-
-  //   Actualizar el estado con el total calculado
-  //   setTotalCantidad(total);
-  // }, []);
 
   const datos = datosMensuales.map((c) =>
     c.productos.respuesta.map((c) => c.cantidad)
@@ -122,6 +74,28 @@ export const Pedidos = () => {
   let indiceMes = fechaActualNew.getMonth();
 
   let nombreMes = nombresMeses[indiceMes];
+
+  const [search, setSearch] = useState("");
+  const [resultadoFiltrados, setResultadosFiltrados] = useState([]);
+
+  const searcher = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    setSearch(searchTerm);
+
+    // Filtrar los resultados por término de búsqueda y mes seleccionado
+    const filteredResults = datosMensuales.filter((dato) =>
+      dato?.cliente?.toLowerCase().includes(searchTerm)
+    );
+
+    setResultadosFiltrados(
+      searchTerm === "" ? datosMensuales : filteredResults
+    );
+  };
+
+  // Use useEffect to update filtered results when the search term changes
+  useEffect(() => {
+    setResultadosFiltrados(search === "" ? datosMensuales : resultadoFiltrados);
+  }, [datosMensuales, search]);
 
   return (
     <section className="w-full py-20 px-14 max-md:px-2 overflow-x-scroll">
@@ -358,7 +332,10 @@ export const Pedidos = () => {
         </div>
 
         <div className="mt-5 h-[500px] overflow-y-scroll w-full">
-          <TablePedidos datosMensuales={datosMensuales} />
+          <TablePedidos
+            resultadoFiltrados={resultadoFiltrados}
+            datosMensuales={datosMensuales}
+          />
         </div>
 
         <ModalCrearPedido isOpen={isOpen} closeModal={closeModal} />

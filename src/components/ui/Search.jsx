@@ -2,7 +2,7 @@ export const Search = ({ search, searcher, variable }) => {
   return (
     <div>
       <div
-        className={`${variable} relative w-1/5 max-w-full rounded-md border-slate-300 border-[1px] py-2.5 pr-10 shadow-sm sm:text-sm`}
+        className={`${variable} relative w-1/5 max-w-full rounded-xl border-slate-300 border-[1px] py-2.5 pr-10 shadow-sm sm:text-sm`}
       >
         <input
           value={search}

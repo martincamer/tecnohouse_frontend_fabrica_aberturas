@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { usePedidoContext } from "../../../context/PedidoProvider";
+import * as XLSX from "xlsx";
 
 export const VerClientesFinalizados = () => {
   const { results } = usePedidoContext();
-
-  console.log(results);
 
   const [clienteFilter, setClienteFilter] = useState("");
   // Filtrar productos por cliente
@@ -35,6 +34,27 @@ export const VerClientesFinalizados = () => {
   const startPage = Math.max(1, currentPage - Math.floor(rangeSize / 2));
   const endPage = Math.min(totalPages, startPage + rangeSize - 1);
 
+  const descargarExcel = () => {
+    const wsData = currentResults.map((producto) => ({
+      CLIENTE: producto.cliente.toUpperCase(),
+      DETALLE: producto.detalle.toUpperCase(),
+      CATEGORIA: producto.categoria.toUpperCase(),
+      "CANTIDAD REALIZADA": producto.cantidadFaltante,
+      COLOR: producto.color.toUpperCase(),
+      ESTADO:
+        producto.cantidad === producto.cantidadFaltante
+          ? "REALIZADO"
+          : "PENDIENTE",
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(wsData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "DatosPedidos");
+
+    // Write the workbook to a file
+    XLSX.writeFile(wb, "datos_pedidos.xlsx");
+  };
+
   return (
     <section className="w-full py-14 px-14 max-md:px-2 overflow-x-scroll">
       <div className="flex">
@@ -46,10 +66,11 @@ export const VerClientesFinalizados = () => {
       <div className="border-slate-300 border-[1px] rounded-xl px-10 py-10 mt-10">
         <div className="mb-5">
           <button
+            onClick={descargarExcel}
             type="button"
             className="bg-black px-6 py-2 rounded-xl text-white shadow"
           >
-            Descargar comprobante unico
+            Descargar comprobante unico en excel
           </button>
         </div>
         <div className="flex justify-between items-center py-2 px-4 border-slate-300 border-[1px] shadow rounded-xl w-1/4">

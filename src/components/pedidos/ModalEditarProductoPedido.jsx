@@ -11,6 +11,8 @@ export const ModalEditarProductoPedido = ({
   obtenerId,
   isOpen,
   closeModal,
+  datos,
+  setDatos,
 }) => {
   const {
     register,
@@ -22,6 +24,30 @@ export const ModalEditarProductoPedido = ({
   const onSubmitEditar = handleSubmit(async (data) => {
     const res = await actualizarFacturaProductoUnico(obtenerId, data);
 
+    const tipoExistenteIndexTwo = datos.findIndex(
+      (tipo) => tipo.id === obtenerId
+    );
+
+    setDatos((prevTipos) => {
+      const newTipos = [...prevTipos];
+      const updatedTipo = JSON.parse(res.config.data); // Convierte el JSON a objeto
+
+      newTipos[tipoExistenteIndexTwo] = {
+        id: obtenerId,
+        nombre: updatedTipo.nombre,
+        detalle: updatedTipo.detalle,
+        categoria: updatedTipo.categoria,
+        color: updatedTipo.color,
+        ancho: updatedTipo.ancho,
+        alto: updatedTipo.alto,
+        cantidad: updatedTipo.cantidad,
+        cliente: updatedTipo.cliente,
+        cantidadFaltante: updatedTipo.cantidadFaltante,
+      };
+      console.log("Estado después de la actualización:", newTipos);
+      return newTipos;
+    });
+
     toast.success("¡Producto editado correctamente!", {
       position: "top-right",
       autoClose: 1500,
@@ -32,11 +58,6 @@ export const ModalEditarProductoPedido = ({
       progress: undefined,
       theme: "light",
     });
-
-    setTimeout(() => {
-      location.reload();
-    }, 1500);
-    console.log(res);
   });
 
   useEffect(() => {
@@ -126,90 +147,106 @@ export const ModalEditarProductoPedido = ({
                     </p>
                   )}
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">Codigo:</label>
+                    <label className="text-[14px] font-normal text-slate-700">
+                      Codigo:
+                    </label>
                     <input
                       {...register("nombre", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="text"
                       placeholder="nombre del codigo"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">Detalle:</label>
+                    <label className="text-[14px] font-normal text-slate-700">
+                      Detalle:
+                    </label>
                     <textarea
                       {...register("detalle", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="text"
                       placeholder="detalle"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">categoria:</label>
+                    <label className="text-[14px] font-normal text-slate-700">
+                      categoria:
+                    </label>
                     <input
                       {...register("categoria", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="text"
                       placeholder="categoria"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">color:</label>
+                    <label className="text-[14px] font-normal text-slate-700">
+                      color:
+                    </label>
                     <input
                       {...register("color", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="text"
                       placeholder="color"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">cliente:</label>
+                    <label className="text-[14px] font-normal text-slate-700">
+                      cliente:
+                    </label>
                     <input
                       {...register("cliente", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="text"
                       placeholder="cliente"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">cantidad:</label>
+                    <label className="text-[14px] font-normal text-slate-700">
+                      cantidad:
+                    </label>
                     <input
                       {...register("cantidad", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="number"
                       placeholder="cantidad"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">ancho:</label>
+                    <label className="text-[14px] font-normal text-slate-700">
+                      ancho:
+                    </label>
                     <input
                       {...register("ancho", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="number"
                       placeholder="ancho"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">alto:</label>
+                    <label className="text-[14px] font-normal text-slate-700">
+                      alto:
+                    </label>
                     <input
                       {...register("alto", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="number"
                       placeholder="alto"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold">
+                    <label className="text-[14px] font-normal text-slate-700">
                       Cantidad faltante:
                     </label>
                     <input
                       {...register("cantidadFaltante", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="number"
                       placeholder="editar cantidad - total"
                     />
@@ -217,7 +254,7 @@ export const ModalEditarProductoPedido = ({
 
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-secondary hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white font-bold text-center cursor-pointer"
+                      className="bg-indigo-500 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl outline-none text-white font-normal text-center cursor-pointer"
                       type="submit"
                       value={"Editar producto"}
                       onClick={closeModal}
