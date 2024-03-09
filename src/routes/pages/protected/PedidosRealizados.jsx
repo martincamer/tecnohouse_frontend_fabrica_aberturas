@@ -101,6 +101,79 @@ export const PedidosRealizados = () => {
 
   let nombreMes = nombresMeses[indiceMes];
 
+  console.log(dataNew);
+
+  function agruparPorDetalle(datos) {
+    const resultado = [];
+
+    datos.forEach((pedido) => {
+      const existente = resultado.find(
+        (grupo) => grupo.detalle === pedido.detalle
+      );
+
+      if (existente) {
+        pedido.productos.respuesta.forEach((producto) => {
+          const existenteProducto = existente.productos.find(
+            (p) =>
+              p.categoria === producto.categoria &&
+              p.ancho === producto.ancho &&
+              p.alto === producto.alto &&
+              p.color === producto.color
+          );
+
+          if (existenteProducto) {
+            existenteProducto.cantidad_total += parseInt(producto.cantidad);
+          } else {
+            existente.productos.push({
+              categoria: producto.categoria,
+              ancho: producto.ancho,
+              alto: producto.alto,
+              color: producto.color,
+              detalle: producto.detalle,
+              cantidad_total: parseInt(producto.cantidad),
+            });
+          }
+        });
+      } else {
+        const nuevoGrupo = {
+          detalle: pedido.detalle,
+          productos: [],
+        };
+
+        pedido.productos.respuesta.forEach((producto) => {
+          nuevoGrupo.productos.push({
+            categoria: producto.categoria,
+            ancho: producto.ancho,
+            alto: producto.alto,
+            color: producto.color,
+            cantidad_total: parseInt(producto.cantidad),
+            detalle: producto.detalle,
+          });
+        });
+
+        resultado.push(nuevoGrupo);
+      }
+    });
+
+    return resultado;
+  }
+
+  function mostrarAgrupacion(datosAgrupados) {
+    datosAgrupados.forEach((grupo) => {
+      console.log(`Detalle: ${grupo.detalle}`);
+      grupo.productos.forEach((producto) => {
+        console.log(
+          `  Categoria: ${producto.categoria}, Ancho: ${producto.ancho}, Alto: ${producto.alto}, Color: ${producto.color}, Cantidad Total: ${producto.cantidad_total}`
+        );
+      });
+      console.log("\n");
+    });
+  }
+
+  const datosAgrupados = agruparPorDetalle(dataNew);
+
+  console.log(datosAgrupados);
+
   return (
     <section className="w-full py-20 px-14 max-md:px-2 overflow-x-scroll">
       <div className="border-[1px] border-slate-300 shadow-black/10 shadow py-10 px-12 max-md:px-4 max-md:py-6 w-full rounded-xl">
@@ -333,6 +406,49 @@ export const PedidosRealizados = () => {
 
         <div className="mt-5 h-[500px] overflow-y-scroll w-full">
           <TablePedidosRealizados loading={loading} dataNew={dataNew} />
+        </div>
+      </div>
+
+      <div className="w-full h-full mt-10 rounded-xl">
+        <div className="border-[1px] border-gray-200 rounded-xl shadow w-full">
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th className="py-3 px2 font-bold uppercase text-indigo-500 text-sm">
+                  Detalle
+                </th>
+                <th className="py-3 px2 font-bold uppercase text-indigo-500 text-sm">
+                  Categoria
+                </th>
+                <th className="py-3 px2 font-bold uppercase text-indigo-500 text-sm">
+                  Color
+                </th>
+                <th className="py-3 px2 font-bold uppercase text-indigo-500 text-sm">
+                  Cantidad
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {datosAgrupados.map((c) =>
+                c.productos.map((c, index) => (
+                  <tr key={index}>
+                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal">
+                      {c.detalle}
+                    </th>
+                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal">
+                      {c.categoria}
+                    </th>
+                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal">
+                      {c.color}
+                    </th>
+                    <th className="border-[1px] border-gray-300 p-2 text-sm font-bold">
+                      {c.cantidad_total}
+                    </th>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
