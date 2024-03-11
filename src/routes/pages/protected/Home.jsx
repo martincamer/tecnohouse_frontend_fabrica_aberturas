@@ -109,7 +109,7 @@ export const Home = () => {
 
   return (
     <section className="w-full py-20 px-12 max-md:px-4">
-      <div className="bg-slate-0 grid grid-cols-5 border-[1px] gap-3 items-center border-black/20 py-6 px-10  max-md:px-2 max-md:py-4 rounded-xl shadow-md shadow-black/10">
+      <div className="bg-slate-0 grid grid-cols-4 border-[1px] gap-3 items-center border-black/20 py-6 px-10  max-md:px-2 max-md:py-4 rounded-xl shadow-md shadow-black/10">
         <div className="border-[1px] border-black/20 py-5 px-2 rounded-xl shadow-md shadow-black/10 flex flex-col gap-3 items-center bg-white">
           <p className="font-normal text-slate-700 text-base max-md:text-lg">
             Productos Totales en stock
