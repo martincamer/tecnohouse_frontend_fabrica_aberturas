@@ -48,6 +48,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
       newTipos[tipoExistenteIndex] = {
         id: obtenerId,
         nombre: updatePerfil.nombre,
+        descripcion: updatePerfil.descripcion,
         stock: updatePerfil.stock,
         categoria: updatePerfil.categoria,
         color: updatePerfil.color,
