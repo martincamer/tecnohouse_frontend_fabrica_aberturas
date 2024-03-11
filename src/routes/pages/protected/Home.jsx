@@ -132,15 +132,6 @@ export const Home = () => {
 
         <div className="border-[1px] border-black/20 py-5 px-2 rounded-xl shadow-md shadow-black/10 flex flex-col gap-3 items-center bg-white">
           <p className="font-normal text-slate-700 text-base max-md:text-lg">
-            Perfiles Totales en stock
-          </p>
-          <div className="font-bold max-md:text-sm text-indigo-500 text-lg">
-            {unidadesEnStockAluminio()}
-          </div>
-        </div>
-
-        <div className="border-[1px] border-black/20 py-5 px-2 rounded-xl shadow-md shadow-black/10 flex flex-col gap-3 items-center bg-white">
-          <p className="font-normal text-slate-700 text-base max-md:text-lg">
             Total aberturas generadas en el mes
           </p>
           <div className="font-bold max-md:text-sm text-indigo-500 text-lg">
