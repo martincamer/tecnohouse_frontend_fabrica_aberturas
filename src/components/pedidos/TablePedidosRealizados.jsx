@@ -31,6 +31,8 @@ export const TablePedidosRealizados = ({
         CLIENTE: p.cliente.toUpperCase(), // Mantenido como p.cliente para mostrar el cliente original (fábrica)
         DETALLE: producto.detalle.toUpperCase(),
         "TOTAL ABERTURAS": producto.cantidad,
+        ANCHO: producto.ancho,
+        ALTO: producto.alto,
         "CLIENTE UNICO": producto.cliente.toUpperCase(), // Cambiado para mostrar el cliente del producto
         "FECHA DE CREACIÓN": new Date(p.created_at).toLocaleDateString("es-AR"),
         "ESTADO DEL PEDIDO":
