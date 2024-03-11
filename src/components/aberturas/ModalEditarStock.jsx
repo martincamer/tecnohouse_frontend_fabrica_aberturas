@@ -49,6 +49,7 @@ export const ModalEditaStock = ({ closeModalEditar, isOpenEditar }) => {
         id: obtenerId,
         nombre: updatePerfil.nombre,
         stock: updatePerfil.stock,
+        descripcion: updatePerfil.descripcion,
         categoria: updatePerfil.categoria,
         color: updatePerfil.color,
         ancho: updatePerfil.ancho,
