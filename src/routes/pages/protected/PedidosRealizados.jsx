@@ -164,6 +164,8 @@ export const PedidosRealizados = () => {
     const wsData = datosAgrupados.flatMap((grupo) =>
       grupo.productos.map((producto) => ({
         DETALLE: producto.detalle.toUpperCase(),
+        ANCHO: producto.ancho,
+        ALTO: producto.alto,
         CATEGORIA: producto.categoria.toUpperCase(),
         COLOR: producto.color.toUpperCase(),
         CANTIDAD: producto.cantidad_total,
