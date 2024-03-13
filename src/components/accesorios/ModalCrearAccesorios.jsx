@@ -111,22 +111,22 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
                       </span>
                     )}
                     <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
-                      Codigo:
+                      Codigo
                     </label>
                     <input
                       {...register("nombre", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="nombre del codigo"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
-                      Color:
+                      Color
                     </label>
                     <select
                       {...register("color", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none bg-white max-md:text-sm"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded-xl shadow shadow-black/10 outline-none bg-white max-md:text-sm"
                     >
                       <option className="text-black">Seleccionar color</option>
                       {colores.map((c) => (
@@ -138,16 +138,32 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
                   </div>
                   <div className="flex flex-col gap-2">
                     {errors.stock && (
-                      <span className=" text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-1/2 text-center shadow border-[1px] border-red-200">
+                      <span className=" text-sm bg-red-100 text-red-600 py-2 px-2 rounded-xl w-1/2 text-center shadow border-[1px] border-red-200">
                         El stock es requerido
                       </span>
                     )}
                     <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
-                      Stock total:
+                      Cantidad stock
                     </label>
                     <input
                       {...register("stock", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
+                      type="number"
+                      placeholder="cantidad de productos"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    {errors.stock_minimo && (
+                      <span className=" text-sm bg-red-100 text-red-600 py-2 px-2 rounded-xl w-1/2 text-center shadow border-[1px] border-red-200">
+                        El stock minimo es requerido
+                      </span>
+                    )}
+                    <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
+                      Stock minimo
+                    </label>
+                    <input
+                      {...register("stock_minimo", { required: true })}
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
                       type="number"
                       placeholder="cantidad de productos"
                     />
@@ -158,7 +174,7 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
                     </label>
                     <select
                       {...register("categoria", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none bg-white max-md:text-sm"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded-xl shadow shadow-black/10 outline-none bg-white max-md:text-sm"
                     >
                       <option className="text-black" key={categorias.id}>
                         Seleccionar categoria
@@ -177,18 +193,18 @@ export const ModalCrearAccesorios = ({ closeModal, isOpen }) => {
                       </span>
                     )}
                     <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
-                      Detalle:
+                      Detalle
                     </label>
                     <input
                       {...register("descripcion", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="detalle ej perfil pesado ventana"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-indigo-500 text-sm font-normal hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white text-center cursor-pointer max-md:text-xs"
+                      className="bg-indigo-500 text-sm font-normal hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl shadow shadow-black/10 outline-none text-white text-center cursor-pointer max-md:text-xs"
                       type="submit"
                       value={"Crear producto"}
                       onClick={closeModal && errors}

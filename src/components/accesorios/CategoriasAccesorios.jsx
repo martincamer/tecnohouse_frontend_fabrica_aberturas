@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAccesoriosContext } from "../../context/AccesoriosProvider";
 
 export const CategoriasAccesorios = ({
@@ -9,7 +10,7 @@ export const CategoriasAccesorios = ({
     useAccesoriosContext();
 
   return (
-    <div className="bg-slate-100 border-slate-300 border-[1px] shadow py-4 px-4 rounded-lg">
+    <div className="bg-white border-slate-300 border-[1px] shadow py-4 px-4 rounded-xl">
       <div className="flex gap-4 max-md:gap-2 max-md:flex-col">
         <button
           onClick={openModal}
@@ -111,6 +112,48 @@ export const CategoriasAccesorios = ({
             />
           </svg>
         </button>
+
+        <Link
+          to={"/accesorios/entradas"}
+          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out"
+        >
+          Ir a la parte de entradas
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+            />
+          </svg>
+        </Link>
+
+        <Link
+          to={"/accesorios/salidas"}
+          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out"
+        >
+          Ir a la parte de salidas
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+            />
+          </svg>
+        </Link>
       </div>
     </div>
   );

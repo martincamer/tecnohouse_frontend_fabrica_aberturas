@@ -15,6 +15,8 @@ import { ModalCrearEditarAccesorios } from "../../../components/accesorios/Modal
 import { CategoriasAccesorios } from "../../../components/accesorios/CategoriasAccesorios";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { AccesoriosPdf } from "../../../components/viewpdfpedidos/AccesoriosPdf";
+import { ModalCrearAccesoriosDos } from "../../../components/accesorios/ModalCrearAccesoriosDos";
+import { useState } from "react";
 
 export const Accesorios = () => {
   const {
@@ -42,11 +44,21 @@ export const Accesorios = () => {
 
   const { spinner } = useAuth();
 
+  const [openEditarDos, setIsOpenEditar] = useState(false);
+
+  const openModalEditarDos = () => {
+    setIsOpenEditar(true);
+  };
+
+  const closeModalEditarDos = () => {
+    setIsOpenEditar(false);
+  };
+
   return spinner ? (
     <Spinner />
   ) : (
-    <main className="w-full py-14 px-14 max-md:px-2 overflow-x-scroll">
-      <section className="max-md:w-full mx-auto py-[20px] px-[20px] h-full border-[1px] border-gray-300 rounded shadow-black/20 shadow-md flex flex-col gap-10">
+    <main className="w-full py-24 px-14 max-md:px-2 overflow-x-scroll">
+      <section className="max-md:w-full mx-auto py-[20px] px-[20px] h-full border-[1px] border-slate-300 rounded-xl shadow flex flex-col gap-10">
         <IntroTitleAccesorios />
 
         <IntroAccesoriosStock results={results} />
@@ -86,38 +98,13 @@ export const Accesorios = () => {
 
         <div className="overflow-y-scroll h-[40vh]">
           <TableAccesorios
+            openModalEditarDos={openModalEditarDos}
             handlePerfilSeleccionado={handlePerfilSeleccionado}
             openModalEditar={openModalEditar}
             results={results}
             resultadosFiltrados={resultadosFiltrados}
           />
         </div>
-
-        <ModalCrearAccesorios
-          openModal={openModal}
-          closeModal={closeModal}
-          isOpen={isOpen}
-        />
-
-        <ModalCrearNuevaCategoriaAccesorios
-          isOpenCrearCategoria={isOpenCrearCategoria}
-          closeModalCrearCategoria={closeModalCrearCategoria}
-        />
-
-        <ModalVerCategoriasAccesorios
-          isOpenVerCategorias={isOpenVerCategorias}
-          closeModalVerCategoria={closeModalVerCategoria}
-        />
-
-        <ModalCrearNuevoColorAccesorios />
-
-        <ModalVerColoresAccesorios />
-
-        <ModalCrearEditarAccesorios
-          openModalEditar={openModalEditar}
-          closeModalEditar={closeModalEditar}
-          isOpenEditar={isOpenEditar}
-        />
 
         <ToastContainer />
 
@@ -131,6 +118,44 @@ export const Accesorios = () => {
           </PDFDownloadLink>
         </div>
       </section>
+
+      <ModalCrearAccesorios
+        openModal={openModal}
+        closeModal={closeModal}
+        isOpen={isOpen}
+      />
+
+      <ModalCrearNuevaCategoriaAccesorios
+        isOpenCrearCategoria={isOpenCrearCategoria}
+        closeModalCrearCategoria={closeModalCrearCategoria}
+      />
+
+      <ModalVerCategoriasAccesorios
+        isOpenVerCategorias={isOpenVerCategorias}
+        closeModalVerCategoria={closeModalVerCategoria}
+      />
+
+      <ModalCrearNuevoColorAccesorios />
+
+      <ModalVerColoresAccesorios />
+
+      <ModalCrearAccesoriosDos
+        openModalEditar={openModalEditarDos}
+        closeModalEditar={closeModalEditarDos}
+        isOpenEditar={openEditarDos}
+      />
+
+      <ModalCrearEditarAccesorios
+        openModalEditar={openModalEditar}
+        closeModalEditar={closeModalEditar}
+        isOpenEditar={isOpenEditar}
+      />
+
+      <ModalCrearEditarAccesorios
+        openModalEditar={openModalEditar}
+        closeModalEditar={closeModalEditar}
+        isOpenEditar={isOpenEditar}
+      />
     </main>
   );
 };

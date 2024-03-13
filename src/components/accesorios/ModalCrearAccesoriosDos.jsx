@@ -5,15 +5,11 @@ import {
   editarAccesorio,
   obtenerUnicoAccesorio,
 } from "../../api/accesorios.api";
-import { ToastContainer, toast } from "react-toastify";
 import { useAccesoriosContext } from "../../context/AccesoriosProvider";
+import { toast } from "react-toastify";
 
-export const ModalCrearEditarAccesorios = ({
-  closeModalEditar,
-  isOpenEditar,
-}) => {
-  const { obtenerId, perfiles, setPerfiles, categorias, colores } =
-    useAccesoriosContext();
+export const ModalCrearAccesoriosDos = ({ closeModalEditar, isOpenEditar }) => {
+  const { obtenerId, perfiles, setPerfiles } = useAccesoriosContext();
 
   const {
     register,
@@ -21,22 +17,6 @@ export const ModalCrearEditarAccesorios = ({
     formState: { errors },
     setValue,
   } = useForm();
-
-  useEffect(() => {
-    async function loadData() {
-      const res = await obtenerUnicoAccesorio(obtenerId);
-
-      setValue("nombre", res.data.nombre);
-      setValue("color", res.data.color);
-      setValue("stock", res.data.stock);
-      setValue("stock_minimo", res.data.stock_minimo);
-      setValue("categoria", res.data.categoria);
-      setValue("descripcion", res.data.descripcion);
-      setValue("disponible", res.data.disponible);
-      setValue("id", res.data.id);
-    }
-    loadData();
-  }, [obtenerId]);
 
   const onSubmitEditar = handleSubmit(async (data) => {
     const res = await editarAccesorio(obtenerId, data);
@@ -63,8 +43,6 @@ export const ModalCrearEditarAccesorios = ({
       return newTipos;
     });
 
-    closeModalEditar();
-
     toast.success("Editado correctamente!", {
       position: "top-right",
       autoClose: 1500,
@@ -75,11 +53,28 @@ export const ModalCrearEditarAccesorios = ({
       progress: undefined,
       theme: "light",
     });
+
+    closeModalEditar();
   });
+
+  useEffect(() => {
+    async function loadData() {
+      const res = await obtenerUnicoAccesorio(obtenerId);
+
+      setValue("nombre", res.data.nombre);
+      setValue("color", res.data.color);
+      setValue("stock", res.data.stock);
+      setValue("stock_minimo", res.data.stock_minimo);
+      setValue("categoria", res.data.categoria);
+      setValue("descripcion", res.data.descripcion);
+      setValue("disponible", res.data.disponible);
+      setValue("id", res.data.id);
+    }
+    loadData();
+  }, [obtenerId]);
 
   return (
     <Menu as="div" className="z-50">
-      <ToastContainer />
       <Transition appear show={isOpenEditar} as={Fragment}>
         <Dialog
           as="div"
@@ -140,33 +135,6 @@ export const ModalCrearEditarAccesorios = ({
                 >
                   <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-normal max-md:text-sm">
-                      Codigo:
-                    </label>
-                    <input
-                      {...register("nombre", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow text-slate-600 outline-none max-md:text-sm"
-                      type="text"
-                      placeholder="nombre del codigo"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-normal max-md:text-sm">
-                      Color:
-                    </label>
-                    <select
-                      {...register("color", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow text-slate-600 outline-none bg-white max-md:text-sm"
-                    >
-                      <option className="text-black">Seleccionar color</option>
-                      {colores.map((c) => (
-                        <option className="text-black" key={c.id}>
-                          {c.color}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-normal max-md:text-sm">
                       Stock total:
                     </label>
                     <input
@@ -178,52 +146,11 @@ export const ModalCrearEditarAccesorios = ({
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-normal max-md:text-sm">
-                      Stock minimo:
-                    </label>
-                    <input
-                      {...register("stock_minimo", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow text-slate-600 outline-none max-md:text-sm"
-                      type="number"
-                      placeholder="cantidad de productos"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-normal max-md:text-sm">
-                      Categoria:
-                    </label>
-                    <select
-                      {...register("categoria", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow text-slate-600 outline-none bg-white max-md:text-sm"
-                    >
-                      <option className="text-black" key={categorias.id}>
-                        Seleccionar categoria
-                      </option>
-                      {categorias.map((cat) => (
-                        <option className="text-black" key={cat.id}>
-                          {cat.categoria}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-normal max-md:text-sm">
-                      Detalle:
-                    </label>
-                    <input
-                      {...register("descripcion", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow text-slate-600 outline-none max-md:text-sm"
-                      type="text"
-                      placeholder="detalle ej perfil pesado ventana"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
                     <input
                       className="bg-indigo-500 shadow transition-all ease-in-out py-2 px-2 rounded-xl outline-none text-white font-normal text-center cursor-pointer"
                       type="submit"
                       value={"Editar producto"}
-                      // onClick={closeModalEditar}
+                      onClick={() => closeModalEditar()}
                     />
                   </div>
                 </form>
@@ -232,7 +159,7 @@ export const ModalCrearEditarAccesorios = ({
                   <button
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer max-md:text-xs"
-                    onClick={closeModalEditar}
+                    onClick={() => closeModalEditar()}
                   >
                     Cerrar Ventana
                   </button>
