@@ -79,7 +79,7 @@ export const Accesorios = () => {
             Buscar por categoría
           </label>
           <select
-            className="bg-slate-100 border-[1px] border-slate-300 text-slate-800 text-sm font-normal py-2 uppercase px-3 rounded shadow cursor-pointer"
+            className="bg-white border-[1px] border-slate-300 text-slate-800 text-sm font-normal py-3 uppercase px-3 rounded-xl shadow cursor-pointer"
             id="categoria"
             onChange={handleCategoriaChange}
             value={categoriaSeleccionada}
@@ -107,16 +107,6 @@ export const Accesorios = () => {
         </div>
 
         <ToastContainer />
-
-        <div>
-          <PDFDownloadLink
-            fileName={`Accesorios`}
-            document={<AccesoriosPdf results={results} />}
-            className="bg-blue-500 py-1 px-5 rounded text-white font-semibold max-md:text-sm"
-          >
-            DESCARGAR ACCESORIOS STOCK
-          </PDFDownloadLink>
-        </div>
       </section>
 
       <ModalCrearAccesorios

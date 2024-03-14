@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import client from "../../../api/axios";
+import { SyncLoader } from "react-spinners";
 import XLSX from "xlsx";
 
 export const Salidas = () => {
@@ -173,111 +174,120 @@ export const Salidas = () => {
           Descargar Datos Filtrados Formato Excel
         </button>
 
-        <div className="border-[1px] border-slate-300 rounded-xl shadow mt-10">
-          <table className="  p-[5px] w-full  uppercase">
-            <thead>
-              <tr>
-                <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
-                  Codigo
-                </td>
-
-                <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
-                  Detalle
-                </td>
-
-                <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
-                  Salida
-                </td>
-
-                <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
-                  Fecha
-                </td>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-300">
-              {currentResults?.map((p) => (
-                <tr
-                  className="hover:bg-slate-100 transition-all ease-in-out duration-100 cursor-pointer"
-                  key={p.id}
-                >
-                  <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
-                    {p.codigo}
-                  </td>
-                  <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
-                    {p.detalle}
+        {loading ? (
+          <div className="flex justify-center items-center w-full mx-auto h-40">
+            <SyncLoader color="#4A90E2" size={6} margin={6} />
+            <p className="animate-blink text-slate-700 text-sm">
+              Buscando los datos...
+            </p>
+          </div>
+        ) : (
+          <div className="border-[1px] border-slate-300 rounded-xl shadow mt-10">
+            <table className="  p-[5px] w-full  uppercase">
+              <thead>
+                <tr>
+                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
+                    Codigo
                   </td>
 
-                  <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
-                    {p.total}
+                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
+                    Detalle
                   </td>
-                  <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
-                    {formatDate(p.created_at)}
+
+                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
+                    Salida
+                  </td>
+
+                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
+                    Fecha
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-300">
+                {currentResults?.map((p) => (
+                  <tr
+                    className="hover:bg-slate-100 transition-all ease-in-out duration-100 cursor-pointer"
+                    key={p.id}
+                  >
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                      {p.codigo}
+                    </td>
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                      {p.detalle}
+                    </td>
 
-          {totalPages > 1 && (
-            <div className="flex flex-wrap justify-center mt-4 mb-4 gap-3">
-              <button
-                className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                      {p.total}
+                    </td>
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                      {formatDate(p.created_at)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div className="flex flex-wrap justify-center mt-4 mb-4 gap-3">
+            <button
+              className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 19.5 8.25 12l7.5-7.5"
-                  />
-                </svg>
-                Anterior
-              </button>
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <button
-                  key={index}
-                  className={`mx-1 px-3 py-1 rounded ${
-                    currentPage === index + 1
-                      ? "bg-indigo-500 hover:bg-primary transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
-                      : "bg-gray-100 shadow shadow-black/20 text-sm"
-                  }`}
-                  onClick={() => handlePageChange(index + 1)}
-                >
-                  {index + 1}
-                </button>
-              ))}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 19.5 8.25 12l7.5-7.5"
+                />
+              </svg>
+              Anterior
+            </button>
+            {Array.from({ length: totalPages }).map((_, index) => (
               <button
-                className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
+                key={index}
+                className={`mx-1 px-3 py-1 rounded ${
+                  currentPage === index + 1
+                    ? "bg-indigo-500 hover:bg-primary transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
+                    : "bg-gray-100 shadow shadow-black/20 text-sm"
+                }`}
+                onClick={() => handlePageChange(index + 1)}
               >
-                Siguiente{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                  />
-                </svg>
+                {index + 1}
               </button>
-            </div>
-          )}
-        </div>
+            ))}
+            <button
+              className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Siguiente{" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

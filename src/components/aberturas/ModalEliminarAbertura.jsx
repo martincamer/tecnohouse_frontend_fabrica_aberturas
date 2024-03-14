@@ -58,7 +58,7 @@ export const ModalEliminarAberturas = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+              <div className="inline-block w-full max-w-lg p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <div className="flex gap-5">
                   <button
                     onClick={() => {
@@ -68,14 +68,14 @@ export const ModalEliminarAberturas = ({
                         }
                       }
                     }}
-                    className="border-red-500 bg-red-500/10 text-red-600 py-1 px-4 rounded border-[1px] font-bold"
+                    className="bg-red-100 text-red-800 py-2 px-4 rounded-xl shadow-black/20 w-full"
                   >
                     SI ELIMINAR
                   </button>
                   <button
                     type="button"
                     onClick={handleBorrarAccesorioClose}
-                    className="border-green-500 bg-green-500/10 text-green-500 py-1 px-4 rounded border-[1px] font-bold"
+                    className="bg-green-500 text-white py-2 px-4 rounded-xl shadow-black/20 w-full"
                   >
                     NO ELIMINAR - CERRAR
                   </button>

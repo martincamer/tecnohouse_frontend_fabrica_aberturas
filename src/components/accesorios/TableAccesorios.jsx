@@ -3,6 +3,7 @@ import { useAccesoriosContext } from "../../context/AccesoriosProvider";
 import { ModalEliminarAccesorio } from "./ModalEliminarAccesorio";
 import { CrearNuevaEntrada } from "./CrearNuevaEntrada";
 import { ModalNuevaSalida } from "./ModalNuevaSalida";
+import XLSX from "xlsx";
 
 export const TableAccesorios = ({
   openModalEditar,
@@ -48,6 +49,25 @@ export const TableAccesorios = ({
   const openSalida = () => setIsOpenSalida(true);
   const closeSalida = () => setIsOpenSalida(false);
 
+  const handleDescargarExcel = () => {
+    const dataToExport = results.map((item) => ({
+      Nombre: item.nombre.toUpperCase(),
+      Descripcion: item.descripcion.toUpperCase(),
+      Stock: item.stock,
+      "Stock Minimo": item.stock_minimo,
+      Entradas: item.entrada,
+      Salidas: item.salida,
+      Categoria: item.categoria.toUpperCase(),
+      Color: item.color.toUpperCase(),
+      Estado: item.stock_minimo < item.stock ? "MUCHO STOCK" : "PEDIR",
+    }));
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
+    XLSX.utils.book_append_sheet(wb, ws, "Datos");
+    XLSX.writeFile(wb, "accesorios_stock_datos.xlsx");
+  };
+
   return (
     <div>
       <div className="border-[1px] border-slate-300 rounded-xl shadow">
@@ -92,6 +112,9 @@ export const TableAccesorios = ({
               </th>
               <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
                 Nueva salida
+              </th>
+              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
+                Estado
               </th>
             </tr>
           </thead>
@@ -189,6 +212,17 @@ export const TableAccesorios = ({
                     Crear salida
                   </button>
                 </th>
+                <th className="py-4 font-normal  px-4">
+                  <p
+                    className={`${
+                      p.stock_minimo < p.stock
+                        ? "bg-green-500 text-white rounded-xl text-sm py-2 px-2"
+                        : "bg-red-500/20 text-red-800 rounded-xl text-sm py-2 px-2"
+                    }`}
+                  >
+                    {p.stock_minimo < p.stock ? "mucho stock" : "pedir"}
+                  </p>
+                </th>
               </tr>
             ))}
           </tbody>
@@ -271,6 +305,13 @@ export const TableAccesorios = ({
         closeOpenEntrada={closeSalida}
         obtenerId={obtenerId}
       />
+
+      <button
+        className="bg-green-500 text-white rounded-xl py-2 px-6 shadow mt-10"
+        onClick={handleDescargarExcel}
+      >
+        Descargar excel accesorios
+      </button>
     </div>
   );
 };
