@@ -10,15 +10,34 @@ export const ModalSeleccionarCantidadProductoPedido = ({
   const [cantidad, setCantidad] = useState(0);
   const [cantidadFaltante, setCantidadFaltante] = useState(0);
   const [cliente, setCliente] = useState("");
+  const [nombreProducto, setNombreProducto] = useState("");
+  const [detalleProducto, setDetalleProducto] = useState("");
+  const [ancho, setAncho] = useState("");
+  const [alto, setAlto] = useState("");
   const { productoUnicoState, addToProductos } = usePedidoContext();
 
-  // const generateRandomIdAsNumber = () => {
-  //   const randomIdString = Math.random().toString().substring(2); // Get the random part as a string
-  //   const randomIdNumber = parseInt(randomIdString, 10); // Convert the string to a base-10 integer
-  //   console.log("Generated Random ID as Number:", randomIdNumber);
-  // };
-  const randomIdString = Math.random().toString().substring(2); // Get the random part as a string
+  const randomIdString = Math.random().toString().substring(2);
   const randomIdNumber = parseInt(randomIdString, 10);
+
+  // Actualizar el nombre del producto cuando el usuario modifique el campo
+  const handleNombreProductoChange = (e) => {
+    setNombreProducto(e.target.value);
+  };
+
+  // Actualizar el detalle del producto cuando el usuario modifique el campo
+  const handleDetalleProductoChange = (e) => {
+    setDetalleProducto(e.target.value);
+  };
+
+  // Actualizar el nombre del producto cuando el usuario modifique el campo
+  const handleAnchoProductoChange = (e) => {
+    setAncho(e.target.value);
+  };
+
+  // Actualizar el detalle del producto cuando el usuario modifique el campo
+  const handleAltoProductoChange = (e) => {
+    setAlto(e.target.value);
+  };
 
   return (
     <Menu as="div" className="z-50">
@@ -53,7 +72,6 @@ export const ModalSeleccionarCantidadProductoPedido = ({
               <Dialog.Overlay className="fixed inset-0" />
             </Transition.Child>
 
-            {/* This element is to trick the browser into centering the modal contents. */}
             <span
               className="inline-block h-screen align-middle"
               aria-hidden="true"
@@ -93,8 +111,11 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                         <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
                           Color
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
-                          Ancho x Alto
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal w-[20px] text-slate-700 text-center">
+                          Ancho
+                        </th>
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal w-[20px] text-slate-700 text-center">
+                          Alto
                         </th>
                         <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
                           Cliente
@@ -109,16 +130,45 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                         {productoUnicoState.id}
                       </th>
                       <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
-                        {productoUnicoState.nombre}
+                        <input
+                          value={nombreProducto || productoUnicoState.nombre}
+                          onChange={handleNombreProductoChange}
+                          type="text"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[180px] outline-none"
+                          placeholder="Nombre"
+                        />
                       </th>
                       <th className="p-2 text-sm max-md:text-xs text-center w-[50px] font-normal text-slate-800">
-                        {productoUnicoState.descripcion}
+                        <input
+                          value={
+                            detalleProducto || productoUnicoState.descripcion
+                          }
+                          onChange={handleDetalleProductoChange}
+                          type="text"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[180px] outline-none"
+                          placeholder="Detalle"
+                        />
                       </th>
                       <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
                         {productoUnicoState.color}
                       </th>
-                      <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
-                        {productoUnicoState.ancho}x{productoUnicoState.alto}
+                      <th className="p-2 text-sm max-md:text-xs text-center font-normal text-slate-800">
+                        <input
+                          value={ancho || productoUnicoState.ancho}
+                          onChange={handleAnchoProductoChange}
+                          type="text"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[60px] outline-none"
+                          placeholder="ancho"
+                        />
+                      </th>
+                      <th className="p-2 text-sm max-md:text-xs text-center font-normal text-slate-800">
+                        <input
+                          value={alto || productoUnicoState.alto}
+                          onChange={handleAltoProductoChange}
+                          type="text"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[60px] outline-none"
+                          placeholder="alto"
+                        />
                       </th>
                       <th className="p-2 text-sm max-md:text-xs text-center w-[100px] font-normal text-slate-800">
                         <input
@@ -144,18 +194,17 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                     onClick={() => {
                       addToProductos(
                         productoUnicoState.id + randomIdNumber,
-                        productoUnicoState.nombre,
-                        productoUnicoState.descripcion,
+                        nombreProducto || productoUnicoState.nombre,
+                        detalleProducto || productoUnicoState.descripcion,
                         productoUnicoState.color,
                         productoUnicoState.categoria,
-                        productoUnicoState.ancho,
-                        productoUnicoState.alto,
+                        ancho || productoUnicoState.ancho,
+                        alto || productoUnicoState.alto,
                         cliente,
                         cantidad,
                         cantidadFaltante
-                      ),
-                        closeModalCantidad();
-                      // closeModal();
+                      );
+                      closeModalCantidad();
                     }}
                     className="bg-indigo-500 max-md:text-xs text-white py-2 px-5 text-sm rounded-xl font-normal hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
                   >
