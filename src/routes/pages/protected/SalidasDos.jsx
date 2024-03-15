@@ -242,9 +242,11 @@ export const SalidasDos = () => {
                     <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
                       {p.detalle}
                     </td>
-
-                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
-                      {p.total}
+    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                      {p.ancho}
+                    </td>
+                        <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                      {p.alto}
                     </td>
                     <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
                       {p.cliente}
