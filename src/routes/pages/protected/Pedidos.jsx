@@ -265,7 +265,7 @@ export const Pedidos = () => {
           <button
             type="button"
             onClick={openModal}
-            className="py-2 px-5 bg-indigo-500 rounded shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
+            className="py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
           >
             Crear nuevo pedido
             <svg
