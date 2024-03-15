@@ -247,6 +247,15 @@ export const SalidasDos = () => {
                       {p.total}
                     </td>
                     <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                      {p.cliente}
+                    </td>
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                      {p.sucursal}
+                    </td>
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                      {p.total}
+                    </td>
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
                       {formatDate(p.created_at)}
                     </td>
                   </tr>
