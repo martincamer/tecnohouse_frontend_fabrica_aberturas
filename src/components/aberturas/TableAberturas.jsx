@@ -132,6 +132,7 @@ export const TableAberturas = ({
             {currentResults
               .filter((p) => p.stock > 0)
               .concat(currentResults.filter((p) => p.stock <= 0))
+              .slice(indexOfFirstItem, indexOfLastItem)
               .map((p) => (
                 <tr
                   key={p.id}
