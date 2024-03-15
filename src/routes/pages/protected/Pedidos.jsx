@@ -20,8 +20,6 @@ export const Pedidos = () => {
       const res = await obtenerFacturasMensual();
 
       setDatosMensuales(res.data);
-
-      console.log(res.data);
     }
 
     loadData();
@@ -107,13 +105,6 @@ export const Pedidos = () => {
         </div>
 
         <div className="mt-5 grid grid-cols-4 gap-5">
-          {/* <div className="border-[1px] py-5 px-5 flex gap-2 items-center  shadow max-md:justify-center max-md:py-2 max-md:px-3 max-md:text-sm">
-            <p>Pedidos generados:</p>{" "}
-            <span className="font-bold text-blue-400 text-lg max-md:text-sm">
-              {datosPresupuesto?.length}
-            </span>
-          </div> */}
-
           <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
@@ -185,21 +176,9 @@ export const Pedidos = () => {
                   {" "}
                   {nombreMes}{" "}
                 </span>
-
-                {/* <span class="text-xs text-gray-500">
-                  {" "}
-                  {"Ultimo creado el día"}{" "}
-                </span> */}
               </p>
             </div>
           </article>
-
-          {/* <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow max-md:justify-center max-md:py-2 max-md:px-3 max-md:text-sm">
-            <p>Fecha del mes:</p>{" "}
-            <span className="font-bold text-blue-400 text-lg max-md:text-sm">
-              {nombreMes}
-            </span>
-          </div> */}
 
           <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
@@ -241,13 +220,6 @@ export const Pedidos = () => {
             </div>
           </article>
 
-          {/* <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow max-md:justify-center max-md:py-2 max-md:px-3 max-md:text-sm">
-            <p>Total aberturas generadas:</p>{" "}
-            <span className="font-bold text-blue-400 text-lg max-md:text-sm">
-              {resultado}
-            </span>
-          </div> */}
-
           <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
@@ -287,13 +259,6 @@ export const Pedidos = () => {
               </p>
             </div>
           </article>
-
-          {/* <div className="border-[1px] py-5 px-5 flex gap-2 items-center shadow max-md:justify-center max-md:py-2 max-md:px-3 max-md:text-sm">
-            <p>Total aberturas realizadas:</p>{" "}
-            <span className="font-bold text-blue-400 text-lg max-md:text-sm">
-              {resultadoTwo}
-            </span>
-          </div> */}
         </div>
 
         <div className="mt-5 py-5 px-5">
@@ -318,13 +283,6 @@ export const Pedidos = () => {
               />
             </svg>
           </button>
-
-          {/* <PDFDownloadLink
-            fileName="pedido"
-            document={<DescargarPedidoCompleto datos={datos} />}
-          >
-            Descargar pedido
-          </PDFDownloadLink> */}
         </div>
 
         <div>
