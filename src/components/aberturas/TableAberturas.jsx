@@ -148,7 +148,7 @@ export const TableAberturas = ({
                 <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {p.nombre}
                 </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                <td className="py-3 px-3 text-sm text-left text-green-500 font-bold uppercase">
                   {p.stock}
                 </td>
                 <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
