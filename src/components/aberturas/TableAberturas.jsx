@@ -3,6 +3,8 @@ import { ModalEditaStock } from "./ModalEditarStock";
 import { ModalEliminarAberturas } from "./ModalEliminarAbertura";
 import { useState } from "react";
 import XLSX from "xlsx";
+import { ModalNuevaSalida } from "./ModalNuevaSalida";
+import { CrearNuevaEntrada } from "./CrearNuevaEntrada";
 
 export const TableAberturas = ({
   results,
@@ -14,6 +16,18 @@ export const TableAberturas = ({
   const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
   const [openModalEditarStock, setOpenModalEditarStock] = useState(false);
   const [guardarId, setGuardarId] = useState(false);
+
+  const [obtenerId, setObtenerId] = useState(null);
+
+  const handleId = (id) => setObtenerId(id);
+
+  const [isOpenEntrada, setIsOpenEntrada] = useState(false);
+  const openEntrada = () => setIsOpenEntrada(true);
+  const closeEntrada = () => setIsOpenEntrada(false);
+
+  const [isOpenSalida, setIsOpenSalida] = useState(false);
+  const openSalida = () => setIsOpenSalida(true);
+  const closeSalida = () => setIsOpenSalida(false);
 
   const handleBorrarAccesorioOpen = () => {
     setOpenBorrarAccesorio(true);
@@ -106,6 +120,12 @@ export const TableAberturas = ({
               <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                 Editar stock
               </th>
+              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+                Nueva Salida{" "}
+              </th>
+              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+                Nueva Entrada{" "}
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 text-left">
@@ -167,21 +187,31 @@ export const TableAberturas = ({
                     EDITAR
                   </button>
                 </td>
+                <td className="py-3 px-3 text-sm text-left text-slate-700">
+                  <button
+                    onClick={() => {
+                      openSalida(), handleId(p.id);
+                    }}
+                    className="bg-black text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
+                  >
+                    CREAR NUEVA SALIDA
+                  </button>
+                </td>
+                <td className="py-3 px-3 text-sm text-left text-slate-700">
+                  <button
+                    onClick={() => {
+                      openEntrada(), handleId(p.id);
+                    }}
+                    className="bg-green-500 text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
+                  >
+                    CREAR NUEVA ENTRADA
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <ModalEliminarAberturas
-          p={guardarId}
-          handleEliminar={handleEliminar}
-          openBorrarAccesorio={openBorrarAccesorio}
-          handleBorrarAccesorioClose={handleBorrarAccesorioClose}
-        />
-        <ModalEditaStock
-          closeModalEditar={handleModalEditarStockClose}
-          isOpenEditar={openModalEditarStock}
-          p={guardarId}
-        />
+
         {totalPages > 1 && (
           <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
             <button
@@ -242,6 +272,27 @@ export const TableAberturas = ({
           </div>
         )}
       </div>
+      <ModalEliminarAberturas
+        p={guardarId}
+        handleEliminar={handleEliminar}
+        openBorrarAccesorio={openBorrarAccesorio}
+        handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+      />
+      <ModalEditaStock
+        closeModalEditar={handleModalEditarStockClose}
+        isOpenEditar={openModalEditarStock}
+        p={guardarId}
+      />
+      <CrearNuevaEntrada
+        isOpenEntrada={isOpenEntrada}
+        closeOpenEntrada={closeEntrada}
+        obtenerId={obtenerId}
+      />
+      <ModalNuevaSalida
+        isOpenEntrada={isOpenSalida}
+        closeOpenEntrada={closeSalida}
+        obtenerId={obtenerId}
+      />
       <button
         className="bg-green-500 rounded-xl shadow py-2 px-5 text-white mt-10"
         onClick={handleDescargarExcel}

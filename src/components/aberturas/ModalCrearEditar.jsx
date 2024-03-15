@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useAberturasContext } from "../../context/AluminioAberturas";
 
 export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
-  const { obtenerId, results, setPerfiles, categorias, colores } =
+  const { obtenerId, perfiles, setPerfiles, categorias, colores } =
     useAberturasContext();
 
   const {
@@ -37,7 +37,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
   const onSubmitEditar = handleSubmit(async (data) => {
     const res = await editarPerfil(obtenerId, data);
 
-    const tipoExistenteIndex = results.findIndex(
+    const tipoExistenteIndex = perfiles.findIndex(
       (tipo) => tipo.id == obtenerId
     );
 

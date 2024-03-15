@@ -19,13 +19,15 @@ import { ClientePedidoMuestra } from "./routes/pages/protected/ClientePedidoMues
 import { RemitoProvider } from "./context/RemitoProvider";
 import { ViewPdf } from "./routes/pages/protected/ViewPdf";
 import { VerClientesFinalizados } from "./routes/pages/protected/VerClientesFinalizados";
+import { Accesorios } from "./routes/pages/protected/Accesorios";
+import { Entradas } from "./routes/pages/protected/Entradas";
+import { Salidas } from "./routes/pages/protected/Salidas";
+import { EntradasDos } from "./routes/pages/protected/EntradasDos";
+import { SalidasDos } from "./routes/pages/protected/SalidasDos";
 //import normales
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
-import { Accesorios } from "./routes/pages/protected/Accesorios";
-import { Entradas } from "./routes/pages/protected/Entradas";
-import { Salidas } from "./routes/pages/protected/Salidas";
 
 function App() {
   const { isAuth } = useAuth();
@@ -70,6 +72,9 @@ function App() {
               <Route path="accesorios" element={<Accesorios />} />
               <Route path="accesorios/entradas" element={<Entradas />} />
               <Route path="accesorios/salidas" element={<Salidas />} />
+
+              <Route path="aberturas/entradas" element={<EntradasDos />} />
+              <Route path="aberturas/salidas" element={<SalidasDos />} />
 
               <Route
                 path="pedidos-realizados"

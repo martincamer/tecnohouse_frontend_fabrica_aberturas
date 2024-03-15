@@ -140,12 +140,6 @@ export const Accesorios = () => {
         closeModalEditar={closeModalEditar}
         isOpenEditar={isOpenEditar}
       />
-
-      <ModalCrearEditarAccesorios
-        openModalEditar={openModalEditar}
-        closeModalEditar={closeModalEditar}
-        isOpenEditar={isOpenEditar}
-      />
     </main>
   );
 };
