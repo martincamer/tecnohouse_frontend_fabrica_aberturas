@@ -214,9 +214,9 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                       Resetear productos
                     </button>
                   </div>
-                  {/* <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
-                      Fecha de entrega del pedido:
+                  <div className="flex flex-col gap-2">
+                    <label className="text-[14px] font-normal max-md:text-sm">
+                      Fecha de entrega del pedido/estimado:
                     </label>
                     <input
                       type="date"
@@ -225,7 +225,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                       className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm"
                       placeholder="fecha"
                     />
-                  </div> */}
+                  </div>
 
                   {/* <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-bold max-md:text-sm">
