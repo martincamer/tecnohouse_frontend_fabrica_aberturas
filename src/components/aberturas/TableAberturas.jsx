@@ -129,89 +129,89 @@ export const TableAberturas = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 text-left">
-            {[
-              ...currentResults.filter((p) => p.stock > 0),
-              ...currentResults.filter((p) => p.stock <= 0),
-            ].map((p) => (
-              <tr
-                key={p.id}
-                className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
-              >
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.id}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.nombre}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.stock}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.categoria}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.color}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.descripcion}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.ancho} x {p.alto}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  <button
-                    onClick={() => {
-                      handleBorrarAccesorioOpen(), setGuardarId(p.id);
-                    }}
-                    className="bg-red-100 text-red-800 py-2 shadow-black/30 px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
-                    // onClick={() => handleEliminar(p.id)}
-                  >
-                    ELIMINAR
-                  </button>
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700">
-                  <button
-                    onClick={() => {
-                      openModalEditar(), handlePerfilSeleccionado(p.id);
-                    }}
-                    className="bg-indigo-500 text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
-                  >
-                    EDITAR
-                  </button>
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700">
-                  <button
-                    onClick={() => {
-                      handleModalEditarStockOpen(),
-                        handlePerfilSeleccionado(p.id);
-                    }}
-                    className="bg-slate-500 text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
-                  >
-                    EDITAR
-                  </button>
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700">
-                  <button
-                    onClick={() => {
-                      openSalida(), handleId(p.id);
-                    }}
-                    className="bg-black text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
-                  >
-                    CREAR NUEVA SALIDA
-                  </button>
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700">
-                  <button
-                    onClick={() => {
-                      openEntrada(), handleId(p.id);
-                    }}
-                    className="bg-green-500 text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
-                  >
-                    CREAR NUEVA ENTRADA
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {currentResults
+              .filter((p) => p.stock > 0)
+              .concat(currentResults.filter((p) => p.stock <= 0))
+              .map((p) => (
+                <tr
+                  key={p.id}
+                  className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
+                >
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                    {p.id}
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                    {p.nombre}
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                    {p.stock}
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                    {p.categoria}
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                    {p.color}
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                    {p.descripcion}
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                    {p.ancho} x {p.alto}
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                    <button
+                      onClick={() => {
+                        handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                      }}
+                      className="bg-red-100 text-red-800 py-2 shadow-black/30 px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
+                      // onClick={() => handleEliminar(p.id)}
+                    >
+                      ELIMINAR
+                    </button>
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700">
+                    <button
+                      onClick={() => {
+                        openModalEditar(), handlePerfilSeleccionado(p.id);
+                      }}
+                      className="bg-indigo-500 text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
+                    >
+                      EDITAR
+                    </button>
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700">
+                    <button
+                      onClick={() => {
+                        handleModalEditarStockOpen(),
+                          handlePerfilSeleccionado(p.id);
+                      }}
+                      className="bg-slate-500 text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
+                    >
+                      EDITAR
+                    </button>
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700">
+                    <button
+                      onClick={() => {
+                        openSalida(), handleId(p.id);
+                      }}
+                      className="bg-black text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
+                    >
+                      CREAR NUEVA SALIDA
+                    </button>
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700">
+                    <button
+                      onClick={() => {
+                        openEntrada(), handleId(p.id);
+                      }}
+                      className="bg-green-500 text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
+                    >
+                      CREAR NUEVA ENTRADA
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 
