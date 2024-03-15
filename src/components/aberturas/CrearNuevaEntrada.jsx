@@ -32,7 +32,7 @@ export const CrearNuevaEntrada = ({
   }, [obtenerId]);
 
   const onSubmit = handleSubmit(async (data) => {
-    const res = await client.post("/nueva-entrada", data);
+    const res = await client.post("/nueva-entrada-dos", data);
 
     toast.success("¡Producto creado correctamente!", {
       position: "top-right",

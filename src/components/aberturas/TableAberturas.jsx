@@ -2,9 +2,9 @@ import { useAberturasContext } from "../../context/AluminioAberturas";
 import { ModalEditaStock } from "./ModalEditarStock";
 import { ModalEliminarAberturas } from "./ModalEliminarAbertura";
 import { useState } from "react";
-import XLSX from "xlsx";
 import { ModalNuevaSalida } from "./ModalNuevaSalida";
 import { CrearNuevaEntrada } from "./CrearNuevaEntrada";
+import XLSX from "xlsx";
 
 export const TableAberturas = ({
   results,
