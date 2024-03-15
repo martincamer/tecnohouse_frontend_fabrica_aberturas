@@ -44,15 +44,20 @@ export const TableAberturas = ({
   const handleModalEditarStockClose = () => {
     setOpenModalEditarStock(false);
   };
-
   const itemsPerPage = 10; // Cantidad de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Aplicar el filtrado antes de la paginación
+  const filteredResults = results?.filter((p) => p.stock > 0);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentResults = results?.slice(indexOfFirstItem, indexOfLastItem);
+  const currentResults = filteredResults?.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
-  const totalPages = Math.ceil(results.length / itemsPerPage);
+  // Calcular el total de páginas basado en los resultados filtrados
+  const totalPages = Math.ceil(filteredResults.length / itemsPerPage);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
