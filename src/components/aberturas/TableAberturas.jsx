@@ -129,7 +129,10 @@ export const TableAberturas = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 text-left">
-            {currentResults.map((p) => (
+            {[
+              ...currentResults.filter((p) => p.stock > 0),
+              ...currentResults.filter((p) => p.stock <= 0),
+            ].map((p) => (
               <tr
                 key={p.id}
                 className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
