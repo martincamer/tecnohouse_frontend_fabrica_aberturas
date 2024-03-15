@@ -136,7 +136,6 @@ export const TableAberturas = ({
           <tbody className="divide-y divide-gray-200 text-left">
             {currentResults
               .filter((p) => p.stock > 0)
-              .concat(currentResults.filter((p) => p.stock <= 0))
               .map((p) => (
                 <tr
                   key={p.id}
