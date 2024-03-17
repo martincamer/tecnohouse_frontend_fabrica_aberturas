@@ -27,11 +27,20 @@ export const TableAccesorios = ({
   const itemsPerPage = 10; // Cantidad de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Filtrar primero los elementos con stock mayor que 0 y luego los que tienen stock menor o igual a 0
+  const filteredResults = results
+    ?.filter((p) => p.stock > 0)
+    .concat(results?.filter((p) => p.stock <= 0));
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentResults = results?.slice(indexOfFirstItem, indexOfLastItem);
+  const currentResults = filteredResults?.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
-  const totalPages = Math.ceil(results.length / itemsPerPage);
+  // Calcular el total de páginas basado en los resultados filtrados
+  const totalPages = Math.ceil(filteredResults.length / itemsPerPage);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -51,15 +60,15 @@ export const TableAccesorios = ({
 
   const handleDescargarExcel = () => {
     const dataToExport = results.map((item) => ({
-      Nombre: item.nombre.toUpperCase(),
-      Descripcion: item.descripcion.toUpperCase(),
-      Stock: item.stock,
-      "Stock Minimo": item.stock_minimo,
-      Entradas: item.entrada,
-      Salidas: item.salida,
-      Categoria: item.categoria.toUpperCase(),
-      Color: item.color.toUpperCase(),
-      Estado: item.stock_minimo < item.stock ? "MUCHO STOCK" : "PEDIR",
+      NOMBRE: item.nombre.toUpperCase(),
+      DESCRIPCION: item.descripcion.toUpperCase(),
+      STOCK: item.stock,
+      "STOCK MINIMO": item.stock_minimo,
+      ENTRADAS: item.entrada,
+      SALIDAS: item.salida,
+      CATEGORIAS: item.categoria.toUpperCase(),
+      COLOR: item.color.toUpperCase(),
+      ESTADO: item.stock_minimo < item.stock ? "MUCHO STOCK" : "PEDIR",
     }));
 
     const wb = XLSX.utils.book_new();
@@ -215,12 +224,14 @@ export const TableAccesorios = ({
                 <th className="py-4 font-normal  px-4">
                   <p
                     className={`${
-                      p.stock_minimo < p.stock
+                      Number(p.stock_minimo) < Number(p.stock)
                         ? "bg-green-500 text-white rounded-xl text-sm py-2 px-2"
                         : "bg-red-500/20 text-red-800 rounded-xl text-sm py-2 px-2"
                     }`}
                   >
-                    {p.stock_minimo < p.stock ? "mucho stock" : "pedir"}
+                    {Number(p.stock_minimo) < Number(p.stock)
+                      ? "mucho stock"
+                      : "pedir"}
                   </p>
                 </th>
               </tr>
