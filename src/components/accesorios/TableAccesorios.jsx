@@ -224,14 +224,14 @@ export const TableAccesorios = ({
                 <th className="py-4 font-normal  px-4">
                   <p
                     className={`${
-                      Number(p.stock) > Number(p.stock_minimo)
-                        ? "bg-green-500 text-white rounded-xl text-sm py-2 px-2"
-                        : "bg-red-500/20 text-red-800 rounded-xl text-sm py-2 px-2"
+                      Number(p.stock_minimo) > Number(p.stock)
+                        ? "bg-red-500/20 text-red-800 rounded-xl text-sm py-2 px-2"
+                        : "bg-green-500 text-white rounded-xl text-sm py-2 px-2"
                     }`}
                   >
-                    {Number(p.stock) > Number(p.stock_minimo)
-                      ? "mucho stock"
-                      : "pedir"}
+                    {Number(p.stock_minimo) > Number(p.stock)
+                      ? "pedir"
+                      : "mucho stock"}
                   </p>
                 </th>
               </tr>
