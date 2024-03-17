@@ -16,7 +16,7 @@ export const CategoriasAccesorios = ({
           onClick={openModal}
           className="flex gap-2 items-center bg-indigo-500/10 text-indigo-600 border-[1px] border-indigo-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out"
         >
-          Crear nuevo accesorio
+          Crear nuevo accesorio/perfil/vidrio
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
