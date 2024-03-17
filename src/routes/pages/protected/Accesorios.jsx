@@ -96,7 +96,7 @@ export const Accesorios = () => {
           </select>
         </div>
 
-        <div className="overflow-y-scroll h-[40vh]">
+        <div>
           <TableAccesorios
             openModalEditarDos={openModalEditarDos}
             handlePerfilSeleccionado={handlePerfilSeleccionado}
