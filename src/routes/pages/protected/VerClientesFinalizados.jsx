@@ -56,24 +56,24 @@ export const VerClientesFinalizados = () => {
   };
 
   return (
-    <section className="w-full py-14 px-14 max-md:px-2 overflow-x-scroll">
-      <div className="flex">
-        <p className="font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700 max-md:text-lg">
+    <section className="w-full py-14 px-14 max-md:py-6 max-md:px-2">
+      <div className="flex max-md:px-4">
+        <p className="max-md:uppercase font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700 max-md:text-sm">
           Buscar clientes finalizados e imprimir comprobantes.
         </p>
       </div>
 
-      <div className="border-slate-300 border-[1px] rounded-xl px-10 py-10 mt-10">
+      <div className="border-slate-300 border-[1px] rounded-xl px-10 py-10 mt-10 max-md:shadow-none max-md:border-none max-md:px-3">
         <div className="mb-5">
           <button
             onClick={descargarExcel}
             type="button"
-            className="bg-black px-6 py-2 rounded-xl text-white shadow"
+            className="bg-black px-6 py-2 rounded-xl text-white shadow uppercase max-md:text-xs"
           >
             Descargar comprobante unico en excel
           </button>
         </div>
-        <div className="flex justify-between items-center py-2 px-4 border-slate-300 border-[1px] shadow rounded-xl w-1/4">
+        <div className="max-md:w-full flex justify-between items-center py-2 px-4 border-slate-300 border-[1px] shadow rounded-xl w-1/4">
           <input
             value={clienteFilter}
             onChange={(e) => setClienteFilter(e.target.value)}
@@ -103,15 +103,25 @@ export const VerClientesFinalizados = () => {
             <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
               <thead className="ltr:text-left rtl:text-right">
                 <tr className="uppercase text-indigo-500">
-                  <th className="text-left px-4 py-2 font-medium">Cliente</th>
-                  <th className="text-left px-4 py-2 font-medium">Detalle</th>
-                  <th className="text-left px-4 py-2 font-medium">Categoria</th>
-                  <th className="text-left px-4 py-2 font-medium">
+                  <th className="text-left px-4 max-md:text-xs py-2 font-medium">
+                    Cliente
+                  </th>
+                  <th className="text-left px-4 max-md:text-xs py-2 font-medium">
+                    Detalle
+                  </th>
+                  <th className="text-left px-4 max-md:text-xs py-2 font-medium">
+                    Categoria
+                  </th>
+                  <th className="text-left px-4 max-md:text-xs py-2 font-medium">
                     Cantidad Realizada
                   </th>
-                  <th className="text-left px-4 py-2 font-medium">Color</th>
+                  <th className="text-left px-4 max-md:text-xs py-2 font-medium">
+                    Color
+                  </th>
 
-                  <th className="text-left px-4 py-2 font-medium">Estado</th>
+                  <th className="text-left px-4 max-md:text-xs py-2 font-medium">
+                    Estado
+                  </th>
                 </tr>
               </thead>
 
@@ -119,22 +129,22 @@ export const VerClientesFinalizados = () => {
                 {/* Mostrar datos directamente en la tabla */}
                 {currentResults.map((producto) => (
                   <tr key={producto.id}>
-                    <td className="text-left px-4 py-3 font-normal text-sm text-gray-900 uppercase">
+                    <td className="text-left px-4 py-3 font-normal text-sm max-md:text-xs text-gray-900 uppercase">
                       {producto.cliente}
                     </td>
-                    <td className="text-left px-4 py-3 font-normal text-sm text-gray-900 uppercase">
+                    <td className="text-left px-4 py-3 font-normal text-sm max-md:text-xs text-gray-900 uppercase">
                       {producto.detalle}
                     </td>
-                    <td className="text-left px-4 py-3 font-normal text-sm text-gray-900 uppercase">
+                    <td className="text-left px-4 py-3 font-normal text-sm max-md:text-xs text-gray-900 uppercase">
                       {producto.categoria}
                     </td>
-                    <td className="text-left px-4 py-3 font-normal text-sm text-gray-900 uppercase">
+                    <td className="text-left px-4 py-3 font-normal text-sm max-md:text-xs text-gray-900 uppercase">
                       {producto.cantidadFaltante}
                     </td>
-                    <td className="text-left px-4 py-3 font-normal text-sm text-gray-900 uppercase">
+                    <td className="text-left px-4 py-3 font-normal text-sm max-md:text-xs text-gray-900 uppercase">
                       {producto.color}
                     </td>
-                    <td className="text-left px-4 py-2 font-normal text-sm text-gray-900 uppercase flex">
+                    <td className="text-left px-4 py-2 font-normal text-sm max-md:text-xs text-gray-900 uppercase flex max-md:items-center max-md:justify-center">
                       {producto.cantidad === producto.cantidadFaltante ? (
                         <p className="bg-green-500 shadow rounded-xl px-4 py-1 font-semibold text-white">
                           Realizado

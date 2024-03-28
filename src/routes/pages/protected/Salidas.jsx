@@ -111,19 +111,19 @@ export const Salidas = () => {
   console.log(currentResults);
 
   return (
-    <section className="py-24 px-10 w-full">
-      <div className="py-10 px-10 rounded-xl border-[1px] border-slate-300 shadow w-full h-full">
+    <section className="py-24 px-10 w-full max-md:py-6 max-md:px-2">
+      <div className="py-10 px-10 rounded-xl border-[1px] border-slate-300 shadow w-full h-full max-md:shadow-none max-md:border-none max-md:px-4">
         <div>
-          <p className="text-slate-700 font-semibold">
+          <p className="text-slate-700 font-semibold max-md:uppercase max-md:text-sm underline">
             Filtar por las salidas realizadas
           </p>
         </div>
 
-        <div className="mt-5 flex flex-col gap-4">
-          <div className="mt-10">
-            <div className="flex gap-6 items-center">
+        <div className="mt-5 flex flex-col gap-4 max-md:mt-0">
+          <div className="mt-10 max-md:mt-6">
+            <div className="flex gap-6 items-center max-md:flex-col max-md:items-start">
               <div className="flex gap-2 items-center">
-                <label className="text-sm text-indigo-500">
+                <label className="text-sm text-indigo-500 max-md:uppercase">
                   Fecha de inicio
                 </label>
                 <input
@@ -134,7 +134,9 @@ export const Salidas = () => {
                 />
               </div>
               <div className="flex gap-2 items-center">
-                <label className="text-sm text-indigo-500">Fecha de fin</label>
+                <label className="text-sm text-indigo-500 max-md:uppercase">
+                  Fecha de fin
+                </label>
                 <input
                   className="text-sm bg-slate-100/10 py-1 px-2 rounded-lg shadow border-slate-300 border-[1px] cursor-pointer text-slate-700 outline-none"
                   type="date"
@@ -168,7 +170,7 @@ export const Salidas = () => {
         </div>
 
         <button
-          className="bg-green-500 text-white rounded-xl shadow py-2 px-5 mt-5"
+          className="bg-green-500 text-white rounded-xl shadow py-2 px-5 mt-5 max-md:hidden"
           onClick={downloadExcel}
         >
           Descargar Datos Filtrados Formato Excel
@@ -186,19 +188,19 @@ export const Salidas = () => {
             <table className="  p-[5px] w-full  uppercase">
               <thead>
                 <tr>
-                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
+                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500 max-md:text-xs">
                     Codigo
                   </td>
 
-                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
+                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500 max-md:text-xs">
                     Detalle
                   </td>
 
-                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
+                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500 max-md:text-xs">
                     Salida
                   </td>
 
-                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500">
+                  <td className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal text-indigo-500 max-md:text-xs">
                     Fecha
                   </td>
                 </tr>
@@ -209,17 +211,17 @@ export const Salidas = () => {
                     className="hover:bg-slate-100 transition-all ease-in-out duration-100 cursor-pointer"
                     key={p.id}
                   >
-                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-xs">
                       {p.codigo}
                     </td>
-                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-xs">
                       {p.detalle}
                     </td>
 
-                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-xs">
                       {p.total}
                     </td>
-                    <td className="py-4 font-normal text-sm p-3 max-md:text-sm">
+                    <td className="py-4 font-normal text-sm p-3 max-md:text-xs">
                       {formatDate(p.created_at)}
                     </td>
                   </tr>

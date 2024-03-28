@@ -199,16 +199,16 @@ export const PedidosRealizados = () => {
   }, [dataNew, search]);
 
   return (
-    <section className="w-full py-20 px-14 max-md:px-2 overflow-x-scroll">
-      <div className="border-[1px] border-slate-300 shadow-black/10 shadow py-10 px-12 max-md:px-4 max-md:py-6 w-full rounded-xl">
+    <section className="max-md:py-4 w-full py-20 px-14 max-md:pb-32 max-md:px-2">
+      <div className="max-md:border-none max-md:shadow-none border-[1px] border-slate-300 shadow-black/10 shadow py-10 px-12 max-md:px-4 max-md:py-6 w-full rounded-xl">
         <div className="flex">
-          <p className="font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700 max-md:text-lg">
+          <p className="font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700 max-md:text-sm uppercase">
             Filtrar o buscar pedidos realizados
           </p>
         </div>
 
-        <div className="mt-5 grid grid-cols-4 gap-5 max-md:flex-col">
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
+        <div className="mt-5 grid grid-cols-4 gap-5 max-md:flex-col max-md:grid-cols-1">
+          <article class="flex flex-col gap-4 rounded-xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -229,13 +229,13 @@ export const PedidosRealizados = () => {
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
                 {" "}
                 Pedidos generados{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
                   {" "}
                   {dataNew.length}{" "}
                 </span>
@@ -248,7 +248,7 @@ export const PedidosRealizados = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -269,13 +269,13 @@ export const PedidosRealizados = () => {
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
                 {" "}
                 Mes Actual{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
                   {" "}
                   {nombreMes}{" "}
                 </span>
@@ -283,7 +283,7 @@ export const PedidosRealizados = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -310,7 +310,7 @@ export const PedidosRealizados = () => {
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
                   {" "}
                   {resultado}{" "}
                 </span>
@@ -322,7 +322,7 @@ export const PedidosRealizados = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -343,13 +343,13 @@ export const PedidosRealizados = () => {
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
                 {" "}
                 Total aberturas realizadas{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
                   {" "}
                   {resultadoTwo}{" "}
                 </span>
@@ -363,10 +363,10 @@ export const PedidosRealizados = () => {
         </div>
 
         <div className="mt-5 flex flex-col gap-4">
-          <div className="mt-10">
-            <div className="flex gap-6 items-center">
+          <div className="mt-10 max-md:mt-2">
+            <div className="flex gap-6 items-center max-md:flex-col max-md:items-start max-md:gap-2">
               <div className="flex gap-2 items-center">
-                <label className="text-sm text-indigo-500">
+                <label className="text-sm text-indigo-500 max-md:uppercase">
                   Fecha de inicio
                 </label>
                 <input
@@ -377,7 +377,9 @@ export const PedidosRealizados = () => {
                 />
               </div>
               <div className="flex gap-2 items-center">
-                <label className="text-sm text-indigo-500">Fecha de fin</label>
+                <label className="text-sm text-indigo-500 max-md:uppercase">
+                  Fecha de fin
+                </label>
                 <input
                   className="text-sm bg-slate-100/10 py-1 px-2 rounded-lg shadow border-slate-300 border-[1px] cursor-pointer text-slate-700 outline-none"
                   type="date"
@@ -410,8 +412,8 @@ export const PedidosRealizados = () => {
           </div>
         </div>
 
-        <div className="mt-5 flex gap-3 w-full items-center">
-          <div className="w-1/3">
+        <div className="mt-5 flex gap-3 w-full items-center max-md:flex-col max-md:items-start">
+          <div className="w-1/3 max-md:w-full">
             <Search variable="w-full" search={search} searcher={searcher} />
           </div>
           <PDFDownloadLink
@@ -421,16 +423,9 @@ export const PedidosRealizados = () => {
           >
             Descargar pedido completo PDF
           </PDFDownloadLink>
-
-          {/* <PDFDownloadLink
-            className=" bg-black/90 px-6 py-2 rounded-xl shadow text-white capitalize"
-            document={<DescargarPedidoCompletoJefeFabrica datos={dataNew} />}
-          >
-            Descargar el total aberturas
-          </PDFDownloadLink> */}
         </div>
 
-        <div className="mt-5 h-[500px] overflow-y-scroll w-full">
+        <div className="mt-5 md:h-[500px] md:overflow-y-scroll w-full">
           <TablePedidosRealizados
             resultadoFiltrados={resultadoFiltrados}
             loading={loading}
@@ -439,27 +434,27 @@ export const PedidosRealizados = () => {
         </div>
       </div>
 
-      <div className="mt-12 font-semibold text-base text-slate-600 flex">
-        <h3 className="border-b-[3px] border-slate-600">
+      <div className="px-4 mt-12 font-semibold text-base text-slate-600 flex">
+        <h3 className="border-b-[3px] border-slate-600 uppercase text-sm">
           Aberturas total realizadas.
         </h3>
       </div>
 
-      <div className="w-full mt-5 rounded-xl h-[50vh] overflow-y-scroll">
+      <div className="w-full mt-5 rounded-xl h-[50vh] overflow-y-scroll px-3">
         <div className="border-[1px] border-slate-300 rounded-xl shadow w-full">
           <table className="w-full">
             <thead>
               <tr>
-                <th className="py-3 px2 font-bold uppercase text-indigo-500 text-sm">
+                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm">
                   Detalle
                 </th>
-                <th className="py-3 px2 font-bold uppercase text-indigo-500 text-sm">
+                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm">
                   Categoria
                 </th>
-                <th className="py-3 px2 font-bold uppercase text-indigo-500 text-sm">
+                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm">
                   Color
                 </th>
-                <th className="py-3 px2 font-bold uppercase text-indigo-500 text-sm">
+                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm">
                   Cantidad
                 </th>
               </tr>
@@ -468,16 +463,16 @@ export const PedidosRealizados = () => {
               {datosAgrupados.map((c) =>
                 c.productos.map((c, index) => (
                   <tr key={index}>
-                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal uppercase">
+                    <th className="border-[1px] border-gray-300 p-2 max-md:text-xs text-sm font-normal uppercase">
                       {c.detalle}
                     </th>
-                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal uppercase">
+                    <th className="border-[1px] border-gray-300 p-2 max-md:text-xs text-sm font-normal uppercase">
                       {c.categoria}
                     </th>
-                    <th className="border-[1px] border-gray-300 p-2 text-sm font-normal uppercase">
+                    <th className="border-[1px] border-gray-300 p-2 max-md:text-xs text-sm font-normal uppercase">
                       {c.color}
                     </th>
-                    <th className="border-[1px] border-gray-300 p-2 text-sm font-bold">
+                    <th className="border-[1px] border-gray-300 p-2 max-md:text-xs text-sm font-bold">
                       {c.cantidad_total}
                     </th>
                   </tr>
@@ -489,7 +484,7 @@ export const PedidosRealizados = () => {
       </div>
       <div className="mt-5 w-full">
         <button
-          className="bg-black rounded-xl text-white py-2 px-6 shadow uppercase text-sm"
+          className="bg-black rounded-xl max-md:text-xs text-white py-2 px-6 shadow uppercase text-sm"
           type="button"
           onClick={descargarExcel}
         >
