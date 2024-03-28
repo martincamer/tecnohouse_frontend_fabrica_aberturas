@@ -79,7 +79,7 @@ export const TableAccesorios = ({
 
   return (
     <div>
-      <div className=" flex flex-col gap-3">
+      <div className=" flex flex-col gap-3 max-md:block md:hidden">
         {currentResults.map((p) => (
           <div
             className="border-slate-300 border-[1px] shadow rounded-xl py-3 px-2 flex justify-between items-center"
