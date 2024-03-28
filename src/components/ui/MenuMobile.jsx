@@ -147,7 +147,7 @@ export const MenuMobile = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 flex overflow-x-scroll py-3 px-4 z-[100] bg-indigo-500 text-white font-bold uppercase text-sm w-full rounded-t-xl">
+    <div className="md:hidden max-md:block fixed bottom-0 flex overflow-x-scroll py-3 px-4 z-[100] bg-indigo-500 text-white font-bold uppercase text-sm w-full rounded-t-xl">
       {navegacion.map(({ name, path, icon }) => (
         <div
           key={path}
