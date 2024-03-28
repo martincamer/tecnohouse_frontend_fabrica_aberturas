@@ -13,8 +13,6 @@ import { ModalVerCategoriasAccesorios } from "../../../components/accesorios/Mod
 import { ModalVerColoresAccesorios } from "../../../components/accesorios/ModalVerColoresAccesorios";
 import { ModalCrearEditarAccesorios } from "../../../components/accesorios/ModalCrearEditarAccesorios";
 import { CategoriasAccesorios } from "../../../components/accesorios/CategoriasAccesorios";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { AccesoriosPdf } from "../../../components/viewpdfpedidos/AccesoriosPdf";
 import { ModalCrearAccesoriosDos } from "../../../components/accesorios/ModalCrearAccesoriosDos";
 import { useState } from "react";
 
@@ -57,8 +55,8 @@ export const Accesorios = () => {
   return spinner ? (
     <Spinner />
   ) : (
-    <main className="w-full py-24 px-14 max-md:px-2 overflow-x-scroll">
-      <section className="max-md:w-full mx-auto py-[20px] px-[20px] h-full border-[1px] border-slate-300 rounded-xl shadow flex flex-col gap-10">
+    <main className="w-full py-24 max-md:py-8 px-14 max-md:px-2">
+      <section className="max-md:w-full mx-auto py-[20px] px-[20px] h-full border-[1px] border-slate-300 rounded-xl shadow flex flex-col gap-10 max-md:shadow-none max-md:border-none">
         <IntroTitleAccesorios />
 
         <IntroAccesoriosStock results={results} />
@@ -69,31 +67,38 @@ export const Accesorios = () => {
           openModal={openModal}
         />
 
-        <Search search={search} searcher={searcher} />
-
-        <div className="flex gap-2 items-center">
-          <label
-            className="font-normal text-slate-700 text-md"
-            htmlFor="categoria"
-          >
-            Buscar por categoría
-          </label>
-          <select
-            className="bg-white border-[1px] border-slate-300 text-slate-800 text-sm font-normal py-3 uppercase px-3 rounded-xl shadow cursor-pointer"
-            id="categoria"
-            onChange={handleCategoriaChange}
-            value={categoriaSeleccionada}
-          >
-            <option value="">Todas las categorías</option>
-            {/* Asegúrate de obtener todas las categorías únicas de tus resultados */}
-            {[
-              ...new Set(categorias?.map((resultado) => resultado.categoria)),
-            ].map((categoria) => (
-              <option key={categoria} value={categoria}>
-                {categoria}
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-2 items-center">
+            <label
+              className="font-normal text-slate-700 text-md max-md:text-sm uppercase"
+              htmlFor="categoria"
+            >
+              Buscar por categoría
+            </label>
+            <select
+              className="max-md:text-xs  bg-white border-[1px] border-slate-300 text-slate-800 text-sm font-normal py-3 uppercase px-3 rounded-xl shadow cursor-pointer"
+              id="categoria"
+              onChange={handleCategoriaChange}
+              value={categoriaSeleccionada}
+            >
+              <option className="capitalize" value="">
+                Todas las categorías
               </option>
-            ))}
-          </select>
+              {/* Asegúrate de obtener todas las categorías únicas de tus resultados */}
+              {[
+                ...new Set(categorias?.map((resultado) => resultado.categoria)),
+              ].map((categoria) => (
+                <option
+                  className="capitalize"
+                  key={categoria}
+                  value={categoria}
+                >
+                  {categoria}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Search search={search} searcher={searcher} />
         </div>
 
         <div>

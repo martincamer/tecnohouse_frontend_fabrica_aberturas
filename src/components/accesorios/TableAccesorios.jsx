@@ -79,7 +79,81 @@ export const TableAccesorios = ({
 
   return (
     <div>
-      <div className="border-[1px] border-slate-300 rounded-xl shadow">
+      <div className=" flex flex-col gap-3">
+        {currentResults.map((p) => (
+          <div
+            className="border-slate-300 border-[1px] shadow rounded-xl py-3 px-2 flex justify-between items-center"
+            key={p.id}
+          >
+            <div className="w-full">
+              <p className="font-bold text-slate-700 text-xs">{p.id}</p>
+              <p className="font-bold text-slate-700 text-xs uppercase">
+                - {p.descripcion}
+              </p>
+              <p className="font-bold text-slate-700 text-xs">
+                STOCK:{" "}
+                <span
+                  className={`${
+                    p.stock_minimo > p.stock ? "text-red-600" : "text-green-500"
+                  } text-xs`}
+                >
+                  {p.stock}
+                </span>
+              </p>
+              <p className="font-bold text-slate-700 text-xs">
+                STOCK MIN: <span className="font-normal">{p.stock_minimo}</span>
+              </p>
+            </div>
+            <div className="flex flex-col gap-1 w-full  h-[70px] overflow-y-scroll">
+              <button
+                className="bg-red-500/10 text-red-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                onClick={() => {
+                  handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                }}
+              >
+                Eliminar
+              </button>
+
+              <button
+                className="bg-black/10 text-black-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                onClick={() => {
+                  openModalEditar(), handlePerfilSeleccionado(p.id);
+                }}
+              >
+                Editar
+              </button>
+
+              <button
+                className="bg-indigo-500/10 text-indigo-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                onClick={() => {
+                  openSalida(), handleId(p.id);
+                }}
+              >
+                Crear Salida
+              </button>
+
+              <button
+                className="bg-indigo-500/10 text-indigo-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                onClick={() => {
+                  openEntrada(), handleId(p.id);
+                }}
+              >
+                Crear Entrada
+              </button>
+
+              <button
+                className="bg-black text-white uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                onClick={() => {
+                  handlePerfilSeleccionado(p.id), openModalEditarDos();
+                }}
+              >
+                Editar Stock
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="border-[1px] border-slate-300 rounded-xl shadow max-md:hidden md:block">
         <table className="  p-[5px] w-full  uppercase">
           <thead>
             <tr>
