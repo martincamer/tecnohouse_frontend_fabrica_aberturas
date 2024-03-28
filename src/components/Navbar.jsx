@@ -51,7 +51,7 @@ export const Navbar = () => {
     <header className="fixed max-md:static w-full py-4 px-6 max-md:px-2 max-md:py-0">
       <div
         className={`flex justify-between items-center max-md:items-end gap-4 max-md:flex-col ${
-          !isAuth ? "w-[1220px]" : "w-full max-md:px-2"
+          !isAuth ? "w-[1220px] hidden" : "w-full max-md:px-2"
         } mx-auto`}
       >
         <div className="flex gap-4 items-center">

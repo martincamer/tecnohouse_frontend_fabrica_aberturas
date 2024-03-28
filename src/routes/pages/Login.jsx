@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
-import img from "../../../public/06.jpg";
 import { useState } from "react";
 
 export const Login = () => {
