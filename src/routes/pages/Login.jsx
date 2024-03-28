@@ -34,10 +34,10 @@ export const Login = () => {
     <section className="flex justify-center items-center bg-slate-100 h-screen">
       <form
         onSubmit={onSubmit}
-        className="bg-white border-[1px] border-slate-300 py-20 px-10 w-1/3 rounded-xl shadow-lg shadow-black/10 relative"
+        className="max-md:mx-3 bg-white border-[1px] border-slate-300 py-20 max-md:py-10 px-10 w-1/3 max-md:w-full rounded-xl shadow-lg shadow-black/10 relative"
       >
         <div className="space-y-2">
-          <p className="text-lg text-center font-normal text-slate-700">
+          <p className="text-lg text-center font-normal text-slate-700 max-md:uppercase max-md:text-sm max-md:mb-3">
             Ingresa al Sistema Tecnohouse Aberturas
           </p>
         </div>
@@ -51,12 +51,14 @@ export const Login = () => {
 
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-2">
-            <label className="text-base normal text-slate-700">Email</label>
+            <label className="text-base normal text-slate-700 max-md:text-sm">
+              Email
+            </label>
             <input
               {...register("email", { required: true })}
               type="text"
               placeholder="Email"
-              className="bg-white rounded-xl shadow border-[1px] border-slate-300 py-3 px-2 placeholder:text-black/50 outline-none"
+              className="bg-white rounded-xl shadow border-[1px] border-slate-300 py-3 px-2 placeholder:text-black/50 outline-none max-md:text-sm"
             />
             {errors.email && (
               <span className="text-sm bg-red-100 text-red-900 py-2 px-2 rounded-xl w-1/3 text-center shadow border-[1px] border-red-200">
@@ -65,12 +67,12 @@ export const Login = () => {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-base normal text-slate-700">
+            <label className="text-base normal text-slate-700 max-md:text-sm">
               Contraseña
             </label>
             <div className="bg-white rounded-xl shadow border-[1px] border-slate-300 py-3 px-2 placeholder:text-black/50 outline-none relative">
               <input
-                className="w-full outline-none"
+                className="w-full outline-none max-md:text-sm"
                 {...register("password", { required: true })}
                 type={showPassword ? "text" : "password"}
                 placeholder="Contraseña de usuario"
@@ -127,7 +129,7 @@ export const Login = () => {
             <input
               type="submit"
               value="Ingresar al sistema"
-              className="bg-indigo-500 text-white rounded-xl hover:shadow-md hover:shadow-black/30 hover:translate-x-1 transition-all ease-in-out py-2 px-6 text-center outline-none cursor-pointer"
+              className="max-md:uppercase max-md:text-sm bg-indigo-500 text-white rounded-xl hover:shadow-md hover:shadow-black/30 hover:translate-x-1 transition-all ease-in-out py-2 px-6 text-center outline-none cursor-pointer"
             />
           </div>
           <div className="flex justify-between text-sm font-semibold">
