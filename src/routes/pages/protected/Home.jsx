@@ -262,7 +262,7 @@ export const Home = () => {
               Total Aberturas entregadas por fabricas
             </h3>
           </div>
-          {<ColumnClientesDos datosPresupuesto={datosPresupuesto} />}
+          {<ColumnClientesDos datosPresupuesto={datosMensuales} />}
         </div>
       </div>
       <div className="mt-10 bg-white py-20 rounded-lg shadow-md border-[1px] border-slate-300 grid grid-cols-2 gap-12 max-md:grid-cols-1">
@@ -272,7 +272,7 @@ export const Home = () => {
               Total aberturas entregadas por cliente
             </h3>
           </div>
-          {<ColumnClientes datosPresupuesto={datosPresupuesto} />}
+          {<ColumnClientes datosPresupuesto={datosMensuales} />}
         </div>
 
         <div className="flex flex-col gap-6">
@@ -281,7 +281,7 @@ export const Home = () => {
               Total viviendas entregadas
             </h3>
           </div>
-          {<ColumnClientesTres datosPresupuesto={datosPresupuesto} />}
+          {<ColumnClientesTres datosPresupuesto={datosMensuales} />}
         </div>
       </div>
     </section>
