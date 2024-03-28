@@ -94,8 +94,8 @@ export const Pedidos = () => {
   }, [datosMensuales, search]);
 
   return (
-    <section className="w-full py-20 px-14 max-md:px-2 overflow-x-scroll">
-      <div className="border-[1px] border-slate-300 rounded-xl shadow-black/10 shadow py-10 px-12 max-md:px-4 max-md:py-6 w-full">
+    <section className="w-full py-20 max-md:py-2 px-14 max-md:px-2">
+      <div className="border-[1px] border-slate-300 rounded-xl shadow-black/10 shadow py-10 px-12 max-md:px-4 max-md:py-6 w-full max-md:border-none max-md:shadow-none">
         <div className="flex">
           <p className="uppercase max-md:text-sm font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700">
             Crear pedido clientes
@@ -103,7 +103,7 @@ export const Pedidos = () => {
         </div>
 
         <div className="mt-5 grid grid-cols-4 gap-5 max-md:grid-cols-1">
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-lg border border-slate-300 max-md:p-3 shadow bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +143,7 @@ export const Pedidos = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-lg border border-slate-300 max-md:p-3 shadow bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +178,7 @@ export const Pedidos = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-lg border border-slate-300 max-md:p-3 shadow bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +218,7 @@ export const Pedidos = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-lg border border-slate-300 max-md:p-3 shadow bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -263,7 +263,7 @@ export const Pedidos = () => {
           <button
             type="button"
             onClick={openModal}
-            className="uppercase max-md:text-xs py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
+            className="uppercase py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
           >
             Crear nuevo pedido
             <svg

@@ -59,7 +59,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
   return (
     <div>
       <div className="flex flex-col gap-3 max-md:flex md:hidden">
-        {currentResults.map((p) => (
+        {resultadoFiltrados.map((p, index) => (
           <div
             className="border-slate-300 border-[1px] shadow rounded-xl py-3 px-2 flex justify-between items-center"
             key={p.id}
@@ -72,25 +72,56 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
               <p className="font-bold text-slate-700 text-xs uppercase">
                 Linea: <span className="font-normal">{p.detalle}</span>
               </p>
-              <p className="font-bold text-slate-700 text-xs uppercase">
-                Total aberturas:
-                {/* {p.reduce((total, presupuesto) => {
-                  presupuesto?.productos?.respuesta?.forEach((producto) => {
-                    total += parseInt(producto?.cantidadFaltante);
-                  });
-                  return total;
-                }, 0)} */}
-                <span className="font-normal">{p.cliente}</span>
-              </p>
+
               <p className="font-bold text-slate-700 text-xs">
-                STOCK:{" "}
-                <span
-                  className={`${
-                    p.stock_minimo > p.stock ? "text-red-600" : "text-green-500"
-                  } text-xs`}
+                CLIENTES DEL PEDIDO:{" "}
+                <div
+                  onClick={() => handleToggleClick(index)}
+                  className={`py-2 px-2 text-xs text-left text-slate-700 uppercase`}
                 >
-                  {p.stock}
-                </span>
+                  {!clickStates[index] ? (
+                    <p className="p-3 border-slate-300 border-[1px] rounded-xl shadow cursor-pointer text-center">
+                      VER CLIENTE - CLICK
+                    </p>
+                  ) : (
+                    <div className="relative">
+                      <div className="absolute top-0 right-3 cursor-pointer">
+                        <IoCloseCircle className="text-2xl text-red-500 border-red-800 border-[1px] rounded-full" />
+                      </div>
+                      {Array.from(
+                        new Set(
+                          p?.productos?.respuesta?.map((item) => item.cliente)
+                        )
+                      ).map((uniqueClient, i) => {
+                        const hasF = p?.productos?.respuesta?.some(
+                          (item) =>
+                            item.cliente === uniqueClient &&
+                            item.cantidad !== item.cantidadFaltante
+                        );
+
+                        return (
+                          <div className="pt-3 cursor-pointer" key={i}>
+                            {i > 0 ? " - " : ""}
+                            {uniqueClient}
+                            <span className="font-bold text-xs underline text-red-500 mx-1">
+                              {hasF && "FALTA REALIZAR"}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </p>
+              <p className="mb-2 mt-2">
+                <Link
+                  to={`/pedido/${p?.id}`}
+                  // target="_blank"
+                  // rel="noopener noreferrer"
+                  className="bg-indigo-500 py-2 px-6 text-white rounded-xl text-sm cursor-pointer max-md:text-sm"
+                >
+                  Ver pedido
+                </Link>
               </p>
             </div>
           </div>

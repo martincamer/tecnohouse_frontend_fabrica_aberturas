@@ -261,12 +261,12 @@ export const ViewPedido = () => {
   };
 
   return (
-    <section className="w-full py-2 px-14 max-md:py-6 max-md:px-2 flex flex-col gap-10 overflow-x-scroll">
+    <section className="w-full py-2 px-14 max-md:py-0 max-md:px-4 flex flex-col gap-10 max-md:gap-5 max-md:pb-20">
       <ToastContainer />
 
-      <div className="flex mt-5">
+      <div className="flex mt-5 max-md:mt-0">
         <Link
-          className="bg-black py-2 px-8 rounded-xl shadow text-white flex  gap-2 items-center"
+          className="bg-black py-2 px-8 rounded-xl max-md:shadow-none max-md:border-none shadow text-white flex  gap-2 items-center max-md:text-xs max-md:px-4"
           to="/pedidos"
         >
           <svg
@@ -275,7 +275,7 @@ export const ViewPedido = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 max-md:h-4 max-md:w-4"
           >
             <path
               strokeLinecap="round"
@@ -300,8 +300,8 @@ export const ViewPedido = () => {
             : "estado del pedido pendiente"}
         </p>
       </div>
-      <div className="border-[1px] border-slate-300 shadow py-8 px-10 rounded-2xl flex justify-around max-md:flex-col">
-        <div className="flex gap-2 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+      <div className="max-md:shadow-none max-md:border-none max-md:px-2 max-md:py-0 max-md:gap-3 border-[1px] border-slate-300 shadow py-8 px-10 rounded-2xl flex justify-around max-md:flex-col">
+        <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
           <p className="text-sm max-md:text-sm uppercase">
             Numero del pedido:{" "}
           </p>{" "}
@@ -309,27 +309,27 @@ export const ViewPedido = () => {
             {datosCliente?.id}
           </p>
         </div>
-        <div className="flex gap-2 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+        <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
           <p className="text-sm max-md:text-sm uppercase">Cliente: </p>{" "}
           <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
             {datosCliente?.cliente}
           </p>
         </div>
-        <div className="flex gap-2 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+        <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
           <p className="text-sm max-md:text-sm uppercase">Categoria: </p>{" "}
           <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
             {datosCliente?.detalle}
           </p>
         </div>
 
-        <div className="flex gap-2 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+        <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
           <p className="text-sm max-md:text-sm uppercase">Total aberturas:</p>{" "}
           <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
             {totalAberturas()}
           </p>
         </div>
 
-        <div className="flex gap-2 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+        <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
           <p className="text-sm max-md:text-sm uppercase">Total realizadas:</p>{" "}
           <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
             {totalAberturasRealizadas()}
@@ -337,16 +337,16 @@ export const ViewPedido = () => {
         </div>
       </div>
 
-      <div className="flex ml-6">
+      <div className="flex px-2">
         <button
           onClick={() => openModalCrearPedidos()}
-          className="bg-slate-500/10 text-slate-700 border-[1px] border-slate-400 rounded-xl py-2 px-8 shadow max-md:text-sm"
+          className="max-md:uppercase bg-slate-500/10 text-slate-700 border-[1px] border-slate-400 rounded-xl py-2 px-8 shadow max-md:text-sm"
         >
           Generar Nuevos Clientes
         </button>
       </div>
 
-      <div className="border-[1px] shadow py-10 px-10 rounded-2xl flex flex-col gap-8 border-slate-300">
+      <div className="border-[1px] shadow py-10 px-10 max-md:px-2 max-md:border-none max-md:shadow-none rounded-2xl flex flex-col gap-8 border-slate-300">
         <div className="flex gap-2 items-center max-md:flex-col">
           <p className="text-sm font-semibold text-indigo-500 max-md:text-sm uppercase">
             Pedido de aberturas - Total pedido
@@ -356,7 +356,7 @@ export const ViewPedido = () => {
             Fecha de emicion: {dateTime(datosCliente?.created_at)}
           </p>
         </div>
-        <div className="flex gap-5 items-center">
+        <div className="flex gap-5 items-center max-md:flex-col max-md:gap-2 max-md:items-start">
           {" "}
           <div className="flex gap-2 items-center">
             <p className="text-base max-md:text-sm uppercase">puertas:</p>{" "}
@@ -386,7 +386,7 @@ export const ViewPedido = () => {
             </p>
           </div>
           -
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center ">
             <p className="text-base max-md:text-sm uppercase">
               Total Aberturas:
             </p>{" "}
@@ -395,7 +395,7 @@ export const ViewPedido = () => {
             </p>
           </div>
           -
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center max-md:flex-col max-md:items-start">
             <p className="text-base max-md:text-sm uppercase">
               Total realizadas:
             </p>{" "}
@@ -415,12 +415,12 @@ export const ViewPedido = () => {
           </div>
         </div>
 
-        <div className="flex gap-4">
-          <div className="w-1/3">
+        <div className="flex gap-4 max-md:flex-col">
+          <div className="w-1/3 max-md:w-full">
             <Search variable="w-full" searcher={searcher} search={search} />
           </div>
 
-          <div className="flex">
+          <div className="flex max-md:text-xs">
             <button
               onClick={descargarExcel}
               className="bg-indigo-500 py-2 rounded-xl text-white uppercase px-6"
@@ -430,7 +430,87 @@ export const ViewPedido = () => {
           </div>
         </div>
 
-        <div className="overflow-x-auto rounded-lg border border-gray-200 mt-5">
+        <div className="flex flex-col gap-3 max-md:flex md:hidden">
+          {currentResults.map((p) => (
+            <div
+              className="border-slate-300 border-[1px] shadow rounded-xl py-3 px-2 flex justify-between items-center"
+              key={p.id}
+            >
+              <div className="w-full">
+                <p className="font-bold text-slate-700 text-xs uppercase">
+                  Cliente: <span className="font-normal">{p.cliente}</span>
+                </p>
+                <p className="font-bold text-slate-700 text-xs uppercase">
+                  Detalle: <span className="font-normal">{p.detalle}</span>
+                </p>
+                <p className="font-bold text-slate-700 text-xs uppercase">
+                  Categoria: <span className="font-normal">{p.categoria}</span>
+                </p>
+                <p className="font-bold text-slate-700 text-xs uppercase">
+                  AnchoxAlto:{" "}
+                  <span className="font-normal">{`${p.ancho}x${p.alto}`}</span>
+                </p>
+                <p className="font-bold text-slate-700 text-xs uppercase">
+                  Cantidad: <span className="font-normal">{p.cantidad}</span>
+                </p>
+                <p className="font-bold text-slate-700 text-xs uppercase">
+                  Cantidad Realizada:{" "}
+                  <span className="font-normal">{p.cantidadFaltante}</span>
+                </p>
+
+                <div className="flex gap-4 mt-2">
+                  <button
+                    type="button"
+                    // onClick={() => handleEliminarProductoPedido(p?.id)}
+                    onClick={() => {
+                      handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                    }}
+                    className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-red-500/10  text-red-900 py-1 px-5 rounded-xl shadow border-[1px] border-red-800 text-sm"
+                  >
+                    eliminar
+                  </button>
+                  <button
+                    onClick={() => {
+                      openModal(), handleSeleccionarId(p?.id);
+                    }}
+                    type="button"
+                    className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-white py-1 px-5 rounded-xl shadow border-[1px] border-slate-300 text-sm"
+                  >
+                    editar
+                  </button>
+                  <button
+                    onClick={() => {
+                      openModalEstado(), handleSeleccionarId(p?.id);
+                    }}
+                    type="button"
+                    className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-slate-500/10 py-1 px-5 rounded-xl shadow border-[1px] border-slate-300 text-sm"
+                  >
+                    editar
+                  </button>
+                </div>
+                <div className="flex gap-2 items-center mt-2">
+                  <span className="font-bold text-slate-700 text-xs uppercase">
+                    Estado:
+                  </span>
+                  <button
+                    type="button"
+                    className={`font-normal px-4 py-1 rounded max-md:text-xs max-md:py-1 max-md:px-4 ${
+                      p?.cantidad === p?.cantidadFaltante
+                        ? "bg-indigo-500 rounded-lg text-white uppercase"
+                        : "bg-orange-500 rounded-lg text-white uppercase"
+                    } shadow`}
+                  >
+                    {p?.cantidad === p?.cantidadFaltante
+                      ? "completada"
+                      : "pendiente"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="overflow-x-auto rounded-lg border border-gray-200 mt-5 max-md:hidden md:block">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm uppercase">
             <thead>
               <tr>
@@ -568,68 +648,68 @@ export const ViewPedido = () => {
               ))}
             </tbody>
           </table>
-
-          {totalPages > 1 && (
-            <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
-              <button
-                className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 19.5 8.25 12l7.5-7.5"
-                  />
-                </svg>
-                Anterior
-              </button>
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <button
-                  key={index}
-                  className={`mx-1 px-3 py-1 rounded ${
-                    currentPage === index + 1
-                      ? "bg-indigo-500 hover:bg-primary transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
-                      : "bg-gray-100 shadow shadow-black/20 text-sm"
-                  }`}
-                  onClick={() => handlePageChange(index + 1)}
-                >
-                  {index + 1}
-                </button>
-              ))}
-              <button
-                className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                Siguiente{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                  />
-                </svg>
-              </button>
-            </div>
-          )}
         </div>
       </div>
+
+      {totalPages > 1 && (
+        <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
+          <button
+            className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+            Anterior
+          </button>
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <button
+              key={index}
+              className={`mx-1 px-3 py-1 rounded ${
+                currentPage === index + 1
+                  ? "bg-indigo-500 hover:bg-primary transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
+                  : "bg-gray-100 shadow shadow-black/20 text-sm"
+              }`}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente{" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </button>
+        </div>
+      )}
 
       <ModalEliminarPedido
         p={guardarId}
@@ -638,7 +718,7 @@ export const ViewPedido = () => {
         handleBorrarAccesorioClose={handleBorrarAccesorioClose}
       />
 
-      <div className="border-[1px] shadow py-10 px-10 rounded flex gap-4 max-md:flex-col max-md:px-1 max-md:py-2">
+      <div className="max-md:hiddens max-md:items-start border-[1px] shadow py-10 max-md:shadow-none px-10 rounded flex gap-4 max-md:flex-col max-md:px-1 max-md:py-2 max-md:border-none">
         <button
           onClick={() => openModalCrearPedido()}
           className="py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
