@@ -66,16 +66,16 @@ export const ModalEliminarAccesorio = ({
                         handleBorrarAccesorioClose(), handleEliminar(p);
                       }
                     }}
-                    className=" text-red-800 py-3 px-6 rounded-xl bg-red-100 text-sm w-full"
+                    className=" text-red-800 py-3 px-6 rounded-xl bg-red-100 text-sm w-full max-md:py-2 max-md:px-2"
                   >
                     SI ELIMINAR
                   </button>
                   <button
                     type="button"
                     onClick={handleBorrarAccesorioClose}
-                    className="text-white py-3 px-6 rounded-xl bg-green-500 text-sm w-full"
+                    className="text-white py-3 px-6 rounded-xl bg-green-500 text-sm w-full max-md:py-2 max-md:px-2"
                   >
-                    NO ELIMINAR - CERRAR
+                    NO ELIMINAR
                   </button>
                 </div>
 

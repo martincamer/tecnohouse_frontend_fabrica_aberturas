@@ -5,8 +5,6 @@ import { usePedidoContext } from "../../../context/PedidoProvider";
 import { useState } from "react";
 import { Search } from "../../../components/ui/Search";
 import { obtenerFacturasMensual } from "../../../api/factura.api";
-import moment from "moment";
-import "moment/locale/es";
 
 export const Pedidos = () => {
   const { isOpen, openModal, closeModal } = usePedidoContext();
@@ -99,12 +97,12 @@ export const Pedidos = () => {
     <section className="w-full py-20 px-14 max-md:px-2 overflow-x-scroll">
       <div className="border-[1px] border-slate-300 rounded-xl shadow-black/10 shadow py-10 px-12 max-md:px-4 max-md:py-6 w-full">
         <div className="flex">
-          <p className="font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700 max-md:text-lg">
+          <p className="uppercase max-md:text-sm font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700">
             Crear pedido clientes
           </p>
         </div>
 
-        <div className="mt-5 grid grid-cols-4 gap-5">
+        <div className="mt-5 grid grid-cols-4 gap-5 max-md:grid-cols-1">
           <article class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
@@ -126,18 +124,18 @@ export const Pedidos = () => {
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
                 {" "}
                 Pedidos generados{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
                   {" "}
                   {datosMensuales.length}{" "}
                 </span>
 
-                <span class="text-xs text-gray-500">
+                <span class="text-xs text-gray-500 max-md:text-xs">
                   {" "}
                   {"Ultimo creado el día"}{" "}
                 </span>
@@ -166,13 +164,13 @@ export const Pedidos = () => {
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
                 {" "}
                 Fecha del mes{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
                   {" "}
                   {nombreMes}{" "}
                 </span>
@@ -201,13 +199,13 @@ export const Pedidos = () => {
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
                 {" "}
                 Aberturas generadas{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
                   {" "}
                   {resultado}{" "}
                 </span>
@@ -241,13 +239,13 @@ export const Pedidos = () => {
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
                 {" "}
                 Aberturas realizadas{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
                   {" "}
                   {resultadoTwo}{" "}
                 </span>
@@ -265,7 +263,7 @@ export const Pedidos = () => {
           <button
             type="button"
             onClick={openModal}
-            className="py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
+            className="uppercase max-md:text-xs py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
           >
             Crear nuevo pedido
             <svg

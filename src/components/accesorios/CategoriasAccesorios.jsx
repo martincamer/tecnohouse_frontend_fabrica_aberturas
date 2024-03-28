@@ -10,7 +10,7 @@ export const CategoriasAccesorios = ({
     useAccesoriosContext();
 
   return (
-    <div className="bg-white border-slate-300 border-[1px] shadow py-4 px-4 rounded-xl">
+    <div className="bg-white border-slate-300 border-[1px] shadow py-4 px-4 rounded-xl max-md:border-none max-md:shadow-none max-md:px-0">
       <div className="flex gap-4 max-md:gap-2 max-md:flex-col">
         <button
           onClick={openModal}
