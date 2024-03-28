@@ -28,6 +28,7 @@ import { SalidasDos } from "./routes/pages/protected/SalidasDos";
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
+import { MenuMobile } from "./components/ui/MenuMobile";
 
 function App() {
   const { isAuth } = useAuth();
@@ -56,6 +57,7 @@ function App() {
                           <RemitoProvider>
                             <main className="flex gap-2 h-full">
                               <Sidebar />
+                              <MenuMobile />
                               <Outlet />
                             </main>
                           </RemitoProvider>

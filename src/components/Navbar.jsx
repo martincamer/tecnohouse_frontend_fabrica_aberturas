@@ -48,9 +48,9 @@ export const Navbar = () => {
   const { isAuth, signout, user, clickProvider, setClickProvider } = useAuth();
 
   return (
-    <header className="fixed w-full py-4 px-6 max-md:px-2">
+    <header className="fixed max-md:static w-full py-4 px-6 max-md:px-2 max-md:py-0">
       <div
-        className={`flex justify-between items-center gap-4 max-md:flex-col ${
+        className={`flex justify-between items-center max-md:items-end gap-4 max-md:flex-col ${
           !isAuth ? "w-[1220px]" : "w-full max-md:px-2"
         } mx-auto`}
       >
@@ -60,7 +60,7 @@ export const Navbar = () => {
           </Link> */}
           <div
             onClick={() => setClickProvider(!clickProvider)}
-            className="cursor-pointer"
+            className="cursor-pointer max-md:hidden"
           >
             {!clickProvider ? (
               <BiMenu
