@@ -26,7 +26,7 @@ export const MenuMobile = () => {
     },
     {
       //   name: "Accesorios en stock",
-      //   path: "/accesorios",
+      path: "/accesorios",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
