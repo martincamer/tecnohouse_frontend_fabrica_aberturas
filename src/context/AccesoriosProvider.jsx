@@ -8,6 +8,7 @@ import {
   obtenerCategorias,
 } from "../api/categoriasAccesorios.api";
 import { eliminarColor, obtenerColores } from "../api/coloresAccesorios.api";
+import client from "../api/axios";
 
 //context
 export const AccesoriosContext = createContext();
@@ -179,21 +180,24 @@ export const AccesoriosProvider = ({ children }) => {
       (perfilState) => perfilState.id !== id
     );
 
-    toast.error("¡Producto eliminado correctamente!", {
-      position: "top-right",
+    setPerfiles(perfilActualizado);
+
+    toast.error("¡Accesorio eliminado correctamente!", {
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
-
-    setPerfiles(perfilActualizado);
-    setTimeout(() => {
-      location.reload();
-    }, 500);
   };
 
   useEffect(() => {
@@ -210,14 +214,20 @@ export const AccesoriosProvider = ({ children }) => {
     );
 
     toast.error("¡Categoria eliminada correctamente!", {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
 
     setCategorias(categoriaActualizada);
@@ -237,18 +247,46 @@ export const AccesoriosProvider = ({ children }) => {
     );
 
     toast.error("¡Color eliminado correctamente!", {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
 
     setColores(colorActualizado);
   };
+
+  const [entradasMes, setEntradasMes] = useState([]);
+
+  useEffect(() => {
+    async function laodData() {
+      const res = await client.get("/accesorios-entradas-mes");
+
+      setEntradasMes(res.data);
+    }
+    laodData();
+  });
+
+  const [salidasMensuales, setSalidasMensuales] = useState([]);
+
+  useEffect(() => {
+    async function laodData() {
+      const res = await client.get("/accesorios-salidas-mes");
+
+      setSalidasMensuales(res.data);
+    }
+    laodData();
+  });
 
   return (
     <AccesoriosContext.Provider
@@ -300,6 +338,10 @@ export const AccesoriosProvider = ({ children }) => {
         resultadosFiltrados,
         handleCategoriaChange,
         categoriaSeleccionada,
+        entradasMes,
+        setEntradasMes,
+        salidasMensuales,
+        setSalidasMensuales,
       }}
     >
       {children}

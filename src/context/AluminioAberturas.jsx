@@ -147,17 +147,22 @@ export const AberturasProvider = ({ children }) => {
     const updatedTipos = perfiles.filter((tipo) => tipo.id !== id);
     setPerfiles(updatedTipos);
 
-    toast.error("¡Producto eliminado correctamente!", {
-      position: "top-right",
+    toast.error("¡Abertura eliminado correctamente!", {
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
-
     setPerfiles(perfilActualizado);
   };
 
@@ -175,14 +180,20 @@ export const AberturasProvider = ({ children }) => {
     );
 
     toast.error("¡Categoria eliminada correctamente!", {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
 
     setCategorias(categoriaActualizada);
@@ -202,14 +213,20 @@ export const AberturasProvider = ({ children }) => {
     );
 
     toast.error("¡Color eliminado correctamente!", {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
 
     setColores(colorActualizado);

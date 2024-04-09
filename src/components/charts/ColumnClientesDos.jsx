@@ -17,6 +17,20 @@ const ColumnClientes = ({ datosPresupuesto }) => {
   const clientes = Object.keys(clientesData);
   const cantidadProductosPorCliente = Object.values(clientesData);
 
+  // Colores para las barras
+  const coloresBarras = [
+    "#FF5733",
+    "#33FF6B",
+    "#336AFF",
+    "#FF33E9",
+    "#FFCD33",
+    "#33FFE3",
+    "#A033FF",
+    "#FFE933",
+    "#33FFAF",
+    "#FF335C",
+  ];
+
   // Configurar opciones del gráfico
   const options = {
     chart: {
@@ -43,18 +57,10 @@ const ColumnClientes = ({ datosPresupuesto }) => {
     },
     plotOptions: {
       bar: {
-        borderRadius: 2,
-        colors: {
-          ranges: [
-            {
-              from: Number.MIN_SAFE_INTEGER,
-              to: 1,
-              color: "#FF0000",
-            },
-          ],
-          backgroundBarColors: [],
-          backgroundBarOpacity: 1,
-        },
+        columnWidth: "10%",
+        // Ajustar el ancho de las columnas si es necesario
+        borderRadius: "10",
+        borderRadiusApplication: "end",
       },
     },
     dataLabels: {
@@ -65,9 +71,10 @@ const ColumnClientes = ({ datosPresupuesto }) => {
       offsetY: -20,
       style: {
         fontSize: "12px",
-        colors: ["#304758"],
+        colors: ["#FFFFFF"],
       },
     },
+    colors: coloresBarras, // Asignar los colores aquí
     responsive: [
       {
         breakpoint: 768,

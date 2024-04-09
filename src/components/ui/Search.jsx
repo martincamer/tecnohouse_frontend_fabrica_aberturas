@@ -10,7 +10,7 @@ export const Search = ({ search, searcher, variable }) => {
           placeholder="Buscar por el código o el detalle"
           type="text"
           id="Search"
-          className="outline-none px-2 w-full"
+          className="outline-none px-2 w-full uppercase"
         />
         <span className="absolute inset-y-0 right-0 grid w-10 place-content-center">
           <button

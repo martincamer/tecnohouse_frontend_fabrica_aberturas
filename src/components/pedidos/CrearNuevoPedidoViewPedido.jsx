@@ -28,15 +28,21 @@ export const CrearNuevoPedidoViewPedido = ({
         location.reload();
       }, 1500);
 
-      toast.success("¡Pedido creado correctamente!", {
-        position: "top-right",
+      toast.success("¡Nuevos clientes creados correctamente!", {
+        position: "top-center",
         autoClose: 1500,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
         theme: "light",
+        style: {
+          padding: "15px",
+          borderRadius: "15px",
+          boxShadow: "none",
+          border: "1px solid rgb(203 213 225)",
+        },
       });
     } catch (error) {
       console.error("Error durante la solicitud:", error.message);
@@ -62,7 +68,7 @@ export const CrearNuevoPedidoViewPedido = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-10" />
           </Transition.Child>
 
           <div className="min-h-screen px-4 text-center">
@@ -95,16 +101,38 @@ export const CrearNuevoPedidoViewPedido = ({
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block w-[1220px] max-md:px-3 p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl max-md:w-full">
+                <div className="py-0 flex justify-end">
+                  <div
+                    onClick={closeModalCrearPedidos}
+                    className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
+                  className="text-sm uppercase font-bold leading-6 text-gray-700"
                 >
                   Crear el pedido
                 </Dialog.Title>
                 <form className="mt-2 border-t pt-4 pb-4 space-y-5">
                   <div>
                     <button
-                      className="border-[1px] border-slate-400 bg-slate-500/10  py-2 px-6 rounded-xl text-slate-700 shadow max-md:text-xs"
+                      className="bg-green-100 text-green-700 py-2 px-6 rounded-xl uppercase text-sm max-md:text-xs hover:bg-green-500 hover:text-white hover:shadow-md transition-all ease-linear"
                       type="button"
                       onClick={openModalProductos}
                     >
@@ -116,12 +144,6 @@ export const CrearNuevoPedidoViewPedido = ({
                     <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                       <thead>
                         <tr className="divide-gray-100">
-                          {/* <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                            Numero
-                          </th> */}
-                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                            Codigo
-                          </th>
                           <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                             Detalle
                           </th>
@@ -151,12 +173,6 @@ export const CrearNuevoPedidoViewPedido = ({
                             key={p.id}
                             className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
                           >
-                            {/* <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                              {p.id}
-                            </td> */}
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                              {p.nombre}
-                            </td>
                             <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.detalle}
                             </td>
@@ -177,7 +193,7 @@ export const CrearNuevoPedidoViewPedido = ({
                             </td>
                             <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               <button
-                                className="justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-50 duration-300 cursor-pointer font-normal text-center border-red-800 flex items-center gap-2"
+                                className="justify-center px-4 py-2 text-xs text-red-900 bg-red-100 border border-transparent rounded-xl uppercase  hover:bg-red-50 duration-300 cursor-pointer font-normal text-center flex items-center gap-2"
                                 onClick={() => deleteProducto(p.id)}
                               >
                                 Eliminar producto
@@ -206,7 +222,7 @@ export const CrearNuevoPedidoViewPedido = ({
                     <button
                       onClick={deleteToResetProductos}
                       type="button"
-                      className="bg-red-100 border-red-900 border-[0.5px] text-red-800 rounded-xl py-1 px-4 shadow font-normal text-base mt-2 max-md:text-sm"
+                      className="bg-red-100 uppercase text-sm text-red-800 rounded-xl py-2 px-4 shadow font-normal mt-2 max-md:text-sm"
                     >
                       Resetear productos
                     </button>
@@ -215,22 +231,12 @@ export const CrearNuevoPedidoViewPedido = ({
                     <button
                       type="button"
                       onClick={() => onSubmit()}
-                      className="bg-indigo-500 rounded-xl py-2 px-6 text-white font-normal shadow-md hover:translate-x-1 transition-all ease-in-out max-md:text-xs"
+                      className="bg-indigo-500 rounded-xl py-2 px-6 text-white font-normal shadow-md hover:translate-x-1 transition-all ease-in-out max-md:text-xs uppercase text-sm"
                     >
                       Generar aberturas
                     </button>
                   </div>
                 </form>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer max-md:text-xs"
-                    onClick={closeModalCrearPedidos}
-                  >
-                    Cerrar Ventana
-                  </button>
-                </div>
               </div>
             </Transition.Child>
           </div>

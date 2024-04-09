@@ -49,7 +49,10 @@ const ColumnClientes = ({ datosPresupuesto }) => {
     },
     plotOptions: {
       bar: {
-        borderRadius: 2,
+        columnWidth: "30%",
+        // Ajustar el ancho de las columnas si es necesario
+        borderRadius: "10",
+        borderRadiusApplication: "end",
         colors: {
           ranges: [
             {
@@ -58,6 +61,7 @@ const ColumnClientes = ({ datosPresupuesto }) => {
               color: "#FF0000",
             },
           ],
+
           backgroundBarColors: [],
           backgroundBarOpacity: 1,
         },
@@ -71,7 +75,7 @@ const ColumnClientes = ({ datosPresupuesto }) => {
       offsetY: -20,
       style: {
         fontSize: "12px",
-        colors: ["#304758"],
+        colors: ["#FFFFFF"],
       },
     },
     responsive: [

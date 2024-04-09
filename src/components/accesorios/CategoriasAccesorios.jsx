@@ -10,11 +10,11 @@ export const CategoriasAccesorios = ({
     useAccesoriosContext();
 
   return (
-    <div className="bg-white border-slate-300 border-[1px] shadow py-4 px-4 rounded-xl max-md:border-none max-md:shadow-none max-md:px-0">
+    <div className="bg-white border-slate-300 border-[1px] hover:shadow-md  cursor-pointer transition-all ease-linear py-4 px-4 rounded-xl max-md:border-none max-md:shadow-none max-md:px-0">
       <div className="flex gap-4 max-md:gap-2 max-md:flex-col">
         <button
           onClick={openModal}
-          className="flex gap-2 items-center bg-indigo-500/10 text-indigo-600 border-[1px] border-indigo-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out"
+          className="flex gap-2 items-center bg-indigo-500/10 text-indigo-600 border-[1px] border-indigo-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Crear nuevo accesorio/perfil/vidrio
           <svg
@@ -34,7 +34,7 @@ export const CategoriasAccesorios = ({
         </button>
         <button
           onClick={openModalCrearCategoria}
-          className="flex gap-2 items-center bg-indigo-500/10 text-indigo-600 border-[1px] border-indigo-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out"
+          className="flex gap-2 items-center bg-indigo-500/10 text-indigo-600 border-[1px] border-indigo-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Crear nueva categoria
           <svg
@@ -54,7 +54,7 @@ export const CategoriasAccesorios = ({
         </button>
         <button
           onClick={openModalVerColores}
-          className="flex gap-2 items-center bg-indigo-500/10 text-indigo-600 border-[1px] border-indigo-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out"
+          className="flex gap-2 items-center bg-indigo-500/10 text-indigo-600 border-[1px] border-indigo-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Crear nuevo color
           <svg
@@ -74,7 +74,7 @@ export const CategoriasAccesorios = ({
         </button>
         <button
           onClick={openModalVerCategoria}
-          className="flex gap-2 items-center bg-slate-500/10 text-slate-700 border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out"
+          className="flex gap-2 items-center bg-slate-500/10 text-slate-700 border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Ver categorias creadas
           <svg
@@ -94,7 +94,7 @@ export const CategoriasAccesorios = ({
         </button>
         <button
           onClick={openModalEditarColores}
-          className="flex gap-2 items-center bg-slate-500/10 text-slate-700 border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out"
+          className="flex gap-2 items-center bg-slate-500/10 text-slate-700 border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Ver colores creados
           <svg
@@ -115,7 +115,7 @@ export const CategoriasAccesorios = ({
 
         <Link
           to={"/accesorios/entradas"}
-          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out"
+          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Ir a la parte de entradas
           <svg
@@ -136,7 +136,7 @@ export const CategoriasAccesorios = ({
 
         <Link
           to={"/accesorios/salidas"}
-          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out"
+          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Ir a la parte de salidas
           <svg

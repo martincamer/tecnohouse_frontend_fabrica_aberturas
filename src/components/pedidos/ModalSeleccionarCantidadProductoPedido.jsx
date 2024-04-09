@@ -1,5 +1,5 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { usePedidoContext } from "../../context/PedidoProvider";
 
 export const ModalSeleccionarCantidadProductoPedido = ({
@@ -15,6 +15,13 @@ export const ModalSeleccionarCantidadProductoPedido = ({
   const [ancho, setAncho] = useState("");
   const [alto, setAlto] = useState("");
   const { productoUnicoState, addToProductos } = usePedidoContext();
+
+  useEffect(() => {
+    setNombreProducto(productoUnicoState.nombre);
+    setDetalleProducto(productoUnicoState.descripcion);
+    setAncho(productoUnicoState.ancho);
+    setAlto(productoUnicoState.alto);
+  }, []);
 
   const randomIdString = Math.random().toString().substring(2);
   const randomIdNumber = parseInt(randomIdString, 10);
@@ -56,7 +63,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-10" />
           </Transition.Child>
 
           <div className="min-h-screen px-4 text-center">
@@ -87,10 +94,32 @@ export const ModalSeleccionarCantidadProductoPedido = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="w-2/3 max-md:w-full inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6">
+              <div className="w-4/5 max-md:w-full inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6">
+                <div className="py-0 flex justify-end">
+                  <div
+                    onClick={closeModalCantidad}
+                    className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-sm font-bold leading-6 text-gray-700 uppercase"
                 >
                   Elegir Cantidad Producto
                 </Dialog.Title>
@@ -99,82 +128,80 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                   <table className="">
                     <thead>
                       <tr className="border-b-[1px] border-slate-300">
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
+                        {/* <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
                           Numero
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
+                        <th className="w-5 py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
                           Codigo
-                        </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
+                        </th> */}
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
                           Detalle
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
                           Color
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal w-[20px] text-slate-700 text-center">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase  text-slate-700 text-center">
                           Ancho
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal w-[20px] text-slate-700 text-center">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase  text-slate-700 text-center">
                           Alto
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
+                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
                           Cliente
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal text-slate-700 text-center">
+                        <th className="w-1/4 py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
                           Seleccionar cantidad aberturas
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
+                      {/* <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
                         {productoUnicoState.id}
                       </th>
-                      <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
+                      <th className="p-2 text-sm max-md:text-xs text-center w-4 font-normal text-slate-800 ">
                         <input
-                          value={nombreProducto || productoUnicoState.nombre}
+                          value={nombreProducto}
                           onChange={handleNombreProductoChange}
                           type="text"
                           className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[180px] outline-none"
                           placeholder="Nombre"
                         />
-                      </th>
-                      <th className="p-2 text-sm max-md:text-xs text-center w-[50px] font-normal text-slate-800">
-                        <input
-                          value={
-                            detalleProducto || productoUnicoState.descripcion
-                          }
+                      </th> */}
+                      <th className="p-2 text-sm max-md:text-xs text-center font-normal text-slate-800">
+                        <textarea
+                          value={detalleProducto}
                           onChange={handleDetalleProductoChange}
                           type="text"
-                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[180px] outline-none"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 outline-none w-full uppercase"
                           placeholder="Detalle"
                         />
                       </th>
-                      <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
+                      <th className="p-2 text-sm max-md:text-xs text-center font-normal text-slate-800 uppercase">
                         {productoUnicoState.color}
                       </th>
                       <th className="p-2 text-sm max-md:text-xs text-center font-normal text-slate-800">
                         <input
-                          value={ancho || productoUnicoState.ancho}
+                          value={ancho}
                           onChange={handleAnchoProductoChange}
                           type="text"
-                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[60px] outline-none"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[60px]  text-center outline-none"
                           placeholder="ancho"
                         />
                       </th>
                       <th className="p-2 text-sm max-md:text-xs text-center font-normal text-slate-800">
                         <input
-                          value={alto || productoUnicoState.alto}
+                          value={alto}
                           onChange={handleAltoProductoChange}
                           type="text"
-                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[60px] outline-none"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[60px] text-center outline-none"
                           placeholder="alto"
                         />
                       </th>
                       <th className="p-2 text-sm max-md:text-xs text-center w-[100px] font-normal text-slate-800">
-                        <input
+                        <textarea
                           onChange={(e) => setCliente(e.target.value)}
                           type="text"
-                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[180px] outline-none"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 outline-none uppercase"
                           placeholder="Cliente"
                         />
                       </th>
@@ -182,7 +209,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                         <input
                           onChange={(e) => setCantidad(e.target.value)}
                           type="number"
-                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[180px] outline-none"
+                          className="rounded-xl uppercase border-slate-300 border-[1px] shadow p-2 w-[120px] text-center outline-none"
                           placeholder="cantidad"
                         />
                       </th>
@@ -206,18 +233,11 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                       );
                       closeModalCantidad();
                     }}
-                    className="bg-indigo-500 max-md:text-xs text-white py-2 px-5 text-sm rounded-xl font-normal hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
+                    className="bg-indigo-500 uppercase max-md:text-xs text-white py-2 px-5 text-sm rounded-xl font-normal hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
                   >
                     Crear producto facturar
                   </button>
                 </div>
-                <button
-                  type="button"
-                  className="max-md:text-xs inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
-                  onClick={closeModalCantidad}
-                >
-                  Cerrar Ventana
-                </button>
               </div>
             </Transition.Child>
           </div>

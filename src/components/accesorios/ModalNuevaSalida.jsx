@@ -18,6 +18,9 @@ export const ModalNuevaSalida = ({
     setValue,
   } = useForm();
 
+  const { salidasMensuales, setSalidasMensuales, perfiles, setPerfiles } =
+    useAccesoriosContext();
+
   const [datos, setDatos] = useState([]);
   const [error, setError] = useState("");
 
@@ -39,27 +42,64 @@ export const ModalNuevaSalida = ({
     try {
       const res = await client.post("/nueva-salida", data);
 
+      // Verificar si la salida ya existe en el estado
+      const salidaExistente = salidasMensuales.find(
+        (salida) => salida.id === res.data.id
+      );
+
+      if (!salidaExistente) {
+        // Si la salida no existe, agregarla al estado de salidasMensuales
+        setSalidasMensuales((prevSalidas) => [...prevSalidas, res.data]);
+      }
+
+      // Buscar el índice del perfil que se actualizará en el estado de perfiles
+      const perfilIndex = perfiles.findIndex(
+        (perfil) => perfil.id === obtenerId
+      );
+
+      // Actualizar el estado de perfiles solo si se encontró el perfil
+      if (perfilIndex !== -1) {
+        setPerfiles((prevPerfiles) => {
+          // Clonar el array de perfiles para no mutar el estado directamente
+          const newPerfiles = [...prevPerfiles];
+
+          // Actualizar el perfil correspondiente
+          newPerfiles[perfilIndex] = {
+            ...newPerfiles[perfilIndex],
+            stock:
+              Number(newPerfiles[perfilIndex].stock) - Number(res.data.total),
+          };
+
+          return newPerfiles;
+        });
+      }
+
+      // Mostrar un mensaje de éxito
       toast.success("¡Salida creada correctamente!", {
-        position: "top-right",
+        position: "top-center",
         autoClose: 1500,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
         theme: "light",
+        style: {
+          padding: "15px",
+          borderRadius: "15px",
+          boxShadow: "none",
+          border: "1px solid rgb(203 213 225)",
+        },
       });
 
       closeOpenEntrada();
-
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
     } catch (error) {
-      setError("");
+      // Manejar cualquier error que ocurra durante la solicitud
+      console.error("Error al crear la salida:", error);
+      setError(error.response.data.message);
       setTimeout(() => {
-        setError(error.response.data.message);
-      }, 1000);
+        setError("");
+      }, 3000);
     }
   });
 
@@ -113,15 +153,37 @@ export const ModalNuevaSalida = ({
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl w-[350px] max-md:w-full">
+                <div className="py-0 flex justify-end">
+                  <div
+                    onClick={closeOpenEntrada}
+                    className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
                 <Dialog.Title
                   as="h3"
-                  className="text-base text-slate-700 font-medium leading-6  max-md:text-md"
+                  className="text-sm text-slate-700 font-bold leading-6  uppercase"
                 >
-                  Crear nueva entrada{" "}
+                  Crear nueva salida del accesorio{" "}
                 </Dialog.Title>
                 <form
                   onSubmit={onSubmit}
-                  className="mt-2 border-t pt-4 pb-4 space-y-2"
+                  className="mt-2 border-t pt-4 pb-4 space-y-2 text-sm"
                 >
                   {error && (
                     <div>
@@ -136,7 +198,7 @@ export const ModalNuevaSalida = ({
                     </label>
                     <input
                       {...register("codigo", { required: true })}
-                      className="border-gray-300 border-[1px] text-slate-700 py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-gray-300 uppercase border-[1px] text-slate-700 py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="Cod"
                     />
@@ -147,19 +209,24 @@ export const ModalNuevaSalida = ({
                     </label>
                     <input
                       {...register("detalle", { required: true })}
-                      className="border-gray-300 border-[1px] text-slate-700 py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-gray-300 uppercase border-[1px] text-slate-700 py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
                       type="text"
                       placeholder="Cod"
                     />
                   </div>
 
                   <div className="flex flex-col gap-1">
-                    <p className="text-indigo-500 text-base font-bold">
-                      Stock maximo del producto
+                    <p className="text-indigo-500 underline font-bold uppercase text-sm">
+                      Stock del producto cargado.
                     </p>
-                    <p className="text-base text-slate-700 font-bold">
-                      {datos.stock} en stock
-                    </p>
+                    <div className="flex">
+                      <p className="text-sm bg-green-100 text-green-600 py-2 px-4 rounded-xl shadow-gray-400 shadow font-bold uppercase">
+                        <span className="text-base text-green-800">
+                          {datos.stock}
+                        </span>{" "}
+                        unds
+                      </p>
+                    </div>
                   </div>
 
                   <div className="flex flex-col gap-2">
@@ -168,30 +235,20 @@ export const ModalNuevaSalida = ({
                     </label>
                     <input
                       {...register("total", { required: true })}
-                      className="border-gray-300 border-[1px] text-slate-700 py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-gray-300 uppercase border-[1px] text-slate-700 py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
                       type="number"
                       placeholder="Total de la salida"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-indigo-500 text-sm font-normal hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl shadow shadow-black/10 outline-none text-white  text-center cursor-pointer max-md:text-xs"
+                      className="bg-indigo-100 text-sm font-normal hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl shadow shadow-black/10 outline-none text-indigo-500  text-center cursor-pointer max-md:text-xs uppercase hover:bg-indigo-500 hover:text-white"
                       type="submit"
                       value={"Crear salida del producto"}
                       //   onClick={closeOpenEntrada}
                     />
                   </div>
                 </form>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer max-md:text-xs"
-                    onClick={closeOpenEntrada}
-                  >
-                    Cerrar Ventana
-                  </button>
-                </div>
               </div>
             </Transition.Child>
           </div>

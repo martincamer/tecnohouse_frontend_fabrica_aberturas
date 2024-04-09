@@ -3,30 +3,26 @@ import { usePedidoContext } from "../../context/PedidoProvider";
 import { useEffect, useState } from "react";
 import { ModalEliminarPedido } from "./ModalEliminarPedido";
 import { IoCloseCircle } from "react-icons/io5";
+import { ModalVerClientes } from "./ModalVerClientes";
 
 export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
   const { handleDeletePresupuesto, results } = usePedidoContext();
 
   useEffect(() => {
-    setClickStates(results.map(() => true));
+    setClickStates(datosMensuales.map(() => true));
     setTimeout(() => {
-      setClickStates(results.map(() => false));
+      setClickStates(datosMensuales.map(() => false));
     }, 100);
-  }, [results]);
+  }, [datosMensuales]);
 
-  const [clickStates, setClickStates] = useState(results.map(() => false));
+  const [clickStates, setClickStates] = useState(
+    datosMensuales.map(() => false)
+  );
 
   const handleToggleClick = (index) => {
     setClickStates((prevClickStates) =>
       prevClickStates.map((state, i) => (i === index ? !state : state))
     );
-  };
-
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
   };
 
   const [openBorrarAccesorio, setOpenBorrarAccesorio] = useState(false);
@@ -40,11 +36,12 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
     setOpenBorrarAccesorio(false);
   };
 
-  const itemsPerPage = 10; // Cantidad de elementos por página
+  const itemsPerPage = 15; // Cantidad de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   const currentResults = datosMensuales?.slice(
     indexOfFirstItem,
     indexOfLastItem
@@ -54,6 +51,21 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
+  };
+
+  const [isClientes, setIsClientes] = useState(false);
+  const [obtenerId, setObtenerId] = useState(null);
+
+  const openClientes = () => {
+    setIsClientes(true);
+  };
+
+  const closeClientes = () => {
+    setIsClientes(false);
+  };
+
+  const handleID = (id) => {
+    setObtenerId(id);
   };
 
   return (
@@ -127,7 +139,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
           </div>
         ))}
       </div>
-      <div className="overflow-x-auto rounded-lg border border-gray-200 mt-5 md:block max-md:hidden">
+      <div className="overflow-x-auto rounded-2xl hover:shadow-md transition-all ease-in-out border border-gray-200 mt-5 md:block max-md:hidden">
         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
           <thead>
             <tr>
@@ -136,9 +148,6 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
               </th>
               <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                 Cliente
-              </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                Detalle de linea - categoria
               </th>
               <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                 Total aberturas
@@ -162,86 +171,74 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 text-left">
-            {resultadoFiltrados?.map((p, index) => (
-              <tr
-                key={p.id}
-                className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
-              >
+            {resultadoFiltrados?.map((p) => (
+              <tr key={p.id} className="cursor-pointer">
                 <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {p?.id}
                 </td>
                 <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {p?.cliente}
                 </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p?.detalle}
+                <td className="py-3 px-3 text-sm text-left uppercase font-bold">
+                  <span className="bg-green-100 text-green-600 py-2 px-2 rounded-xl">
+                    {p?.productos.respuesta.reduce((sum, b) => {
+                      return sum + Number(b?.cantidad);
+                    }, 0)}
+                  </span>
                 </td>
                 <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p?.productos.respuesta.reduce((sum, b) => {
-                    return sum + Number(b?.cantidad);
-                  }, 0)}
-                </td>
-                <td
-                  onClick={() => handleToggleClick(index)}
-                  className="py-3 px-3 text-sm text-left text-slate-700 uppercase"
-                >
-                  {!clickStates[index] ? (
-                    <p className="p-3 border-slate-300 border-[1px] rounded-xl shadow cursor-pointer text-center">
-                      VER CLIENTE - CLICK
-                    </p>
-                  ) : (
-                    <div className="relative">
-                      <div className="absolute top-0 right-3 cursor-pointer">
-                        <IoCloseCircle className="text-2xl text-red-500 border-red-800 border-[1px] rounded-full" />
-                      </div>
-                      {Array.from(
-                        new Set(
-                          p?.productos?.respuesta?.map((item) => item.cliente)
-                        )
-                      ).map((uniqueClient, i) => {
-                        const hasF = p?.productos?.respuesta?.some(
-                          (item) =>
-                            item.cliente === uniqueClient &&
-                            item.cantidad !== item.cantidadFaltante
-                        );
-
-                        return (
-                          <div className="pt-3 cursor-pointer" key={i}>
-                            {i > 0 ? " - " : ""}
-                            {uniqueClient}
-                            <span className="font-bold underline text-red-500 mx-1">
-                              {hasF && "FALTA REALIZAR"}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
+                  <div className="flex">
+                    <button
+                      onClick={() => {
+                        handleID(p?.id), openClientes();
+                      }}
+                      type="button"
+                      className="bg-indigo-100 text-indigo-600 py-2 px-4 rounded-xl flex gap-2 items-center"
+                    >
+                      VER CLIENTES
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </td>
                 <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {new Date(p?.created_at).toLocaleDateString("es-AR")}
                 </td>
                 <th
-                  className={`font-bold max-md:text-xs text-sm uppercase rounded-lg text-center`}
+                  className={`font-bold max-md:text-xs uppercase rounded-lg text-center`}
                 >
-                  {p?.productos.respuesta.reduce((sum, b) => {
-                    return sum + Number(b?.cantidad);
-                  }, 0) ===
-                  p?.productos.respuesta.reduce((sum, b) => {
-                    return sum + Number(b?.cantidadFaltante);
-                  }, 0) ? (
-                    <p className="bg-green-500 text-white py-3 rounded-xl">
-                      realizado
-                    </p>
-                  ) : (
-                    <p className="bg-orange-500 text-white py-3 rounded-xl">
-                      pendiente
-                    </p>
-                  )}
+                  <div className="flex">
+                    {p?.productos.respuesta.reduce((sum, b) => {
+                      return sum + Number(b?.cantidad);
+                    }, 0) ===
+                    p?.productos.respuesta.reduce((sum, b) => {
+                      return sum + Number(b?.cantidadFaltante);
+                    }, 0) ? (
+                      <p className="bg-green-500 text-white py-3 px-6 text-xs rounded-xl">
+                        realizado
+                      </p>
+                    ) : (
+                      <p className="bg-orange-500 text-white py-3 px-6 text-xs rounded-xl">
+                        pendiente
+                      </p>
+                    )}
+                  </div>
                 </th>
                 <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   <button
-                    className="bg-red-500/10 border-red-200 border-[1px] py-2 px-4 text-red-500 rounded-xl text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
+                    className="bg-red-100 uppercase py-2 px-4 text-red-800 rounded-xl text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
                     onClick={() => {
                       handleBorrarAccesorioOpen(), setGuardarId(p.id);
                     }}
@@ -251,14 +248,30 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
                 </td>
 
                 <td className="py-3 px-3 text-sm text-left text-slate-700">
-                  <Link
-                    to={`/pedido/${p?.id}`}
-                    // target="_blank"
-                    // rel="noopener noreferrer"
-                    className="bg-indigo-600/10 border-indigo-300 border-[1px] py-2 px-4 text-indigo-600 rounded-xl text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
-                  >
-                    Ver pedido
-                  </Link>
+                  <div className="flex">
+                    <Link
+                      to={`/pedido/${p?.id}`}
+                      // target="_blank"
+                      // rel="noopener noreferrer"
+                      className="bg-indigo-100 uppercase py-2 px-4 text-indigo-600 rounded-xl text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs flex gap-2 items-center"
+                    >
+                      Ver pedido
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -269,6 +282,11 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
           handleEliminar={handleDeletePresupuesto}
           openBorrarAccesorio={openBorrarAccesorio}
           handleBorrarAccesorioClose={handleBorrarAccesorioClose}
+        />
+        <ModalVerClientes
+          obtenerId={obtenerId}
+          isOpen={isClientes}
+          closeModal={closeClientes}
         />
         {totalPages > 1 && (
           <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">

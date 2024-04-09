@@ -39,8 +39,8 @@ export const Aberturas = () => {
   return spinner ? (
     <Spinner />
   ) : (
-    <main className="w-full py-20 px-14 max-md:px-2 max-md:py-8">
-      <section className="max-md:border-none max-md:shadow-none max-md:px-4 max-md:w-full mx-auto py-[30px] px-[40px] h-full border-[1px] border-slate-300 rounded-xl shadow-black/20 shadow-md flex flex-col gap-10">
+    <main className="w-full py-20 max-md:px-2 max-md:py-8">
+      <section className="max-md:border-none max-md:shadow-none max-md:px-4 max-md:w-full mx-auto px-5 h-full flex flex-col gap-10">
         <IntroTitleAberturas />
 
         <IntroAberturasStock results={results} />
@@ -86,8 +86,6 @@ export const Aberturas = () => {
           closeModalEditar={closeModalEditar}
           isOpenEditar={isOpenEditar}
         />
-
-        <ToastContainer />
       </section>
     </main>
   );

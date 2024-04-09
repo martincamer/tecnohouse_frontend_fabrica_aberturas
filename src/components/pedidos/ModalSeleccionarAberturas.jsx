@@ -75,12 +75,34 @@ export const ModalSeleccionarAberturas = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="w-1/2 inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6 max-md:w-full">
+              <div className="w-3/4 inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6 max-md:w-full">
+                <div className="py-0 flex justify-end">
+                  <div
+                    onClick={closeModalProductos}
+                    className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 max-md:text-md"
+                  className="text-sm font-bold leading-6 text-gray-700 uppercase"
                 >
-                  Elegir Abertura
+                  ELEGIR UNA ABERTURA Y PONER LA CANTIDAD.
                 </Dialog.Title>
                 <Search variable="w-2/5" search={search} searcher={searcher} />
                 {errorProducto && (
@@ -90,16 +112,10 @@ export const ModalSeleccionarAberturas = () => {
                     </span>
                   </div>
                 )}
-                <div className="border-[1px] border-gray-200 rounded-xl shadow-black/10 shadow flex flex-col gap-3 w-full h-[300px] overflow-y-scroll">
-                  <table className="border-[1px]  p-[5px] table-auto w-full rounded uppercase">
-                    <thead>
-                      <tr>
-                        {/* <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
-                          Numero
-                        </th> */}
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
-                          Codigo
-                        </th>
+                <div className="border-[1px] border-gray-200 rounded-xl shadow-black/10 shadow flex flex-col gap-3 w-full h-[300px] overflow-y-scroll ">
+                  <table className="p-[5px] table-auto w-full rounded uppercase">
+                    <thead className="divide-gray-300 divide-y-2">
+                      <tr className="">
                         <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
                           Detalle
                         </th>
@@ -119,12 +135,6 @@ export const ModalSeleccionarAberturas = () => {
                     </thead>
                     {results.map((c) => (
                       <tbody key={c.id}>
-                        {/* <th className="border-b-[1px] border-gray-300 py-3 px-3 text-sm max-md:text-xs text-center w-[20px]">
-                          {c.id}
-                        </th> */}
-                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
-                          {c.nombre}
-                        </th>
                         <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
                           {c.descripcion}
                         </th>
@@ -143,7 +153,7 @@ export const ModalSeleccionarAberturas = () => {
                               openModalCantidad(),
                                 handleSeleccionarProducto(c.id);
                             }}
-                            className="bg-slate-700 py-2 px-2 text-white rounded-xl shadow text-center"
+                            className="bg-green-100 py-2 px-4 text-green-700 rounded-xl shadow text-center text-xs"
                           >
                             Seleccionar
                           </Link>
@@ -156,13 +166,6 @@ export const ModalSeleccionarAberturas = () => {
                   isOpenModalCantidad={isOpenModalCantidad}
                   closeModalCantidad={closeModalCantidad}
                 />
-                <button
-                  type="button"
-                  className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
-                  onClick={() => closeModalProductos()}
-                >
-                  Cerrar Ventana
-                </button>
               </div>
             </Transition.Child>
           </div>

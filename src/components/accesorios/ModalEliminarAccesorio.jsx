@@ -26,7 +26,7 @@ export const ModalEliminarAccesorio = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-10" />
           </Transition.Child>
 
           <div className="min-h-screen px-4 text-center">
@@ -59,6 +59,28 @@ export const ModalEliminarAccesorio = ({
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block w-full max-w-lg p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <div className="py-3 pb-6 flex justify-end">
+                  <div
+                    onClick={handleBorrarAccesorioClose}
+                    className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
                 <div className="flex gap-5">
                   <button
                     onClick={() => {
@@ -76,16 +98,6 @@ export const ModalEliminarAccesorio = ({
                     className="text-white py-3 px-6 rounded-xl bg-green-500 text-sm w-full max-md:py-2 max-md:px-2"
                   >
                     NO ELIMINAR
-                  </button>
-                </div>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer max-md:text-xs"
-                    onClick={handleBorrarAccesorioClose}
-                  >
-                    Cerrar Ventana
                   </button>
                 </div>
               </div>

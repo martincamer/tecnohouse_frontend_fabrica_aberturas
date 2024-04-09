@@ -83,7 +83,7 @@ export const Sidebar = () => {
     //   ),
     // },
     {
-      name: "Productos en stock",
+      name: "Aberturas en stock/etc",
       path: "/productos",
       icon: (
         <svg
@@ -103,7 +103,7 @@ export const Sidebar = () => {
       ),
     },
     {
-      name: "Clientes pedidos",
+      name: "Clientes pedidos / Crear",
       path: "/pedidos",
       icon: (
         <svg
@@ -123,7 +123,7 @@ export const Sidebar = () => {
       ),
     },
     {
-      name: "Pedidos realizados",
+      name: "Pedidos realizados / Entregados",
       path: "/pedidos-realizados",
       icon: (
         <svg
@@ -170,7 +170,7 @@ export const Sidebar = () => {
         click
           ? "w-[70px]  transition-all ease-in-out duration-300"
           : "w-1/6 transition-all ease-in-out duration-300"
-      } w-1/5 bg-slate-200 min-h-screen max-h-full block   ${
+      } w-1/5 bg-white border-r-[1px] border-slate-300 min-h-screen max-h-full block z-[101]   ${
         clickProvider ? "max-md:block" : "max-md:hidden"
       }`}
     >
@@ -179,9 +179,9 @@ export const Sidebar = () => {
           click
             ? "t group justify-center transition-all ease-in-out duration-300"
             : "t group justify-end transition-all ease-in-out duration-300 "
-        } w-full flex px-4 py-2 cursor-pointer`}
+        } w-full px-4 py-2 cursor-pointer hidden`}
       >
-        <Link className="t group relative">
+        <Link className="t group relative hidden">
           <BiMenu
             onClick={handleClick}
             className="text-[35px] bg-indigo-500 hover:bg-slate-700 hover:text-white rounded-lg shadow text-white py-[5px] transition-all ease-in-out duration-300 max-md:hidden"
@@ -191,29 +191,31 @@ export const Sidebar = () => {
           </span>
         </Link>
       </div>
-      <div className={`w-full flex flex-col justify-center gap-12 mt-3`}>
+      <div className={`w-full flex flex-col justify-center gap-12 mt-0`}>
         <div>
           {navegacion.map(({ name, path, icon }) => (
             <div
               key={path}
               className={`${
-                location.pathname === path && "bg-slate-800"
-              } w-full py-2 px-5 relative`}
+                location.pathname === path && "bg-slate-200"
+              } w-full py-4 px-5 relative`}
             >
-              <div className="t group  w-full flex items-center max-md:justify-center gap-2 hover:translate-x-1 max-md:hover:translate-x-1 transition-all ease duration-300">
+              <div className="t group group-hover:transition-all group-hover:ease-linear group-hover:duration-300  w-full flex items-center max-md:justify-center gap-2 ease duration-300">
                 <Link
                   to={path}
                   className={`${
-                    location.pathname === path ? "text-white" : "text-slate-700"
+                    location.pathname === path
+                      ? "text-slate-800"
+                      : "text-slate-700"
                   } text-2xl`}
                 >
                   {icon}
 
-                  <span className="invisible absolute start-full top-1/2 ms-5 -translate-y-1/2 rounded bg-slate-800 px-4 w-[150px] flex justify-center py-2 text-xs font-medium text-white group-hover:visible">
-                    {name}
+                  <span className="invisible absolute start-full left-14 top-1/2 ms-5 -translate-y-1/2 rounded-xl border-[1px] solid text-slate-800 px-4 flex justify-center py-2 text-xs group-hover:visible z-[100] bg-white shadow-md font-bold uppercase">
+                    <div>{name}</div>
                   </span>
                 </Link>
-                <Link
+                {/* <Link
                   to={path}
                   className={`${
                     click
@@ -224,7 +226,7 @@ export const Sidebar = () => {
                   }`}
                 >
                   {name}
-                </Link>
+                </Link> */}
               </div>
             </div>
           ))}

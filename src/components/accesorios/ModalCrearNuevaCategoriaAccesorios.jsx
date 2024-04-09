@@ -28,14 +28,20 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
     console.log(nuevoValor);
 
     toast.success("¡Categoria creada correctamente!", {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
 
     reset();
@@ -43,7 +49,6 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
 
   return (
     <Menu as="div" className="z-50">
-      <ToastContainer />
       <Transition appear show={isOpenCrearCategoria} as={Fragment}>
         <Dialog
           as="div"
@@ -59,7 +64,7 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-10" />
           </Transition.Child>
 
           <div className="min-h-screen px-4 text-center">
@@ -92,15 +97,37 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <div className="py-0 flex justify-end">
+                  <div
+                    onClick={closeModalCrearCategoria}
+                    className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
                 <Dialog.Title
                   as="h3"
-                  className="text-base font-normal text-slate-800 leading-6  max-md:text-md"
+                  className="text-sm uppercase font-bold text-slate-700 leading-6"
                 >
                   Crear nueva categoria
                 </Dialog.Title>
                 <form
                   onSubmit={onSubmit}
-                  className="mt-2 border-t pt-4 pb-4 space-y-2"
+                  className="mt-2 border-t pt-4 pb-4 space-y-2 text-sm"
                 >
                   <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
@@ -108,14 +135,14 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
                     </label>
                     <input
                       {...register("categoria", { required: true })}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none max-md:text-sm"
+                      className="border-gray-300 border-[1px] py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm uppercase"
                       type="text"
                       placeholder="nombre de la categoria"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="max-md:text-xs bg-indigo-500 text-sm font-normal hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white text-center cursor-pointer"
+                      className="max-md:text-xs bg-indigo-500 text-sm font-normal hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded shadow shadow-black/10 outline-none text-white text-center cursor-pointer uppercase rounded-xl"
                       type="submit"
                       value={"Crear categoria"}
                       onClick={closeModalCrearCategoria}
@@ -123,7 +150,7 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
                   </div>
                 </form>
 
-                <div className="mt-4">
+                {/* <div className="mt-4">
                   <button
                     type="button"
                     className="max-md:text-xs inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
@@ -131,7 +158,7 @@ export const ModalCrearNuevaCategoriaAccesorios = ({
                   >
                     Cerrar Ventana
                   </button>
-                </div>
+                </div> */}
               </div>
             </Transition.Child>
           </div>

@@ -48,7 +48,7 @@ export const Navbar = () => {
   const { isAuth, signout, user, clickProvider, setClickProvider } = useAuth();
 
   return (
-    <header className="fixed max-md:static w-full py-4 px-6 max-md:px-2 max-md:py-0">
+    <header className="fixed max-md:static w-full py-4 px-6 max-md:px-2 max-md:py-0 z-[100]">
       <div
         className={`flex justify-between items-center max-md:items-end gap-4 max-md:flex-col ${
           !isAuth ? "w-[1220px] hidden" : "w-full max-md:px-2"
@@ -78,7 +78,7 @@ export const Navbar = () => {
           {isAuth
             ? rutasuno.map(({ path, name }) => (
                 <div className="flex items-center gap-4">
-                  <div className="font-normal text-sm bg-indigo-600 shadow text-white p-1 rounded-xl px-2 max-md:text-sm">
+                  <div className="font-normal text-sm bg-indigo-600 shadow text-white py-1 rounded-xl px-5 max-md:text-sm">
                     {user?.username}
                   </div>
                   <Link

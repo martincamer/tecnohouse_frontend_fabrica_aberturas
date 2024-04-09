@@ -59,10 +59,6 @@ export const ViewPedido = () => {
       progress: undefined,
       theme: "light",
     });
-
-    // setTimeout(() => {
-    //   location.reload();
-    // }, 1500);
   };
 
   let [isOpen, setIsOpen] = useState(false);
@@ -261,12 +257,12 @@ export const ViewPedido = () => {
   };
 
   return (
-    <section className="w-full py-2 px-14 max-md:py-0 max-md:px-4 flex flex-col gap-10 max-md:gap-5 max-md:pb-20">
+    <section className="w-full py-2 px-5 max-md:py-0 max-md:px-4 flex flex-col gap-10 max-md:gap-5 max-md:pb-20">
       <ToastContainer />
 
       <div className="flex mt-5 max-md:mt-0">
         <Link
-          className="bg-black py-2 px-8 rounded-xl max-md:shadow-none max-md:border-none shadow text-white flex  gap-2 items-center max-md:text-xs max-md:px-4"
+          className="bg-black py-2 px-8 rounded-xl max-md:shadow-none max-md:border-none shadow text-white flex  gap-2 items-center max-md:text-xs max-md:px-4 text-sm"
           to="/pedidos"
         >
           <svg
@@ -275,7 +271,7 @@ export const ViewPedido = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 max-md:h-4 max-md:w-4"
+            className="w-4 h-4 max-md:h-4 max-md:w-4"
           >
             <path
               strokeLinecap="round"
@@ -293,14 +289,14 @@ export const ViewPedido = () => {
             totalAberturasRealizadas() === totalAberturas()
               ? "bg-indigo-500"
               : "bg-orange-500"
-          } font-normal text-white text-xl max-md:text-sm uppercase  px-4 py-2 rounded-2xl shadow`}
+          } font-normal text-white text-sm max-md:text-sm uppercase  px-4 py-2 rounded-2xl shadow`}
         >
           {totalAberturasRealizadas() === totalAberturas()
             ? "estado del pedido finalizado"
             : "estado del pedido pendiente"}
         </p>
       </div>
-      <div className="max-md:shadow-none max-md:border-none max-md:px-2 max-md:py-0 max-md:gap-3 border-[1px] border-slate-300 shadow py-8 px-10 rounded-2xl flex justify-around max-md:flex-col">
+      <div className="max-md:shadow-none max-md:border-none max-md:px-2 max-md:py-0 max-md:gap-3 border-[1px] border-slate-300 py-8 px-10 rounded-2xl grid grid-cols-4 gap-4 hover:shadow-md transition-all ease-linear cursor-pointer">
         <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
           <p className="text-sm max-md:text-sm uppercase">
             Numero del pedido:{" "}
@@ -313,12 +309,6 @@ export const ViewPedido = () => {
           <p className="text-sm max-md:text-sm uppercase">Cliente: </p>{" "}
           <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
             {datosCliente?.cliente}
-          </p>
-        </div>
-        <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
-          <p className="text-sm max-md:text-sm uppercase">Categoria: </p>{" "}
-          <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
-            {datosCliente?.detalle}
           </p>
         </div>
 
@@ -340,13 +330,27 @@ export const ViewPedido = () => {
       <div className="flex px-2">
         <button
           onClick={() => openModalCrearPedidos()}
-          className="max-md:uppercase bg-slate-500/10 text-slate-700 border-[1px] border-slate-400 rounded-xl py-2 px-8 shadow max-md:text-sm"
+          className="max-md:uppercase bg-green-100 text-green-700 text-sm font-bold uppercase rounded-xl py-2 px-8 hover:bg-green-500 hover:text-white transtion-all ease-linear duration-300 max-md:text-sm flex gap-2 items-center"
         >
           Generar Nuevos Clientes
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
         </button>
       </div>
 
-      <div className="border-[1px] shadow py-10 px-10 max-md:px-2 max-md:border-none max-md:shadow-none rounded-2xl flex flex-col gap-8 border-slate-300">
+      <div className="px-3 max-md:px-2 max-md:border-none max-md:shadow-none rounded-2xl flex flex-col gap-6 border-slate-300">
         <div className="flex gap-2 items-center max-md:flex-col">
           <p className="text-sm font-semibold text-indigo-500 max-md:text-sm uppercase">
             Pedido de aberturas - Total pedido
@@ -423,9 +427,23 @@ export const ViewPedido = () => {
           <div className="flex max-md:text-xs">
             <button
               onClick={descargarExcel}
-              className="bg-indigo-500 py-2 rounded-xl text-white uppercase px-6"
+              className="bg-indigo-500 py-2 rounded-xl text-white uppercase px-6 text-sm flex gap-2 items-center"
             >
               Descargar Excel
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m.75 12 3 3m0 0 3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                />
+              </svg>
             </button>
           </div>
         </div>
@@ -510,16 +528,10 @@ export const ViewPedido = () => {
           ))}
         </div>
 
-        <div className="overflow-x-auto rounded-lg border border-gray-200 mt-5 max-md:hidden md:block">
+        <div className="overflow-x-auto rounded-2xl hover:shadow-md transition-all ease-in-out border border-gray-200 mt-5 max-md:hidden md:block">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm uppercase">
             <thead>
               <tr>
-                {/* <th className="p-3 max-md:text-sm max-md:py-1 max-md:px-4">
-                  ID
-                </th> */}
-                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                  Codigo
-                </th>
                 <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Descripción del producto
                 </th>
@@ -557,16 +569,7 @@ export const ViewPedido = () => {
             </thead>
             <tbody className="divide-y divide-gray-200 text-left">
               {currentResults?.map((p) => (
-                <tr
-                  key={p.id}
-                  className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
-                >
-                  {/* <th className="border-[1px] border-gray-300 p-3 max-md:text-xs max-md:py-1 max-md:px-4 font-medium text-sm">
-                    {p?.id}
-                  </th> */}
-                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                    {p?.nombre}
-                  </td>
+                <tr key={p.id} className="cursor-pointer">
                   <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     {p?.detalle}
                   </td>
@@ -672,7 +675,6 @@ export const ViewPedido = () => {
                 d="M15.75 19.5 8.25 12l7.5-7.5"
               />
             </svg>
-            Anterior
           </button>
           {Array.from({ length: totalPages }).map((_, index) => (
             <button
@@ -692,7 +694,6 @@ export const ViewPedido = () => {
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
-            Siguiente{" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -718,7 +719,7 @@ export const ViewPedido = () => {
         handleBorrarAccesorioClose={handleBorrarAccesorioClose}
       />
 
-      <div className="max-md:hiddens max-md:items-start border-[1px] shadow py-10 max-md:shadow-none px-10 rounded flex gap-4 max-md:flex-col max-md:px-1 max-md:py-2 max-md:border-none">
+      {/* <div className="max-md:hiddens max-md:items-start border-[1px] shadow py-10 max-md:shadow-none px-10 rounded flex gap-4 max-md:flex-col max-md:px-1 max-md:py-2 max-md:border-none">
         <button
           onClick={() => openModalCrearPedido()}
           className="py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
@@ -739,7 +740,7 @@ export const ViewPedido = () => {
             />
           </svg>
         </button>
-      </div>
+      </div> */}
       <ModalEditarProductoPedido
         obtenerId={obtenerId}
         isOpen={isOpen}

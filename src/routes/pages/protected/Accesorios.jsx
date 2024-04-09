@@ -1,5 +1,4 @@
 import { Search } from "../../../components/ui/Search";
-import { ToastContainer } from "react-toastify";
 import { useAccesoriosContext } from "../../../context/AccesoriosProvider";
 import { IntroTitleAccesorios } from "../../../components/accesorios/IntroTitleAccesorios";
 import { useAuth } from "../../../context/AuthProvider";
@@ -55,8 +54,8 @@ export const Accesorios = () => {
   return spinner ? (
     <Spinner />
   ) : (
-    <main className="w-full py-24 max-md:py-8 px-14 max-md:px-2">
-      <section className="max-md:w-full mx-auto py-[20px] px-[20px] h-full border-[1px] border-slate-300 rounded-xl shadow flex flex-col gap-10 max-md:shadow-none max-md:border-none">
+    <main className="w-full py-20 max-md:py-8 px-5 max-md:px-2">
+      <section className="max-md:w-full mx-auto flex flex-col gap-10 max-md:shadow-none max-md:border-none">
         <IntroTitleAccesorios />
 
         <IntroAccesoriosStock results={results} />
@@ -81,18 +80,14 @@ export const Accesorios = () => {
               onChange={handleCategoriaChange}
               value={categoriaSeleccionada}
             >
-              <option className="capitalize" value="">
+              <option className="uppercase" value="">
                 Todas las categorías
               </option>
               {/* Asegúrate de obtener todas las categorías únicas de tus resultados */}
               {[
                 ...new Set(categorias?.map((resultado) => resultado.categoria)),
               ].map((categoria) => (
-                <option
-                  className="capitalize"
-                  key={categoria}
-                  value={categoria}
-                >
+                <option className="uppercase" key={categoria} value={categoria}>
                   {categoria}
                 </option>
               ))}
@@ -110,8 +105,6 @@ export const Accesorios = () => {
             resultadosFiltrados={resultadosFiltrados}
           />
         </div>
-
-        <ToastContainer />
       </section>
 
       <ModalCrearAccesorios

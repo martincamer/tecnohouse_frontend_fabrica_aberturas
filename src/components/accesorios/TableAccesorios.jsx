@@ -60,15 +60,10 @@ export const TableAccesorios = ({
 
   const handleDescargarExcel = () => {
     const dataToExport = results.map((item) => ({
-      NOMBRE: item.nombre.toUpperCase(),
+      CODIGO: item.nombre.toUpperCase(),
       DESCRIPCION: item.descripcion.toUpperCase(),
       STOCK: item.stock,
-      "STOCK MINIMO": item.stock_minimo,
-      ENTRADAS: item.entrada,
-      SALIDAS: item.salida,
       CATEGORIAS: item.categoria.toUpperCase(),
-      COLOR: item.color.toUpperCase(),
-      ESTADO: item.stock_minimo < item.stock ? "MUCHO STOCK" : "PEDIR",
     }));
 
     const wb = XLSX.utils.book_new();
@@ -153,7 +148,7 @@ export const TableAccesorios = ({
           </div>
         ))}
       </div>
-      <div className="border-[1px] border-slate-300 rounded-xl shadow max-md:hidden md:block">
+      <div className="border-[1px] border-slate-300 rounded-2xl  max-md:hidden md:block hover:shadow-md transition-all ease-linear ">
         <table className="  p-[5px] w-full  uppercase">
           <thead>
             <tr>
@@ -203,10 +198,7 @@ export const TableAccesorios = ({
           </thead>
           <tbody className="divide-y divide-slate-300">
             {currentResults?.map((p) => (
-              <tr
-                className="hover:bg-slate-100 transition-all ease-in-out duration-100 cursor-pointer"
-                key={p.id}
-              >
+              <tr className="cursor-pointer" key={p.id}>
                 <th className="py-4 font-normal text-sm max-md:p-2 max-md:text-sm">
                   {p.nombre}
                 </th>
@@ -215,7 +207,7 @@ export const TableAccesorios = ({
                 </th>
                 <th
                   className={`${
-                    p.stock_minimo > p.stock
+                    Number(p.stock_minimo) > Number(p.stock)
                       ? "text-red-600 font-bold"
                       : "text-green-500 font-bold"
                   } py-4 text-sm max-md:p-2 max-md:text-sm`}
@@ -246,7 +238,7 @@ export const TableAccesorios = ({
 
                 <th className="py-4 font-normal max-md:p-2">
                   <button
-                    className="bg-red-500/10 border-[1px] border-red-500 text-red-600 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm"
+                    className="bg-red-500/10 text-red-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
                     onClick={() => {
                       handleBorrarAccesorioOpen(), setGuardarId(p.id);
                     }}
@@ -259,7 +251,7 @@ export const TableAccesorios = ({
                     onClick={() => {
                       openModalEditar(), handlePerfilSeleccionado(p.id);
                     }}
-                    className="bg-indigo-500/10 border-[1px] border-indigo-500 text-indigo-600 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm"
+                    className="bg-indigo-500/10 text-indigo-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
                   >
                     Editar
                   </button>
@@ -270,7 +262,7 @@ export const TableAccesorios = ({
                     onClick={() => {
                       openEntrada(), handleId(p.id);
                     }}
-                    className="bg-indigo-500 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm"
+                    className="bg-indigo-500 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
                   >
                     Nueva entrada
                   </button>
@@ -280,7 +272,7 @@ export const TableAccesorios = ({
                     onClick={() => {
                       handlePerfilSeleccionado(p.id), openModalEditarDos();
                     }}
-                    className="bg-slate-700 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm"
+                    className="bg-slate-700 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
                   >
                     Editar stock
                   </button>
@@ -290,7 +282,7 @@ export const TableAccesorios = ({
                     onClick={() => {
                       openSalida(), handleId(p.id);
                     }}
-                    className="bg-green-600 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm"
+                    className="bg-green-600 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
                   >
                     Crear salida
                   </button>
@@ -342,7 +334,6 @@ export const TableAccesorios = ({
                 d="M15.75 19.5 8.25 12l7.5-7.5"
               />
             </svg>
-            Anterior
           </button>
           {Array.from({ length: totalPages }).map((_, index) => (
             <button
@@ -362,7 +353,6 @@ export const TableAccesorios = ({
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
-            Siguiente{" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -393,7 +383,7 @@ export const TableAccesorios = ({
       />
 
       <button
-        className="bg-green-500 text-white rounded-xl py-2 px-6 shadow mt-10 max-md:hidden md:block"
+        className="bg-green-100 text-green-700 hover:shadow-md hover:shadow-gray-350 transition-all ease-linear uppercase rounded-xl py-2 px-6 shadow mt-10 max-md:hidden md:block text-sm"
         onClick={handleDescargarExcel}
       >
         Descargar excel accesorios

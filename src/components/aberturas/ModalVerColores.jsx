@@ -17,7 +17,6 @@ export const ModalVerColores = () => {
 
   return (
     <Menu as="div" className="z-50">
-      {/* <ToastContainer /> */}
       <Transition appear show={isOpenEditarColores} as={Fragment}>
         <Dialog
           as="div"
@@ -33,7 +32,7 @@ export const ModalVerColores = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-10" />
           </Transition.Child>
 
           <div className="min-h-screen px-4 text-center">
@@ -66,16 +65,39 @@ export const ModalVerColores = () => {
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl w-[1000px] max-md:w-full">
+                <div className="py-3 pb-6 flex justify-end">
+                  <div
+                    onClick={closeModalEditarColores}
+                    className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-sm font-bold leading-6 text-gray-700 uppercase"
                 >
                   Editar o eliminar colores
                 </Dialog.Title>
+
                 <div className="grid grid-cols-4 gap-4 my-5 h-[120px] overflow-y-scroll w-full max-md:grid-cols-1">
                   {colores.map((c) => (
                     <div
-                      className="bg-slate-100 max-md:text-sm border-[1px] border-slate-300  py-2 px-2 rounded-xl shadow shadow-black/20 flex gap-2 justify-center items-center h-[58px] text-sm"
+                      className="bg-white max-md:text-sm border-[1px] border-slate-300  py-2 px-2 rounded-xl hover:shadow-md cursor-pointer transition-all ease-linear shadow-black/20 flex gap-2 justify-center items-center h-[58px] text-sm"
                       key={c.id}
                     >
                       <p className="text-slate-700 font-normal uppercase max-md:text-sm">
@@ -97,16 +119,6 @@ export const ModalVerColores = () => {
                 </div>
 
                 <ModalEditarColor />
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="max-md:text-xs inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
-                    onClick={closeModalEditarColores}
-                  >
-                    Cerrar Ventana
-                  </button>
-                </div>
               </div>
             </Transition.Child>
           </div>

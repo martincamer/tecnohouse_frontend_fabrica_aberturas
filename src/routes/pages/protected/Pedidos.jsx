@@ -4,24 +4,9 @@ import { TablePedidos } from "../../../components/pedidos/TablePedidos";
 import { usePedidoContext } from "../../../context/PedidoProvider";
 import { useState } from "react";
 import { Search } from "../../../components/ui/Search";
-import { obtenerFacturasMensual } from "../../../api/factura.api";
 
 export const Pedidos = () => {
-  const { isOpen, openModal, closeModal } = usePedidoContext();
-
-  const [datosMensuales, setDatosMensuales] = useState([]);
-
-  console.log(datosMensuales);
-
-  useEffect(() => {
-    async function loadData() {
-      const res = await obtenerFacturasMensual();
-
-      setDatosMensuales(res.data);
-    }
-
-    loadData();
-  }, []);
+  const { isOpen, openModal, closeModal, datosMensuales } = usePedidoContext();
 
   const datos = datosMensuales.map((c) =>
     c.productos.respuesta.map((c) => c.cantidad)
@@ -94,8 +79,8 @@ export const Pedidos = () => {
   }, [datosMensuales, search]);
 
   return (
-    <section className="w-full py-20 max-md:py-2 px-14 max-md:px-2">
-      <div className="border-[1px] border-slate-300 rounded-xl shadow-black/10 shadow py-10 px-12 max-md:px-4 max-md:py-6 w-full max-md:border-none max-md:shadow-none">
+    <section className="w-full py-20 max-md:py-2">
+      <div className="px-5 max-md:px-4 max-md:py-6 w-full max-md:border-none max-md:shadow-none">
         <div className="flex">
           <p className="uppercase max-md:text-sm font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700">
             Crear pedido clientes
@@ -103,7 +88,7 @@ export const Pedidos = () => {
         </div>
 
         <div className="mt-5 grid grid-cols-4 gap-5 max-md:grid-cols-1">
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-300 max-md:p-3 shadow bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -124,13 +109,13 @@ export const Pedidos = () => {
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
                 {" "}
                 Pedidos generados{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
                   {" "}
                   {datosMensuales.length}{" "}
                 </span>
@@ -143,7 +128,7 @@ export const Pedidos = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-300 max-md:p-3 shadow bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -160,17 +145,17 @@ export const Pedidos = () => {
                 />
               </svg>
 
-              <span class="text-xs font-medium"> {nombreMes}</span>
+              <span class="text-xs font-medium uppercase"> {nombreMes}</span>
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
                 {" "}
                 Fecha del mes{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
                   {" "}
                   {nombreMes}{" "}
                 </span>
@@ -178,7 +163,7 @@ export const Pedidos = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-300 max-md:p-3 shadow bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -195,22 +180,22 @@ export const Pedidos = () => {
                 />
               </svg>
 
-              <span class="text-xs font-medium"> {resultado}%</span>
+              <span class="text-xs font-medium uppercase"> {resultado}%</span>
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
                 {" "}
                 Aberturas generadas{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
                   {" "}
                   {resultado}{" "}
                 </span>
 
-                <span class="text-xs text-gray-500">
+                <span class="text-xs text-gray-500 uppercase">
                   {" "}
                   {"Generadas hasta ahora"}{" "}
                 </span>
@@ -218,7 +203,7 @@ export const Pedidos = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-lg border border-slate-300 max-md:p-3 shadow bg-white p-5">
+          <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
             <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -235,22 +220,25 @@ export const Pedidos = () => {
                 />
               </svg>
 
-              <span class="text-xs font-medium"> {resultadoTwo}%</span>
+              <span class="text-xs font-medium uppercase">
+                {" "}
+                {resultadoTwo}%
+              </span>
             </div>
 
             <div>
-              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs">
+              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
                 {" "}
                 Aberturas realizadas{" "}
               </strong>
 
               <p>
-                <span class="text-2xl font-medium text-gray-900 max-md:text-base">
+                <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
                   {" "}
                   {resultadoTwo}{" "}
                 </span>
 
-                <span class="text-xs text-gray-500">
+                <span class="text-xs text-gray-500 uppercase">
                   {" "}
                   {"Realizadas hasta ahora"}{" "}
                 </span>

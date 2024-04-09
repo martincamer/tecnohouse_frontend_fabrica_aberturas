@@ -38,7 +38,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
     const res = await editarPerfil(obtenerId, data);
 
     const tipoExistenteIndex = perfiles.findIndex(
-      (tipo) => tipo.id == obtenerId
+      (tipo) => tipo.id === obtenerId
     );
 
     setPerfiles((prevTipos) => {
@@ -57,22 +57,26 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
       };
       return newTipos;
     });
-
-    toast.success("¡Producto editado correctamente!", {
-      position: "top-right",
+    toast.success("¡Abertura editada correctamente!", {
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
   });
 
   return (
     <Menu as="div" className="z-50">
-      <ToastContainer />
       <Transition appear show={isOpenEditar} as={Fragment}>
         <Dialog
           as="div"
@@ -121,15 +125,37 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <div className="py-3 pb-6 flex justify-end">
+                  <div
+                    onClick={closeModalEditar}
+                    className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
+
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-sm font-bold leading-6 text-gray-700 uppercase"
                 >
                   Editar el producto
                 </Dialog.Title>
                 <form
                   onSubmit={onSubmitEditar}
-                  className="mt-2 border-t pt-4 pb-4 space-y-2"
+                  className="mt-2 border-t pt-4 pb-4 space-y-2 text-sm"
                 >
                   <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-normal text-slate-700">
@@ -137,7 +163,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                     </label>
                     <input
                       {...register("nombre", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none uppercase"
                       placeholder="nombre del codigo"
                     />
                   </div>
@@ -147,7 +173,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                     </label>
                     <select
                       {...register("color", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none uppercase"
                     >
                       <option className="text-black">Seleccionar color</option>
                       {colores.map((c) => (
@@ -163,7 +189,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                     </label>
                     <input
                       {...register("stock", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none uppercase"
                       type="number"
                       placeholder="cantidad de productos"
                     />
@@ -174,7 +200,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                     </label>
                     <select
                       {...register("categoria", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none uppercase"
                     >
                       <option className="text-black" key={categorias.id}>
                         Seleccionar categoria
@@ -192,7 +218,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                     </label>
                     <textarea
                       {...register("descripcion", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none uppercase"
                       type="text"
                       placeholder="detalle ej perfil pesado ventana"
                     />
@@ -204,7 +230,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                     <div>
                       <input
                         {...register("ancho", { required: true })}
-                        className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none"
+                        className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none uppercase"
                         type="number"
                         placeholder="ancho"
                       />
@@ -217,7 +243,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                     <div>
                       <input
                         {...register("alto", { required: true })}
-                        className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none"
+                        className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none uppercase"
                         type="number"
                         placeholder="alto"
                       />
@@ -229,7 +255,7 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                     </label>
                     <input
                       {...register("id", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none"
+                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl bg-slate-50 text-slate-700 placeholder:text-slate-500 shadow shadow-black/10 outline-none uppercase"
                       type="text"
                       placeholder="id del perfil"
                       disabled
@@ -237,23 +263,13 @@ export const ModalCrearEditar = ({ closeModalEditar, isOpenEditar }) => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-indigo-500 hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl shadow shadow-black/10 outline-none text-white text-sm text-center cursor-pointer max-md:text-xs"
+                      className="bg-indigo-100 hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl shadow shadow-black/10 outline-none text-indigo-600 text-sm text-center cursor-pointer max-md:text-xs uppercase hover:text-white hover:bg-indigo-500"
                       type="submit"
                       value={"Editar producto"}
                       onClick={closeModalEditar}
                     />
                   </div>
                 </form>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
-                    onClick={closeModalEditar}
-                  >
-                    Cerrar Ventana
-                  </button>
-                </div>
               </div>
             </Transition.Child>
           </div>

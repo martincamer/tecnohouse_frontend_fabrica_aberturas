@@ -1,28 +1,30 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { BiEdit } from "react-icons/bi";
-import { AiFillDelete } from "react-icons/ai";
-import { ModalEditarCategorias } from "./ModalEditarCategorias";
-import { useAberturasContext } from "../../context/AluminioAberturas";
+import { ToastContainer } from "react-toastify";
+import { Fragment, useEffect, useState } from "react";
+import client from "../../api/axios";
 
-export const ModalVerCategorias = ({
-  isOpenVerCategorias,
-  closeModalVerCategoria,
-}) => {
-  const {
-    categorias,
-    handleEliminarCategoria,
-    openModalEditarCategoria,
-    handleCategoriaSeleccionada,
-  } = useAberturasContext();
+export const ModalVerClientes = ({ isOpen, closeModal, obtenerId }) => {
+  const [datos, setDatos] = useState([]);
 
+  useEffect(() => {
+    async function loadData() {
+      const res = await client(`/pedido/${obtenerId}`);
+
+      setDatos(res.data);
+    }
+
+    loadData();
+  }, [obtenerId]);
+
+  console.log(datos);
   return (
     <Menu as="div" className="z-50">
-      <Transition appear show={isOpenVerCategorias} as={Fragment}>
+      <ToastContainer />
+      <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={closeModalVerCategoria}
+          onClose={closeModal}
         >
           <Transition.Child
             as={Fragment}
@@ -65,10 +67,10 @@ export const ModalVerCategorias = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl w-[1000px] max-md:w-full">
+              <div className="inline-block w-1/3 max-md:px-3 p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl max-md:w-full">
                 <div className="py-3 pb-6 flex justify-end">
                   <div
-                    onClick={closeModalVerCategoria}
+                    onClick={closeModal}
                     className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
                   >
                     <svg
@@ -90,35 +92,41 @@ export const ModalVerCategorias = ({
 
                 <Dialog.Title
                   as="h3"
-                  className="text-sm uppercase max-md:text-md font-bold leading-6 text-gray-700"
+                  className="text-sm font-bold leading-6 text-gray-700 uppercase"
                 >
-                  Editar o eliminar categorias
+                  LOS CLIENTES ENCONTRADO SON
                 </Dialog.Title>
-                <div className="grid grid-cols-5 gap-4 my-5 h-[120px] overflow-y-scroll w-full max-md:grid-cols-1">
-                  {categorias.map((cat) => (
-                    <div
-                      className="bg-white max-md:text-sm border-[1px] border-slate-300  py-2 px-2 rounded-xl hover:shadow-md shadow-black/20 flex gap-2 justify-center items-center h-[58px] text-sm cursor-pointer transition-all ease-in-out"
-                      key={cat.id}
-                    >
-                      <p className="text-slate-700 font-normal uppercase max-md:text-sm">
-                        {cat.categoria}
-                      </p>
-                      <BiEdit
-                        onClick={() => {
-                          handleCategoriaSeleccionada(cat.id),
-                            openModalEditarCategoria();
-                        }}
-                        className="text-[30px] max-md:text-[30px] text-indigo-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
-                      />
-                      <AiFillDelete
-                        onClick={() => handleEliminarCategoria(cat.id)}
-                        className="text-[30px] max-md:text-[30px] text-red-400 cursor-pointer bg-white rounded-full py-1 px-1 shadow shadow-black/20 border-[1px] border-black/30"
-                      />
-                    </div>
-                  ))}
-                </div>
 
-                <ModalEditarCategorias />
+                <div className="mt-4 h-[30vh] overflow-y-scroll space-y-2">
+                  {datos.productos?.respuesta
+                    ?.sort((a, b) => {
+                      // Si a.cantidad es igual a a.cantidadFaltante, a debería ir después de b
+                      if (a.cantidad === a.cantidadFaltante) return 1;
+                      // Si b.cantidad es igual a b.cantidadFaltante, b debería ir después de a
+                      if (b.cantidad === b.cantidadFaltante) return -1;
+                      // En cualquier otro caso, no se altera el orden
+                      return 0;
+                    })
+                    .map((producto, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-between border-slate-200 border-[1px] py-2 px-4 hover:shadow transition-all ease-linear cursor-pointer rounded-xl items-center"
+                      >
+                        <span className="text-sm text-gray-700 uppercase">
+                          {producto.cliente}
+                        </span>
+                        {producto.cantidad === producto.cantidadFaltante ? (
+                          <span className="text-sm text-green-600 font-semibold bg-green-100 py-2 px-2 rounded-xl uppercase">
+                            Realizado
+                          </span>
+                        ) : (
+                          <span className="text-sm text-red-600 font-semibold uppercase bg-red-100 py-2 px-2 rounded-xl">
+                            Falta realizar
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                </div>
               </div>
             </Transition.Child>
           </div>

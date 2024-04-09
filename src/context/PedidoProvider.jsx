@@ -7,6 +7,7 @@ import {
   deleteFactura,
   obtenerFacturas,
   obtenerFactura,
+  obtenerFacturasMensual,
 } from "../api/factura.api";
 
 import { obtenerUnicoPerfil } from "../api/aberturas.api";
@@ -56,6 +57,18 @@ export const PedidoProvider = ({ children }) => {
     setIsOpen(true);
   }
 
+  const [datosMensuales, setDatosMensuales] = useState([]);
+
+  useEffect(() => {
+    async function loadData() {
+      const res = await obtenerFacturasMensual();
+
+      setDatosMensuales(res.data);
+    }
+
+    loadData();
+  }, []);
+
   //buscador de pedidos
   let results = [];
 
@@ -101,26 +114,40 @@ export const PedidoProvider = ({ children }) => {
       remito: remito,
     });
 
-    const presupuestoActualizado = [...datosPresupuesto, res.data];
+    const tipoExistente = datosMensuales.find(
+      (tipo) => tipo.id === res.data.id
+    );
 
-    setDatosPresupuesto(presupuestoActualizado);
+    if (!tipoExistente) {
+      // Actualizar el estado de tipos agregando el nuevo tipo al final
+      setDatosMensuales((prevTipos) => [...prevTipos, res.data]);
+    }
 
     setProductoSeleccionado([]);
 
     toast.success("¡Pedido creado correctamente!", {
-      position: "top-right",
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
 
-    setTimeout(() => {
-      location.reload();
-    }, 1500);
+    setCliente("");
+    setFecha("");
+
+    // setTimeout(() => {
+    //   location.reload();
+    // }, 1500);
   };
 
   //fin crear factura
@@ -266,6 +293,8 @@ export const PedidoProvider = ({ children }) => {
         remito,
         search,
         searcher,
+        datosMensuales,
+        setDatosMensuales,
       }}
     >
       {children}
