@@ -17,11 +17,11 @@ export const ModalSeleccionarCantidadProductoPedido = ({
   const { productoUnicoState, addToProductos } = usePedidoContext();
 
   useEffect(() => {
-    setNombreProducto(productoUnicoState.nombre);
-    setDetalleProducto(productoUnicoState.descripcion);
-    setAncho(productoUnicoState.ancho);
-    setAlto(productoUnicoState.alto);
-  }, []);
+    setNombreProducto(productoUnicoState.nombre || "");
+    setDetalleProducto(productoUnicoState.descripcion || "");
+    setAncho(productoUnicoState.ancho || "");
+    setAlto(productoUnicoState.alto || "");
+  }, [productoUnicoState.id]);
 
   const randomIdString = Math.random().toString().substring(2);
   const randomIdNumber = parseInt(randomIdString, 10);

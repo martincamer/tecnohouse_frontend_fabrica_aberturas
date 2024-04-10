@@ -214,19 +214,6 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                     />
                   </div>
 
-                  {/* <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-bold max-md:text-sm">
-                      Numero del remito:
-                    </label>
-                    <input
-                      type="text"
-                      value={remito}
-                      onChange={(e) => setRemito(e.target.value)}
-                      className="border-gray-300 border-[1px] py-2 px-2 rounded shadow shadow-black/10 outline-none w-[300px] bg-white max-md:text-sm"
-                      placeholder="Numero del remito"
-                    />
-                  </div> */}
-
                   <div className="flex gap-2">
                     <button
                       type="button"

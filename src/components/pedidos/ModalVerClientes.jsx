@@ -111,14 +111,15 @@ export const ModalVerClientes = ({ isOpen, closeModal, obtenerId }) => {
                           // En cualquier otro caso, no se altera el orden
                           return 0;
                         })
-                        .reduce((clientesMostrados, producto, index) => {
+                        .map((producto, index, array) => {
                           // Verificar si el cliente ya ha sido mostrado antes
-                          if (!clientesMostrados.includes(producto.cliente)) {
-                            // Si el cliente es único, añadirlo a la lista de clientes mostrados
-                            // clientesMostrados.push(producto.cliente);
+                          const clienteRepetido = array
+                            .slice(0, index)
+                            .some((item) => item.cliente === producto.cliente);
+
+                          if (!clienteRepetido) {
                             // Renderizar el elemento del cliente y su producto asociado
-                            return [
-                              ...clientesMostrados,
+                            return (
                               <div
                                 key={index}
                                 className="flex justify-between border-slate-200 border-[1px] py-2 px-4 hover:shadow transition-all ease-linear cursor-pointer rounded-xl items-center"
@@ -136,12 +137,12 @@ export const ModalVerClientes = ({ isOpen, closeModal, obtenerId }) => {
                                     Falta realizar
                                   </span>
                                 )}
-                              </div>,
-                            ];
+                              </div>
+                            );
                           }
                           // Si el cliente ya ha sido mostrado antes, no renderizar nada
-                          return clientesMostrados;
-                        }, [])}
+                          return null;
+                        })}
                     </>
                   )}
                 </div>
