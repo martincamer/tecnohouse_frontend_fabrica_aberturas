@@ -47,96 +47,86 @@ export const ModalEditarProductoPedidoEstado = ({
   console.log(datosMensuales);
 
   const onSubmitEditar = handleSubmit(async (data) => {
-    try {
-      const res = await actualizarFacturaProductoUnicoDos(obtenerId, data);
+    const res = await actualizarFacturaProductoUnicoDos(obtenerId, data);
 
-      const tipoExistenteIndexTwo = datos.findIndex(
-        (tipo) => tipo.id === obtenerId
-      );
+    const tipoExistenteIndexTwo = datos.findIndex(
+      (tipo) => tipo.id === obtenerId
+    );
 
-      setDatos((prevTipos) => {
-        const newTipos = [...prevTipos];
-        const updatedTipo = JSON.parse(res.config.data); // Convierte el JSON a objeto
+    setDatos((prevTipos) => {
+      const newTipos = [...prevTipos];
+      const updatedTipo = JSON.parse(res.config.data); // Convierte el JSON a objeto
 
-        newTipos[tipoExistenteIndexTwo] = {
-          id: obtenerId,
-          nombre: updatedTipo.nombre,
-          detalle: updatedTipo.detalle,
-          categoria: updatedTipo.categoria,
-          color: updatedTipo.color,
-          ancho: updatedTipo.ancho,
-          alto: updatedTipo.alto,
-          cantidad: updatedTipo.cantidad,
-          cliente: updatedTipo.cliente,
-          cantidadFaltante: updatedTipo.cantidadFaltante,
-        };
-        console.log("Estado después de la actualización:", newTipos);
-        return newTipos;
-      });
+      newTipos[tipoExistenteIndexTwo] = {
+        id: obtenerId,
+        nombre: updatedTipo.nombre,
+        detalle: updatedTipo.detalle,
+        categoria: updatedTipo.categoria,
+        color: updatedTipo.color,
+        ancho: updatedTipo.ancho,
+        alto: updatedTipo.alto,
+        cantidad: updatedTipo.cantidad,
+        cliente: updatedTipo.cliente,
+        cantidadFaltante: updatedTipo.cantidadFaltante,
+      };
+      console.log("Estado después de la actualización:", newTipos);
+      return newTipos;
+    });
 
-      const updatedTipo = JSON.parse(res.config.data);
+    const updatedTipo = JSON.parse(res.config.data);
 
-      const productoEditado = datosMensuales.find((producto) =>
-        producto.productos.respuesta.some((item) => item.id === obtenerId)
-      );
+    const productoEditado = datosMensuales.find((producto) =>
+      producto.productos.respuesta.some((item) => item.id === obtenerId)
+    );
 
-      const nuevosProductos = productoEditado.productos.respuesta.map(
-        (producto) => {
-          if (producto.id === obtenerId) {
-            // Actualizar solo la propiedad cantidadFaltante del producto editado
-            return {
-              ...producto,
-              cantidadFaltante: updatedTipo.cantidadFaltante,
-            };
-          } else {
-            return producto;
-          }
+    const nuevosProductos = productoEditado.productos.respuesta.map(
+      (producto) => {
+        if (producto.id === obtenerId) {
+          // Actualizar solo la propiedad cantidadFaltante del producto editado
+          return {
+            ...producto,
+            cantidadFaltante: updatedTipo.cantidadFaltante,
+          };
+        } else {
+          return producto;
         }
-      );
-
-      // Actualizar el estado de datosMensuales con el nuevo arreglo
-      setDatosMensuales((prevDatosMensuales) => {
-        return prevDatosMensuales.map((item) => {
-          if (item.id === productoEditado.id) {
-            return {
-              ...item,
-              productos: {
-                respuesta: nuevosProductos,
-              },
-            };
-          } else {
-            return item;
-          }
-        });
-      });
-
-      toast.success("¡Cantidad realizada editada correctamente!", {
-        position: "top-center",
-        autoClose: 1500,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        style: {
-          padding: "15px",
-          borderRadius: "15px",
-          boxShadow: "none",
-          border: "1px solid rgb(203 213 225)",
-        },
-      });
-
-      closeModalEstado();
-    } catch (error) {
-      if (error) {
-        setError("LA CANTIDAD QUE INGRESASTE ES MAYOR A LA CANTIDAD GENERADA");
-
-        setTimeout(() => {
-          setError("");
-        }, 1500);
       }
-    }
+    );
+
+    // Actualizar el estado de datosMensuales con el nuevo arreglo
+    setDatosMensuales((prevDatosMensuales) => {
+      return prevDatosMensuales.map((item) => {
+        if (item.id === productoEditado.id) {
+          return {
+            ...item,
+            productos: {
+              respuesta: nuevosProductos,
+            },
+          };
+        } else {
+          return item;
+        }
+      });
+    });
+
+    toast.success("¡Cantidad realizada editada correctamente!", {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
+    });
+
+    closeModalEstado();
   });
 
   return (
@@ -220,12 +210,6 @@ export const ModalEditarProductoPedidoEstado = ({
                   onSubmit={onSubmitEditar}
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
-                  {error && (
-                    <p className="bg-red-100 py-2 px-2 rounded-xl uppercase text-red-900 text-sm shadow-md shadow-gray-300">
-                      Selecciona una cantidad menor a la cantidad a entregar
-                    </p>
-                  )}
-
                   <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-normal capitalize text-slate-700">
                       cantidad:
