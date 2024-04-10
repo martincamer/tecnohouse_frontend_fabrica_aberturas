@@ -48,15 +48,22 @@ export const ModalEditarProductoPedido = ({
       return newTipos;
     });
 
-    toast.success("¡Producto editado correctamente!", {
-      position: "top-right",
+    // setPerfiles(proyectoActualizado);
+    toast.success("¡Abertura del cliente editada correctamente!", {
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
   });
 
@@ -82,7 +89,6 @@ export const ModalEditarProductoPedido = ({
 
   return (
     <Menu as="div" className="z-50">
-      <ToastContainer />
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -98,7 +104,7 @@ export const ModalEditarProductoPedido = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-10" />
           </Transition.Child>
 
           <div className="min-h-screen px-4 text-center">
@@ -131,15 +137,36 @@ export const ModalEditarProductoPedido = ({
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <div className="py-3 pb-6 flex justify-end">
+                  <div
+                    onClick={closeModal}
+                    className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-sm uppercase font-bold leading-6 text-gray-700"
                 >
-                  Editar la abertura
+                  Editar la abertura del cliente
                 </Dialog.Title>
                 <form
                   onSubmit={onSubmitEditar}
-                  className="mt-2 border-t pt-4 pb-4 space-y-2"
+                  className="mt-2 border-t pt-4 pb-4 space-y-2 text-sm"
                 >
                   {error && (
                     <p>
@@ -152,7 +179,7 @@ export const ModalEditarProductoPedido = ({
                     </label>
                     <input
                       {...register("nombre", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
+                      className="border-slate-300 uppercase border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="text"
                       placeholder="nombre del codigo"
                     />
@@ -164,7 +191,7 @@ export const ModalEditarProductoPedido = ({
                     </label>
                     <textarea
                       {...register("detalle", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
+                      className="border-slate-300 uppercase border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="text"
                       placeholder="detalle"
                     />
@@ -176,7 +203,7 @@ export const ModalEditarProductoPedido = ({
                     </label>
                     <input
                       {...register("categoria", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
+                      className="border-slate-300 uppercase border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="text"
                       placeholder="categoria"
                     />
@@ -188,7 +215,7 @@ export const ModalEditarProductoPedido = ({
                     </label>
                     <input
                       {...register("color", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
+                      className="border-slate-300 uppercase border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="text"
                       placeholder="color"
                     />
@@ -199,7 +226,7 @@ export const ModalEditarProductoPedido = ({
                     </label>
                     <input
                       {...register("cliente", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
+                      className="border-slate-300 uppercase border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="text"
                       placeholder="cliente"
                     />
@@ -210,7 +237,7 @@ export const ModalEditarProductoPedido = ({
                     </label>
                     <input
                       {...register("cantidad", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
+                      className="border-slate-300 uppercase border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="number"
                       placeholder="cantidad"
                     />
@@ -222,7 +249,7 @@ export const ModalEditarProductoPedido = ({
                     </label>
                     <input
                       {...register("ancho", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
+                      className="border-slate-300 uppercase border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="number"
                       placeholder="ancho"
                     />
@@ -234,43 +261,21 @@ export const ModalEditarProductoPedido = ({
                     </label>
                     <input
                       {...register("alto", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
+                      className="border-slate-300 uppercase border-[1px] py-2 px-2 rounded-xl shadow outline-none"
                       type="number"
                       placeholder="alto"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-[14px] font-normal text-slate-700">
-                      Cantidad faltante:
-                    </label>
                     <input
-                      {...register("cantidadFaltante", { required: true })}
-                      className="border-slate-300 border-[1px] py-2 px-2 rounded-xl shadow outline-none"
-                      type="number"
-                      placeholder="editar cantidad - total"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <input
-                      className="bg-indigo-500 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl outline-none text-white font-normal text-center cursor-pointer"
+                      className="bg-indigo-500 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl outline-none text-white font-normal text-center cursor-pointer uppercase text-sm"
                       type="submit"
                       value={"Editar producto"}
                       onClick={closeModal}
                     />
                   </div>
                 </form>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
-                    onClick={closeModal}
-                  >
-                    Cerrar Ventana
-                  </button>
-                </div>
               </div>
             </Transition.Child>
           </div>

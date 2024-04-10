@@ -28,7 +28,7 @@ import { IoClose } from "react-icons/io5";
 
 const rutasuno = [
   {
-    name: "Logout",
+    name: "Salir de la aplicación",
     path: "/logout",
   },
 ];
@@ -83,11 +83,25 @@ export const Navbar = () => {
                   </div>
                   <Link
                     onClick={() => signout()}
-                    className="text-[16px] max-md:text-sm max-md:font-bold max-md:py-1 font-normal transition-all ease-in-out duration-300 bg-indigo-500/10 px-4 rounded-lg border-[1px] border-indigo-500 py-1 text-indigo-600 hover:shadow-sm hover:shadow-black/20 hover:scale-[1.02]"
+                    className="text-[16px] max-md:text-sm max-md:font-bold max-md:py-1 font-normal transition-all ease-linear duration-300 bg-slate-500/10 px-5 uppercase rounded-xl py-2 text-slate-700 text-sm  flex gap-2 items-center hover:bg-slate-800 hover:text-white hover:shadow-md"
                     //o={path}
                     key={path}
                   >
                     {name}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25"
+                      />
+                    </svg>
                   </Link>
                 </div>
               ))

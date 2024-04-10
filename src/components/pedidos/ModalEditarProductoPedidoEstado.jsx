@@ -1,11 +1,12 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import {
   obtenerValorUnico,
-  actualizarFacturaProductoUnico,
+  actualizarFacturaProductoUnicoDos,
 } from "../../api/factura.api";
-import { ToastContainer, toast } from "react-toastify";
+import { usePedidoContext } from "../../context/PedidoProvider";
 
 export const ModalEditarProductoPedidoEstado = ({
   obtenerId,
@@ -21,49 +22,9 @@ export const ModalEditarProductoPedidoEstado = ({
     setValue,
   } = useForm();
 
-  const onSubmitEditar = handleSubmit(async (data) => {
-    const res = await actualizarFacturaProductoUnico(obtenerId, data);
+  const { datosMensuales, setDatosMensuales } = usePedidoContext();
 
-    const tipoExistenteIndexTwo = datos.findIndex(
-      (tipo) => tipo.id === obtenerId
-    );
-
-    setDatos((prevTipos) => {
-      const newTipos = [...prevTipos];
-      const updatedTipo = JSON.parse(res.config.data); // Convierte el JSON a objeto
-
-      newTipos[tipoExistenteIndexTwo] = {
-        id: obtenerId,
-        nombre: updatedTipo.nombre,
-        detalle: updatedTipo.detalle,
-        categoria: updatedTipo.categoria,
-        color: updatedTipo.color,
-        ancho: updatedTipo.ancho,
-        alto: updatedTipo.alto,
-        cantidad: updatedTipo.cantidad,
-        cliente: updatedTipo.cliente,
-        cantidadFaltante: updatedTipo.cantidadFaltante,
-      };
-      console.log("Estado después de la actualización:", newTipos);
-      return newTipos;
-    });
-
-    toast.success("¡Producto editado correctamente!", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
-    // setTimeout(() => {
-    //   location.reload();
-    // }, 1500);
-    console.log(res);
-  });
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function loadData() {
@@ -83,11 +44,103 @@ export const ModalEditarProductoPedidoEstado = ({
     loadData();
   }, [obtenerId]);
 
-  const [error, setError] = useState(false);
+  console.log(datosMensuales);
+
+  const onSubmitEditar = handleSubmit(async (data) => {
+    try {
+      const res = await actualizarFacturaProductoUnicoDos(obtenerId, data);
+
+      console.log(res.config.data);
+
+      const tipoExistenteIndexTwo = datos.findIndex(
+        (tipo) => tipo.id === obtenerId
+      );
+
+      setDatos((prevTipos) => {
+        const newTipos = [...prevTipos];
+        const updatedTipo = JSON.parse(res.config.data); // Convierte el JSON a objeto
+
+        newTipos[tipoExistenteIndexTwo] = {
+          id: obtenerId,
+          nombre: updatedTipo.nombre,
+          detalle: updatedTipo.detalle,
+          categoria: updatedTipo.categoria,
+          color: updatedTipo.color,
+          ancho: updatedTipo.ancho,
+          alto: updatedTipo.alto,
+          cantidad: updatedTipo.cantidad,
+          cliente: updatedTipo.cliente,
+          cantidadFaltante: updatedTipo.cantidadFaltante,
+        };
+        console.log("Estado después de la actualización:", newTipos);
+        return newTipos;
+      });
+
+      const updatedTipo = JSON.parse(res.config.data);
+
+      const productoEditado = datosMensuales.find((producto) =>
+        producto.productos.respuesta.some((item) => item.id === obtenerId)
+      );
+
+      const nuevosProductos = productoEditado.productos.respuesta.map(
+        (producto) => {
+          if (producto.id === obtenerId) {
+            // Actualizar solo la propiedad cantidadFaltante del producto editado
+            return {
+              ...producto,
+              cantidadFaltante: updatedTipo.cantidadFaltante,
+            };
+          } else {
+            return producto;
+          }
+        }
+      );
+
+      // Actualizar el estado de datosMensuales con el nuevo arreglo
+      setDatosMensuales((prevDatosMensuales) => {
+        return prevDatosMensuales.map((item) => {
+          if (item.id === productoEditado.id) {
+            return {
+              ...item,
+              productos: {
+                respuesta: nuevosProductos,
+              },
+            };
+          } else {
+            return item;
+          }
+        });
+      });
+
+      toast.success("¡Cantidad realizada editada correctamente!", {
+        position: "top-center",
+        autoClose: 1500,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        style: {
+          padding: "15px",
+          borderRadius: "15px",
+          boxShadow: "none",
+          border: "1px solid rgb(203 213 225)",
+        },
+      });
+
+      closeModalEstado();
+    } catch (error) {
+      setError("LA CANTIDAD QUE INGRESASTE ES MAYOR A LA CANTIDAD GENERADA");
+
+      setTimeout(() => {
+        setError("");
+      }, 1500);
+    }
+  });
 
   return (
     <Menu as="div" className="z-50">
-      <ToastContainer />
       <Transition appear show={isOpenEstado} as={Fragment}>
         <Dialog
           as="div"
@@ -103,7 +156,7 @@ export const ModalEditarProductoPedidoEstado = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-10" />
           </Transition.Child>
 
           <div className="min-h-screen px-4 text-center">
@@ -136,9 +189,30 @@ export const ModalEditarProductoPedidoEstado = ({
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <div className="py-3 pb-6 flex justify-end">
+                  <div
+                    onClick={closeModalEstado}
+                    className="bg-red-100 text-red-700 py-1.5 px-1.5 rounded-xl cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-sm uppercase font-bold leading-6 text-gray-700"
                 >
                   Editar la cantidad
                 </Dialog.Title>
@@ -147,7 +221,7 @@ export const ModalEditarProductoPedidoEstado = ({
                   className="mt-2 border-t pt-4 pb-4 space-y-2"
                 >
                   {error && (
-                    <p>
+                    <p className="bg-red-100 py-2 px-2 rounded-xl uppercase text-red-900 text-sm shadow-md shadow-gray-300">
                       Selecciona una cantidad menor a la cantidad a entregar
                     </p>
                   )}
@@ -179,23 +253,12 @@ export const ModalEditarProductoPedidoEstado = ({
 
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-indigo-500 hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl shadow outline-none text-white font-normal text-sm text-center cursor-pointer"
+                      className="bg-indigo-500 hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl shadow outline-none text-white font-normal text-sm text-center cursor-pointer uppercase"
                       type="submit"
-                      value={"Editar producto"}
-                      onClick={closeModalEstado}
+                      value={"Editar la cantidad realizada"}
                     />
                   </div>
                 </form>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer"
-                    onClick={closeModalEstado}
-                  >
-                    Cerrar Ventana
-                  </button>
-                </div>
               </div>
             </Transition.Child>
           </div>

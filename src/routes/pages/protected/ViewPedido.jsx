@@ -20,8 +20,6 @@ export const ViewPedido = () => {
   const [search, setSearch] = useState("");
   const params = useParams();
 
-  console.log("datos", datosCliente.id);
-
   useEffect(() => {
     async function loadData() {
       const res = await obtenerFactura(params.id);
@@ -49,15 +47,22 @@ export const ViewPedido = () => {
     const updatedTipos = datos.filter((tipo) => tipo.id !== guardarId);
     setDatos(updatedTipos);
 
-    toast.error("¡Producto eliminado correctamente!", {
-      position: "top-right",
+    // setPerfiles(proyectoActualizado);
+    toast.error("¡Abertura del cliente eliminada correctamente!", {
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
   };
 
@@ -98,10 +103,6 @@ export const ViewPedido = () => {
   const closeModalCrearPedido = () => {
     setIsOpenPedido(false);
   };
-
-  // const handleSeleccionarProducto = (id) => {
-  //   setObtenerId(id);
-  // };
 
   const totalAberturas = () => {
     return datos?.reduce((sum, b) => {
@@ -179,22 +180,6 @@ export const ViewPedido = () => {
     console.error("La estructura de datos no es la esperada.");
   }
 
-  // console.log(datosAgrupadosEnUno);
-
-  // let resultadoFinal = datos?.map((p) =>
-  //   p.productos.map(
-  //     (prod) => prod?.cantidad !== prod?.cantidadFaltante && prod?.cantidad
-  //   )
-  // );
-
-  let resultadoFinalAberturas = datos.reduce((sum, d) => {
-    return sum + Number(d.cantidad !== d.cantidadFaltante && d.cantidad);
-  }, 0);
-
-  let resultadoFinalAberturasEmbalaje = datos?.reduce((sum, d) => {
-    return sum + Number(d.cantidad);
-  }, 0);
-
   const datosPuertas = datos
     ?.filter((item) => item.detalle.toUpperCase().startsWith("P"))
     .reduce((total, item) => total + parseInt(item.cantidad), 0);
@@ -225,15 +210,39 @@ export const ViewPedido = () => {
   const itemsPerPage = 10; // Cantidad de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Obtener todos los resultados de la búsqueda
+  const allResults = performSearch();
+
+  // Calcular el número total de páginas
+  const totalPages = Math.ceil(allResults.length / itemsPerPage);
+
+  // Calcular los índices de los elementos para la página actual
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentResults = performSearch()?.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
 
-  const totalPages = Math.ceil(performSearch()?.length / itemsPerPage);
+  // Obtener los resultados de la página actual
+  const currentResults = allResults
+    ?.sort((a, b) => {
+      // Si a es pendiente y b no lo es, a debería ir primero
+      if (
+        a.cantidad !== a.cantidadFaltante &&
+        b.cantidad === b.cantidadFaltante
+      ) {
+        return -1;
+      }
+      // Si b es pendiente y a no lo es, b debería ir primero
+      if (
+        b.cantidad !== b.cantidadFaltante &&
+        a.cantidad === a.cantidadFaltante
+      ) {
+        return 1;
+      }
+      // En cualquier otro caso, no se altera el orden
+      return 0;
+    })
+    ?.slice(indexOfFirstItem, indexOfLastItem);
 
+  // Manejar el cambio de página
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -257,7 +266,7 @@ export const ViewPedido = () => {
   };
 
   return (
-    <section className="w-full py-2 px-5 max-md:py-0 max-md:px-4 flex flex-col gap-10 max-md:gap-5 max-md:pb-20">
+    <section className="w-full py-2 px-5 max-md:py-0 max-md:px-4 flex flex-col gap-8 max-md:gap-5 max-md:pb-20">
       <ToastContainer />
 
       <div className="flex mt-5 max-md:mt-0">
@@ -289,15 +298,15 @@ export const ViewPedido = () => {
             totalAberturasRealizadas() === totalAberturas()
               ? "bg-indigo-500"
               : "bg-orange-500"
-          } font-normal text-white text-sm max-md:text-sm uppercase  px-4 py-2 rounded-2xl shadow`}
+          } font-normal text-white text-sm max-md:text-sm uppercase  px-4 py-3 rounded-xl shadow`}
         >
           {totalAberturasRealizadas() === totalAberturas()
             ? "estado del pedido finalizado"
             : "estado del pedido pendiente"}
         </p>
       </div>
-      <div className="max-md:shadow-none max-md:border-none max-md:px-2 max-md:py-0 max-md:gap-3 border-[1px] border-slate-300 py-8 px-10 rounded-2xl grid grid-cols-4 gap-4 hover:shadow-md transition-all ease-linear cursor-pointer">
-        <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+      <div className="max-md:shadow-none max-md:border-none max-md:px-2 max-md:py-0 max-md:gap-3  rounded-2xl grid grid-cols-4 gap-4 transition-all ease-linear cursor-pointer">
+        <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
           <p className="text-sm max-md:text-sm uppercase">
             Numero del pedido:{" "}
           </p>{" "}
@@ -305,21 +314,21 @@ export const ViewPedido = () => {
             {datosCliente?.id}
           </p>
         </div>
-        <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+        <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
           <p className="text-sm max-md:text-sm uppercase">Cliente: </p>{" "}
           <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
             {datosCliente?.cliente}
           </p>
         </div>
 
-        <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+        <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
           <p className="text-sm max-md:text-sm uppercase">Total aberturas:</p>{" "}
           <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
             {totalAberturas()}
           </p>
         </div>
 
-        <div className="flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+        <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
           <p className="text-sm max-md:text-sm uppercase">Total realizadas:</p>{" "}
           <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
             {totalAberturasRealizadas()}
@@ -361,46 +370,15 @@ export const ViewPedido = () => {
           </p>
         </div>
         <div className="flex gap-5 items-center max-md:flex-col max-md:gap-2 max-md:items-start">
-          {" "}
-          <div className="flex gap-2 items-center">
-            <p className="text-base max-md:text-sm uppercase">puertas:</p>{" "}
-            <p className="font-semibold text-indigo-500 text-base max-md:text-sm uppercase">
-              {datosPuertas}
-            </p>
-          </div>
-          -
-          <div className="flex gap-2 items-center">
-            <p className="text-base max-md:text-sm uppercase">ventanas:</p>{" "}
-            <p className="font-semibold text-indigo-500 text-base max-md:text-sm uppercase">
-              {datosVentanas}
-            </p>
-          </div>
-          -
-          <div className="flex gap-2 items-center">
-            <p className="text-base max-md:text-sm uppercase">celosias:</p>{" "}
-            <p className="font-semibold text-indigo-500 text-base max-md:text-sm uppercase">
-              {datosCelosias}
-            </p>
-          </div>
-          -
-          <div className="flex gap-2 items-center">
-            <p className="text-base max-md:text-sm uppercase">mosquiteros:</p>{" "}
-            <p className="font-semibold text-indigo-500 text-base max-md:text-sm uppercase">
-              {datosMosquiteros}
-            </p>
-          </div>
-          -
           <div className="flex gap-2 items-center ">
-            <p className="text-base max-md:text-sm uppercase">
-              Total Aberturas:
-            </p>{" "}
+            <p className="text-sm max-md:text-sm uppercase">Total Aberturas:</p>{" "}
             <p className="font-semibold text-indigo-500 text-base max-md:text-sm uppercase">
               {totalAberturas()}
             </p>
           </div>
           -
           <div className="flex gap-2 items-center max-md:flex-col max-md:items-start">
-            <p className="text-base max-md:text-sm uppercase">
+            <p className="text-sm max-md:text-sm uppercase">
               Total realizadas:
             </p>{" "}
             <p
@@ -408,10 +386,10 @@ export const ViewPedido = () => {
                 totalAberturasRealizadas() === totalAberturas()
                   ? "bg-indigo-500"
                   : "bg-orange-500"
-              } font-normal text-white text-base max-md:text-sm uppercase  px-4 py-1 rounded-xl shadow`}
+              } font-normal text-white max-md:text-sm uppercase text-sm  px-4 py-2 rounded-xl shadow`}
             >
-              {totalAberturasRealizadas()}
-              {" - "}
+              <span className="font-bold">{totalAberturasRealizadas()}</span>
+              {" / "}
               {totalAberturasRealizadas() === totalAberturas()
                 ? "estado finalizado"
                 : "estado pendiente"}
@@ -528,7 +506,7 @@ export const ViewPedido = () => {
           ))}
         </div>
 
-        <div className="overflow-x-auto rounded-2xl hover:shadow-md transition-all ease-in-out border border-gray-200 mt-5 max-md:hidden md:block">
+        <div className="overflow-x-auto rounded-2xl hover:shadow-md transition-all ease-in-out border border-gray-200 mt-5 max-md:hidden md:block h-[80vh]">
           <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm uppercase">
             <thead>
               <tr>
@@ -542,25 +520,19 @@ export const ViewPedido = () => {
                   Color
                 </th>
                 <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                  Cliente
+                  AnchoXAlto
                 </th>
                 <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                  Ancho - Alto
+                  Cliente
                 </th>
                 <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Cantidad
                 </th>
                 <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                  Cantidad Realizada
+                  Realizado
                 </th>
-                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                  Eliminar
-                </th>
-                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                  Editar Producto
-                </th>
-                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                  Realizada - Total
+                <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-center">
+                  Acciones
                 </th>
                 <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                   Abertura realizada
@@ -570,7 +542,7 @@ export const ViewPedido = () => {
             <tbody className="divide-y divide-gray-200 text-left">
               {currentResults?.map((p) => (
                 <tr key={p.id} className="cursor-pointer">
-                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase font-bold">
                     {p?.detalle}
                   </td>
                   <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
@@ -580,67 +552,65 @@ export const ViewPedido = () => {
                     {p?.color}
                   </td>
                   <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                    {p?.cliente}
-                  </td>
-                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     {p?.ancho}x{p?.alto}
+                  </td>
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase font-bold">
+                    {p?.cliente}
                   </td>
                   <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                     {p?.cantidad}
                   </td>
-                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase flex">
                     <p
                       className={`${
                         p?.cantidad === p?.cantidadFaltante
                           ? "bg-green-500"
                           : "bg-orange-500"
-                      } rounded-full py-2 w-[40px] text-white text-center mx-auto shadow`}
+                      } rounded-xl py-1 px-3 text-white text-center mx-auto shadow`}
                     >
                       {p?.cantidadFaltante}
                     </p>
                   </td>
-                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                  <td className="py-3 px-3 text-sm text-left space-x-2">
                     <button
                       type="button"
                       // onClick={() => handleEliminarProductoPedido(p?.id)}
                       onClick={() => {
                         handleBorrarAccesorioOpen(), setGuardarId(p.id);
                       }}
-                      className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-red-500/10  text-red-900 py-1 px-5 rounded-xl shadow border-[1px] border-red-800 text-sm"
+                      className="uppercase max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-red-500/10  text-red-900 py-2 px-5 rounded-xl text-sm hover:shaodw-md transition-all ease-linear"
                     >
                       eliminar
                     </button>
-                  </td>
-                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+
                     <button
                       onClick={() => {
                         openModal(), handleSeleccionarId(p?.id);
                       }}
                       type="button"
-                      className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-white py-1 px-5 rounded-xl shadow border-[1px] border-slate-300 text-sm"
+                      className="uppercase max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-green-500/10  text-green-700 py-2 px-5 rounded-xl text-sm hover:shaodw-md transition-all ease-linear"
                     >
-                      editar
+                      editar product.
                     </button>
-                  </td>
-                  <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+
                     <button
                       onClick={() => {
                         openModalEstado(), handleSeleccionarId(p?.id);
                       }}
                       type="button"
-                      className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-slate-500/10 py-1 px-5 rounded-xl shadow border-[1px] border-slate-300 text-sm"
+                      className="uppercase max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-indigo-500/10  text-indigo-700 py-2 px-5 rounded-xl text-sm hover:shaodw-md transition-all ease-linear"
                     >
-                      editar
+                      editar cant.
                     </button>
                   </td>
                   <td className="py-3 px-3 text-sm text-left  uppercase">
                     <button
                       type="button"
-                      className={`font-normal capitalize px-4 py-1 rounded max-md:text-xs max-md:py-1 max-md:px-4 ${
+                      className={`font-normal px-4 py-2 rounded-xl max-md:text-xs max-md:py-1 max-md:px-4 ${
                         p?.cantidad === p?.cantidadFaltante
-                          ? "bg-indigo-500/10 rounded-xl border-[1px] border-indigo-500 text-indigo-600"
-                          : "bg-orange-500/10 rounded-xl border-[1px] border-orange-500 text-orange-600"
-                      } shadow`}
+                          ? "bg-green-500 rounded-xl text-white"
+                          : "bg-orange-500 rounded-xl text-white"
+                      } uppercase shadow-md shadow-gray-300/10`}
                     >
                       {p?.cantidad === p?.cantidadFaltante
                         ? "completada"
@@ -657,7 +627,7 @@ export const ViewPedido = () => {
       {totalPages > 1 && (
         <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
           <button
-            className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+            className="cursor-pointer mx-1 px-3 py-2 rounded-xl shadow shadow-black/20 text-sm flex gap-1 items-center border-slate-300 border-[1px]"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -679,10 +649,10 @@ export const ViewPedido = () => {
           {Array.from({ length: totalPages }).map((_, index) => (
             <button
               key={index}
-              className={`mx-1 px-3 py-1 rounded ${
+              className={`mx-1 px-3 py-1 rounded-xl ${
                 currentPage === index + 1
-                  ? "bg-indigo-500 hover:bg-primary transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
-                  : "bg-gray-100 shadow shadow-black/20 text-sm"
+                  ? "cursor-pointer bg-green-500  text-white shadow shadow-black/20 text-sm"
+                  : "cursor-pointer bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
               }`}
               onClick={() => handlePageChange(index + 1)}
             >
@@ -690,7 +660,7 @@ export const ViewPedido = () => {
             </button>
           ))}
           <button
-            className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+            className="cursor-pointer mx-1 px-3 py-2 rounded-xl shadow shadow-black/20 text-sm flex gap-1 items-center border-slate-300 border-[1px]"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
@@ -719,28 +689,6 @@ export const ViewPedido = () => {
         handleBorrarAccesorioClose={handleBorrarAccesorioClose}
       />
 
-      {/* <div className="max-md:hiddens max-md:items-start border-[1px] shadow py-10 max-md:shadow-none px-10 rounded flex gap-4 max-md:flex-col max-md:px-1 max-md:py-2 max-md:border-none">
-        <button
-          onClick={() => openModalCrearPedido()}
-          className="py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
-        >
-          Crear un nuevo producto
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-5 h-5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-            />
-          </svg>
-        </button>
-      </div> */}
       <ModalEditarProductoPedido
         obtenerId={obtenerId}
         isOpen={isOpen}
@@ -764,6 +712,8 @@ export const ViewPedido = () => {
         datosCliente={datosCliente}
         isOpenCrarPedido={isOpenCrarPedido}
         closeModalCrearPedidos={closeModalCrearPedidos}
+        setDatos={setDatos}
+        datos={datos}
       />
     </section>
   );

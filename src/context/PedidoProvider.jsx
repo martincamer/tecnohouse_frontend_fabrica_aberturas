@@ -241,20 +241,27 @@ export const PedidoProvider = ({ children }) => {
   const handleDeletePresupuesto = (id) => {
     deleteFactura(id);
 
-    toast.error("¡Pedido eliminado correctamente!", {
-      position: "top-right",
+    const datos = datosMensuales.filter((pedido) => pedido.id !== id);
+
+    setDatosMensuales(datos);
+
+    // setPerfiles(proyectoActualizado);
+    toast.error("¡Pedido eliminado correctamente, crea otro pedido!", {
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
-
-    setTimeout(() => {
-      location.reload();
-    }, 1500);
   };
 
   return (

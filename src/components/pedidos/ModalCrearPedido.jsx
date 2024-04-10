@@ -69,7 +69,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-[1220px] max-md:px-3 p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl max-md:w-full">
+              <div className="inline-block w-[1350px] max-md:px-3 p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl max-md:w-full">
                 <div className="py-3 pb-6 flex justify-end">
                   <div
                     onClick={closeModal}
@@ -111,6 +111,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                       <option>SELECCIONAR</option>
                       <option>IRAOLA</option>
                       <option>BURZACO</option>
+                      <option>LA PAMPA TOAY</option>
                       <option>LONG</option>
                       <option>BARRANQUERAS</option>
                       <option>MAR DEL PLATA</option>
@@ -161,7 +162,7 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                       <tbody>
                         {productoSeleccionado.map((p) => (
                           <tr key={p.id}>
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase font-bold">
                               {p.detalle}
                             </td>
                             <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
@@ -173,10 +174,10 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                             <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.categoria}
                             </td>
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase font-bold">
                               {p.cliente}
                             </td>
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase font-bold">
                               {p?.cantidad}
                             </td>
                             <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">

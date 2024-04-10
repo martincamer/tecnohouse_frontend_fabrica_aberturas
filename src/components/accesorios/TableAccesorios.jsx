@@ -314,9 +314,9 @@ export const TableAccesorios = ({
       </div>
 
       {totalPages > 1 && (
-        <div className="flex flex-wrap justify-center mt-4 mb-4 gap-3">
+        <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
           <button
-            className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+            className="mx-1 px-3 py-1 rounded-xl cursor-pointer bg-white border-[1px] border-slate-300 shadow shadow-black/20 text-sm flex gap-1 items-center"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -338,10 +338,10 @@ export const TableAccesorios = ({
           {Array.from({ length: totalPages }).map((_, index) => (
             <button
               key={index}
-              className={`mx-1 px-3 py-1 rounded ${
+              className={`mx-1 px-3 py-1 rounded-xl ${
                 currentPage === index + 1
-                  ? "bg-indigo-500 hover:bg-primary transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
-                  : "bg-gray-100 shadow shadow-black/20 text-sm"
+                  ? "bg-green-500 text-white shadow shadow-black/20 text-sm"
+                  : "border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
               }`}
               onClick={() => handlePageChange(index + 1)}
             >
@@ -349,7 +349,7 @@ export const TableAccesorios = ({
             </button>
           ))}
           <button
-            className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+            className="mx-1 px-3 py-1 rounded-xl cursor-pointer bg-white border-[1px] border-slate-300 shadow shadow-black/20 text-sm flex gap-1 items-center"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >

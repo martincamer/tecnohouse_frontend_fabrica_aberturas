@@ -1,4 +1,3 @@
-import { usePedidoContext } from "../../../context/PedidosMensualesProvider";
 import { useEffect, useState } from "react";
 import { Search } from "../../../components/ui/Search";
 import { TablePedidosRealizados } from "../../../components/pedidos/TablePedidosRealizados";
@@ -198,18 +197,35 @@ export const PedidosRealizados = () => {
     setResultadosFiltrados(search === "" ? dataNew : resultadoFiltrados);
   }, [dataNew, search]);
 
+  const [busqueda, setBusqueda] = useState("");
+
+  // Función para manejar cambios en el campo de búsqueda
+  const handleChangeBusqueda = (e) => {
+    setBusqueda(e.target.value);
+  };
+
+  // Filtrar los datos basados en el término de búsqueda
+  const datosFiltrados = datosAgrupados
+    .map((grupo) => ({
+      ...grupo,
+      productos: grupo.productos.filter((producto) =>
+        producto.detalle.toLowerCase().includes(busqueda.toLowerCase())
+      ),
+    }))
+    .filter((grupo) => grupo.productos.length > 0);
+
   return (
-    <section className="max-md:py-4 w-full py-20 px-14 max-md:pb-32 max-md:px-2">
-      <div className="max-md:border-none max-md:shadow-none border-[1px] border-slate-300 shadow-black/10 shadow py-10 px-12 max-md:px-4 max-md:py-6 w-full rounded-xl">
+    <section className="max-md:py-4 w-full py-20 px-5 max-md:pb-32 max-md:px-2">
+      <div>
         <div className="flex">
           <p className="font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700 max-md:text-sm uppercase">
             Filtrar o buscar pedidos realizados
           </p>
         </div>
 
-        <div className="mt-5 grid grid-cols-4 gap-5 max-md:flex-col max-md:grid-cols-1">
-          <article class="flex flex-col gap-4 rounded-xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
-            <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
+        <div className="mt-5 grid grid-cols-4 gap-5 max-md:flex-col max-md:grid-cols-1 uppercase">
+          <article class="hover:shadow-md transition-all ease-linear cursor-pointer flex flex-col gap-4 rounded-2xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
+            <div class="inline-flex gap-2 self-end rounded-xl bg-green-100 py-2 px-3 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4"
@@ -248,8 +264,8 @@ export const PedidosRealizados = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
-            <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
+          <article class="hover:shadow-md transition-all ease-linear cursor-pointer flex flex-col gap-4 rounded-2xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
+            <div class="inline-flex gap-2 self-end rounded-xl bg-green-100 py-2 px-3 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4"
@@ -283,8 +299,8 @@ export const PedidosRealizados = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
-            <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
+          <article class="hover:shadow-md transition-all ease-linear cursor-pointer flex flex-col gap-4 rounded-2xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
+            <div class="inline-flex gap-2 self-end rounded-xl bg-green-100 py-2 px-3 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4"
@@ -322,8 +338,8 @@ export const PedidosRealizados = () => {
             </div>
           </article>
 
-          <article class="flex flex-col gap-4 rounded-xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
-            <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
+          <article class="hover:shadow-md transition-all ease-linear cursor-pointer flex flex-col gap-4 rounded-2xl max-md:p-3 max-md:shadow border border-slate-200 bg-white p-5">
+            <div class="inline-flex gap-2 self-end rounded-xl bg-green-100 py-2 px-3 text-green-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4"
@@ -362,11 +378,11 @@ export const PedidosRealizados = () => {
           </article>
         </div>
 
-        <div className="mt-5 flex flex-col gap-4">
+        <div className="mt-0 flex flex-col gap-4">
           <div className="mt-10 max-md:mt-2">
             <div className="flex gap-6 items-center max-md:flex-col max-md:items-start max-md:gap-2">
               <div className="flex gap-2 items-center">
-                <label className="text-sm text-indigo-500 max-md:uppercase">
+                <label className="text-sm text-indigo-500 max-md:uppercase uppercase">
                   Fecha de inicio
                 </label>
                 <input
@@ -377,7 +393,7 @@ export const PedidosRealizados = () => {
                 />
               </div>
               <div className="flex gap-2 items-center">
-                <label className="text-sm text-indigo-500 max-md:uppercase">
+                <label className="text-sm text-indigo-500 uppercase">
                   Fecha de fin
                 </label>
                 <input
@@ -413,7 +429,7 @@ export const PedidosRealizados = () => {
         </div>
 
         <div className="mt-5 flex gap-3 w-full items-center max-md:flex-col max-md:items-start">
-          <div className="w-1/3 max-md:w-full">
+          <div className="w-1/4 max-md:w-full">
             <Search variable="w-full" search={search} searcher={searcher} />
           </div>
           <PDFDownloadLink
@@ -425,56 +441,88 @@ export const PedidosRealizados = () => {
           </PDFDownloadLink>
         </div>
 
-        <div className="mt-5 md:h-[500px] md:overflow-y-scroll w-full">
-          <TablePedidosRealizados
-            resultadoFiltrados={resultadoFiltrados}
-            loading={loading}
-            dataNew={dataNew}
-          />
-        </div>
+        <TablePedidosRealizados
+          resultadoFiltrados={resultadoFiltrados}
+          loading={loading}
+          dataNew={dataNew}
+        />
       </div>
 
       <div className="px-4 mt-12 font-semibold text-base text-slate-600 flex">
         <h3 className="border-b-[3px] border-slate-600 uppercase text-sm">
-          Aberturas total realizadas.
+          Aberturas total realizadas/entregadas.
         </h3>
       </div>
 
-      <div className="w-full mt-5 rounded-xl h-[50vh] overflow-y-scroll px-3">
-        <div className="border-[1px] border-slate-300 rounded-xl shadow w-full">
+      <div className="w-full mt-5 rounded-xl h-[60vh] overflow-y-scroll px-3">
+        <div className="w-1/4 mb-5 p-2 border-[1px] border-gray-300 rounded-xl flex items-center">
+          <input
+            type="text"
+            placeholder="Buscar por abertura por el detalle..."
+            value={busqueda}
+            onChange={handleChangeBusqueda}
+            className="w-full  uppercase text-sm outline-none"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            />
+          </svg>
+        </div>
+
+        <div className="border-[1px] border-slate-300 rounded-2xl hover:shadow-md transition-all ease-linear shadow w-full">
+          {/* Tabla */}
           <table className="w-full">
             <thead>
               <tr>
-                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm">
+                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm text-left">
                   Detalle
                 </th>
-                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm">
+                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm text-left">
+                  AnchoxAlto
+                </th>
+                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm text-left">
                   Categoria
                 </th>
-                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm">
+                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm text-left">
                   Color
                 </th>
-                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm">
+                <th className="py-3 px-2 max-md:text-xs font-bold uppercase text-indigo-500 text-sm text-left">
                   Cantidad
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {datosAgrupados.map((c) =>
-                c.productos.map((c, index) => (
-                  <tr key={index}>
-                    <th className="border-[1px] border-gray-300 p-2 max-md:text-xs text-sm font-normal uppercase">
-                      {c.detalle}
-                    </th>
-                    <th className="border-[1px] border-gray-300 p-2 max-md:text-xs text-sm font-normal uppercase">
-                      {c.categoria}
-                    </th>
-                    <th className="border-[1px] border-gray-300 p-2 max-md:text-xs text-sm font-normal uppercase">
-                      {c.color}
-                    </th>
-                    <th className="border-[1px] border-gray-300 p-2 max-md:text-xs text-sm font-bold">
-                      {c.cantidad_total}
-                    </th>
+            <tbody className="divide-gray-300 divide-y-[1px]">
+              {datosFiltrados.map((grupo, index) =>
+                grupo.productos.map((producto, subIndex) => (
+                  <tr key={`${index}-${subIndex}`}>
+                    <td className="p-2 max-md:text-xs text-sm font-bold py-4 uppercase">
+                      {producto.detalle}
+                    </td>
+                    <td className="p-2 max-md:text-xs text-sm py-4 uppercase">
+                      {producto.ancho}x{producto.alto}
+                    </td>
+                    <td className="p-2 max-md:text-xs text-sm font-normal py-4 uppercase">
+                      {producto.categoria}
+                    </td>
+                    <td className="p-2 max-md:text-xs text-sm font-normal py-4 uppercase">
+                      {producto.color}
+                    </td>
+                    <td className="p-2 max-md:text-xs text-sm font-bold py-4">
+                      <span className="bg-green-100 text-green-600 py-2 px-3 rounded-xl">
+                        {" "}
+                        {producto.cantidad_total}
+                      </span>
+                    </td>
                   </tr>
                 ))
               )}

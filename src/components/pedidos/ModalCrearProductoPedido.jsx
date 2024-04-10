@@ -70,7 +70,6 @@ export const ModalCrearProductoPedido = ({
 
   return (
     <Menu as="div" className="z-50">
-      <ToastContainer />
       <Transition appear show={isOpenPedido} as={Fragment}>
         <Dialog
           as="div"

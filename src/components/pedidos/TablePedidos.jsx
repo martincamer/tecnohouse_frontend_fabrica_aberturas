@@ -6,7 +6,7 @@ import { IoCloseCircle } from "react-icons/io5";
 import { ModalVerClientes } from "./ModalVerClientes";
 
 export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
-  const { handleDeletePresupuesto, results } = usePedidoContext();
+  const { handleDeletePresupuesto } = usePedidoContext();
 
   useEffect(() => {
     setClickStates(datosMensuales.map(() => true));
@@ -144,7 +144,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
           <thead>
             <tr>
               <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                Numero
+                Numero/Pedido
               </th>
               <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
                 Cliente
@@ -176,7 +176,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
                 <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {p?.id}
                 </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase font-bold">
                   {p?.cliente}
                 </td>
                 <td className="py-3 px-3 text-sm text-left uppercase font-bold">
@@ -291,7 +291,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
         {totalPages > 1 && (
           <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
             <button
-              className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+              className="mx-1 px-3 py-2 rounded-xl bg-white shadow border-slate-300 border-[1px] shadow-black/20 text-sm flex gap-1 items-center cursor-pointer"
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
             >
@@ -309,15 +309,14 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
                   d="M15.75 19.5 8.25 12l7.5-7.5"
                 />
               </svg>
-              Anterior
             </button>
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
                 key={index}
-                className={`mx-1 px-3 py-1 rounded ${
+                className={`mx-1 px-3 py-1 rounded-xl ${
                   currentPage === index + 1
-                    ? "bg-indigo-500 hover:bg-primary transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
-                    : "bg-gray-100 shadow shadow-black/20 text-sm"
+                    ? "bg-green-500 transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
+                    : "bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
                 }`}
                 onClick={() => handlePageChange(index + 1)}
               >
@@ -325,11 +324,10 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
               </button>
             ))}
             <button
-              className="mx-1 px-3 py-1 rounded bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center hover:bg-indigo-500 transiton-all ease-in duration-100 hover:text-white"
+              className="mx-1 px-3 py-2 rounded-xl bg-white shadow border-slate-300 border-[1px] shadow-black/20 text-sm flex gap-1 items-center"
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
             >
-              Siguiente{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

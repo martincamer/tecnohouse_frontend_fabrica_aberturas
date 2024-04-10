@@ -9,6 +9,8 @@ export const CrearNuevoPedidoViewPedido = ({
   isOpenCrarPedido,
   closeModalCrearPedidos,
   datosCliente,
+  setDatos,
+  datos,
 }) => {
   const {
     openModalProductos,
@@ -17,6 +19,8 @@ export const CrearNuevoPedidoViewPedido = ({
     deleteToResetProductos,
   } = usePedidoContext();
 
+  console.log(datos);
+
   const onSubmit = async () => {
     try {
       const res = await crearValorPedidoUnicos(
@@ -24,35 +28,41 @@ export const CrearNuevoPedidoViewPedido = ({
         productoSeleccionado
       );
 
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      console.log(res.data);
 
-      toast.success("¡Nuevos clientes creados correctamente!", {
-        position: "top-center",
-        autoClose: 1500,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        style: {
-          padding: "15px",
-          borderRadius: "15px",
-          boxShadow: "none",
-          border: "1px solid rgb(203 213 225)",
-        },
-      });
+      // Reemplazar el arreglo de datos existente con el nuevo arreglo de productos
+      const nuevosDatos = res.data.updatedResult.productos.respuesta;
+      setDatos(nuevosDatos);
+
+      // Mostrar una notificación de éxito
+      toast.success(
+        "¡Productos agregados exitosamente al registro existente!",
+        {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          style: {
+            padding: "15px",
+            borderRadius: "15px",
+            boxShadow: "none",
+            border: "1px solid rgb(203 213 225)",
+          },
+        }
+      );
+
+      closeModalCrearPedidos();
     } catch (error) {
       console.error("Error durante la solicitud:", error.message);
-      // Maneja el error de la solicitud
     }
   };
 
   return (
     <Menu as="div" className="z-50">
-      <ToastContainer />
       <Transition appear show={isOpenCrarPedido} as={Fragment}>
         <Dialog
           as="div"
