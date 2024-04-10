@@ -50,8 +50,6 @@ export const ModalEditarProductoPedidoEstado = ({
     try {
       const res = await actualizarFacturaProductoUnicoDos(obtenerId, data);
 
-      console.log(res.config.data);
-
       const tipoExistenteIndexTwo = datos.findIndex(
         (tipo) => tipo.id === obtenerId
       );
