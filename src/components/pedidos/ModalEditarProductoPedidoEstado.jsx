@@ -129,11 +129,13 @@ export const ModalEditarProductoPedidoEstado = ({
 
       closeModalEstado();
     } catch (error) {
-      setError("LA CANTIDAD QUE INGRESASTE ES MAYOR A LA CANTIDAD GENERADA");
+      if (error) {
+        setError("LA CANTIDAD QUE INGRESASTE ES MAYOR A LA CANTIDAD GENERADA");
 
-      setTimeout(() => {
-        setError("");
-      }, 1500);
+        setTimeout(() => {
+          setError("");
+        }, 1500);
+      }
     }
   });
 
