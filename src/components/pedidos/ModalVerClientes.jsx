@@ -98,34 +98,52 @@ export const ModalVerClientes = ({ isOpen, closeModal, obtenerId }) => {
                 </Dialog.Title>
 
                 <div className="mt-4 h-[30vh] overflow-y-scroll space-y-2">
-                  {datos.productos?.respuesta
-                    ?.sort((a, b) => {
-                      // Si a.cantidad es igual a a.cantidadFaltante, a debería ir después de b
-                      if (a.cantidad === a.cantidadFaltante) return 1;
-                      // Si b.cantidad es igual a b.cantidadFaltante, b debería ir después de a
-                      if (b.cantidad === b.cantidadFaltante) return -1;
-                      // En cualquier otro caso, no se altera el orden
-                      return 0;
-                    })
-                    .map((producto, index) => (
-                      <div
-                        key={index}
-                        className="flex justify-between border-slate-200 border-[1px] py-2 px-4 hover:shadow transition-all ease-linear cursor-pointer rounded-xl items-center"
-                      >
-                        <span className="text-sm text-gray-700 uppercase">
-                          {producto.cliente}
-                        </span>
-                        {producto.cantidad === producto.cantidadFaltante ? (
-                          <span className="text-sm text-green-600 font-semibold bg-green-100 py-2 px-2 rounded-xl uppercase">
-                            Realizado
-                          </span>
-                        ) : (
-                          <span className="text-sm text-red-600 font-semibold uppercase bg-red-100 py-2 px-2 rounded-xl">
-                            Falta realizar
-                          </span>
-                        )}
-                      </div>
-                    ))}
+                  {/* Verificar si hay datos de productos */}
+                  {datos.productos?.respuesta && (
+                    <>
+                      {/* Iterar sobre los productos */}
+                      {datos.productos.respuesta
+                        .sort((a, b) => {
+                          // Si a.cantidad es igual a a.cantidadFaltante, a debería ir después de b
+                          if (a.cantidad === a.cantidadFaltante) return 1;
+                          // Si b.cantidad es igual a b.cantidadFaltante, b debería ir después de a
+                          if (b.cantidad === b.cantidadFaltante) return -1;
+                          // En cualquier otro caso, no se altera el orden
+                          return 0;
+                        })
+                        .reduce((clientesMostrados, producto, index) => {
+                          // Verificar si el cliente ya ha sido mostrado antes
+                          if (!clientesMostrados.includes(producto.cliente)) {
+                            // Si el cliente es único, añadirlo a la lista de clientes mostrados
+                            // clientesMostrados.push(producto.cliente);
+                            // Renderizar el elemento del cliente y su producto asociado
+                            return [
+                              ...clientesMostrados,
+                              <div
+                                key={index}
+                                className="flex justify-between border-slate-200 border-[1px] py-2 px-4 hover:shadow transition-all ease-linear cursor-pointer rounded-xl items-center"
+                              >
+                                <span className="text-sm text-gray-700 uppercase">
+                                  {producto.cliente}
+                                </span>
+                                {producto.cantidad ===
+                                producto.cantidadFaltante ? (
+                                  <span className="text-sm text-green-600 font-semibold bg-green-100 py-2 px-2 rounded-xl uppercase">
+                                    Realizado
+                                  </span>
+                                ) : (
+                                  <span className="text-sm text-red-600 font-semibold uppercase bg-red-100 py-2 px-2 rounded-xl">
+                                    Falta realizar
+                                  </span>
+                                )}
+                              </div>,
+                            ];
+                          }
+                          // Si el cliente ya ha sido mostrado antes, no renderizar nada
+                          return clientesMostrados;
+                        }, [])}
+                    </>
+                  )}
                 </div>
               </div>
             </Transition.Child>
