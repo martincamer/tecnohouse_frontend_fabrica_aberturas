@@ -78,7 +78,60 @@ export const Pedidos = () => {
     setResultadosFiltrados(search === "" ? datosMensuales : resultadoFiltrados);
   }, [datosMensuales, search]);
 
-  return (
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return isLoading ? (
+    <section className="w-full h-full min-h-full max-h-full px-12 max-md:px-4 flex flex-col gap-12 max-md:gap-8 py-24">
+      <div className="w-[300px] py-5 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
+
+      <div className="rounded-xl bg-white grid grid-cols-4 gap-3 max-md:grid-cols-1 max-md:border-none max-md:shadow-none max-md:py-2 max-md:px-0">
+        {[1, 2, 3, 4].map((index) => (
+          <article
+            key={index}
+            className="animate-pulse flex items-center justify-between gap-4 rounded-2xl border-[1px] border-slate-200 bg-white py-12 px-8 hover:shadow-md transition-all ease-linear cursor-pointer"
+          >
+            <div className="flex gap-4 items-center">
+              <div className="rounded-full bg-gray-200 animate-pulse w-9 h-9"></div>
+              <div>
+                <div className="bg-gray-200 animate-pulse h-8 w-24"></div>
+                <div className="bg-gray-200 animate-pulse h-4 w-20"></div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <div className="border-slate-200 shadow-md rounded-2xl border-[1px] w-1/4 py-5 px-4"></div>
+        <div className="border-slate-200 shadow-md rounded-2xl border-[1px] w-1/5 py-5 px-4"></div>
+      </div>
+
+      <div className="border-[1px] border-slate-200 animate-pulse rounded-2xl  max-md:hidden md:block hover:shadow-md transition-all ease-linear ">
+        <table className="min-w-full  uppercase">
+          <thead className="bg-slate-200 rounded-xl">
+            <tr>
+              <th className="py-9 px-3"></th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-300">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => (
+              <tr key={index}>
+                <th className="py-9 px-3"></th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  ) : (
     <section className="w-full py-20 max-md:py-2">
       <div className="px-5 max-md:px-4 max-md:py-6 w-full max-md:border-none max-md:shadow-none">
         <div className="flex">

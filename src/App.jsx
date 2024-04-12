@@ -24,11 +24,11 @@ import { Entradas } from "./routes/pages/protected/Entradas";
 import { Salidas } from "./routes/pages/protected/Salidas";
 import { EntradasDos } from "./routes/pages/protected/EntradasDos";
 import { SalidasDos } from "./routes/pages/protected/SalidasDos";
+import { MenuMobile } from "./components/ui/MenuMobile";
 //import normales
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
-import { MenuMobile } from "./components/ui/MenuMobile";
 
 function App() {
   const { isAuth } = useAuth();

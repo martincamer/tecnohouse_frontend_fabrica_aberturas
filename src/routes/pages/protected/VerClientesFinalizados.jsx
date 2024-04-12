@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePedidoContext } from "../../../context/PedidoProvider";
 import * as XLSX from "xlsx";
 
@@ -55,7 +55,31 @@ export const VerClientesFinalizados = () => {
     XLSX.writeFile(wb, "datos_pedidos.xlsx");
   };
 
-  return (
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return isLoading ? (
+    <section className="w-full h-full min-h-full max-h-full px-12 max-md:px-4 flex flex-col gap-12 max-md:gap-8 py-24">
+      <div className="w-[300px] py-5 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
+
+      <div className="flex flex-col gap-2">
+        <div className="border-slate-200 shadow-md rounded-2xl border-[1px] w-1/4 py-5 px-4"></div>
+        <div className="border-slate-200 shadow-md rounded-2xl border-[1px] w-1/5 py-5 px-4"></div>
+      </div>
+      <div className="grid grid-cols-5 gap-4 mb-10">
+        {currentResults.map((c) => (
+          <div className="border-slate-200 animate-pulse py-28 px-10 border-[1px] rounded-2xl hover:shadow-md transition-all ease-linear shadow-md"></div>
+        ))}
+      </div>
+    </section>
+  ) : (
     <section className="w-full py-20 px-4 max-md:py-6 max-md:px-2">
       <div className="flex max-md:px-4">
         <p className="uppercase font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700 max-md:text-sm">

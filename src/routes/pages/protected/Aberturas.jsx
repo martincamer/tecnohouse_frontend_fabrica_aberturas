@@ -13,6 +13,7 @@ import { ModalCrearNuevoColor } from "../../../components/aberturas/ModalCrearNu
 import { ModalVerColores } from "../../../components/aberturas/ModalVerColores";
 import { ModalCrearEditar } from "../../../components/aberturas/ModalCrearEditar";
 import { ModalVerCategorias } from "../../../components/aberturas/ModalVerCategorias";
+import { useEffect, useState } from "react";
 
 export const Aberturas = () => {
   const {
@@ -36,8 +37,62 @@ export const Aberturas = () => {
 
   const { spinner } = useAuth();
 
-  return spinner ? (
-    <Spinner />
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return isLoading ? (
+    <section className="w-full h-full min-h-full max-h-full px-12 max-md:px-4 flex flex-col gap-12 max-md:gap-8 py-24">
+      <div className="w-[300px] py-5 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
+
+      <div className="animate-pulse rounded-2xl border-slate-200 border-[1px] flex shadow">
+        <div className="flex justify-center w-full border-r-[1px] border-slate-200 py-12 px-20">
+          <div className="bg-slate-300 py-6 px-12 rounded-2xl animate-pulse"></div>
+        </div>
+        <div className="w-full justify-center flex py-12 px-20">
+          <div className="bg-slate-300 py-6 px-12 rounded-2xl animate-pulse"></div>
+        </div>
+      </div>
+
+      <div className="border-slate-200 shadow-md rounded-2xl border-[1px] w-full py-4 px-4">
+        <div className="grid-cols-7 grid gap-2 w-full">
+          <div className="py-5 px-6 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
+          <div className="py-5 px-6 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
+          <div className="py-5 px-6 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
+          <div className="py-5 px-6 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
+          <div className="py-5 px-6 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
+          <div className="py-5 px-6 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
+          <div className="py-5 px-6 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
+        </div>
+      </div>
+      <div className="flex flex-col gap-2">
+        <div className="border-slate-200 shadow-md rounded-2xl border-[1px] w-1/4 py-5 px-4"></div>
+        <div className="border-slate-200 shadow-md rounded-2xl border-[1px] w-1/5 py-5 px-4"></div>
+      </div>
+
+      <div className="border-[1px] border-slate-200 animate-pulse rounded-2xl  max-md:hidden md:block hover:shadow-md transition-all ease-linear ">
+        <table className="min-w-full  uppercase">
+          <thead className="bg-slate-200 rounded-xl">
+            <tr>
+              <th className="py-9 px-3"></th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-300">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => (
+              <tr key={index}>
+                <th className="py-9 px-3"></th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
   ) : (
     <main className="w-full py-20 max-md:px-2 max-md:py-8">
       <section className="max-md:border-none max-md:shadow-none max-md:px-4 max-md:w-full mx-auto px-5 h-full flex flex-col gap-10">
