@@ -8,17 +8,20 @@
       "sizes": "512x512"
     },
     {
+      "purpose": "maskable",
       "sizes": "1024x1024",
       "src": "logo.png",
       "type": "image/png"
     },
     {
+      "purpose": "any",
       "sizes": "1024x1024",
       "src": "logo.png",
       "type": "image/png"
     }
   ],
   "orientation": "any",
+  "purpose": "maskable",
   "display": "fullscreen",
   "dir": "auto",
   "lang": "es-AR",
