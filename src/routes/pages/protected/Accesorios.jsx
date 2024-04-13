@@ -91,7 +91,7 @@ export const Accesorios = () => {
       </div>
 
       <div className="border-[1px] border-slate-200 animate-pulse rounded-2xl  max-md:hidden md:block hover:shadow-md transition-all ease-linear ">
-        <table className="w-full  uppercase">
+        <table className="min-w-full  uppercase">
           <thead className="bg-slate-200 rounded-xl">
             <tr>
               <th className="py-9 px-3"></th>
