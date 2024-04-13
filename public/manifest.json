@@ -3,6 +3,11 @@
   "background_color": "#ffffff",
   "icons": [
     {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
       "purpose": "maskable",
       "sizes": "1024x1024",
       "src": "logo.png",
