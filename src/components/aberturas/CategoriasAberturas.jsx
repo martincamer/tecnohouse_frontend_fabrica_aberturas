@@ -10,10 +10,10 @@ export const CategoriasAberturas = ({
 
   return (
     <div>
-      <div className="flex max-md:flex-col gap-3 max-md:gap-2 border-slate-300 border-[1px] rounded-xl py-4 hover:shadow-md transition-all ease-in-out cursor-pointer px-4">
+      <div className="grid grid-cols-7 max-md:grid-cols-2 gap-3 max-md:gap-2 border-slate-300 border-[1px] rounded-xl py-4 hover:shadow-md transition-all ease-in-out cursor-pointer px-4 max-md:border-none max-md:px-0 max-md:py-0">
         <button
           onClick={openModal}
-          className="flex gap-2 items-center bg-indigo-500/10 text-indigo-600 border-[1px] border-indigo-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase "
+          className="flex gap-2 items-center text-indigo-700 bg-indigo-50 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Crear nuevo producto o objeto
           <svg
@@ -22,7 +22,7 @@ export const CategoriasAberturas = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5"
+            className="w-6 h-6 max-md:hidden"
           >
             <path
               strokeLinecap="round"
@@ -33,7 +33,7 @@ export const CategoriasAberturas = ({
         </button>
         <button
           onClick={openModalCrearCategoria}
-          className="flex gap-2 items-center bg-indigo-500/10 text-indigo-600 border-[1px] border-indigo-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
+          className="flex gap-2 items-center text-indigo-700 bg-indigo-50 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Crear nueva categoria
           <svg
@@ -42,7 +42,7 @@ export const CategoriasAberturas = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5"
+            className="w-6 h-6 max-md:hidden"
           >
             <path
               strokeLinecap="round"
@@ -53,7 +53,7 @@ export const CategoriasAberturas = ({
         </button>
         <button
           onClick={openModalVerColores}
-          className="flex gap-2 items-center bg-indigo-500/10 text-indigo-600 border-[1px] border-indigo-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
+          className="flex gap-2 items-center text-indigo-700 bg-indigo-50 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Crear nuevo color
           <svg
@@ -62,7 +62,7 @@ export const CategoriasAberturas = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5"
+            className="w-6 h-6 max-md:hidden"
           >
             <path
               strokeLinecap="round"
@@ -73,7 +73,7 @@ export const CategoriasAberturas = ({
         </button>
         <button
           onClick={openModalVerCategoria}
-          className="flex gap-2 items-center bg-slate-500/10 text-slate-700 border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
+          className="flex gap-2 items-center text-slate-700 bg-slate-100 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Ver categorias creadas
           <svg
@@ -82,7 +82,7 @@ export const CategoriasAberturas = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5"
+            className="w-6 h-6 max-md:hidden"
           >
             <path
               strokeLinecap="round"
@@ -93,7 +93,7 @@ export const CategoriasAberturas = ({
         </button>
         <button
           onClick={openModalEditarColores}
-          className="flex gap-2 items-center bg-slate-500/10 text-slate-700 border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
+          className="flex gap-2 items-center text-slate-700 bg-slate-100 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase"
         >
           Ver colores creados
           <svg
@@ -102,7 +102,7 @@ export const CategoriasAberturas = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5"
+            className="w-6 h-6 max-md:hidden"
           >
             <path
               strokeLinecap="round"
@@ -123,7 +123,7 @@ export const CategoriasAberturas = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 max-md:hidden"
           >
             <path
               strokeLinecap="round"
@@ -144,7 +144,7 @@ export const CategoriasAberturas = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 max-md:hidden"
           >
             <path
               strokeLinecap="round"

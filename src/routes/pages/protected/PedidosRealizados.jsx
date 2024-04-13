@@ -225,7 +225,7 @@ export const PedidosRealizados = () => {
   }, []);
 
   return isLoading ? (
-    <section className="w-full h-full min-h-full max-h-full px-12 max-md:px-4 flex flex-col gap-12 max-md:gap-8 py-24">
+    <section className="w-full h-full min-h-full max-h-full px-12 max-md:px-5 flex flex-col gap-12 max-md:gap-8 py-24 max-md:py-8">
       <div className="w-[300px] py-5 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
 
       <div className="rounded-xl bg-white grid grid-cols-4 gap-3 max-md:grid-cols-1 max-md:border-none max-md:shadow-none max-md:py-2 max-md:px-0">
@@ -268,7 +268,7 @@ export const PedidosRealizados = () => {
       </div>
     </section>
   ) : (
-    <section className="max-md:py-4 w-full py-20 px-5 max-md:pb-32 max-md:px-2">
+    <section className="max-md:py-4 w-full py-20 px-5 max-md:pb-32 max-md:px-5">
       <div>
         <div className="flex">
           <p className="font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700 max-md:text-sm uppercase">
@@ -483,7 +483,11 @@ export const PedidosRealizados = () => {
 
         <div className="mt-5 flex gap-3 w-full items-center max-md:flex-col max-md:items-start">
           <div className="w-1/4 max-md:w-full">
-            <Search variable="w-full" search={search} searcher={searcher} />
+            <Search
+              variable="w-full max-md:w-full max-md:max-w-full"
+              search={search}
+              searcher={searcher}
+            />
           </div>
           <PDFDownloadLink
             fileName="Pedido Completo Fabrica Aberturas"
@@ -508,13 +512,13 @@ export const PedidosRealizados = () => {
       </div>
 
       <div className="w-full mt-5 rounded-xl h-[60vh] overflow-y-scroll px-3">
-        <div className="w-1/4 mb-5 p-2 border-[1px] border-gray-300 rounded-xl flex items-center">
+        <div className="w-1/4 max-md:w-full mb-5 p-2 border-[1px] border-gray-300 rounded-xl flex items-center">
           <input
             type="text"
             placeholder="Buscar por abertura por el detalle..."
             value={busqueda}
             onChange={handleChangeBusqueda}
-            className="w-full  uppercase text-sm outline-none"
+            className="w-full max-w-full  uppercase text-sm outline-none"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -532,7 +536,7 @@ export const PedidosRealizados = () => {
           </svg>
         </div>
 
-        <div className="border-[1px] border-slate-300 rounded-2xl hover:shadow-md transition-all ease-linear shadow w-full">
+        <div className="border-[1px] border-slate-300 rounded-2xl hover:shadow-md transition-all ease-linear shadow w-full max-md:overflow-x-scroll">
           {/* Tabla */}
           <table className="w-full">
             <thead>

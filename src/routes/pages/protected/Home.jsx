@@ -94,7 +94,7 @@ export const Home = () => {
   }, []);
 
   return isLoading ? (
-    <section className="w-full h-full min-h-full max-h-full px-12 max-md:px-4 flex flex-col gap-12 max-md:gap-8 py-24">
+    <section className="w-full h-full min-h-full max-h-full px-12 max-md:px-4 flex flex-col gap-12 max-md:gap-8 py-24 max-md:py-6">
       <div className="rounded-xl bg-white grid grid-cols-4 gap-3 max-md:grid-cols-1 max-md:border-none max-md:shadow-none max-md:py-2 max-md:px-0">
         {[1, 2, 3, 4].map((index) => (
           <article
@@ -112,18 +112,18 @@ export const Home = () => {
         ))}
       </div>
 
-      <div className="w-full animate-pulse flex flex-col gap-3 py-10 px-10 shadow-md h-[70vh] border-slate-200 border-[1px] rounded-2xl">
+      <div className="w-full animate-pulse flex flex-col gap-3 py-10 px-10 shadow-md h-[70vh] max-md:h-[30vh] border-slate-200 border-[1px] rounded-2xl">
         <div className="flex items-end justify-around h-full border-b-[1px] border-slate-200">
-          <div className="h-[500px]  animate-pulse  w-[80px] rounded-t-2xl bg-slate-300 mr-3"></div>
-          <div className="h-[300px]  animate-pulse  w-[80px] rounded-t-2xl bg-slate-300 mr-3"></div>
-          <div className="h-[150px]  animate-pulse  w-[80px] rounded-t-2xl bg-slate-300 mr-3"></div>
-          <div className="h-[90px]   animate-pulse w-[80px] rounded-t-2xl bg-slate-300 mr-3"></div>
-          <div className="h-[400px]  animate-pulse  w-[80px] rounded-t-2xl bg-slate-300"></div>
+          <div className="h-[500px] max-md:h-[100px] max-md:w-[40px]  animate-pulse  w-[80px] rounded-t-2xl bg-slate-300 mr-3"></div>
+          <div className="h-[300px] max-md:h-[60px] max-md:w-[40px]  animate-pulse  w-[80px] rounded-t-2xl bg-slate-300 mr-3"></div>
+          <div className="h-[150px] max-md:h-[50px] max-md:w-[40px]  animate-pulse  w-[80px] rounded-t-2xl bg-slate-300 mr-3"></div>
+          <div className="h-[90px]  max-md:h-[30px] max-md:w-[40px]  animate-pulse w-[80px] rounded-t-2xl bg-slate-300 mr-3"></div>
+          <div className="h-[400px] max-md:h-[20px] max-md:w-[40px]  animate-pulse  w-[80px] rounded-t-2xl bg-slate-300"></div>
         </div>
       </div>
     </section>
   ) : (
-    <section className="w-full py-20 px-5 max-md:px-4 max-md:py-2 max-md:pb-32">
+    <section className="w-full py-20 px-5 max-md:px-4 max-md:py-6 max-md:pb-32">
       <div className="max-md:grid-cols-1 max-md:border-none max-md:shadow-none max-md:px-0 bg-slate-0 grid grid-cols-4 gap-3">
         <article class="rounded-xl border border-slate-300 bg-white p-6 h-full hover:shadow-md transition-all ease-linear cursor-pointer justify-center flex flex-col gap-1">
           <div>

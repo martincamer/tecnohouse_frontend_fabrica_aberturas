@@ -87,42 +87,30 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
 
               <p className="font-bold text-slate-700 text-xs">
                 CLIENTES DEL PEDIDO:{" "}
-                <div
-                  onClick={() => handleToggleClick(index)}
-                  className={`py-2 px-2 text-xs text-left text-slate-700 uppercase`}
-                >
-                  {!clickStates[index] ? (
-                    <p className="p-3 border-slate-300 border-[1px] rounded-xl shadow cursor-pointer text-center">
-                      VER CLIENTE - CLICK
-                    </p>
-                  ) : (
-                    <div className="relative">
-                      <div className="absolute top-0 right-3 cursor-pointer">
-                        <IoCloseCircle className="text-2xl text-red-500 border-red-800 border-[1px] rounded-full" />
-                      </div>
-                      {Array.from(
-                        new Set(
-                          p?.productos?.respuesta?.map((item) => item.cliente)
-                        )
-                      ).map((uniqueClient, i) => {
-                        const hasF = p?.productos?.respuesta?.some(
-                          (item) =>
-                            item.cliente === uniqueClient &&
-                            item.cantidad !== item.cantidadFaltante
-                        );
-
-                        return (
-                          <div className="pt-3 cursor-pointer" key={i}>
-                            {i > 0 ? " - " : ""}
-                            {uniqueClient}
-                            <span className="font-bold text-xs underline text-red-500 mx-1">
-                              {hasF && "FALTA REALIZAR"}
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
+                <div className="flex my-3">
+                  <button
+                    onClick={() => {
+                      handleID(p?.id), openClientes();
+                    }}
+                    type="button"
+                    className="bg-indigo-100 text-indigo-600 py-2 px-4 rounded-xl flex gap-2 items-center"
+                  >
+                    VER CLIENTES
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                      />
+                    </svg>
+                  </button>
                 </div>
               </p>
               <p className="mb-2 mt-2">
