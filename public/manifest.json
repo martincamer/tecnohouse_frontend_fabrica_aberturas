@@ -4,13 +4,13 @@
   "icons": [
     {
       "purpose": "maskable",
-      "sizes": "512x512",
+      "sizes": "1024x1024",
       "src": "icon512_maskable.png",
       "type": "image/png"
     },
     {
       "purpose": "any",
-      "sizes": "512x512",
+      "sizes": "1024x1024",
       "src": "icon512_rounded.png",
       "type": "image/png"
     }
@@ -19,6 +19,6 @@
   "display": "fullscreen",
   "dir": "auto",
   "lang": "es-AR",
-  "name": "Tecnohouse aberturas",
-  "short_name": "Tecnohouse aberturas"
+  "name": "ABERTURAS APLICACIÓN",
+  "short_name": "ABERTURAS APLICACIÓN"
 }
