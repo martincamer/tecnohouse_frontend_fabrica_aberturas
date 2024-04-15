@@ -224,6 +224,15 @@ export const PedidosRealizados = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const totalCantidad = datosFiltrados.reduce((accumulator, grupo) => {
+    return (
+      accumulator +
+      grupo.productos.reduce((acc, producto) => {
+        return acc + producto.cantidad_total;
+      }, 0)
+    );
+  }, 0);
+
   return isLoading ? (
     <section className="w-full h-full min-h-full max-h-full px-12 max-md:px-5 flex flex-col gap-12 max-md:gap-8 py-24 max-md:py-8">
       <div className="w-[300px] py-5 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
@@ -461,7 +470,7 @@ export const PedidosRealizados = () => {
                 onClick={buscarIngresosPorFecha}
                 className="bg-indigo-500/10 text-sm border-[1px] border-indigo-500 text-indigo-700 px-5 py-1 rounded-xl shadow flex items-center gap-2"
               >
-                Buscar Ingresos
+                BUSCAR...
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -534,6 +543,15 @@ export const PedidosRealizados = () => {
               d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
             />
           </svg>
+        </div>
+
+        <div className="mb-5 flex">
+          <p className="bg-green-100 py-3 px-4 rounded-xl text-green-700 font-bold flex gap-3 items-center">
+            TOTAL
+            <span className="bg-green-700/20 text-lg text-green-700 px-4 py-2 rounded-xl">
+              {totalCantidad}
+            </span>
+          </p>
         </div>
 
         <div className="border-[1px] border-slate-300 rounded-2xl hover:shadow-md transition-all ease-linear shadow w-full max-md:overflow-x-scroll">
