@@ -81,10 +81,6 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
               <p className="font-bold text-slate-700 text-xs uppercase">
                 - Cliente: <span className="font-normal">{p.cliente}</span>
               </p>
-              <p className="font-bold text-slate-700 text-xs uppercase">
-                Linea: <span className="font-normal">{p.detalle}</span>
-              </p>
-
               <p className="font-bold text-slate-700 text-xs">
                 CLIENTES DEL PEDIDO:{" "}
                 <div className="flex my-3">
@@ -93,7 +89,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
                       handleID(p?.id), openClientes();
                     }}
                     type="button"
-                    className="bg-indigo-100 text-indigo-600 py-2 px-4 rounded-xl flex gap-2 items-center"
+                    className="bg-indigo-100 text-indigo-600 py-2 px-4 rounded-xl flex gap-2 items-center max-md:text-xs"
                   >
                     VER CLIENTES
                     <svg
@@ -118,7 +114,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
                   to={`/pedido/${p?.id}`}
                   // target="_blank"
                   // rel="noopener noreferrer"
-                  className="bg-indigo-500 py-2 px-6 text-white rounded-xl text-sm cursor-pointer max-md:text-sm"
+                  className="bg-indigo-500 py-2 px-6 text-white rounded-xl text-sm cursor-pointer max-md:text-xs uppercase"
                 >
                   Ver pedido
                 </Link>

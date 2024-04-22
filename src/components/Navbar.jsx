@@ -78,7 +78,7 @@ export const Navbar = () => {
           {isAuth
             ? rutasuno.map(({ path, name }) => (
                 <div className="flex items-center gap-4">
-                  <div className="font-normal text-sm bg-indigo-600 shadow text-white py-1 rounded-xl px-5 max-md:text-sm">
+                  <div className="uppercase font-normal text-sm bg-indigo-600 shadow text-white py-2 rounded-xl px-5 max-md:text-sm">
                     {user?.username}
                   </div>
                   <Link

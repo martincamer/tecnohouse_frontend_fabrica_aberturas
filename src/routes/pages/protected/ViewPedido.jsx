@@ -298,42 +298,46 @@ export const ViewPedido = () => {
             totalAberturasRealizadas() === totalAberturas()
               ? "bg-indigo-500"
               : "bg-orange-500"
-          } font-normal text-white text-sm max-md:text-sm uppercase  px-4 py-3 rounded-xl shadow`}
+          } font-normal text-white text-sm max-md:text-xs uppercase  px-4 py-3 rounded-xl shadow`}
         >
           {totalAberturasRealizadas() === totalAberturas()
             ? "estado del pedido finalizado"
             : "estado del pedido pendiente"}
         </p>
       </div>
-      <div className="max-md:shadow-none max-md:border-none max-md:px-2 max-md:py-0 max-md:gap-3  rounded-2xl grid grid-cols-4 gap-4 transition-all ease-linear cursor-pointer">
-        <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
-          <p className="text-sm max-md:text-sm uppercase">
-            Numero del pedido:{" "}
-          </p>{" "}
-          <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
-            {datosCliente?.id}
-          </p>
-        </div>
-        <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
-          <p className="text-sm max-md:text-sm uppercase">Cliente: </p>{" "}
-          <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
-            {datosCliente?.cliente}
-          </p>
-        </div>
+      <div className="max-md:shadow-none max-md:border-none max-md:px-2 max-md:py-0  rounded-2xl  transition-all ease-linear cursor-pointer overflow-x-scroll">
+        <article className="max-md:gap-3 grid grid-cols-4 gap-4 max-md:w-[1000px]">
+          <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+            <p className="text-sm max-md:text-sm uppercase">
+              Numero del pedido:{" "}
+            </p>{" "}
+            <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
+              {datosCliente?.id}
+            </p>
+          </div>
+          <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+            <p className="text-sm max-md:text-sm uppercase">Cliente: </p>{" "}
+            <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
+              {datosCliente?.cliente}
+            </p>
+          </div>
 
-        <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
-          <p className="text-sm max-md:text-sm uppercase">Total aberturas:</p>{" "}
-          <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
-            {totalAberturas()}
-          </p>
-        </div>
+          <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+            <p className="text-sm max-md:text-sm uppercase">Total aberturas:</p>{" "}
+            <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
+              {totalAberturas()}
+            </p>
+          </div>
 
-        <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
-          <p className="text-sm max-md:text-sm uppercase">Total realizadas:</p>{" "}
-          <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
-            {totalAberturasRealizadas()}
-          </p>
-        </div>
+          <div className="hover:shadow-md transition-all ease-linear flex gap-2 max-md:py-4 items-center bg-white border-slate-300 shadow rounded-xl py-6 px-5 border-[1px]">
+            <p className="text-sm max-md:text-sm uppercase">
+              Total realizadas:
+            </p>{" "}
+            <p className="font-semibold text-indigo-500 text-sm max-md:text-sm">
+              {totalAberturasRealizadas()}
+            </p>
+          </div>
+        </article>
       </div>
 
       <div className="flex px-2">
@@ -402,7 +406,7 @@ export const ViewPedido = () => {
             <Search variable="w-full" searcher={searcher} search={search} />
           </div>
 
-          <div className="flex max-md:text-xs">
+          <div className="flex max-md:hidden">
             <button
               onClick={descargarExcel}
               className="bg-indigo-500 py-2 rounded-xl text-white uppercase px-6 text-sm flex gap-2 items-center"
@@ -461,7 +465,7 @@ export const ViewPedido = () => {
                     onClick={() => {
                       handleBorrarAccesorioOpen(), setGuardarId(p.id);
                     }}
-                    className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-red-500/10  text-red-900 py-1 px-5 rounded-xl shadow border-[1px] border-red-800 text-sm"
+                    className="max-md:text-xs max-md:py-1.5 max-md:px-4 font-normal rounded-xl text-red-700 bg-red-100 uppercase text-xs"
                   >
                     eliminar
                   </button>
@@ -470,7 +474,7 @@ export const ViewPedido = () => {
                       openModal(), handleSeleccionarId(p?.id);
                     }}
                     type="button"
-                    className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-white py-1 px-5 rounded-xl shadow border-[1px] border-slate-300 text-sm"
+                    className="max-md:text-xs max-md:py-1.5 max-md:px-4 font-normal rounded-xl text-indigo-700 bg-indigo-100 uppercase text-xs"
                   >
                     editar
                   </button>
@@ -479,9 +483,9 @@ export const ViewPedido = () => {
                       openModalEstado(), handleSeleccionarId(p?.id);
                     }}
                     type="button"
-                    className="max-md:text-xs max-md:py-1 max-md:px-4 font-normal bg-slate-500/10 py-1 px-5 rounded-xl shadow border-[1px] border-slate-300 text-sm"
+                    className="max-md:text-xs max-md:py-1.5 max-md:px-4 font-normal rounded-xl text-green-700 bg-green-100 uppercase text-xs"
                   >
-                    editar
+                    editar stock
                   </button>
                 </div>
                 <div className="flex gap-2 items-center mt-2">
@@ -492,7 +496,7 @@ export const ViewPedido = () => {
                     type="button"
                     className={`font-normal px-4 py-1 rounded max-md:text-xs max-md:py-1 max-md:px-4 ${
                       p?.cantidad === p?.cantidadFaltante
-                        ? "bg-indigo-500 rounded-lg text-white uppercase"
+                        ? "bg-green-500 rounded-lg text-white uppercase"
                         : "bg-orange-500 rounded-lg text-white uppercase"
                     } shadow`}
                   >
@@ -627,7 +631,7 @@ export const ViewPedido = () => {
       {totalPages > 1 && (
         <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
           <button
-            className="cursor-pointer mx-1 px-3 py-2 rounded-xl shadow shadow-black/20 text-sm flex gap-1 items-center border-slate-300 border-[1px]"
+            className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -646,21 +650,45 @@ export const ViewPedido = () => {
               />
             </svg>
           </button>
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <button
-              key={index}
-              className={`mx-1 px-3 py-1 rounded-xl ${
-                currentPage === index + 1
-                  ? "cursor-pointer bg-green-500  text-white shadow shadow-black/20 text-sm"
-                  : "cursor-pointer bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
-              }`}
-              onClick={() => handlePageChange(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {(() => {
+            // Determina el rango de páginas visibles
+            const maxVisiblePages = 2; // Máximo de páginas a mostrar
+            const halfRange = Math.floor(maxVisiblePages / 2);
+
+            let startPage = Math.max(currentPage - halfRange, 1);
+            let endPage = Math.min(currentPage + halfRange, totalPages);
+
+            // Asegúrate de que el rango tenga 5 elementos
+            if (endPage - startPage < maxVisiblePages - 1) {
+              if (startPage === 1) {
+                endPage = Math.min(maxVisiblePages, totalPages);
+              } else if (endPage === totalPages) {
+                startPage = Math.max(totalPages - (maxVisiblePages - 1), 1);
+              }
+            }
+
+            return Array.from(
+              { length: endPage - startPage + 1 },
+              (_, index) => {
+                const pageIndex = startPage + index;
+                return (
+                  <button
+                    key={pageIndex}
+                    className={`mx-1 px-3 py-1 rounded-xl ${
+                      currentPage === pageIndex
+                        ? "bg-green-500 text-white transition-all border-[1px] border-green-500 ease-in-out shadow shadow-black/20 text-sm"
+                        : "bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
+                    }`}
+                    onClick={() => handlePageChange(pageIndex)}
+                  >
+                    {pageIndex}
+                  </button>
+                );
+              }
+            );
+          })()}
           <button
-            className="cursor-pointer mx-1 px-3 py-2 rounded-xl shadow shadow-black/20 text-sm flex gap-1 items-center border-slate-300 border-[1px]"
+            className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >

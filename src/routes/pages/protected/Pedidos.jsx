@@ -134,177 +134,182 @@ export const Pedidos = () => {
   ) : (
     <section className="w-full py-20 max-md:py-2">
       <div className="px-5 max-md:px-4 max-md:py-6 w-full max-md:border-none max-md:shadow-none">
-        <div className="flex">
-          <p className="uppercase max-md:text-sm font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700">
-            Crear pedido clientes
+        <div className="flex max-md:justify-center">
+          <p className="max-md:font-bold uppercase max-md:text-sm font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700">
+            Crear nuevos pedido fabricas/editar/ver
           </p>
         </div>
 
-        <div className="mt-5 grid grid-cols-4 gap-5 max-md:grid-cols-1">
-          <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
-            <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                />
-              </svg>
+        <div className="mt-5 max-md:overflow-x-scroll">
+          <div className="grid grid-cols-4 max-md:w-[1000px] gap-3 uppercase">
+            <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
+              <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                  />
+                </svg>
 
-              <span class="text-xs font-medium"> {datosMensuales.length}%</span>
-            </div>
-
-            <div>
-              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
-                {" "}
-                Pedidos generados{" "}
-              </strong>
-
-              <p>
-                <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
+                <span class="text-xs font-medium">
                   {" "}
-                  {datosMensuales.length}{" "}
+                  {datosMensuales.length}%
                 </span>
+              </div>
 
-                <span class="text-xs text-gray-500 max-md:text-xs">
+              <div>
+                <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
                   {" "}
-                  {"Ultimo creado el día"}{" "}
-                </span>
-              </p>
-            </div>
-          </article>
+                  Pedidos generados{" "}
+                </strong>
 
-          <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
-            <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
-                />
-              </svg>
+                <p>
+                  <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
+                    {" "}
+                    {datosMensuales.length}{" "}
+                  </span>
 
-              <span class="text-xs font-medium uppercase"> {nombreMes}</span>
-            </div>
+                  <span class="text-xs text-gray-500 max-md:text-xs">
+                    {" "}
+                    {"Ultimo creado el día"}{" "}
+                  </span>
+                </p>
+              </div>
+            </article>
 
-            <div>
-              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
-                {" "}
-                Fecha del mes{" "}
-              </strong>
+            <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
+              <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
+                  />
+                </svg>
 
-              <p>
-                <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
+                <span class="text-xs font-medium uppercase"> {nombreMes}</span>
+              </div>
+
+              <div>
+                <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
                   {" "}
-                  {nombreMes}{" "}
-                </span>
-              </p>
-            </div>
-          </article>
+                  Fecha del mes{" "}
+                </strong>
 
-          <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
-            <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                />
-              </svg>
+                <p>
+                  <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
+                    {" "}
+                    {nombreMes}{" "}
+                  </span>
+                </p>
+              </div>
+            </article>
 
-              <span class="text-xs font-medium uppercase"> {resultado}%</span>
-            </div>
+            <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
+              <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                  />
+                </svg>
 
-            <div>
-              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
-                {" "}
-                Aberturas generadas{" "}
-              </strong>
+                <span class="text-xs font-medium uppercase"> {resultado}%</span>
+              </div>
 
-              <p>
-                <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
+              <div>
+                <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
                   {" "}
-                  {resultado}{" "}
-                </span>
+                  Aberturas generadas{" "}
+                </strong>
 
-                <span class="text-xs text-gray-500 uppercase">
+                <p>
+                  <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
+                    {" "}
+                    {resultado}{" "}
+                  </span>
+
+                  <span class="text-xs text-gray-500 uppercase">
+                    {" "}
+                    {"Generadas hasta ahora"}{" "}
+                  </span>
+                </p>
+              </div>
+            </article>
+
+            <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
+              <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                  />
+                </svg>
+
+                <span class="text-xs font-medium uppercase">
                   {" "}
-                  {"Generadas hasta ahora"}{" "}
+                  {resultadoTwo}%
                 </span>
-              </p>
-            </div>
-          </article>
+              </div>
 
-          <article class="flex flex-col gap-4 rounded-2xl border border-slate-300 max-md:p-3 hover:shadow-md transition-all ease-linear cursor-pointer bg-white p-5">
-            <div class="inline-flex gap-2 self-end rounded bg-green-100 p-1 text-green-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                />
-              </svg>
-
-              <span class="text-xs font-medium uppercase">
-                {" "}
-                {resultadoTwo}%
-              </span>
-            </div>
-
-            <div>
-              <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
-                {" "}
-                Aberturas realizadas{" "}
-              </strong>
-
-              <p>
-                <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
+              <div>
+                <strong class="block text-sm font-medium text-gray-500 max-md:text-xs uppercase">
                   {" "}
-                  {resultadoTwo}{" "}
-                </span>
+                  Aberturas realizadas{" "}
+                </strong>
 
-                <span class="text-xs text-gray-500 uppercase">
-                  {" "}
-                  {"Realizadas hasta ahora"}{" "}
-                </span>
-              </p>
-            </div>
-          </article>
+                <p>
+                  <span class="text-2xl font-medium text-gray-900 max-md:text-base uppercase">
+                    {" "}
+                    {resultadoTwo}{" "}
+                  </span>
+
+                  <span class="text-xs text-gray-500 uppercase">
+                    {" "}
+                    {"Realizadas hasta ahora"}{" "}
+                  </span>
+                </p>
+              </div>
+            </article>
+          </div>
         </div>
 
-        <div className="mt-5 py-5 px-5">
+        <div className="mt-5 py-5 px-5 max-md:px-2 max-md:mt-1">
           <button
             type="button"
             onClick={openModal}
-            className="uppercase py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white max-md:text-sm flex gap-2 text-center items-center"
+            className="uppercase py-2 px-5 bg-indigo-500 rounded-xl shadow font-normal text-sm text-white flex gap-2 text-center items-center max-md:text-xs"
           >
             Crear nuevo pedido
             <svg

@@ -132,8 +132,8 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
                     </button>
                   </div>
 
-                  <div className="overflow-x-auto rounded-xl border border-gray-200 mt-5 hover:shadow cursor-pointer shadow-gray-300 transition-all ease-linear h-[30vh] overflow-y-scroll">
-                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                  <div className="overflow-x-auto rounded-xl border border-gray-200 mt-5 hover:shadow cursor-pointer shadow-gray-300 transition-all ease-linear h-[30vh] overflow-y-scroll max-md:overflow-x-scroll">
+                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm max-md:w-[1200px]">
                       <thead>
                         <tr>
                           <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">

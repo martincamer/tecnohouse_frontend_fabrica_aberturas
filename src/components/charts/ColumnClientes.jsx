@@ -32,36 +32,19 @@ const ColumnClientes = ({ datosPresupuesto }) => {
         show: false,
       },
     },
-    xaxis: {
-      categories: clientes,
-      labels: {
-        style: {
-          fontSize: "12px",
-        },
-      },
-    },
-    yaxis: {
-      labels: {
-        style: {
-          fontSize: "12px",
-        },
-      },
-    },
     plotOptions: {
       bar: {
         columnWidth: "30%",
-        // Ajustar el ancho de las columnas si es necesario
-        borderRadius: "10",
+        borderRadius: 10,
         borderRadiusApplication: "end",
         colors: {
           ranges: [
             {
               from: Number.MIN_SAFE_INTEGER,
               to: 1,
-              color: "#FF0000",
+              color: "#FF0000", // Por ejemplo, para indicar valores negativos
             },
           ],
-
           backgroundBarColors: [],
           backgroundBarOpacity: 1,
         },
@@ -78,12 +61,46 @@ const ColumnClientes = ({ datosPresupuesto }) => {
         colors: ["#FFFFFF"],
       },
     },
+    xaxis: {
+      categories: clientes,
+      labels: {
+        style: {
+          fontSize: "12px",
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          fontSize: "12px",
+        },
+      },
+    },
     responsive: [
       {
-        breakpoint: 768,
+        breakpoint: 768, // Punto de interrupción para cambiar a horizontal
         options: {
           chart: {
             height: 350,
+          },
+          plotOptions: {
+            bar: {
+              horizontal: true, // Hacer el gráfico horizontal
+            },
+          },
+          xaxis: {
+            labels: {
+              style: {
+                fontSize: "10px",
+              },
+            },
+          },
+          yaxis: {
+            labels: {
+              style: {
+                fontSize: "10px",
+              },
+            },
           },
         },
       },
@@ -106,7 +123,7 @@ const ColumnClientes = ({ datosPresupuesto }) => {
         options={options}
         series={series}
         type="bar"
-        className="max-md:w-[1500px] md:w-[100%] uppercase"
+        className="max-md:w-[100%] md:w-[100%] uppercase"
         height={300}
       />
     </div>

@@ -150,8 +150,8 @@ export const CrearNuevoPedidoViewPedido = ({
                     </button>
                   </div>
 
-                  <div className="rounded-xl border-slate-300 border-[1px] shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll h-[300px] overflow-y-scroll">
-                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                  <div className="rounded-xl border-slate-300 border-[1px] shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll h-[300px] overflow-y-scroll max-md:overflow-x-scroll">
+                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm max-md:w-[1200px]">
                       <thead>
                         <tr className="divide-gray-100">
                           <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">

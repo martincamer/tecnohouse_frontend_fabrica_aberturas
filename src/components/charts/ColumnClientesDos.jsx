@@ -40,6 +40,13 @@ const ColumnClientes = ({ datosPresupuesto }) => {
         show: false,
       },
     },
+    plotOptions: {
+      bar: {
+        columnWidth: "10%",
+        borderRadius: "10",
+        borderRadiusApplication: "end",
+      },
+    },
     xaxis: {
       categories: clientes,
       labels: {
@@ -55,32 +62,41 @@ const ColumnClientes = ({ datosPresupuesto }) => {
         },
       },
     },
-    plotOptions: {
-      bar: {
-        columnWidth: "10%",
-        // Ajustar el ancho de las columnas si es necesario
-        borderRadius: "10",
-        borderRadiusApplication: "end",
-      },
-    },
     dataLabels: {
       enabled: true,
-      formatter: function (val) {
-        return val; // Muestra la cantidad en el gráfico
-      },
+      formatter: (val) => val, // Muestra la cantidad en el gráfico
       offsetY: -20,
       style: {
         fontSize: "12px",
         colors: ["#FFFFFF"],
       },
     },
-    colors: coloresBarras, // Asignar los colores aquí
+    colors: coloresBarras, // Asignar colores
     responsive: [
       {
         breakpoint: 768,
         options: {
           chart: {
             height: 350,
+          },
+          plotOptions: {
+            bar: {
+              horizontal: true, // Hacer horizontal en dispositivos móviles
+            },
+          },
+          xaxis: {
+            labels: {
+              style: {
+                fontSize: "10px",
+              },
+            },
+          },
+          yaxis: {
+            labels: {
+              style: {
+                fontSize: "10px",
+              },
+            },
           },
         },
       },
@@ -101,7 +117,7 @@ const ColumnClientes = ({ datosPresupuesto }) => {
         options={options}
         series={series}
         type="bar"
-        className="max-md:w-[1500px] md:w-[100%]"
+        className="md:w-[100%]"
         height={500}
       />
     </div>

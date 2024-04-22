@@ -63,12 +63,6 @@ export const Accesorios = () => {
 
   return isLoading ? (
     <>
-      {/* <div className="absolute top-52 w-full flex flex-col gap-5 justify-center items-center">
-        <img className="w-[200px] animate-pulse" src="/logo.png" />
-        <p className="animate-pulse text-slate-700 font-bold">
-          OBTENIENDO LOS DATOS
-        </p>
-      </div> */}
       <section className="w-full h-full min-h-full max-h-full px-12 max-md:px-4 flex flex-col gap-12 max-md:gap-8 py-24 max-md:py-6">
         <div className="w-[300px] max-md:w-[200px] max-md:py-4 py-5 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
 
@@ -125,7 +119,7 @@ export const Accesorios = () => {
       </section>
     </>
   ) : (
-    <main className="w-full py-20 mb-20 max-md:py-8 px-5 max-md:px-4">
+    <main className="w-full py-20 max-md:py-8 px-5 max-md:px-5">
       <section className="max-md:w-full mx-auto flex flex-col gap-10 max-md:gap-6 max-md:shadow-none max-md:border-none">
         <IntroTitleAccesorios />
 

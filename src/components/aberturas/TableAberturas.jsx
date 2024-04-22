@@ -97,7 +97,7 @@ export const TableAberturas = ({
 
   return (
     <div>
-      <div className="flex flex-col gap-3 max-md:flex md:hidden">
+      <div className="flex flex-col gap-3 max-md:flex md:hidden overflow-y-scroll h-[60vh]">
         {currentResults.map((p) => (
           <div
             className="border-slate-300 border-[1px] shadow rounded-xl py-3 px-2 flex justify-between items-center"
@@ -160,52 +160,6 @@ export const TableAberturas = ({
                 </button>
               </div>
             </div>
-            {/* <div className="flex flex-col gap-1 w-full  h-[70px] overflow-y-scroll">
-              <button
-                className="bg-red-500/10 text-red-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                onClick={() => {
-                  handleBorrarAccesorioOpen(), setGuardarId(p.id);
-                }}
-              >
-                Eliminar
-              </button>
-
-              <button
-                className="bg-black/10 text-black-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                onClick={() => {
-                  openModalEditar(), handlePerfilSeleccionado(p.id);
-                }}
-              >
-                Editar
-              </button>
-
-              <button
-                className="bg-indigo-500/10 text-indigo-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                onClick={() => {
-                  openSalida(), handleId(p.id);
-                }}
-              >
-                Crear Salida
-              </button>
-
-              <button
-                className="bg-indigo-500/10 text-indigo-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                onClick={() => {
-                  openEntrada(), handleId(p.id);
-                }}
-              >
-                Crear Entrada
-              </button>
-
-              <button
-                className="bg-black text-white uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                onClick={() => {
-                  handleModalEditarStockOpen(), handlePerfilSeleccionado(p.id);
-                }}
-              >
-                Editar Stock
-              </button>
-            </div> */}
           </div>
         ))}
       </div>
@@ -297,7 +251,7 @@ export const TableAberturas = ({
       {totalPages > 1 && (
         <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
           <button
-            className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer"
+            className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -316,21 +270,45 @@ export const TableAberturas = ({
               />
             </svg>
           </button>
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <button
-              key={index}
-              className={`mx-1 px-3 py-1 rounded-xl ${
-                currentPage === index + 1
-                  ? "bg-green-500 text-white transition-all ease-in-out shadow shadow-black/20 text-sm"
-                  : "bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
-              }`}
-              onClick={() => handlePageChange(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {(() => {
+            // Determina el rango de páginas visibles
+            const maxVisiblePages = 2; // Máximo de páginas a mostrar
+            const halfRange = Math.floor(maxVisiblePages / 2);
+
+            let startPage = Math.max(currentPage - halfRange, 1);
+            let endPage = Math.min(currentPage + halfRange, totalPages);
+
+            // Asegúrate de que el rango tenga 5 elementos
+            if (endPage - startPage < maxVisiblePages - 1) {
+              if (startPage === 1) {
+                endPage = Math.min(maxVisiblePages, totalPages);
+              } else if (endPage === totalPages) {
+                startPage = Math.max(totalPages - (maxVisiblePages - 1), 1);
+              }
+            }
+
+            return Array.from(
+              { length: endPage - startPage + 1 },
+              (_, index) => {
+                const pageIndex = startPage + index;
+                return (
+                  <button
+                    key={pageIndex}
+                    className={`mx-1 px-3 py-1 rounded-xl ${
+                      currentPage === pageIndex
+                        ? "bg-green-500 text-white transition-all border-[1px] border-green-500 ease-in-out shadow shadow-black/20 text-sm"
+                        : "bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
+                    }`}
+                    onClick={() => handlePageChange(pageIndex)}
+                  >
+                    {pageIndex}
+                  </button>
+                );
+              }
+            );
+          })()}
           <button
-            className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-gray-100 shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer"
+            className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >

@@ -52,7 +52,7 @@ const ColumnClientesTres = ({ datosPresupuesto }) => {
         options={options}
         series={series}
         type="donut"
-        className="max-md:w-[100%] md:w-[100%] uppercase"
+        className="md:w-[100%] uppercase max-md:hidden"
         height={300}
       />
     </div>

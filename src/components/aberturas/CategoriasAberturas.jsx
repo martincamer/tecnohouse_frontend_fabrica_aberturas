@@ -16,7 +16,7 @@ export const CategoriasAberturas = ({
 
   return (
     <div>
-      <div className="grid grid-cols-7 max-md:grid-cols-none max-md:flex max-md:overflow-x-scroll gap-3 max-md:gap-2 border-slate-300 border-[1px] rounded-xl py-4 transition-all ease-in-out cursor-pointer px-4 max-md:border-none max-md:px-0 max-md:py-0 hover:shadow-none">
+      <div className="grid grid-cols-7 max-md:grid-cols-none max-md:flex max-md:overflow-x-scroll gap-3 max-md:gap-2 border-slate-300 border-[1px] rounded-xl py-4 transition-all ease-in-out cursor-pointer px-4 max-md:border-[1px] hover:shadow-none max-md:border-slate-200 max-md:px-2 max-md:py-2">
         <button
           onClick={openModal}
           className="flex gap-2 items-center text-indigo-700 bg-indigo-50 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0"
@@ -127,8 +127,9 @@ export const CategoriasAberturas = ({
 
         <Link
           to={"/aberturas/entradas"}
-          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0"
+          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0 max-md:hidden"
         >
+          <p className="max-md:hidden">Ir a la parte de entradas</p>{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -148,7 +149,7 @@ export const CategoriasAberturas = ({
 
         <Link
           to={"/aberturas/salidas"}
-          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0"
+          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0 max-md:hidden"
         >
           <p className="max-md:hidden"> Ir a la parte de salidas</p>{" "}
           <svg

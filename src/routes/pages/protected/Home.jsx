@@ -123,12 +123,12 @@ export const Home = () => {
       </div>
     </section>
   ) : (
-    <section className="w-full py-20 px-5 max-md:px-4 max-md:py-6 max-md:pb-32">
+    <section className="w-full py-20 px-5 max-md:px-4  max-md:py-8">
       <div className="max-md:grid-cols-1 max-md:border-none max-md:shadow-none max-md:px-0 bg-slate-0 grid grid-cols-4 gap-3">
         <article class="rounded-xl border border-slate-300 bg-white p-6 h-full hover:shadow-md transition-all ease-linear cursor-pointer justify-center flex flex-col gap-1">
           <div>
             <p class="text-sm text-gray-500 uppercase max-md:text-xs">
-              Total aberturas realizadas
+              Total aberturas entregadas/fabricas
             </p>
 
             <p class="text-2xl font-medium text-gray-900 max-md:text-base">
@@ -285,17 +285,17 @@ export const Home = () => {
           </div>
         </article>
       </div>
-      <div className="mt-10 bg-white py-20 rounded-2xl hover:shadow-md transition-all ease-linear cursor-pointer border-[1px] border-slate-300 max-md:flex-col">
+      <div className="mt-10 bg-white py-20 rounded-2xl hover:shadow-md transition-all ease-linear cursor-pointer border-[1px] border-slate-300 max-md:flex-col max-md:py-6">
         <div className="flex flex-col gap-6">
           <div>
-            <h3 className="font-bold uppercase text-slate-700 text-center max-md:text-sm max-md:underline max-md:px-6">
+            <h3 className="font-bold uppercase text-slate-700 text-center max-md:text-xs max-md:underline max-md:px-6">
               Total Aberturas entregadas por fabricas
             </h3>
           </div>
           {<ColumnClientesDos datosPresupuesto={datosMensuales} />}
         </div>
       </div>
-      <div className="mt-10 bg-white py-20 rounded-2xl hover:shadow-md transition-all ease-linear border-[1px] border-slate-300 grid grid-cols-2 gap-12 max-md:grid-cols-1 cursor-pointer">
+      <div className="mt-10 bg-white py-20 rounded-2xl hover:shadow-md transition-all ease-linear border-[1px] border-slate-300 grid grid-cols-2 gap-12 max-md:grid-cols-1 cursor-pointer max-md:py-5">
         <div className="flex flex-col gap-6">
           <div className="max-md:px-12">
             <h3 className="font-bold uppercase text-slate-700 text-center max-md:text-sm underline">

@@ -5,7 +5,6 @@ import { usePedidoContext } from "../../context/PedidoProvider";
 export const ModalSeleccionarCantidadProductoPedido = ({
   isOpenModalCantidad,
   closeModalCantidad,
-  closeModal,
 }) => {
   const [cantidad, setCantidad] = useState(0);
   const [cantidadFaltante, setCantidadFaltante] = useState(0);
@@ -124,16 +123,10 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                   Elegir Cantidad Producto
                 </Dialog.Title>
 
-                <div className="border-[1px] border-slate-300 rounded-xl shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll">
-                  <table className="">
+                <div className="border-[1px] border-slate-300 rounded-xl shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll max-md:overflow-x-scroll">
+                  <table className="max-md:w-[1200px]">
                     <thead>
                       <tr className="border-b-[1px] border-slate-300">
-                        {/* <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
-                          Numero
-                        </th>
-                        <th className="w-5 py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
-                          Codigo
-                        </th> */}
                         <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
                           Detalle
                         </th>

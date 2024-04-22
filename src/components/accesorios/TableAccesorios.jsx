@@ -4,6 +4,9 @@ import { ModalEliminarAccesorio } from "./ModalEliminarAccesorio";
 import { CrearNuevaEntrada } from "./CrearNuevaEntrada";
 import { ModalNuevaSalida } from "./ModalNuevaSalida";
 import XLSX from "xlsx";
+import { MdDelete } from "react-icons/md";
+import { TiEdit } from "react-icons/ti";
+import { RiEditCircleFill } from "react-icons/ri";
 
 export const TableAccesorios = ({
   openModalEditar,
@@ -74,76 +77,62 @@ export const TableAccesorios = ({
 
   return (
     <div>
-      <div className=" flex flex-col gap-3 max-md:flex md:hidden">
+      <div className=" flex flex-col gap-3 max-md:flex md:hidden h-[50vh] overflow-y-scroll">
         {currentResults.map((p) => (
           <div
             className="border-slate-300 border-[1px] shadow rounded-xl py-3 px-2 flex justify-between items-center"
             key={p.id}
           >
             <div className="w-full">
-              <p className="font-bold text-slate-700 text-xs">{p.id}</p>
-              <p className="font-bold text-slate-700 text-xs uppercase">
-                - {p.descripcion}
+              <p className="font-bold text-slate-700 text-xs uppercase flex gap-1 items-center">
+                <span>Num °</span> <span className="font-normal">{p.id}</span>
+              </p>
+              <p className="font-bold text-slate-700 text-xs uppercase flex gap-1 items-center">
+                <span>Descripción</span>{" "}
+                <span className="font-normal">{p.descripcion}</span>
               </p>
               <p className="font-bold text-slate-700 text-xs">
-                STOCK:{" "}
+                STOCK{" "}
                 <span
                   className={`${
-                    p.stock_minimo > p.stock ? "text-red-600" : "text-green-500"
+                    Number(p.stock_minimo) > Number(p.stock)
+                      ? "text-red-600"
+                      : "text-green-500"
                   } text-xs`}
                 >
                   {p.stock}
                 </span>
               </p>
               <p className="font-bold text-slate-700 text-xs">
-                STOCK MIN: <span className="font-normal">{p.stock_minimo}</span>
+                STOCK MIN <span className="font-normal">{p.stock_minimo}</span>
               </p>
-            </div>
-            <div className="flex flex-col gap-1 w-full  h-[70px] overflow-y-scroll">
-              <button
-                className="bg-red-500/10 text-red-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                onClick={() => {
-                  handleBorrarAccesorioOpen(), setGuardarId(p.id);
-                }}
-              >
-                Eliminar
-              </button>
-
-              <button
-                className="bg-black/10 text-black-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                onClick={() => {
-                  openModalEditar(), handlePerfilSeleccionado(p.id);
-                }}
-              >
-                Editar
-              </button>
-
-              <button
-                className="bg-indigo-500/10 text-indigo-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                onClick={() => {
-                  openSalida(), handleId(p.id);
-                }}
-              >
-                Crear Salida
-              </button>
-
-              <button
-                className="bg-indigo-500/10 text-indigo-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                onClick={() => {
-                  openEntrada(), handleId(p.id);
-                }}
-              >
-                Crear Entrada
-              </button>
-
-              <button
-                className="bg-black text-white uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                onClick={() => {
-                  handlePerfilSeleccionado(p.id), openModalEditarDos();
-                }}
-              >
-                Editar Stock
-              </button>
+              <div className="flex mt-1 gap-2">
+                <button
+                  className="bg-red-500/10 text-red-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                  onClick={() => {
+                    handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                  }}
+                >
+                  <MdDelete className="text-2xl" />
+                </button>
+                <button
+                  className="bg-black/10 text-black-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                  onClick={() => {
+                    openModalEditar(), handlePerfilSeleccionado(p.id);
+                  }}
+                >
+                  <TiEdit className="text-2xl" />
+                </button>
+                <button
+                  className="bg-black text-white uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                  onClick={() => {
+                    handleModalEditarStockOpen(),
+                      handlePerfilSeleccionado(p.id);
+                  }}
+                >
+                  <RiEditCircleFill className="text-xl" />
+                </button>
+              </div>
             </div>
           </div>
         ))}
@@ -312,11 +301,10 @@ export const TableAccesorios = ({
           handleBorrarAccesorioClose={handleBorrarAccesorioClose}
         />
       </div>
-
       {totalPages > 1 && (
         <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
           <button
-            className="mx-1 px-3 py-1 rounded-xl cursor-pointer bg-white border-[1px] border-slate-300 shadow shadow-black/20 text-sm flex gap-1 items-center"
+            className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -335,21 +323,45 @@ export const TableAccesorios = ({
               />
             </svg>
           </button>
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <button
-              key={index}
-              className={`mx-1 px-3 py-1 rounded-xl ${
-                currentPage === index + 1
-                  ? "bg-green-500 text-white shadow shadow-black/20 text-sm"
-                  : "border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
-              }`}
-              onClick={() => handlePageChange(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {(() => {
+            // Determina el rango de páginas visibles
+            const maxVisiblePages = 2; // Máximo de páginas a mostrar
+            const halfRange = Math.floor(maxVisiblePages / 2);
+
+            let startPage = Math.max(currentPage - halfRange, 1);
+            let endPage = Math.min(currentPage + halfRange, totalPages);
+
+            // Asegúrate de que el rango tenga 5 elementos
+            if (endPage - startPage < maxVisiblePages - 1) {
+              if (startPage === 1) {
+                endPage = Math.min(maxVisiblePages, totalPages);
+              } else if (endPage === totalPages) {
+                startPage = Math.max(totalPages - (maxVisiblePages - 1), 1);
+              }
+            }
+
+            return Array.from(
+              { length: endPage - startPage + 1 },
+              (_, index) => {
+                const pageIndex = startPage + index;
+                return (
+                  <button
+                    key={pageIndex}
+                    className={`mx-1 px-3 py-1 rounded-xl ${
+                      currentPage === pageIndex
+                        ? "bg-green-500 text-white transition-all border-[1px] border-green-500 ease-in-out shadow shadow-black/20 text-sm"
+                        : "bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
+                    }`}
+                    onClick={() => handlePageChange(pageIndex)}
+                  >
+                    {pageIndex}
+                  </button>
+                );
+              }
+            );
+          })()}
           <button
-            className="mx-1 px-3 py-1 rounded-xl cursor-pointer bg-white border-[1px] border-slate-300 shadow shadow-black/20 text-sm flex gap-1 items-center"
+            className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >

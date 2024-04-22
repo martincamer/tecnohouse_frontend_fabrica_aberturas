@@ -112,52 +112,57 @@ export const ModalSeleccionarAberturas = () => {
                     </span>
                   </div>
                 )}
-                <div className="border-[1px] border-gray-200 rounded-xl shadow-black/10 shadow flex flex-col gap-3 w-full h-[300px] overflow-y-scroll ">
-                  <table className="p-[5px] table-auto w-full rounded uppercase">
-                    <thead className="divide-gray-300 divide-y-2">
-                      <tr className="">
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
+                <div className="border-[1px] border-gray-200 rounded-xl shadow-black/10 shadow w-full h-[300px] overflow-y-scroll max-md:overflow-x-scroll">
+                  <table className="p-[5px] table-auto w-full rounded uppercase max-md:w-[1200px] divide-gray-300 divide-y-[1px]">
+                    <thead>
+                      <tr>
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-left">
                           Detalle
                         </th>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-left">
                           Color
                         </th>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-left">
                           Ancho - Alto
                         </th>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-left">
                           Categoria
                         </th>
-                        <th className="p-2 max-md:py-1 max-md:px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-center">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-left">
                           Seleccionar
                         </th>
                       </tr>
                     </thead>
                     {results.map((c) => (
-                      <tbody key={c.id}>
-                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
-                          {c.descripcion}
-                        </th>
-                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
-                          {c.color}
-                        </th>
-                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
-                          {c.ancho}x{c.alto}
-                        </th>
-                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs text-center font-normal">
-                          {c.categoria}
-                        </th>
-                        <th className="border-b-[1px] border-gray-300 py-4 px-4 text-sm max-md:text-xs w-[120px] text-center font-normal">
-                          <Link
-                            onClick={() => {
-                              openModalCantidad(),
-                                handleSeleccionarProducto(c.id);
-                            }}
-                            className="bg-green-100 py-2 px-4 text-green-700 rounded-xl shadow text-center text-xs"
-                          >
-                            Seleccionar
-                          </Link>
-                        </th>
+                      <tbody
+                        className="divide-y-[1px] divide-gray-300"
+                        key={c.id}
+                      >
+                        <tr>
+                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-normal">
+                            {c.descripcion}
+                          </th>
+                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-normal">
+                            {c.color}
+                          </th>
+                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-normal">
+                            {c.ancho}x{c.alto}
+                          </th>
+                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-normal">
+                            {c.categoria}
+                          </th>
+                          <th className="py-4 px-4 text-sm max-md:text-xs w-[120px] text-left font-normal">
+                            <Link
+                              onClick={() => {
+                                openModalCantidad(),
+                                  handleSeleccionarProducto(c.id);
+                              }}
+                              className="bg-green-100 py-2 px-4 text-green-700 rounded-xl shadow text-left text-xs"
+                            >
+                              Seleccionar
+                            </Link>
+                          </th>
+                        </tr>
                       </tbody>
                     ))}
                   </table>
