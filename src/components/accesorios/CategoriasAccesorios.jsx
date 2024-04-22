@@ -10,7 +10,7 @@ export const CategoriasAccesorios = ({
     useAccesoriosContext();
 
   return (
-    <div className="bg-white border-slate-300 border-[1px] hover:shadow-md  cursor-pointer transition-all ease-linear px-4 rounded-xl max-md:border-none max-md:shadow-none max-md:px-0 max-md:py-0">
+    <div className="bg-white border-slate-300 border-[1px] hover:shadow-md  cursor-pointer transition-all ease-linear px-4 rounded-xl max-md:border-none max-md:shadow-none max-md:px-0 max-md:py-0 max-md:hidden md:block">
       <div className="grid-cols-7 grid max-md:grid-cols-2 gap-4 max-md:gap-2 max-md:py-0 py-4">
         <button
           onClick={openModal}

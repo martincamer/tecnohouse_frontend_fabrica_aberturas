@@ -1,11 +1,13 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 export const MenuMobile = () => {
   const location = useLocation();
 
+  const [visible, setVisible] = useState(false);
+
   const navegacion = [
     {
-      //   name: "Inicio",
       path: "/",
       icon: (
         <svg
@@ -25,7 +27,6 @@ export const MenuMobile = () => {
       ),
     },
     {
-      //   name: "Accesorios en stock",
       path: "/accesorios",
       icon: (
         <svg
@@ -44,28 +45,8 @@ export const MenuMobile = () => {
         </svg>
       ),
     },
-    // {
-    //   name: "Perfiles en stock",
-    //   path: "/perfiles",
-    //   icon: (
-    //     <svg
-    //       xmlns="http://www.w3.org/2000/svg"
-    //       fill="none"
-    //       viewBox="0 0 24 24"
-    //       strokeWidth={1.5}
-    //       stroke="currentColor"
-    //       className="w-6 h-6"
-    //     >
-    //       <path
-    //         strokeLinecap="round"
-    //         strokeLinejoin="round"
-    //         d="M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z"
-    //       />
-    //     </svg>
-    //   ),
-    // },
+
     {
-      //   name: "Productos en stock",
       path: "/productos",
       icon: (
         <svg
@@ -85,7 +66,6 @@ export const MenuMobile = () => {
       ),
     },
     {
-      //   name: "Clientes pedidos",
       path: "/pedidos",
       icon: (
         <svg
@@ -105,7 +85,6 @@ export const MenuMobile = () => {
       ),
     },
     {
-      //   name: "Pedidos realizados",
       path: "/pedidos-realizados",
       icon: (
         <svg
@@ -125,7 +104,6 @@ export const MenuMobile = () => {
       ),
     },
     {
-      //   name: "Clientes Finalizados / Casas",
       path: "/clientes-finalizados",
       icon: (
         <svg
@@ -146,32 +124,36 @@ export const MenuMobile = () => {
     },
   ];
 
-  return (
-    <div className="md:hidden max-md:flex fixed bottom-0 flex overflow-x-scroll py-3 px-4 z-[100] bg-indigo-500 text-white font-bold uppercase text-sm w-full rounded-t-xl">
-      {navegacion.map(({ name, path, icon }) => (
-        <div
-          key={path}
-          className={`${
-            location.pathname === path && "bg-indigo-800 rounded-xl py-3"
-          } w-full py-3 px-5 relative`}
-        >
-          <div className="w-full flex items-center max-md:justify-center gap-2 transition-all ease duration-300">
-            <Link
-              to={path}
-              className={`${
-                location.pathname === path ? "text-white" : "text-white"
-              } text-2xl`}
-            >
-              {icon}
+  const handleMouseEnter = () => {
+    setVisible(true);
+  };
 
-              {/* <span className="invisible absolute start-full top-1/2 ms-5 -translate-y-1/2 rounded bg-slate-800 px-4 w-[150px] flex justify-center py-2 text-xs font-medium text-white group-hover:visible">
-                {name}
-              </span> */}
+  const handleMouseLeave = () => {
+    setVisible(false);
+  };
+
+  return (
+    <div
+      className={`md:hidden fixed bottom-0 w-full bg-indigo-500 transition-all ease-in-out duration-500 z-[100] overflow-x-scroll ${
+        visible ? "max-h-32" : "max-h-[1px]" // Aumenta la altura mínima para mejorar la detección del evento
+      }`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="flex overflow-x-scroll py-3 px-4 w-full z-[100]">
+        {navegacion.map(({ path, icon }) => (
+          <div
+            key={path}
+            className={`${
+              location.pathname === path ? "bg-indigo-800 rounded-xl" : ""
+            } py-3 px-5 flex items-center justify-center`}
+          >
+            <Link to={path} className="text-2xl text-white">
+              {icon}
             </Link>
-            {/* <Link to={path}>{name}</Link> */}
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

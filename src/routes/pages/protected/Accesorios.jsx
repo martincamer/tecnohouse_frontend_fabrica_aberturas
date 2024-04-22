@@ -125,7 +125,7 @@ export const Accesorios = () => {
       </section>
     </>
   ) : (
-    <main className="w-full py-20 max-md:py-8 px-5 max-md:px-4">
+    <main className="w-full py-20 mb-20 max-md:py-8 px-5 max-md:px-4">
       <section className="max-md:w-full mx-auto flex flex-col gap-10 max-md:gap-6 max-md:shadow-none max-md:border-none">
         <IntroTitleAccesorios />
 
@@ -140,13 +140,13 @@ export const Accesorios = () => {
         <div className="flex flex-col gap-3">
           <div className="flex gap-2 items-center">
             <label
-              className="font-normal text-slate-700 text-md max-md:text-sm uppercase"
+              className="font-normal text-slate-700 text-md uppercase max-md:text-xs"
               htmlFor="categoria"
             >
               Buscar por categoría
             </label>
             <select
-              className="max-md:text-xs  bg-white border-[1px] border-slate-300 text-slate-800 text-sm font-normal py-3 uppercase px-3 rounded-xl shadow cursor-pointer"
+              className="max-md:text-xs  bg-white border-[1px] border-slate-300 text-slate-800 text-sm font-normal py-3 uppercase px-3 rounded-xl shadow cursor-pointer max-md:py-2"
               id="categoria"
               onChange={handleCategoriaChange}
               value={categoriaSeleccionada}

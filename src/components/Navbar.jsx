@@ -83,11 +83,11 @@ export const Navbar = () => {
                   </div>
                   <Link
                     onClick={() => signout()}
-                    className="text-[16px] max-md:text-sm max-md:font-bold max-md:py-1 font-normal transition-all ease-linear duration-300 bg-slate-500/10 px-5 uppercase rounded-xl py-2 text-slate-700 text-sm  flex gap-2 items-center hover:bg-slate-800 hover:text-white hover:shadow-md"
+                    className="text-[16px] max-md:text-sm max-md:font-bold font-normal transition-all ease-linear duration-300 bg-slate-500/10 px-5 uppercase rounded-xl py-2 max-md:py-2 text-slate-700 text-sm  flex gap-2 items-center hover:bg-slate-800 hover:text-white hover:shadow-md"
                     //o={path}
                     key={path}
                   >
-                    {name}
+                    <p className="max-md:hidden md:block">{name}</p>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
