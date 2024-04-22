@@ -138,7 +138,7 @@ export const MenuMobile = () => {
         visible ? "max-h-32" : "max-h-[2px] opacity-0" // Aumenta la altura mínima para mejorar la detección del evento
       }`}
       onTouchStart={handleMouseEnter}
-      onTouchEnd={handleMouseLeave}
+      onTouchCancel={handleMouseLeave}
     >
       <div className="flex overflow-x-scroll py-3 px-4 w-full z-[100]">
         {navegacion.map(({ path, icon }) => (
