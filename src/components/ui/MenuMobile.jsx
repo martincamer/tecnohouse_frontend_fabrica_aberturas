@@ -135,7 +135,7 @@ export const MenuMobile = () => {
   return (
     <div
       className={`md:hidden rounded-t-2xl fixed px-1 bottom-0 w-full bg-indigo-500 transition-all ease-in-out duration-500 z-[100]  ${
-        visible ? "max-h-32" : "max-h-[2px] opacity-0" // Aumenta la altura mínima para mejorar la detección del evento
+        visible ? "max-h-32" : "max-h-[10px] opacity-0" // Aumenta la altura mínima para mejorar la detección del evento
       }`}
       onTouchStart={handleMouseEnter}
       onTouchCancel={handleMouseLeave}
