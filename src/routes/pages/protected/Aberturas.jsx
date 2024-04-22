@@ -125,13 +125,11 @@ export const Aberturas = () => {
 
         <Search search={search} searcher={searcher} />
 
-        {/* <div className="overflow-y-scroll h-[40vh]"> */}
         <TableAberturas
           handlePerfilSeleccionado={handlePerfilSeleccionado}
           openModalEditar={openModalEditar}
           results={results}
         />
-        {/* </div> */}
 
         <ModalCrearAberturas
           openModal={openModal}

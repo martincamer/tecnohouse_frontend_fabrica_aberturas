@@ -4,6 +4,9 @@ import { ModalEliminarAberturas } from "./ModalEliminarAbertura";
 import { useState } from "react";
 import { ModalNuevaSalida } from "./ModalNuevaSalida";
 import { CrearNuevaEntrada } from "./CrearNuevaEntrada";
+import { MdDelete } from "react-icons/md";
+import { TiEdit } from "react-icons/ti";
+import { RiEditCircleFill } from "react-icons/ri";
 import XLSX from "xlsx";
 
 export const TableAberturas = ({
@@ -101,18 +104,26 @@ export const TableAberturas = ({
             key={p.id}
           >
             <div className="w-full">
-              <p className="font-bold text-slate-700 text-xs">{p.id}</p>
-              <p className="font-bold text-slate-700 text-xs uppercase">
-                - {p.descripcion}
+              <p className="font-bold text-slate-700 text-xs uppercase flex gap-2">
+                <p>Num°</p>
+                <span className="font-normal">{p.id}</span>
               </p>
-              <p className="font-bold text-slate-700 text-xs uppercase">
-                {p.ancho}x{p.alto}
+              <p className="font-bold text-slate-700 text-xs uppercase flex gap-2">
+                <p>Descripción</p>
+                <span className="font-normal">{p.descripcion}</span>
               </p>
-              <p className="font-bold text-slate-700 text-xs uppercase">
-                {p.categoria}
+              <p className="font-bold text-slate-700 text-xs uppercase flex gap-2">
+                <p>Medida</p>
+                <span className="font-normal">
+                  {p.ancho}x{p.alto}
+                </span>
               </p>
-              <p className="font-bold text-slate-700 text-xs">
-                STOCK:{" "}
+              <p className="font-bold text-slate-700 text-xs uppercase flex gap-2">
+                <p>Linea</p>
+                <span className="font-normal">{p.categoria}</span>
+              </p>
+              <p className="font-bold text-slate-700 text-xs flex gap-1">
+                <p> STOCK </p>
                 <span
                   className={`${
                     p.stock_minimo > p.stock ? "text-red-600" : "text-green-500"
@@ -121,8 +132,35 @@ export const TableAberturas = ({
                   {p.stock}
                 </span>
               </p>
+              <div className="flex mt-1 gap-2">
+                <button
+                  className="bg-red-500/10 text-red-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                  onClick={() => {
+                    handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                  }}
+                >
+                  <MdDelete className="text-2xl" />
+                </button>
+                <button
+                  className="bg-black/10 text-black-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                  onClick={() => {
+                    openModalEditar(), handlePerfilSeleccionado(p.id);
+                  }}
+                >
+                  <TiEdit className="text-2xl" />
+                </button>
+                <button
+                  className="bg-black text-white uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
+                  onClick={() => {
+                    handleModalEditarStockOpen(),
+                      handlePerfilSeleccionado(p.id);
+                  }}
+                >
+                  <RiEditCircleFill className="text-xl" />
+                </button>
+              </div>
             </div>
-            <div className="flex flex-col gap-1 w-full  h-[70px] overflow-y-scroll">
+            {/* <div className="flex flex-col gap-1 w-full  h-[70px] overflow-y-scroll">
               <button
                 className="bg-red-500/10 text-red-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
                 onClick={() => {
@@ -167,7 +205,7 @@ export const TableAberturas = ({
               >
                 Editar Stock
               </button>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>
