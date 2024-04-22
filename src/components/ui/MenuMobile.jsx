@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 export const MenuMobile = () => {
   const location = useLocation();
 
+  const menuRef = useRef(null); // Para referenciar el menú
   const [visible, setVisible] = useState(false);
 
   const navegacion = [
@@ -124,21 +125,31 @@ export const MenuMobile = () => {
     },
   ];
 
-  const handleMouseEnter = () => {
-    setVisible(true);
-  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setVisible(false); // Cierra el menú solo si el clic fue fuera del menú
+      }
+    };
 
-  const handleMouseLeave = () => {
-    setVisible(false);
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside); // Limpieza del evento
+    };
+  }, []);
+
+  const toggleMenu = () => {
+    setVisible((prevVisible) => !prevVisible); // Alterna la visibilidad del menú
   };
 
   return (
     <div
-      className={`md:hidden rounded-t-2xl fixed px-1 bottom-0 w-full bg-indigo-500 transition-all ease-in-out duration-500 z-[100]  ${
-        visible ? "max-h-32" : "max-h-[20px] opacity-0" // Aumenta la altura mínima para mejorar la detección del evento
+      ref={menuRef} // Referencia para el menú
+      className={`md:hidden rounded-t-2xl fixed px-1 bottom-0 w-full bg-indigo-500 transition-all ease-in-out duration-500 z-[100] ${
+        visible ? "max-h-32 opacity-100" : "max-h-[20px] opacity-0"
       }`}
-      onTouchMove={handleMouseEnter}
-      onTouchEnd={handleMouseLeave}
+      onClick={handleToggleMenu} // Tocar en el menú para alternar su visibilidad
     >
       <div className="flex overflow-x-scroll py-3 px-4 w-full z-[100]">
         {navegacion.map(({ path, icon }) => (
