@@ -128,19 +128,18 @@ export const MenuMobile = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setVisible(false); // Cierra el menú solo si el clic fue fuera del menú
+        setVisible(false); // Cerrar menú si el clic es fuera de su área
       }
     };
 
     document.addEventListener("click", handleClickOutside);
-
     return () => {
-      document.removeEventListener("click", handleClickOutside); // Limpieza del evento
+      document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, []); // El arreglo vacío garantiza que el efecto solo se ejecute cuando el componente se monte y se desmonte
 
-  const toggleMenu = () => {
-    setVisible((prevVisible) => !prevVisible); // Alterna la visibilidad del menú
+  const handleToggleMenu = () => {
+    setVisible((prevVisible) => !prevVisible); // Alternar visibilidad al tocar el menú
   };
 
   return (
