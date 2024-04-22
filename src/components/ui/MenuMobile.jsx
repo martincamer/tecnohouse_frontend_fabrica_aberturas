@@ -134,8 +134,8 @@ export const MenuMobile = () => {
 
   return (
     <div
-      className={`md:hidden fixed bottom-0 w-full bg-indigo-500 transition-all ease-in-out duration-500 z-[100] overflow-x-scroll ${
-        visible ? "max-h-32" : "max-h-[1px]" // Aumenta la altura mínima para mejorar la detección del evento
+      className={`md:hidden fixed bottom-0 w-full bg-indigo-500 transition-all ease-in-out duration-500 z-[100]  ${
+        visible ? "max-h-32" : "max-h-[4px]" // Aumenta la altura mínima para mejorar la detección del evento
       }`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
