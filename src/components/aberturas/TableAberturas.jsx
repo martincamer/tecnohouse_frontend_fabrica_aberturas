@@ -96,153 +96,119 @@ export const TableAberturas = ({
   };
 
   return (
-    <div>
-      <div className="flex flex-col gap-3 max-md:flex md:hidden overflow-y-scroll h-[60vh]">
-        {currentResults.map((p) => (
-          <div
-            className="border-slate-300 border-[1px] shadow rounded-xl py-3 px-2 flex justify-between items-center"
-            key={p.id}
-          >
-            <div className="w-full">
-              <p className="font-bold text-slate-700 text-xs uppercase flex gap-2">
-                <p>Num°</p>
-                <span className="font-normal">{p.id}</span>
-              </p>
-              <p className="font-bold text-slate-700 text-xs uppercase flex gap-2">
-                <p>Descripción</p>
-                <span className="font-normal">{p.descripcion}</span>
-              </p>
-              <p className="font-bold text-slate-700 text-xs uppercase flex gap-2">
-                <p>Medida</p>
-                <span className="font-normal">
-                  {p.ancho}x{p.alto}
-                </span>
-              </p>
-              <p className="font-bold text-slate-700 text-xs uppercase flex gap-2">
-                <p>Linea</p>
-                <span className="font-normal">{p.categoria}</span>
-              </p>
-              <p className="font-bold text-slate-700 text-xs flex gap-1">
-                <p> STOCK </p>
-                <span
-                  className={`${
-                    p.stock_minimo > p.stock ? "text-red-600" : "text-green-500"
-                  } text-xs`}
-                >
-                  {p.stock}
-                </span>
-              </p>
-              <div className="flex mt-1 gap-2">
-                <button
-                  className="bg-red-500/10 text-red-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                  onClick={() => {
-                    handleBorrarAccesorioOpen(), setGuardarId(p.id);
-                  }}
-                >
-                  <MdDelete className="text-2xl" />
-                </button>
-                <button
-                  className="bg-black/10 text-black-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                  onClick={() => {
-                    openModalEditar(), handlePerfilSeleccionado(p.id);
-                  }}
-                >
-                  <TiEdit className="text-2xl" />
-                </button>
-                <button
-                  className="bg-black text-white uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                  onClick={() => {
-                    handleModalEditarStockOpen(),
-                      handlePerfilSeleccionado(p.id);
-                  }}
-                >
-                  <RiEditCircleFill className="text-xl" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="overflow-x-auto rounded-2xl hover:shadow-md transition-all ease-in-out border border-gray-200 mt-5 max-md:mt-0 max-md:hidden md:block">
-        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+    <div className="max-md:py-2">
+      <div className="rounded-xl shadow-xl md:block bg-white max-md:overflow-x-auto scrollbar-hidden">
+        <table className="w-full uppercase divide-y-[1px] divide-slate-300 table">
           <thead>
             <tr>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              {/* <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Codigo
+              </th> */}
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
+                Descripción
               </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                Stock
-              </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Categoria
               </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Color
               </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                Detalle
-              </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Ancho x Alto
               </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                Acciones/editar/eliminar
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
+                Stock/fabrica
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 text-left">
+          <tbody className="divide-y divide-gray-100 text-left">
             {currentResults.map((p) => (
-              <tr key={p.id} className="cursor-pointer">
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+              <tr
+                key={p.id}
+                className="cursor-pointer hover:bg-slate-100 transition-all"
+              >
+                {/* <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {p.nombre}
-                </td>
-                <td
+                </th> */}
+                <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                  {p.descripcion}
+                </th>
+                <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                  {p.categoria}
+                </th>
+                <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                  {p.color}
+                </th>
+                <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                  {p.ancho} x {p.alto}
+                </th>
+                <th
                   className={`py-3 px-3 text-sm text-left ${
                     p.stock > 0 ? "text-green-500" : "text-red-800"
                   } font-bold uppercase`}
                 >
                   {p.stock}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.categoria}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.color}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.descripcion}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.ancho} x {p.alto}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase space-x-3">
-                  <button
-                    onClick={() => {
-                      handleBorrarAccesorioOpen(), setGuardarId(p.id);
-                    }}
-                    className="bg-red-100 text-red-800 py-2 shadow-black/30 px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
-                    // onClick={() => handleEliminar(p.id)}
-                  >
-                    ELIMINAR
-                  </button>
-                  <button
-                    onClick={() => {
-                      openModalEditar(), handlePerfilSeleccionado(p.id);
-                    }}
-                    className="bg-indigo-500 text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
-                  >
-                    EDITAR ABERTURA
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleModalEditarStockOpen(),
-                        handlePerfilSeleccionado(p.id);
-                    }}
-                    className="bg-slate-500 text-white py-2 shadow px-6 rounded-xl text-sm cursor-pointer max-md:text-xs max-md:font-normal"
-                  >
-                    EDITAR STOCK
-                  </button>
-                </td>
+                </th>
+                <th>
+                  <div className="dropdown dropdown-bottom dropdown-end">
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="hover:bg-indigo-500 hover:text-white py-3 px-3 rounded-full transition-all"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
+                        />
+                      </svg>
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow-xl border border-gray-300 bg-base-100 rounded-box w-52 gap-2"
+                    >
+                      <li>
+                        <button
+                          className="bg-red-500/10 hover:bg-red-500 hover:text-white text-red-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
+                          onClick={() => {
+                            handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                          }}
+                        >
+                          Eliminar
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="bg-indigo-500/10 hover:bg-indigo-500 hover:text-white text-indigo-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
+                          onClick={() => {
+                            openModalEditar(), handlePerfilSeleccionado(p.id);
+                          }}
+                        >
+                          Editar
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="bg-green-500/10 hover:bg-green-500 hover:text-white text-green-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
+                          onClick={() => {
+                            handleModalEditarStockOpen(),
+                              handlePerfilSeleccionado(p.id);
+                          }}
+                        >
+                          Editar stock
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </th>
               </tr>
             ))}
           </tbody>
@@ -351,7 +317,7 @@ export const TableAberturas = ({
         obtenerId={obtenerId}
       />
       <button
-        className="bg-green-100 rounded-xl shadow hover:shadow-gray-400/50 py-2 px-5 text-green-600 mt-10 uppercase max-md:hidden text-sm transition-all ease-in-out"
+        className="bg-green-500/90 rounded-full shadow hover:shadow-gray-400/50 py-2.5 px-6 font-semibold text-white mt-10 uppercase max-md:hidden text-sm transition-all ease-in-out"
         onClick={handleDescargarExcel}
       >
         Descargar aberturas en stock formato Excel

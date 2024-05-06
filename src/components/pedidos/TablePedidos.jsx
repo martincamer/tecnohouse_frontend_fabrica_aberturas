@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { usePedidoContext } from "../../context/PedidoProvider";
 import { useEffect, useState } from "react";
 import { ModalEliminarPedido } from "./ModalEliminarPedido";
-import { IoCloseCircle } from "react-icons/io5";
 import { ModalVerClientes } from "./ModalVerClientes";
 
 export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
@@ -69,7 +68,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
   };
 
   return (
-    <div>
+    <div className="mt-10">
       <div className="flex flex-col gap-3 max-md:flex md:hidden">
         {resultadoFiltrados.map((p, index) => (
           <div
@@ -123,61 +122,60 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
           </div>
         ))}
       </div>
-      <div className="overflow-x-auto rounded-2xl hover:shadow-md transition-all ease-in-out border border-gray-200 mt-5 md:block max-md:hidden">
-        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+      <div className="rounded-xl shadow-xl md:block bg-white max-md:overflow-x-auto scrollbar-hidden">
+        <table className="w-full uppercase divide-y-[1px] divide-slate-300 table">
           <thead>
             <tr>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Numero/Pedido
               </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Cliente
               </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Total aberturas
               </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Clientes
               </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Fecha de creación
               </th>
-              {/* <th className="p-3 max-md:py-1 max-md:px-3 max-md:text-sm">Remito</th> */}
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
-                Estado del pedido
-              </th>{" "}
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Eliminar
               </th>
-              <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Ver pedido
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 text-left">
             {resultadoFiltrados?.map((p) => (
-              <tr key={p.id} className="cursor-pointer">
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+              <tr
+                key={p.id}
+                className="cursor-pointer hover:bg-slate-100 transition-all"
+              >
+                <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {p?.id}
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase font-bold">
+                </th>
+                <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase font-bold">
                   {p?.cliente}
-                </td>
-                <td className="py-3 px-3 text-sm text-left uppercase font-bold">
-                  <span className="bg-green-100 text-green-600 py-2 px-2 rounded-xl">
+                </th>
+                <th className="py-3 px-3 text-sm text-left uppercase font-bold">
+                  <span className="bg-green-500/90 text-white py-2 px-4 shadow-md rounded-xl">
                     {p?.productos.respuesta.reduce((sum, b) => {
                       return sum + Number(b?.cantidad);
                     }, 0)}
                   </span>
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                </th>
+                <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   <div className="flex">
                     <button
                       onClick={() => {
                         handleID(p?.id), openClientes();
                       }}
                       type="button"
-                      className="bg-indigo-100 text-indigo-600 py-2 px-4 rounded-xl flex gap-2 items-center"
+                      className="bg-indigo-100 text-indigo-600 py-2 px-6 rounded-full flex gap-2 items-center"
                     >
                       VER CLIENTES
                       <svg
@@ -196,33 +194,14 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
                       </svg>
                     </button>
                   </div>
-                </td>
-                <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {new Date(p?.created_at).toLocaleDateString("es-AR")}
-                </td>
-                <th
-                  className={`font-bold max-md:text-xs uppercase rounded-lg text-center`}
-                >
-                  <div className="flex">
-                    {p?.productos.respuesta.reduce((sum, b) => {
-                      return sum + Number(b?.cantidad);
-                    }, 0) ===
-                    p?.productos.respuesta.reduce((sum, b) => {
-                      return sum + Number(b?.cantidadFaltante);
-                    }, 0) ? (
-                      <p className="bg-green-500 text-white py-3 px-6 text-xs rounded-xl">
-                        realizado
-                      </p>
-                    ) : (
-                      <p className="bg-orange-500 text-white py-3 px-6 text-xs rounded-xl">
-                        pendiente
-                      </p>
-                    )}
-                  </div>
                 </th>
+                <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                  {new Date(p?.created_at).toLocaleDateString("es-AR")}
+                </th>
+
                 <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   <button
-                    className="bg-red-100 uppercase py-2 px-4 text-red-800 rounded-xl text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
+                    className="bg-red-500 uppercase py-2.5 px-6 font-bold text-white rounded-full text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs"
                     onClick={() => {
                       handleBorrarAccesorioOpen(), setGuardarId(p.id);
                     }}
@@ -237,7 +216,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
                       to={`/pedido/${p?.id}`}
                       // target="_blank"
                       // rel="noopener noreferrer"
-                      className="bg-indigo-100 uppercase py-2 px-4 text-indigo-600 rounded-xl text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs flex gap-2 items-center"
+                      className="bg-indigo-500 uppercase py-2 px-6 text-white rounded-full font-bold text-sm cursor-pointer max-md:py-1 max-md:px-4 max-md:text-xs flex gap-2 items-center"
                     >
                       Ver pedido
                       <svg

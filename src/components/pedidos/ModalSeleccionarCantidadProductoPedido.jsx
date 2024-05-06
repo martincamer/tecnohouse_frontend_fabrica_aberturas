@@ -50,7 +50,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
       <Transition appear show={isOpenModalCantidad} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className="fixed inset-0 z-[103] overflow-y-auto"
           onClose={closeModalCantidad}
         >
           <Transition.Child
@@ -62,10 +62,10 @@ export const ModalSeleccionarCantidadProductoPedido = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-10" />
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
-          <div className="min-h-screen px-4 text-center">
+          <div className="min-h-full h-full w-full text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -78,8 +78,9 @@ export const ModalSeleccionarCantidadProductoPedido = ({
               <Dialog.Overlay className="fixed inset-0" />
             </Transition.Child>
 
+            {/* This element is to trick the browser into centering the modal contents. */}
             <span
-              className="inline-block h-screen align-middle"
+              className="inline-block h-full min-h-full align-middle"
               aria-hidden="true"
             >
               &#8203;
@@ -93,7 +94,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="w-4/5 max-md:w-full inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6">
+              <div className="inline-block p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl space-y-6 w-full h-full">
                 <div className="py-0 flex justify-end">
                   <div
                     onClick={closeModalCantidad}
@@ -118,58 +119,46 @@ export const ModalSeleccionarCantidadProductoPedido = ({
 
                 <Dialog.Title
                   as="h3"
-                  className="text-sm font-bold leading-6 text-gray-700 uppercase"
+                  className="text-sm font-bold leading-6 text-gray-700 uppercase border-b"
                 >
                   Elegir Cantidad Producto
                 </Dialog.Title>
 
-                <div className="border-[1px] border-slate-300 rounded-xl shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll max-md:overflow-x-scroll">
-                  <table className="max-md:w-[1200px]">
+                <div className="flex flex-col gap-3 w-full">
+                  <table className="table">
                     <thead>
                       <tr className="border-b-[1px] border-slate-300">
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-bold uppercase text-slate-700 text-left">
                           Detalle
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-bold uppercase text-slate-700 text-center">
                           Color
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase  text-slate-700 text-center">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-bold uppercase  text-slate-700 text-center">
                           Ancho
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase  text-slate-700 text-center">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-bold uppercase  text-slate-700 text-center">
                           Alto
                         </th>
-                        <th className="py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-bold uppercase text-slate-700 text-center">
                           Cliente
                         </th>
-                        <th className="w-1/4 py-3 px-2 text-sm max-md:text-xs font-normal uppercase text-slate-700 text-center">
+                        <th className="w-1/4 py-4 px-3 text-sm max-md:text-xs font-bold uppercase text-slate-700 text-center">
                           Seleccionar cantidad aberturas
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {/* <th className="p-2 text-sm max-md:text-xs text-center w-[20px] font-normal text-slate-800">
-                        {productoUnicoState.id}
-                      </th>
-                      <th className="p-2 text-sm max-md:text-xs text-center w-4 font-normal text-slate-800 ">
-                        <input
-                          value={nombreProducto}
-                          onChange={handleNombreProductoChange}
-                          type="text"
-                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[180px] outline-none"
-                          placeholder="Nombre"
-                        />
-                      </th> */}
                       <th className="p-2 text-sm max-md:text-xs text-center font-normal text-slate-800">
                         <textarea
                           value={detalleProducto}
                           onChange={handleDetalleProductoChange}
                           type="text"
-                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 outline-none w-full uppercase"
+                          className="rounded-xl border-slate-300 font-bold border-[1px] shadow p-2 outline-none w-full uppercase"
                           placeholder="Detalle"
                         />
                       </th>
-                      <th className="p-2 text-sm max-md:text-xs text-center font-normal text-slate-800 uppercase">
+                      <th className="p-2 text-sm max-md:text-xs text-center text-slate-800 uppercase font-bold">
                         {productoUnicoState.color}
                       </th>
                       <th className="p-2 text-sm max-md:text-xs text-center font-normal text-slate-800">
@@ -177,7 +166,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                           value={ancho}
                           onChange={handleAnchoProductoChange}
                           type="text"
-                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[60px]  text-center outline-none"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[60px]  text-center outline-none font-bold"
                           placeholder="ancho"
                         />
                       </th>
@@ -186,7 +175,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                           value={alto}
                           onChange={handleAltoProductoChange}
                           type="text"
-                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[60px] text-center outline-none"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 w-[60px] text-center outline-none font-bold"
                           placeholder="alto"
                         />
                       </th>
@@ -194,7 +183,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                         <textarea
                           onChange={(e) => setCliente(e.target.value)}
                           type="text"
-                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 outline-none uppercase"
+                          className="rounded-xl border-slate-300 border-[1px] shadow p-2 outline-none uppercase font-bold"
                           placeholder="Cliente"
                         />
                       </th>
@@ -202,7 +191,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                         <input
                           onChange={(e) => setCantidad(e.target.value)}
                           type="number"
-                          className="rounded-xl uppercase border-slate-300 border-[1px] shadow p-2 w-[120px] text-center outline-none"
+                          className="rounded-xl uppercase border-slate-300 border-[1px] shadow p-2 w-[120px] text-center outline-none font-bold"
                           placeholder="cantidad"
                         />
                       </th>
@@ -228,7 +217,7 @@ export const ModalSeleccionarCantidadProductoPedido = ({
                     }}
                     className="bg-indigo-500 uppercase max-md:text-xs text-white py-2 px-5 text-sm rounded-xl font-normal hover:shadow-md hover:shadow-black/20 hover:translate-x-1 transition-all ease-in-out"
                   >
-                    Crear producto facturar
+                    Crear el producto para el pedido.
                   </button>
                 </div>
               </div>

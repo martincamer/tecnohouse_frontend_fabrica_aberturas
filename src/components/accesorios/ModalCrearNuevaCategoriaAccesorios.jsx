@@ -1,9 +1,9 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
 import { crearCategorias } from "../../api/categoriasAccesorios.api";
 import { useAccesoriosContext } from "../../context/AccesoriosProvider";
+import { toast } from "react-toastify";
 
 export const ModalCrearNuevaCategoriaAccesorios = ({
   isOpenCrearCategoria,

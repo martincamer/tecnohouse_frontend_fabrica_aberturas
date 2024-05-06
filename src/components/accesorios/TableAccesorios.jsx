@@ -76,122 +76,50 @@ export const TableAccesorios = ({
   };
 
   return (
-    <div>
-      <div className=" flex flex-col gap-3 max-md:flex md:hidden h-[50vh] overflow-y-scroll">
-        {currentResults.map((p) => (
-          <div
-            className="border-slate-300 border-[1px] shadow rounded-xl py-3 px-2 flex justify-between items-center"
-            key={p.id}
-          >
-            <div className="w-full">
-              <p className="font-bold text-slate-700 text-xs uppercase flex gap-1 items-center">
-                <span>Num °</span> <span className="font-normal">{p.id}</span>
-              </p>
-              <p className="font-bold text-slate-700 text-xs uppercase flex gap-1 items-center">
-                <span>Descripción</span>{" "}
-                <span className="font-normal">{p.descripcion}</span>
-              </p>
-              <p className="font-bold text-slate-700 text-xs">
-                STOCK{" "}
-                <span
-                  className={`${
-                    Number(p.stock_minimo) > Number(p.stock)
-                      ? "text-red-600"
-                      : "text-green-500"
-                  } text-xs`}
-                >
-                  {p.stock}
-                </span>
-              </p>
-              <p className="font-bold text-slate-700 text-xs">
-                STOCK MIN <span className="font-normal">{p.stock_minimo}</span>
-              </p>
-              <div className="flex mt-1 gap-2">
-                <button
-                  className="bg-red-500/10 text-red-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                  onClick={() => {
-                    handleBorrarAccesorioOpen(), setGuardarId(p.id);
-                  }}
-                >
-                  <MdDelete className="text-2xl" />
-                </button>
-                <button
-                  className="bg-black/10 text-black-800 uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                  onClick={() => {
-                    openModalEditar(), handlePerfilSeleccionado(p.id);
-                  }}
-                >
-                  <TiEdit className="text-2xl" />
-                </button>
-                <button
-                  className="bg-black text-white uppercase text-xs py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal"
-                  onClick={() => {
-                    handleModalEditarStockOpen(),
-                      handlePerfilSeleccionado(p.id);
-                  }}
-                >
-                  <RiEditCircleFill className="text-xl" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="border-[1px] border-slate-300 rounded-2xl  max-md:hidden md:block hover:shadow-md transition-all ease-linear ">
-        <table className="  p-[5px] w-full  uppercase">
+    <div className="max-md:py-2">
+      <div className="rounded-xl shadow-xl md:block bg-white max-md:overflow-x-auto scrollbar-hidden">
+        <table className="w-full uppercase divide-y-[1px] divide-slate-300 table">
           <thead>
             <tr>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
+              <th className="py-6 px-3 text-sm font-bold text-indigo-600">
                 Codigo
               </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
+              <th className="py-6 px-3 text-sm font-bold text-indigo-600">
                 Detalle
               </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
+              <th className="py-6 px-3 text-sm font-bold text-indigo-600">
                 Stock
               </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
+              <th className="py-6 px-3 text-sm font-bold text-indigo-600">
                 Stock Minimo
               </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
+              <th className="py-6 px-3 text-sm font-bold text-indigo-600">
                 Entradas
               </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
+              <th className="py-6 px-3 text-sm font-bold text-indigo-600">
                 Salidas
               </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
+              <th className="py-6 px-3 text-sm font-bold text-indigo-600">
                 Categoria
               </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
-                Color
+              <th className="py-6 px-3 text-sm font-bold text-indigo-600">
+                Acciones
               </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
-                Eliminar
-              </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
-                Editar
-              </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
-                Nueva entrada
-              </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
-                Editar stock
-              </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
-                Nueva salida
-              </th>
-              <th className="p-3 max-md:p-2 border-b-[1px] text-sm font-normal">
+              <th className="py-6 px-3 text-sm font-bold text-indigo-600">
                 Estado
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-300">
+          <tbody className="divide-y divide-slate-200">
             {currentResults?.map((p) => (
-              <tr className="cursor-pointer" key={p.id}>
-                <th className="py-4 font-normal text-sm max-md:p-2 max-md:text-sm">
+              <tr
+                className="cursor-pointer hover:bg-slate-100 transition-all"
+                key={p.id}
+              >
+                <th className="py-4 text-sm max-md:p-2 max-md:text-sm">
                   {p.nombre}
                 </th>
-                <th className="py-4 font-normal text-sm max-md:p-2 max-md:text-sm">
+                <th className="py-4 text-sm max-md:p-2 max-md:text-sm">
                   {p.descripcion}
                 </th>
                 <th
@@ -203,80 +131,22 @@ export const TableAccesorios = ({
                 >
                   {p.stock}
                 </th>
-                <th
-                  className={`py-4 font-normal text-sm max-md:p-2 max-md:text-sm`}
-                >
+                <th className={`py-4 text-sm max-md:p-2 max-md:text-sm`}>
                   {p.stock_minimo}
                 </th>
                 <th
-                  className={`text-indigo-500 font-bold py-4 text-sm max-md:p-2 max-md:text-sm`}
+                  className={`text-indigo-500 py-4 text-sm max-md:p-2 max-md:text-sm`}
                 >
                   +{p.entrada}
                 </th>
-                <th
-                  className={`py-4 font-normal text-sm max-md:p-2 max-md:text-sm`}
-                >
+                <th className={`py-4 text-sm max-md:p-2 max-md:text-sm`}>
                   {p.salida}
                 </th>
-                <th className="py-4 font-normal text-sm max-md:p-2 max-md:text-sm">
+                <th className="py-4 text-sm max-md:p-2 max-md:text-sm">
                   {p.categoria}
                 </th>
-                <th className="py-4 font-normal text-sm max-md:p-2 max-md:text-sm">
-                  {p.color}
-                </th>
 
-                <th className="py-4 font-normal max-md:p-2">
-                  <button
-                    className="bg-red-500/10 text-red-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
-                    onClick={() => {
-                      handleBorrarAccesorioOpen(), setGuardarId(p.id);
-                    }}
-                  >
-                    Eliminar
-                  </button>
-                </th>
-                <th className="py-4 font-normal  max-md:p-2">
-                  <button
-                    onClick={() => {
-                      openModalEditar(), handlePerfilSeleccionado(p.id);
-                    }}
-                    className="bg-indigo-500/10 text-indigo-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
-                  >
-                    Editar
-                  </button>
-                </th>
-
-                <th className="py-4 font-normal  max-md:p-2">
-                  <button
-                    onClick={() => {
-                      openEntrada(), handleId(p.id);
-                    }}
-                    className="bg-indigo-500 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
-                  >
-                    Nueva entrada
-                  </button>
-                </th>
-                <th className="py-4 font-normal  max-md:p-2">
-                  <button
-                    onClick={() => {
-                      handlePerfilSeleccionado(p.id), openModalEditarDos();
-                    }}
-                    className="bg-slate-700 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
-                  >
-                    Editar stock
-                  </button>
-                </th>
-                <th className="py-4 font-normal  max-md:p-2">
-                  <button
-                    onClick={() => {
-                      openSalida(), handleId(p.id);
-                    }}
-                    className="bg-green-600 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
-                  >
-                    Crear salida
-                  </button>
-                </th>
-                <th className="py-4 font-normal  px-4">
+                <th className="py-4 flex px-4">
                   <p
                     className={`${
                       Number(p.stock_minimo) > Number(p.stock)
@@ -288,6 +158,94 @@ export const TableAccesorios = ({
                       ? "pedir"
                       : "mucho stock"}
                   </p>
+                </th>
+                <th>
+                  <div className="dropdown dropdown-bottom dropdown-end">
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="hover:bg-indigo-500 hover:text-white py-3 px-3 rounded-full transition-all"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
+                        />
+                      </svg>
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow-xl border border-gray-300 bg-base-100 rounded-box w-52 gap-2"
+                    >
+                      <li>
+                        <button
+                          className="bg-red-500/10 hover:bg-red-500 hover:text-white text-red-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
+                          onClick={() => {
+                            handleBorrarAccesorioOpen(), setGuardarId(p.id);
+                          }}
+                        >
+                          Eliminar
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() => {
+                            openModalEditar(), handlePerfilSeleccionado(p.id);
+                          }}
+                          className="
+                          hover:bg-indigo-500 hover:text-white
+                          bg-indigo-500/10 text-indigo-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
+                        >
+                          Editar
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() => {
+                            handlePerfilSeleccionado(p.id),
+                              openModalEditarDos();
+                          }}
+                          className="
+                          hover:bg-slate-200 hover:text-slate-700
+                          bg-slate-700 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
+                        >
+                          Editar stock
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() => {
+                            openEntrada(), handleId(p.id);
+                          }}
+                          className="
+                          hover:bg-indigo-100 hover:text-indigo-500
+                          bg-indigo-500 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
+                        >
+                          Nueva entrada
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() => {
+                            openSalida(), handleId(p.id);
+                          }}
+                          className="
+                          hover:bg-green-100 hover:text-green-700
+                          bg-green-600 text-white py-2 px-5 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
+                        >
+                          Crear salida
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
                 </th>
               </tr>
             ))}
@@ -395,7 +353,7 @@ export const TableAccesorios = ({
       />
 
       <button
-        className="bg-green-100 text-green-700 hover:shadow-md hover:shadow-gray-350 transition-all ease-linear uppercase rounded-xl py-2 px-6 shadow mt-10 max-md:hidden md:block text-sm"
+        className="bg-green-500/90 text-white hover:shadow-md hover:shadow-gray-350 transition-all ease-linear uppercase rounded-full py-2.5 px-6 font-semibold shadow mt-10 max-md:hidden md:block text-sm"
         onClick={handleDescargarExcel}
       >
         Descargar excel accesorios

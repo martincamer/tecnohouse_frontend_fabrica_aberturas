@@ -15,11 +15,11 @@ export const CategoriasAberturas = ({
   const { openModalEditarColores, openModalVerColores } = useAberturasContext();
 
   return (
-    <div>
-      <div className="grid grid-cols-7 max-md:grid-cols-none max-md:flex max-md:overflow-x-scroll gap-3 max-md:gap-2 border-slate-300 border-[1px] rounded-xl py-4 transition-all ease-in-out cursor-pointer px-4 max-md:border-[1px] hover:shadow-none max-md:border-slate-200 max-md:px-2 max-md:py-2">
+    <div className="bg-white shadow-xl cursor-pointer transition-all ease-linear px-4 rounded-xl max-md:border-none max-md:px-2 max-md:py-2 md:block max-md:shadow-lg">
+      <div className="grid-cols-5 grid gap-4 max-md:gap-2 max-md:py-0 py-4 max-md:grid-cols-none max-md:flex">
         <button
           onClick={openModal}
-          className="flex gap-2 items-center text-indigo-700 bg-indigo-50 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0"
+          className="flex gap-2 items-center bg-indigo-500 font-semibold text-white text-sm max-md:px-2 max-md:text-xs py-2 px-4 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase justify-between"
         >
           <p className="max-md:hidden md:block">
             Crear nuevo producto o objeto
@@ -42,7 +42,7 @@ export const CategoriasAberturas = ({
         </button>
         <button
           onClick={openModalCrearCategoria}
-          className="flex gap-2 items-center text-indigo-700 bg-indigo-50 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0"
+          className="flex gap-2 items-center bg-indigo-500 font-semibold text-white text-sm max-md:px-2 max-md:text-xs py-2 px-4 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase justify-between"
         >
           <p className="max-md:hidden">Crear nueva categoria</p>{" "}
           <svg
@@ -63,7 +63,7 @@ export const CategoriasAberturas = ({
         </button>
         <button
           onClick={openModalVerColores}
-          className="flex gap-2 items-center text-indigo-700 bg-indigo-50 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0"
+          className="flex gap-2 items-center bg-indigo-500 font-semibold text-white text-sm max-md:px-2 max-md:text-xs py-2 px-4 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase justify-between"
         >
           <p className="max-md:hidden"> Crear nuevo color</p>{" "}
           <svg
@@ -84,7 +84,7 @@ export const CategoriasAberturas = ({
         </button>
         <button
           onClick={openModalVerCategoria}
-          className="flex gap-2 items-center text-slate-700 bg-slate-100 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0"
+          className="flex gap-2 items-center bg-green-500 font-semibold text-white text-sm max-md:px-2 max-md:text-xs py-2 px-4 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase justify-between"
         >
           <p className="max-md:hidden">Ver categorias creadas</p>{" "}
           <svg
@@ -105,7 +105,7 @@ export const CategoriasAberturas = ({
         </button>
         <button
           onClick={openModalEditarColores}
-          className="flex gap-2 items-center text-slate-700 bg-slate-100 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0"
+          className="flex gap-2 items-center bg-green-500 font-semibold text-white text-sm max-md:px-2 max-md:text-xs py-2 px-4 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase justify-between"
         >
           <p className="max-md:hidden">Ver colores creados</p>{" "}
           <svg
@@ -127,7 +127,7 @@ export const CategoriasAberturas = ({
 
         <Link
           to={"/aberturas/entradas"}
-          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0 max-md:hidden"
+          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2  font-semibold py-2 px-3 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0 max-md:hidden justify-between"
         >
           <p className="max-md:hidden">Ir a la parte de entradas</p>{" "}
           <svg
@@ -149,7 +149,7 @@ export const CategoriasAberturas = ({
 
         <Link
           to={"/aberturas/salidas"}
-          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2 font-normal py-2 px-3 rounded-xl cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0 max-md:hidden"
+          className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2  font-semibold py-2 px-3 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0 max-md:hidden justify-between"
         >
           <p className="max-md:hidden"> Ir a la parte de salidas</p>{" "}
           <svg

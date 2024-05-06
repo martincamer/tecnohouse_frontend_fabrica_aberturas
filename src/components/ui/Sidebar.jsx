@@ -1,19 +1,12 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
-import {
-  BiHome,
-  BiLogoProductHunt,
-  BiArea,
-  BiMenu,
-  BiUserCircle,
-  BiUserCheck,
-} from "react-icons/bi";
-import { IoDocumentText } from "react-icons/io5";
+import { BiMenu } from "react-icons/bi";
 import { useState } from "react";
 
 export const Sidebar = () => {
-  const { user, clickProvider, setClickProvider } = useAuth();
+  const { clickProvider, signout } = useAuth();
   const [click, setClick] = useState(true);
+  const params = useParams();
 
   const handleClick = () => {
     setClick(!click);
@@ -32,7 +25,7 @@ export const Sidebar = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-7 h-7"
         >
           <path
             strokeLinecap="round"
@@ -52,7 +45,7 @@ export const Sidebar = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-7 h-7"
         >
           <path
             strokeLinecap="round"
@@ -72,7 +65,7 @@ export const Sidebar = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-7 h-7"
         >
           <path
             strokeLinecap="round"
@@ -84,7 +77,7 @@ export const Sidebar = () => {
     },
     {
       name: "Clientes pedidos / Crear",
-      path: "/pedidos",
+      path: `${params.id ? `/pedido/${params.id}` : "/pedidos"}`,
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +85,7 @@ export const Sidebar = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-7 h-7"
+          className="w-8 h-8"
         >
           <path
             strokeLinecap="round"
@@ -112,7 +105,7 @@ export const Sidebar = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-8 h-8"
         >
           <path
             strokeLinecap="round"
@@ -132,7 +125,7 @@ export const Sidebar = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-7 h-7"
         >
           <path
             strokeLinecap="round"
@@ -171,35 +164,40 @@ export const Sidebar = () => {
           </span>
         </Link>
       </div>
-      <div>
-        <div className="">
+      <menu className="flex flex-col justify-between h-full">
+        <div>
           {navegacion.map(({ name, path, icon }) => (
             <div
               key={path}
               className={`${
-                location.pathname === path && "bg-slate-200"
-              } w-full py-4 px-5 relative flex items-center flex-col gap-2 justify-center`}
+                location.pathname === path && "bg-slate-100 text-indigo-600"
+              } tooltip tooltip-right w-full py-4 px-5 z-100 uppercase font-semibold`}
+              data-tip={name}
             >
-              <div className="t group group-hover:transition-all group-hover:ease-linear group-hover:duration-300  w-full flex items-center max-md:justify-center gap-2 ease duration-300">
-                <Link
-                  to={path}
-                  className={`${
-                    location.pathname === path
-                      ? "text-slate-800 "
-                      : "text-slate-700 "
-                  } text-2xl`}
-                >
-                  {icon}
-
-                  <span className="invisible absolute start-full left-14 top-1/2 ms-5 -translate-y-1/2 rounded-xl border-[1px] solid text-slate-800 px-4 flex justify-center py-2 text-xs group-hover:visible z-[100] bg-white shadow-md font-bold uppercase">
-                    <div>{name}</div>
-                  </span>
-                </Link>
-              </div>
+              <Link to={path}>{icon}</Link>
             </div>
           ))}
         </div>
-      </div>
+        <div
+          onClick={() => signout()}
+          className="hover:bg-slate-100 py-4 px-5 cursor-pointer hover:text-indigo-600"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-7 h-7"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+            />
+          </svg>
+        </div>
+      </menu>
     </div>
   );
 };

@@ -31,7 +31,7 @@ export const ModalSeleccionarAberturas = () => {
       <Transition appear show={isOpenProductos} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className="fixed inset-0 z-[102] overflow-y-auto"
           onClose={closeModalProductos}
         >
           <Transition.Child
@@ -46,7 +46,7 @@ export const ModalSeleccionarAberturas = () => {
             <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
-          <div className="min-h-screen px-4 text-center">
+          <div className="min-h-full h-full w-full text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -61,7 +61,7 @@ export const ModalSeleccionarAberturas = () => {
 
             {/* This element is to trick the browser into centering the modal contents. */}
             <span
-              className="inline-block h-screen align-middle"
+              className="inline-block h-full min-h-full align-middle"
               aria-hidden="true"
             >
               &#8203;
@@ -75,7 +75,7 @@ export const ModalSeleccionarAberturas = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="w-3/4 inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl space-y-6 max-md:w-full">
+              <div className="inline-block p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl space-y-6 w-full h-full">
                 <div className="py-0 flex justify-end">
                   <div
                     onClick={closeModalProductos}
@@ -104,7 +104,11 @@ export const ModalSeleccionarAberturas = () => {
                 >
                   ELEGIR UNA ABERTURA Y PONER LA CANTIDAD.
                 </Dialog.Title>
-                <Search variable="w-2/5" search={search} searcher={searcher} />
+                <Search
+                  variable="w-2/5 border border-gray-300 shadow-none"
+                  search={search}
+                  searcher={searcher}
+                />
                 {errorProducto && (
                   <div>
                     <span className="bg-red-500 py-2 px-2 text-white font-bold rounded-md">
@@ -112,23 +116,23 @@ export const ModalSeleccionarAberturas = () => {
                     </span>
                   </div>
                 )}
-                <div className="border-[1px] border-gray-200 rounded-xl shadow-black/10 shadow w-full h-[300px] overflow-y-scroll max-md:overflow-x-scroll">
-                  <table className="p-[5px] table-auto w-full rounded uppercase max-md:w-[1200px] divide-gray-300 divide-y-[1px]">
+                <div className="border-[1px] border-gray-200 rounded-xl shadow-black/10 shadow w-full h-[60vh] overflow-y-scroll scroll-bar cursor-pointer">
+                  <table className="p-[5px] table-auto w-full rounded uppercase divide-gray-300 divide-y-[1px] table">
                     <thead>
                       <tr>
-                        <th className="py-4 px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-left">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-bold text-indigo-500 text-left">
                           Detalle
                         </th>
-                        <th className="py-4 px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-left">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-bold text-indigo-500 text-left">
                           Color
                         </th>
-                        <th className="py-4 px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-left">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-bold text-indigo-500 text-left">
                           Ancho - Alto
                         </th>
-                        <th className="py-4 px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-left">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-bold text-indigo-500 text-left">
                           Categoria
                         </th>
-                        <th className="py-4 px-3 text-sm max-md:text-xs font-normal text-indigo-500 text-left">
+                        <th className="py-4 px-3 text-sm max-md:text-xs font-bold text-indigo-500 text-left">
                           Seleccionar
                         </th>
                       </tr>
@@ -139,25 +143,25 @@ export const ModalSeleccionarAberturas = () => {
                         key={c.id}
                       >
                         <tr>
-                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-normal">
+                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-bold">
                             {c.descripcion}
                           </th>
-                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-normal">
+                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-bold">
                             {c.color}
                           </th>
-                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-normal">
+                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-bold">
                             {c.ancho}x{c.alto}
                           </th>
-                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-normal">
+                          <th className="py-4 px-4 text-sm max-md:text-xs text-left font-bold">
                             {c.categoria}
                           </th>
-                          <th className="py-4 px-4 text-sm max-md:text-xs w-[120px] text-left font-normal">
+                          <th className="py-4 px-4 text-sm max-md:text-xs w-[120px] text-left font-bold">
                             <Link
                               onClick={() => {
                                 openModalCantidad(),
                                   handleSeleccionarProducto(c.id);
                               }}
-                              className="bg-green-100 py-2 px-4 text-green-700 rounded-xl shadow text-left text-xs"
+                              className="bg-green-500 py-2 px-4 text-white rounded-full text-left text-sm"
                             >
                               Seleccionar
                             </Link>

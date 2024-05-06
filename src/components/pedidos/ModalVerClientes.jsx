@@ -16,7 +16,23 @@ export const ModalVerClientes = ({ isOpen, closeModal, obtenerId }) => {
     loadData();
   }, [obtenerId]);
 
-  console.log(datos);
+  const [clientesUnicos, setClientesUnicos] = useState([]);
+
+  useEffect(() => {
+    const clientesSet = new Set(); // Usar un conjunto para clientes únicos
+    const clientesList = [];
+
+    datos?.productos?.respuesta?.forEach((producto) => {
+      const cliente = producto.cliente.toUpperCase(); // Normalizar el nombre del cliente
+      if (!clientesSet.has(cliente)) {
+        clientesSet.add(cliente); // Agregar al conjunto para evitar duplicados
+        clientesList.push(cliente); // Mantener una lista de clientes únicos
+      }
+    });
+
+    setClientesUnicos(clientesList); // Guardar la lista de clientes únicos en el estado
+  }, [datos?.productos]); // Ejecutar cada vez que los productos cambien
+
   return (
     <Menu as="div" className="z-50">
       <ToastContainer />
@@ -97,54 +113,20 @@ export const ModalVerClientes = ({ isOpen, closeModal, obtenerId }) => {
                   LOS CLIENTES ENCONTRADO SON
                 </Dialog.Title>
 
-                <div className="mt-4 h-[30vh] overflow-y-scroll space-y-2">
-                  {/* Verificar si hay datos de productos */}
-                  {datos.productos?.respuesta && (
-                    <>
-                      {/* Iterar sobre los productos */}
-                      {datos.productos.respuesta
-                        .sort((a, b) => {
-                          // Si a.cantidad es igual a a.cantidadFaltante, a debería ir después de b
-                          if (a.cantidad === a.cantidadFaltante) return 1;
-                          // Si b.cantidad es igual a b.cantidadFaltante, b debería ir después de a
-                          if (b.cantidad === b.cantidadFaltante) return -1;
-                          // En cualquier otro caso, no se altera el orden
-                          return 0;
-                        })
-                        .map((producto, index, array) => {
-                          // Verificar si el cliente ya ha sido mostrado antes
-                          const clienteRepetido = array
-                            .slice(0, index)
-                            .some((item) => item.cliente === producto.cliente);
-
-                          if (!clienteRepetido) {
-                            // Renderizar el elemento del cliente y su producto asociado
-                            return (
-                              <div
-                                key={index}
-                                className="flex justify-between border-slate-200 border-[1px] py-2 px-4 hover:shadow transition-all ease-linear cursor-pointer rounded-xl items-center"
-                              >
-                                <span className="text-sm text-gray-700 uppercase">
-                                  {producto.cliente}
-                                </span>
-                                {producto.cantidad ===
-                                producto.cantidadFaltante ? (
-                                  <span className="text-sm text-green-600 font-semibold bg-green-100 py-2 px-2 rounded-xl uppercase">
-                                    Realizado
-                                  </span>
-                                ) : (
-                                  <span className="text-sm text-red-600 font-semibold uppercase bg-red-100 py-2 px-2 rounded-xl">
-                                    Falta realizar
-                                  </span>
-                                )}
-                              </div>
-                            );
-                          }
-                          // Si el cliente ya ha sido mostrado antes, no renderizar nada
-                          return null;
-                        })}
-                    </>
-                  )}
+                <div className="mt-4 h-[30vh] overflow-y-scroll scroll-bar px-2 space-y-2">
+                  {clientesUnicos.map((cliente, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between border-slate-200 border-[1px] py-2 px-4 hover:shadow transition-all ease-linear cursor-pointer rounded-xl items-center"
+                    >
+                      <span className="text-sm text-gray-700 uppercase font-bold">
+                        {cliente}
+                      </span>
+                      <span className="text-sm text-white font-semibold bg-green-500/90 py-2 px-2 rounded-xl uppercase">
+                        Entregado
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </Transition.Child>

@@ -5,28 +5,62 @@ import * as XLSX from "xlsx";
 export const VerClientesFinalizados = () => {
   const { results } = usePedidoContext();
 
+  // Función para agrupar productos por cliente
+  const agruparPorCliente = (pedidos) => {
+    // Crear un objeto para agrupar por cliente
+    const agrupadoPorCliente = {};
+
+    pedidos.forEach((pedido) => {
+      pedido.productos.respuesta.forEach((producto) => {
+        const cliente = producto.cliente.toUpperCase(); // Normalizar el cliente a mayúsculas
+
+        if (!agrupadoPorCliente[cliente]) {
+          // Si no existe el cliente, inicializarlo como un arreglo de productos
+          agrupadoPorCliente[cliente] = [];
+        }
+
+        // Agregar el producto al cliente correspondiente
+        agrupadoPorCliente[cliente].push(producto);
+      });
+    });
+
+    // Convertir el objeto a un arreglo de clientes con productos
+    const arregloAgrupado = Object.entries(agrupadoPorCliente).map(
+      ([cliente, productos]) => ({
+        cliente, // Nombre del cliente
+        productos, // Productos asociados al cliente
+      })
+    );
+
+    return arregloAgrupado; // Retornar el arreglo agrupado por cliente
+  };
+
+  // Agrupar por cliente
+  const clientesAgrupados = agruparPorCliente(results);
+
   const [clienteFilter, setClienteFilter] = useState("");
-  // Filtrar productos por cliente
-  const filteredProductos = results.flatMap((order) =>
-    order.productos.respuesta.filter((producto) =>
-      producto.cliente.toLowerCase().includes(clienteFilter.toLowerCase())
-    )
+
+  // Filtrar clientes por el nombre ingresado en `clienteFilter`
+  const clientesFiltrados = clientesAgrupados.filter((cliente) =>
+    cliente.cliente.toLowerCase().includes(clienteFilter.toLowerCase())
   );
 
+  // Paginación
   const itemsPerPage = 10; // Cantidad de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentResults = filteredProductos?.slice(
+
+  const currentResults = clientesFiltrados.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
 
-  const totalPages = Math.ceil(filteredProductos?.length / itemsPerPage);
+  const totalPages = Math.ceil(clientesFiltrados.length / itemsPerPage);
 
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+    setCurrentPage(newPage); // Cambiar la página actual
   };
 
   const rangeSize = 5;
@@ -55,49 +89,19 @@ export const VerClientesFinalizados = () => {
     XLSX.writeFile(wb, "datos_pedidos.xlsx");
   };
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  return isLoading ? (
-    <section className="w-full h-full min-h-full max-h-full px-12 max-md:px-4 flex flex-col gap-12 max-md:gap-8 py-24 max-md:py-8">
-      <div className="w-[300px] py-5 rounded-2xl bg-slate-300 animate-pulse shadow"></div>
-
-      <div className="flex flex-col gap-2">
-        <div className="border-slate-200 shadow-md rounded-2xl border-[1px] w-1/4 py-5 px-4"></div>
-        <div className="border-slate-200 shadow-md rounded-2xl border-[1px] w-1/5 py-5 px-4"></div>
-      </div>
-      <div className="grid grid-cols-5 gap-4 mb-10 max-md:grid-cols-1">
-        {currentResults.map((c) => (
-          <div className="border-slate-200 animate-pulse py-28 px-10 border-[1px] rounded-2xl hover:shadow-md transition-all ease-linear shadow-md max-md:py-28"></div>
-        ))}
-      </div>
-    </section>
-  ) : (
-    <section className="w-full py-20 px-4 max-md:py-6 max-md:px-2">
-      <div className="flex max-md:px-4">
-        <p className="uppercase font-normal text-lg border-b-[3px] border-indigo-500 text-slate-700 max-md:text-sm">
-          Buscar clientes finalizados e imprimir comprobantes.
-        </p>
-      </div>
-
+  return (
+    <section className="w-full py-2 px-10">
       <div className="mt-10 max-md:shadow-none max-md:border-none max-md:px-3">
         <div className="mb-5">
           <button
             onClick={descargarExcel}
             type="button"
-            className="bg-black text-sm px-6 py-2 rounded-xl text-white shadow uppercase max-md:text-xs"
+            className="bg-indigo-500 font-bold text-sm px-6 py-2.5 rounded-full text-white shadow uppercase max-md:text-xs"
           >
             Descargar comprobante unico en excel
           </button>
         </div>
-        <div className="max-md:w-full flex justify-between items-center py-2 px-4 border-slate-300 border-[1px] shadow rounded-xl w-1/4">
+        <div className="max-md:w-full flex justify-between items-center py-2 px-4 font-bold shadow-xl bg-white rounded-full w-1/4">
           <input
             value={clienteFilter}
             onChange={(e) => setClienteFilter(e.target.value)}
@@ -124,81 +128,54 @@ export const VerClientesFinalizados = () => {
 
         <div className="cursor-pointer mt-5 ">
           <div className="grid grid-cols-5 gap-4 mb-10 max-md:grid-cols-1">
-            {currentResults.map((c) => (
-              <div className="border-slate-200 border-[1px] rounded-2xl hover:shadow-md transition-all ease-linear py-5 px-5">
+            {currentResults?.map((c) => (
+              <div className="border-slate-200 bg-white rounded-xl hover:shadow-md shadow-xl transition-all ease-linear py-5 px-5">
                 <div className="flex flex-col gap-1">
                   <p className="uppercase text-sm font-bold text-slate-700">
                     CLIENTE <span className="font-normal">{c.cliente}</span>
                   </p>
+                </div>
 
-                  <p className="uppercase text-sm font-bold text-slate-700">
-                    CATEGORIA DE LAS ABERTURAS{" "}
-                    <span className="font-normal">{c.categoria}</span>
+                <div className="mt-2">
+                  <p className="font-bold text-sm uppercase text-center underline">
+                    Aberturas entregadas
                   </p>
-
-                  <p className="uppercase text-sm font-bold text-slate-700">
-                    DETALLE <span className="font-normal">{c.detalle}</span>
-                  </p>
-                  <p className="uppercase text-sm font-bold text-slate-700">
-                    ANCHOXALTO{" "}
-                    <span className="font-normal">
-                      {c.ancho}x{c.alto}
-                    </span>
-                  </p>
-                  <p className="uppercase text-sm font-bold text-slate-700">
-                    CANTIDAD <span className="font-normal">{c.cantidad}</span>
-                  </p>
-                  <p className="uppercase text-sm font-bold text-slate-700">
-                    CANTIDAD REALIZADA{" "}
-                    <span className="font-normal">{c.cantidadFaltante}</span>
-                  </p>
-
-                  <div className="flex mt-1 justify-end">
-                    <p
-                      className={`${
-                        c.cantidad === c.cantidadFaltante
-                          ? "bg-green-100 text-green-700"
-                          : "text-orange-700 bg-orange-100"
-                      } py-1.5 px-4 rounded-xl text-sm shadow-md shadow-gray-300`}
-                    >
-                      {c.cantidad === c.cantidadFaltante ? (
-                        <span className="flex gap-2 items-center">
-                          FINALIZADA
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z"
-                            />
-                          </svg>
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-2">
-                          PENDIENTE{" "}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M7.498 15.25H4.372c-1.026 0-1.945-.694-2.054-1.715a12.137 12.137 0 0 1-.068-1.285c0-2.848.992-5.464 2.649-7.521C5.287 4.247 5.886 4 6.504 4h4.016a4.5 4.5 0 0 1 1.423.23l3.114 1.04a4.5 4.5 0 0 0 1.423.23h1.294M7.498 15.25c.618 0 .991.724.725 1.282A7.471 7.471 0 0 0 7.5 19.75 2.25 2.25 0 0 0 9.75 22a.75.75 0 0 0 .75-.75v-.633c0-.573.11-1.14.322-1.672.304-.76.93-1.33 1.653-1.715a9.04 9.04 0 0 0 2.86-2.4c.498-.634 1.226-1.08 2.032-1.08h.384m-10.253 1.5H9.7m8.075-9.75c.01.05.027.1.05.148.593 1.2.925 2.55.925 3.977 0 1.487-.36 2.89-.999 4.125m.023-8.25c-.076-.365.183-.75.575-.75h.908c.889 0 1.713.518 1.972 1.368.339 1.11.521 2.287.521 3.507 0 1.553-.295 3.036-.831 4.398-.306.774-1.086 1.227-1.918 1.227h-1.053c-.472 0-.745-.556-.5-.96a8.95 8.95 0 0 0 .303-.54"
-                            />
-                          </svg>
-                        </span>
-                      )}
-                    </p>
+                  <div className="flex flex-col gap-2 mt-2 overflow-y-scroll px-2 scroll-bar h-[20vh]">
+                    {c?.productos?.map((producto) => (
+                      <div
+                        className="border-slate-200 border py-1 px-1 rounded"
+                        key={producto.id}
+                      >
+                        <p className="text-sm font-bold uppercase">
+                          Desc.{" "}
+                          <span className="font-medium">
+                            {producto.detalle}
+                          </span>
+                        </p>
+                        <p className="text-sm font-bold uppercase">
+                          Cat.{" "}
+                          <span className="font-medium">
+                            {producto.categoria}
+                          </span>
+                        </p>
+                        <p className="text-sm font-bold uppercase">
+                          Col.{" "}
+                          <span className="font-medium">{producto.color}</span>
+                        </p>
+                        <p className="text-sm font-bold uppercase">
+                          AnchoxAlto.{" "}
+                          <span className="font-medium">
+                            {producto.ancho}x{producto.alto}
+                          </span>
+                        </p>
+                        <p className="text-sm font-bold uppercase">
+                          Cant.{" "}
+                          <span className="font-medium">
+                            {producto.cantidad}
+                          </span>
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

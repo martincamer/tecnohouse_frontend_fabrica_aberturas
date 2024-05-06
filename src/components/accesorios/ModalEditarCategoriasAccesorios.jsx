@@ -65,12 +65,11 @@ export const ModalEditarCategoriasAccesorios = () => {
   });
 
   return (
-    <Menu as="div" className="z-50">
-      {/* <ToastContainer /> */}
+    <Menu as="div" className="z-[104]">
       <Transition appear show={isOpenEditarCategorias} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className="fixed inset-0 z-[104] overflow-y-auto"
           onClose={closeModalEditarCategoria}
         >
           <Transition.Child

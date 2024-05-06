@@ -17,11 +17,11 @@ export const ModalVerCategoriasAccesorios = ({
   } = useAccesoriosContext();
 
   return (
-    <Menu as="div" className="z-50">
+    <Menu as="div" className="z-100">
       <Transition appear show={isOpenVerCategorias} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className="fixed inset-0 z-[101] overflow-y-auto scrooll-bar"
           onClose={closeModalVerCategoria}
         >
           <Transition.Child
@@ -36,7 +36,7 @@ export const ModalVerCategoriasAccesorios = ({
             <div className="fixed inset-0 bg-black bg-opacity-10" />
           </Transition.Child>
 
-          <div className="min-h-screen px-4 text-center">
+          <div className="text-center h-full max-h-full">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -51,7 +51,7 @@ export const ModalVerCategoriasAccesorios = ({
 
             {/* This element is to trick the browser into centering the modal contents. */}
             <span
-              className="inline-block h-screen align-middle"
+              className="inline-block h-full align-middle"
               aria-hidden="true"
             >
               &#8203;
@@ -65,7 +65,7 @@ export const ModalVerCategoriasAccesorios = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl w-[1000px] max-md:w-full">
+              <div className="inline-block w-full p-6 my-0 px-5 text-left align-middle transition-all transform bg-white shadow-xl rounded-none max-w-full z-[101] h-full min-h-full max-h-full">
                 <div className="py-0 flex justify-end">
                   <div
                     onClick={closeModalVerCategoria}
@@ -94,7 +94,7 @@ export const ModalVerCategoriasAccesorios = ({
                 >
                   Editar o eliminar categorias
                 </Dialog.Title>
-                <div className="grid grid-cols-4 max-md:grid-cols-1 gap-4 my-5 h-[120px] overflow-y-scroll w-full">
+                <div className="grid grid-cols-4 max-md:grid-cols-1 gap-4 my-5 w-full">
                   {categorias.map((cat) => (
                     <div
                       className="bg-white border-[1px] border-gray-200 py-2 px-2 rounded-xl hover:shadow hover:shadow-gray-300 transition-all ease-in-out flex justify-center gap-3 uppercase text-sm items-center h-[58px] cursor-pointer"

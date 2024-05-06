@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { AluminioProvider } from "../src/context/AluminioProvider";
 import { useAuth } from "./context/AuthProvider";
 import { Sidebar } from "./components/ui/Sidebar";
-import { Navbar } from "./components/Navbar";
 import { NotFound } from "./routes/pages/protected/NotFound";
 import { Login } from "./routes/pages/Login";
 import { Register } from "./routes/pages/Register";
@@ -25,6 +25,7 @@ import { Salidas } from "./routes/pages/protected/Salidas";
 import { EntradasDos } from "./routes/pages/protected/EntradasDos";
 import { SalidasDos } from "./routes/pages/protected/SalidasDos";
 import { MenuMobile } from "./components/ui/MenuMobile";
+import { ToastContainer } from "react-toastify";
 //import normales
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,10 +34,25 @@ import "react-toastify/dist/ReactToastify.min.css";
 function App() {
   const { isAuth } = useAuth();
 
+  const [isLoading, setIsLoading] = useState(true); // Estado de carga
+
+  // Simula un tiempo de carga de 5 segundos
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false); // Desactiva la pantalla de carga después de 5 segundos
+    }, 3000);
+
+    return () => clearTimeout(timer); // Limpia el temporizador cuando se desmonta
+  }, []);
+
+  if (isLoading) {
+    // Muestra la pantalla de carga mientras se está cargando
+    return <LoadingScreen />;
+  }
+
   return (
     <>
       <BrowserRouter>
-        <Navbar />
         <Routes>
           <Route
             element={<RutaProtegida isAllowed={!isAuth} redirectTo={"/"} />}
@@ -55,7 +71,8 @@ function App() {
                       <PedidoProvider>
                         <PedidosMensualesProvider>
                           <RemitoProvider>
-                            <main className="flex gap-2 h-full">
+                            <main className="h-full flex">
+                              <ToastContainer />
                               <Sidebar />
                               <MenuMobile />
                               <Outlet />
@@ -102,3 +119,14 @@ function App() {
 }
 
 export default App;
+
+const LoadingScreen = () => {
+  return (
+    <div className="w-full h-screen flex items-center justify-center bg-gray-100">
+      <div className="flex flex-col items-center">
+        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-indigo-500 border-b-transparent"></div>
+        <p className="mt-4 text-lg font-bold text-gray-800">Cargando...</p>
+      </div>
+    </div>
+  );
+};

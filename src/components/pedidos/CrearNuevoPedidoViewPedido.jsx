@@ -62,11 +62,11 @@ export const CrearNuevoPedidoViewPedido = ({
   };
 
   return (
-    <Menu as="div" className="z-50">
+    <Menu as="div" className="z-100">
       <Transition appear show={isOpenCrarPedido} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className="fixed inset-0 z-[101] overflow-y-auto scrooll-bar"
           onClose={closeModalCrearPedidos}
         >
           <Transition.Child
@@ -81,7 +81,7 @@ export const CrearNuevoPedidoViewPedido = ({
             <div className="fixed inset-0 bg-black bg-opacity-10" />
           </Transition.Child>
 
-          <div className="min-h-screen px-4 text-center">
+          <div className="text-center h-full max-h-full">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -96,7 +96,7 @@ export const CrearNuevoPedidoViewPedido = ({
 
             {/* This element is to trick the browser into centering the modal contents. */}
             <span
-              className="inline-block h-screen align-middle"
+              className="inline-block h-full align-middle"
               aria-hidden="true"
             >
               &#8203;
@@ -110,7 +110,7 @@ export const CrearNuevoPedidoViewPedido = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-[1220px] max-md:px-3 p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl max-md:w-full">
+              <div className="inline-block w-full p-6 my-0 px-5 text-left align-middle transition-all transform bg-white shadow-xl rounded-none max-w-full z-[101] h-full min-h-full max-h-full">
                 <div className="py-0 flex justify-end">
                   <div
                     onClick={closeModalCrearPedidos}
@@ -137,12 +137,12 @@ export const CrearNuevoPedidoViewPedido = ({
                   as="h3"
                   className="text-sm uppercase font-bold leading-6 text-gray-700"
                 >
-                  Crear el pedido
+                  Crear nuevas aberturas/clientes
                 </Dialog.Title>
                 <form className="mt-2 border-t pt-4 pb-4 space-y-5">
                   <div>
                     <button
-                      className="bg-green-100 text-green-700 py-2 px-6 rounded-xl uppercase text-sm max-md:text-xs hover:bg-green-500 hover:text-white hover:shadow-md transition-all ease-linear"
+                      className="bg-green-500 text-white py-2.5 px-6 rounded-full font-bold uppercase text-sm max-md:text-xs hover:bg-green-500 hover:text-white hover:shadow-md transition-all ease-linear"
                       type="button"
                       onClick={openModalProductos}
                     >
@@ -150,60 +150,59 @@ export const CrearNuevoPedidoViewPedido = ({
                     </button>
                   </div>
 
-                  <div className="rounded-xl border-slate-300 border-[1px] shadow-black/10 shadow flex flex-col gap-3 w-full max-md:overflow-y-scroll h-[300px] overflow-y-scroll max-md:overflow-x-scroll">
-                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm max-md:w-[1200px]">
+                  <div className="rounded-xl shadow-lg md:block bg-white max-md:overflow-x-auto scrollbar-hidden border">
+                    <table className="w-full uppercase divide-y-[1px] divide-slate-300 table">
                       <thead>
                         <tr className="divide-gray-100">
-                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+                          <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600">
                             Detalle
                           </th>
-                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+                          <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600">
                             Color
                           </th>
-                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+                          <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600">
                             Ancho - Alto
                           </th>
-                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+                          <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600">
                             Categoria
                           </th>
-                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+                          <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600">
                             Cliente
                           </th>
-                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+                          <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600">
                             Cantidad
                           </th>
-                          <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+                          <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600">
                             Eliminar
                           </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200 text-left">
                         {productoSeleccionado.map((p) => (
-                          <tr
-                            key={p.id}
-                            className="hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
-                          >
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                          <tr key={p.id} className="cursor-pointer">
+                            <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.detalle}
-                            </td>
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                            </th>
+                            <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.color}
-                            </td>
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                            </th>
+                            <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.ancho}x{p.alto}
-                            </td>
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                            </th>
+                            <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.categoria}
-                            </td>
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                            </th>
+                            <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               {p.cliente}
-                            </td>
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                              {p?.cantidad}
-                            </td>
-                            <td className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                            </th>
+                            <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
+                              <span className="bg-indigo-500 py-1.5 px-2.5 rounded-xl text-white shadow">
+                                {p?.cantidad}
+                              </span>
+                            </th>
+                            <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                               <button
-                                className="justify-center px-4 py-2 text-xs text-red-900 bg-red-100 border border-transparent rounded-xl uppercase  hover:bg-red-50 duration-300 cursor-pointer font-normal text-center flex items-center gap-2"
+                                className="justify-center px-4 py-2 text-xs text-white bg-red-500 font-semibold rounded-xl uppercase text-center flex items-center gap-2"
                                 onClick={() => deleteProducto(p.id)}
                               >
                                 Eliminar producto
@@ -222,7 +221,7 @@ export const CrearNuevoPedidoViewPedido = ({
                                   />
                                 </svg>
                               </button>
-                            </td>
+                            </th>
                           </tr>
                         ))}
                       </tbody>
@@ -232,7 +231,7 @@ export const CrearNuevoPedidoViewPedido = ({
                     <button
                       onClick={deleteToResetProductos}
                       type="button"
-                      className="bg-red-100 uppercase text-sm text-red-800 rounded-xl py-2 px-4 shadow font-normal mt-2 max-md:text-sm"
+                      className="bg-red-100 uppercase text-sm text-red-900 font-semibold rounded-full py-2.5 px-6 mt-2 max-md:text-sm"
                     >
                       Resetear productos
                     </button>
@@ -241,7 +240,7 @@ export const CrearNuevoPedidoViewPedido = ({
                     <button
                       type="button"
                       onClick={() => onSubmit()}
-                      className="bg-indigo-500 rounded-xl py-2 px-6 text-white font-normal shadow-md hover:translate-x-1 transition-all ease-in-out max-md:text-xs uppercase text-sm"
+                      className="bg-indigo-500 rounded-full py-2.5 px-6 text-white font-semibold shadow-md hover:translate-x-1 transition-all ease-in-out max-md:text-xs uppercase text-sm"
                     >
                       Generar aberturas
                     </button>
