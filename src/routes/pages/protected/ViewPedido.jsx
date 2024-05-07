@@ -176,7 +176,7 @@ export const ViewPedido = () => {
     setOpenBorrarAccesorio(false);
   };
 
-  const itemsPerPage = 1; // Cantidad de elementos por página
+  const itemsPerPage = 10; // Cantidad de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
 
   // Obtener todos los resultados de la búsqueda
