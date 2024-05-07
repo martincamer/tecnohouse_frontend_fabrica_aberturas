@@ -4,9 +4,6 @@ import { ModalEliminarAberturas } from "./ModalEliminarAbertura";
 import { useState } from "react";
 import { ModalNuevaSalida } from "./ModalNuevaSalida";
 import { CrearNuevaEntrada } from "./CrearNuevaEntrada";
-import { MdDelete } from "react-icons/md";
-import { TiEdit } from "react-icons/ti";
-import { RiEditCircleFill } from "react-icons/ri";
 import XLSX from "xlsx";
 
 export const TableAberturas = ({
@@ -75,8 +72,6 @@ export const TableAberturas = ({
 
     // Mapear los datos a un formato adecuado para el archivo Excel
     const dataToExport = aberturasConStock.map((abertura) => ({
-      // ID: abertura.id,
-      // Codigo: abertura.nombre,
       DETALLE: abertura.descripcion,
       CATEGORIA: abertura.categoria,
       COLOR: abertura.color,
@@ -101,9 +96,6 @@ export const TableAberturas = ({
         <table className="w-full uppercase divide-y-[1px] divide-slate-300 table">
           <thead>
             <tr>
-              {/* <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
-                Codigo
-              </th> */}
               <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
                 Descripción
               </th>
@@ -127,9 +119,6 @@ export const TableAberturas = ({
                 key={p.id}
                 className="cursor-pointer hover:bg-slate-100 transition-all"
               >
-                {/* <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.nombre}
-                </th> */}
                 <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {p.descripcion}
                 </th>
@@ -140,7 +129,7 @@ export const TableAberturas = ({
                   {p.color}
                 </th>
                 <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
-                  {p.ancho} x {p.alto}
+                  {p.ancho}x{p.alto}
                 </th>
                 <th
                   className={`py-3 px-3 text-sm text-left ${
@@ -215,9 +204,9 @@ export const TableAberturas = ({
         </table>
       </div>
       {totalPages > 1 && (
-        <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
+        <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1 font-bold">
           <button
-            className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
+            className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -262,7 +251,7 @@ export const TableAberturas = ({
                     key={pageIndex}
                     className={`mx-1 px-3 py-1 rounded-xl ${
                       currentPage === pageIndex
-                        ? "bg-green-500 text-white transition-all border-[1px] border-green-500 ease-in-out shadow shadow-black/20 text-sm"
+                        ? "bg-indigo-500 text-white transition-all border-[1px] border-indigo-500 ease-in-out shadow shadow-black/20 text-sm"
                         : "bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
                     }`}
                     onClick={() => handlePageChange(pageIndex)}
@@ -274,7 +263,7 @@ export const TableAberturas = ({
             );
           })()}
           <button
-            className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
+            className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >

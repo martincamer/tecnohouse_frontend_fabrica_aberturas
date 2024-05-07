@@ -176,7 +176,7 @@ export const ViewPedido = () => {
     setOpenBorrarAccesorio(false);
   };
 
-  const itemsPerPage = 10; // Cantidad de elementos por página
+  const itemsPerPage = 1; // Cantidad de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
 
   // Obtener todos los resultados de la búsqueda
@@ -494,9 +494,9 @@ export const ViewPedido = () => {
           </div>
 
           {totalPages > 1 && (
-            <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
+            <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1 font-bold">
               <button
-                className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
+                className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
               >
@@ -541,7 +541,7 @@ export const ViewPedido = () => {
                         key={pageIndex}
                         className={`mx-1 px-3 py-1 rounded-xl ${
                           currentPage === pageIndex
-                            ? "bg-green-500 text-white transition-all border-[1px] border-green-500 ease-in-out shadow shadow-black/20 text-sm"
+                            ? "bg-indigo-500 text-white transition-all border-[1px] border-indigo-500 ease-in-out shadow shadow-black/20 text-sm"
                             : "bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
                         }`}
                         onClick={() => handlePageChange(pageIndex)}
@@ -553,7 +553,7 @@ export const ViewPedido = () => {
                 );
               })()}
               <button
-                className="mx-1 px-3 py-2 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
+                className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
               >

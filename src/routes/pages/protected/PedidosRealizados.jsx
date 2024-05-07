@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import { Search } from "../../../components/ui/Search";
+import { Search } from "../../../components/ui/Search";
 import { TablePedidosRealizados } from "../../../components/pedidos/TablePedidosRealizados";
 import { DescargarPedidoCompletoJefeFabrica } from "../../../components/pedidos/DescargarPedidoIncompletoJefeFabrica";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import client from "../../../api/axios";
 import "moment/locale/es";
 import * as XLSX from "xlsx";
-import { Search } from "../../../components/ui/Search";
 
 export const PedidosRealizados = () => {
   const [fechaInicio, setFechaInicio] = useState("");
@@ -128,64 +127,6 @@ export const PedidosRealizados = () => {
 
   let nombreMes = nombresMeses[indiceMes];
 
-  function agruparPorDetalle(datos) {
-    const resultado = [];
-
-    datos.forEach((pedido) => {
-      const existente = resultado.find(
-        (grupo) => grupo.detalle === pedido.detalle
-      );
-
-      if (existente) {
-        pedido.productos.respuesta.forEach((producto) => {
-          const existenteProducto = existente.productos.find(
-            (p) =>
-              p.categoria === producto.categoria &&
-              p.ancho === producto.ancho &&
-              p.alto === producto.alto &&
-              p.color === producto.color &&
-              p.detalle === producto.detalle
-          );
-
-          if (existenteProducto) {
-            existenteProducto.cantidad_total += parseInt(producto.cantidad);
-          } else {
-            existente.productos.push({
-              categoria: producto.categoria,
-              ancho: producto.ancho,
-              alto: producto.alto,
-              color: producto.color,
-              detalle: producto.detalle,
-              cantidad_total: parseInt(producto.cantidad),
-            });
-          }
-        });
-      } else {
-        const nuevoGrupo = {
-          detalle: pedido.detalle,
-          productos: [],
-        };
-
-        pedido.productos.respuesta.forEach((producto) => {
-          nuevoGrupo.productos.push({
-            categoria: producto.categoria,
-            ancho: producto.ancho,
-            alto: producto.alto,
-            color: producto.color,
-            detalle: producto.detalle,
-            cantidad_total: parseInt(producto.cantidad),
-          });
-        });
-
-        resultado.push(nuevoGrupo);
-      }
-    });
-
-    return resultado;
-  }
-
-  const datosAgrupados = agruparPorDetalle(dataNew);
-
   const descargarExcel = () => {
     const wsData = datosAgrupados.flatMap((grupo) =>
       grupo.productos.map((producto) => ({
@@ -231,23 +172,49 @@ export const PedidosRealizados = () => {
     setBusqueda(e.target.value);
   };
 
-  // Filtrar los datos basados en el término de búsqueda
-  const datosFiltrados = datosAgrupados
-    .map((grupo) => ({
-      ...grupo,
-      productos: grupo.productos.filter((producto) =>
-        producto.detalle.toLowerCase().includes(busqueda.toLowerCase())
-      ),
-    }))
-    .filter((grupo) => grupo.productos.length > 0);
+  function agruparPorDetalle(datos) {
+    const mapaProductos = {};
 
-  const totalCantidad = datosFiltrados.reduce((accumulator, grupo) => {
-    return (
-      accumulator +
-      grupo.productos.reduce((acc, producto) => {
-        return acc + producto.cantidad_total;
-      }, 0)
-    );
+    datos.forEach((pedido) => {
+      const productos = pedido.productos.respuesta;
+
+      productos.forEach((producto) => {
+        const clave = `${producto.detalle}-${producto.categoria}-${producto.ancho}-${producto.alto}-${producto.color}`;
+
+        if (mapaProductos[clave]) {
+          // If the product with this unique key already exists, increment the quantity
+          mapaProductos[clave].cantidad_total += parseInt(
+            producto.cantidad,
+            10
+          );
+        } else {
+          // If it's a new product, add it to the map
+          mapaProductos[clave] = {
+            detalle: producto.detalle,
+            categoria: producto.categoria,
+            ancho: producto.ancho,
+            alto: producto.alto,
+            color: producto.color,
+            cantidad_total: parseInt(producto.cantidad, 10),
+          };
+        }
+      });
+    });
+
+    // Convert the map to an array of unique products
+    const resultado = Object.values(mapaProductos);
+
+    return resultado;
+  }
+
+  const datosAgrupados = agruparPorDetalle(dataNew);
+
+  const datosFiltrados = datosAgrupados.filter((producto) =>
+    producto?.detalle?.toLowerCase()?.includes(busqueda.toLowerCase())
+  );
+
+  const totalCantidad = datosFiltrados?.reduce((sum, b) => {
+    return sum + Number(b.cantidad_total);
   }, 0);
 
   return (
@@ -533,8 +500,8 @@ export const PedidosRealizados = () => {
               </p>
             </div>
 
-            <div className="overflow-y-scroll scroll-bar px-2">
-              <div className="bg-white shadow-xl rounded-xl h-[50vh]">
+            <div className="overflow-y-scroll scroll-bar px-2 h-[50vh] py-2">
+              <div className="bg-white shadow-xl rounded-2xl">
                 {/* Tabla */}
                 <table className="w-full table">
                   <thead>
@@ -557,30 +524,28 @@ export const PedidosRealizados = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {datosFiltrados.map((grupo, index) =>
-                      grupo.productos.map((producto, subIndex) => (
-                        <tr key={`${index}-${subIndex}`}>
-                          <th className="p-2 max-md:text-xs text-sm font-bold py-4 uppercase">
-                            {producto.detalle}
-                          </th>
-                          <th className="p-2 max-md:text-xs text-sm py-4 uppercase">
-                            {producto.ancho}x{producto.alto}
-                          </th>
-                          <th className="p-2 max-md:text-xs text-sm font-bold py-4 uppercase">
-                            {producto.categoria}
-                          </th>
-                          <th className="p-2 max-md:text-xs text-sm font-bold py-4 uppercase">
-                            {producto.color}
-                          </th>
-                          <th className="p-2 max-md:text-xs text-sm font-bold py-4">
-                            <span className="bg-green-100 text-green-600 py-2 px-3 rounded-xl">
-                              {" "}
-                              {producto.cantidad_total}
-                            </span>
-                          </th>
-                        </tr>
-                      ))
-                    )}
+                    {datosFiltrados.map((producto, index) => (
+                      <tr key={index}>
+                        <th className="p-2 max-md:text-xs text-sm font-bold py-4 uppercase">
+                          {producto.detalle}
+                        </th>
+                        <th className="p-2 max-md:text-xs text-sm py-4 uppercase">
+                          {producto.ancho}x{producto.alto}
+                        </th>
+                        <th className="p-2 max-md:text-xs text-sm font-bold py-4 uppercase">
+                          {producto.categoria}
+                        </th>
+                        <th className="p-2 max-md:text-xs text-sm font-bold py-4 uppercase">
+                          {producto.color}
+                        </th>
+                        <th className="p-2 max-md:text-xs text-sm font-bold py-4">
+                          <span className="bg-green-600 text-white shadow py-2 px-3 rounded-xl">
+                            {" "}
+                            {producto.cantidad_total}
+                          </span>
+                        </th>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

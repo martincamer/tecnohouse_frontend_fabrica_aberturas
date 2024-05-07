@@ -35,7 +35,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
     setOpenBorrarAccesorio(false);
   };
 
-  const itemsPerPage = 15; // Cantidad de elementos por página
+  const itemsPerPage = 10; // Cantidad de elementos por página
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -251,64 +251,89 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
           isOpen={isClientes}
           closeModal={closeClientes}
         />
-        {totalPages > 1 && (
-          <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1">
-            <button
-              className="mx-1 px-3 py-2 rounded-xl bg-white shadow border-slate-300 border-[1px] shadow-black/20 text-sm flex gap-1 items-center cursor-pointer"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 19.5 8.25 12l7.5-7.5"
-                />
-              </svg>
-            </button>
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <button
-                key={index}
-                className={`mx-1 px-3 py-1 rounded-xl ${
-                  currentPage === index + 1
-                    ? "bg-green-500 transition-all ease-in-out text-white shadow shadow-black/20 text-sm"
-                    : "bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
-                }`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              className="mx-1 px-3 py-2 rounded-xl bg-white shadow border-slate-300 border-[1px] shadow-black/20 text-sm flex gap-1 items-center"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </button>
-          </div>
-        )}
       </div>
+
+      {totalPages > 1 && (
+        <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1 font-bold">
+          <button
+            className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
+          {(() => {
+            // Determina el rango de páginas visibles
+            const maxVisiblePages = 2; // Máximo de páginas a mostrar
+            const halfRange = Math.floor(maxVisiblePages / 2);
+
+            let startPage = Math.max(currentPage - halfRange, 1);
+            let endPage = Math.min(currentPage + halfRange, totalPages);
+
+            // Asegúrate de que el rango tenga 5 elementos
+            if (endPage - startPage < maxVisiblePages - 1) {
+              if (startPage === 1) {
+                endPage = Math.min(maxVisiblePages, totalPages);
+              } else if (endPage === totalPages) {
+                startPage = Math.max(totalPages - (maxVisiblePages - 1), 1);
+              }
+            }
+
+            return Array.from(
+              { length: endPage - startPage + 1 },
+              (_, index) => {
+                const pageIndex = startPage + index;
+                return (
+                  <button
+                    key={pageIndex}
+                    className={`mx-1 px-3 py-1 rounded-xl ${
+                      currentPage === pageIndex
+                        ? "bg-indigo-500 text-white transition-all border-[1px] border-indigo-500 ease-in-out shadow shadow-black/20 text-sm"
+                        : "bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
+                    }`}
+                    onClick={() => handlePageChange(pageIndex)}
+                  >
+                    {pageIndex}
+                  </button>
+                );
+              }
+            );
+          })()}
+          <button
+            className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </button>
+        </div>
+      )}
     </div>
   );
 };
