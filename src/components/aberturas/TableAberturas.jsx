@@ -195,6 +195,16 @@ export const TableAberturas = ({
                           Editar stock
                         </button>
                       </li>
+                      <li>
+                        <button
+                          className="bg-green-500/10 hover:bg-green-500 hover:text-white text-green-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
+                          onClick={() => {
+                            openEntrada(), handleId(p.id);
+                          }}
+                        >
+                          Nueva entrada
+                        </button>
+                      </li>
                     </ul>
                   </div>
                 </th>

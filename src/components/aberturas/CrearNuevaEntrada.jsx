@@ -10,12 +10,7 @@ export const CrearNuevaEntrada = ({
   closeOpenEntrada,
   obtenerId,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
     async function loadData() {
@@ -23,7 +18,6 @@ export const CrearNuevaEntrada = ({
 
       setValue("codigo", res.data.nombre);
       setValue("detalle", res.data.descripcion);
-      setValue("stock", res.data.stock);
       setValue("ancho", res.data.ancho);
       setValue("alto", res.data.alto);
     }
@@ -160,20 +154,20 @@ export const CrearNuevaEntrada = ({
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-[14px] font-normal text-slate-700 max-md:text-sm">
-                      Ingreso:
+                      Total de la entrada:
                     </label>
                     <input
-                      {...register("ingreso", { required: true })}
+                      {...register("stock", { required: true })}
                       className="border-gray-300 border-[1px] text-slate-700 py-2 px-2 rounded-xl shadow shadow-black/10 outline-none max-md:text-sm"
                       type="number"
-                      placeholder="Total Ingreso"
+                      placeholder="Total de la entrada"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
                     <input
-                      className="bg-indigo-500 text-sm font-normal hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl shadow shadow-black/10 outline-none text-white  text-center cursor-pointer max-md:text-xs"
+                      className="bg-indigo-500 text-sm hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-full shadow shadow-black/10 outline-none text-white  text-center cursor-pointer max-md:text-xs uppercase font-bold"
                       type="submit"
-                      value={"Crear el ingreso"}
+                      value={"Crear la entrada"}
                       //   onClick={closeOpenEntrada}
                     />
                   </div>

@@ -5,11 +5,58 @@ import { obtenerFacturasMensual } from "../../../api/factura.api";
 import ApexChart from "../../../components/charts/ApextChart";
 import ApexChartColumn from "../../../components/charts/ApextChartColumn";
 import ApexChartPie from "../../../components/charts/ApexChartPie";
+import client from "../../../api/axios";
 
 export const Home = () => {
-  const { results } = useAberturasContext();
+  const [fechaInicio, setFechaInicio] = useState("");
+  const [fechaFin, setFechaFin] = useState("");
+
+  const [perfiles, setPerfiles] = useState([]);
 
   const [datosMensuales, setDatosMensuales] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const res = await client.get("/productos");
+
+      setPerfiles(res.data);
+    };
+
+    loadData();
+  }, []);
+
+  const obtenerIngresoRangoFechas = async (fechaInicio, fechaFin) => {
+    try {
+      // Validación de fechas
+      if (!fechaInicio || !fechaFin) {
+        console.error("Fechas no proporcionadas");
+        return;
+      }
+
+      // Verifica y formatea las fechas
+      fechaInicio = new Date(fechaInicio).toISOString().split("T")[0];
+      fechaFin = new Date(fechaFin).toISOString().split("T")[0];
+
+      const response = await client.post("/pedido/rango-fechas", {
+        fechaInicio,
+        fechaFin,
+      });
+
+      const responseEntradas = await client.post("/entrada-dos/rango-fechas", {
+        fechaInicio,
+        fechaFin,
+      });
+
+      setDatosMensuales(response.data); // Maneja la respuesta según tus necesidades
+      setPerfiles(responseEntradas.data);
+    } catch (error) {
+      console.error("Error al obtener ingresos:", error);
+    }
+  };
+
+  const buscarIngresosPorFecha = () => {
+    obtenerIngresoRangoFechas(fechaInicio, fechaFin);
+  };
 
   useEffect(() => {
     async function loadData() {
@@ -24,7 +71,7 @@ export const Home = () => {
   }, []);
 
   const unidadesEnStockAberturas = () => {
-    return results.reduce((sum, b) => {
+    return perfiles.reduce((sum, b) => {
       return sum + Number(b.stock);
     }, 0);
   };
@@ -87,9 +134,57 @@ export const Home = () => {
       </div>
 
       <div className="px-10 mt-6">
-        <p className="font-bold text-2xl text-slate-600">
+        <p className="font-bold text-2xl text-slate-600 max-md:text-lg">
           Bienvenido a la parte de estadisticas del mes 🖐️.
         </p>
+      </div>
+
+      <div className="mt-5 px-10 right-0 top-[75px] absolute max-md:static max-md:top-0 max-md:right-0">
+        <div className="flex gap-4 items-center max-md:flex-row max-md:overflow-x-scroll scrollbar-hidden max-md:gap-2 max-md:w-full max-md:items-center">
+          <div className="flex gap-2 items-center">
+            <label className="text-sm text-slate-600 font-bold max-md:uppercase uppercase">
+              Fecha de inicio
+            </label>
+            <input
+              className="text-sm bg-white py-1.5 font-bold uppercase px-3 rounded-xl shadow-xl cursor-pointer text-slate-700 outline-none"
+              type="date"
+              value={fechaInicio}
+              onChange={(e) => setFechaInicio(e.target.value)}
+            />
+          </div>
+          <div className="flex gap-2 items-center">
+            <label className="text-sm text-slate-600 font-bold max-md:uppercase uppercase">
+              Fecha de fin
+            </label>
+            <input
+              className="text-sm bg-white py-1.5 font-bold uppercase px-3 rounded-xl shadow-xl cursor-pointer text-slate-700 outline-none"
+              type="date"
+              value={fechaFin}
+              onChange={(e) => setFechaFin(e.target.value)}
+            />
+          </div>
+
+          <button
+            onClick={buscarIngresosPorFecha}
+            className="bg-indigo-500 text-white text-sm  font-bold px-5 py-1 rounded-xl shadow flex items-center gap-2"
+          >
+            BUSCAR...
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className="px-10 py-10 max-md:px-5">

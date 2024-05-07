@@ -74,7 +74,7 @@ function App() {
                             <main className="h-full flex">
                               <ToastContainer />
                               <Sidebar />
-                              <MenuMobile />
+                              {/* <MenuMobile /> */}
                               <Outlet />
                             </main>
                           </RemitoProvider>
