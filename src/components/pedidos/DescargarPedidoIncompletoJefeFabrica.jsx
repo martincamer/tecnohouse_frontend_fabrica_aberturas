@@ -22,13 +22,10 @@ Font.register({
 });
 
 const OrderDetails = ({ order }) => {
-  const { cliente, productos } = order;
+  const { productos } = order;
 
   return (
     <View style={{ margin: "10px 0" }}>
-      {/* <Text
-        style={{ fontSize: 13, fontWeight: "bold" }}
-      >{`FABRICA: ${cliente}`}</Text> */}
       <View
         style={{
           flexDirection: "row",
@@ -43,6 +40,7 @@ const OrderDetails = ({ order }) => {
             width: "33%",
             fontWeight: "bold",
             fontFamily: "Montserrat",
+            textTransform: "uppercase",
             fontSize: "8px",
           }}
         >
@@ -52,6 +50,7 @@ const OrderDetails = ({ order }) => {
           style={{
             width: "33%",
             fontWeight: "bold",
+            textTransform: "uppercase",
             fontFamily: "Montserrat",
             fontSize: "8px",
           }}
@@ -63,6 +62,7 @@ const OrderDetails = ({ order }) => {
             width: "20%",
             fontWeight: "bold",
             fontFamily: "Montserrat",
+            textTransform: "uppercase",
             fontSize: "8px",
           }}
         >
@@ -73,6 +73,7 @@ const OrderDetails = ({ order }) => {
             width: "10%",
             fontWeight: "bold",
             fontFamily: "Montserrat",
+            textTransform: "uppercase",
             fontSize: "8px",
           }}
         >
@@ -83,6 +84,7 @@ const OrderDetails = ({ order }) => {
             width: "20%",
             fontWeight: "bold",
             fontFamily: "Montserrat",
+            textTransform: "uppercase",
             fontSize: "8px",
           }}
         >
@@ -90,7 +92,10 @@ const OrderDetails = ({ order }) => {
         </Text>
       </View>
       {productos.respuesta.map((producto) => (
-        <View key={producto.id} style={{ flexDirection: "row", marginTop: 5 }}>
+        <View
+          key={producto.id}
+          style={{ flexDirection: "row", marginTop: 5, gap: 12 }}
+        >
           <Text
             style={{
               width: "33%",
@@ -108,6 +113,7 @@ const OrderDetails = ({ order }) => {
               fontWeight: "bold",
               fontFamily: "Montserrat",
               fontSize: "8px",
+              textTransform: "uppercase",
             }}
           >
             {producto.detalle}
@@ -129,9 +135,10 @@ const OrderDetails = ({ order }) => {
               fontWeight: "bold",
               fontFamily: "Montserrat",
               fontSize: "8px",
+              textTransform: "uppercase",
             }}
           >
-            {producto.cantidadFaltante}
+            {producto.cantidad}
           </Text>
           <Text
             style={{
@@ -146,7 +153,7 @@ const OrderDetails = ({ order }) => {
               borderRadius: "6px",
             }}
           >
-            {producto.cantidadFaltante === producto.cantidad && "Realizado"}
+            {"Entregada"}
           </Text>
         </View>
       ))}
@@ -194,7 +201,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
 
   const total = datos.reduce((sumaTotal, order) => {
     const sumaProductos = order.productos.respuesta.reduce(
-      (total, producto) => total + parseInt(producto.cantidadFaltante, 10),
+      (total, producto) => total + parseInt(producto.cantidad, 10),
       0
     );
     return sumaTotal + sumaProductos;
@@ -311,8 +318,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
               return (
                 sum +
                 order.productos.respuesta.reduce(
-                  (total, producto) =>
-                    total + parseInt(producto.cantidadFaltante, 10),
+                  (total, producto) => total + parseInt(producto.cantidad, 10),
                   0
                 )
               );
@@ -323,10 +329,9 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
                 <Text
                   style={{
                     fontSize: 12,
-                    fontWeight: "bold",
                     textTransform: "uppercase",
                     fontFamily: "Montserrat",
-                    fontWeight: "normal",
+                    fontWeight: "bold",
                     marginBottom: "2px",
                   }}
                 >{`FABRICA: ${cliente}`}</Text>
@@ -336,6 +341,7 @@ export const DescargarPedidoCompletoJefeFabrica = ({ datos }) => {
                     fontWeight: "normal",
                     textTransform: "uppercase",
                     fontFamily: "Montserrat",
+                    fontWeight: "bold",
                   }}
                 >
                   {`Total de aberturas entregadas:`}{" "}

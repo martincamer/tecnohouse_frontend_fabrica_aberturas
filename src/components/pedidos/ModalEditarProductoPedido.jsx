@@ -5,7 +5,7 @@ import {
   obtenerValorUnico,
   actualizarFacturaProductoUnico,
 } from "../../api/factura.api";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const ModalEditarProductoPedido = ({
   obtenerId,

@@ -42,6 +42,8 @@ export const ViewPedido = () => {
     return new Date(data).toLocaleDateString("arg", options);
   }
 
+  const handleSeleccionarId = (id) => setObtenerId(id);
+
   const handleEliminarProductoPedido = (id) => {
     deleteFacturaProducto(id);
 
@@ -403,43 +405,6 @@ export const ViewPedido = () => {
                           return sum + Number(b?.cantidad);
                         }, 0)}
                       </p>
-                      <div className="dropdown dropdown-end">
-                        <div
-                          tabIndex={0}
-                          className="cursor-pointer hover:text-indigo-500 transition-all"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
-                            />
-                          </svg>
-                        </div>
-                        <ul
-                          tabIndex={0}
-                          className="dropdown-content z-[1] menu p-2 shadow-xl border border-gray-300 bg-base-100 rounded-box w-52"
-                        >
-                          <li>
-                            <button
-                              onClick={() => {
-                                openModal(), handleSeleccionarId(p?.id);
-                              }}
-                              type="button"
-                              className="uppercase font-semibold bg-green-500 py-2 px-2 rounded-xl text-white hover:text-green-700 hover:bg-green-100"
-                            >
-                              editar product.
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
                     </div>
                   </div>
 
@@ -451,7 +416,7 @@ export const ViewPedido = () => {
                     <div className="flex flex-col gap-2 mt-2 overflow-y-scroll px-2 scroll-bar h-[20vh]">
                       {p.productos.map((producto) => (
                         <div
-                          className="border-slate-200 border py-1 px-1 rounded"
+                          className="border-slate-200 border py-1 px-1 rounded relative"
                           key={producto.id}
                         >
                           <p className="text-sm font-bold uppercase">
@@ -484,6 +449,45 @@ export const ViewPedido = () => {
                               {producto.cantidad}
                             </span>
                           </p>
+
+                          <div className="dropdown dropdown-end absolute top-0 right-0 mx-2 my-2">
+                            <div
+                              tabIndex={0}
+                              className="cursor-pointer hover:text-indigo-500 transition-all"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
+                                />
+                              </svg>
+                            </div>
+                            <ul
+                              tabIndex={0}
+                              className="dropdown-content z-[1] menu p-2 shadow-xl border border-gray-300 bg-base-100 rounded-box w-52"
+                            >
+                              <li>
+                                <button
+                                  onClick={() => {
+                                    openModal(),
+                                      handleSeleccionarId(producto?.id);
+                                  }}
+                                  type="button"
+                                  className="uppercase font-semibold bg-green-500 py-2 px-2 rounded-xl text-white hover:text-green-700 hover:bg-green-100"
+                                >
+                                  editar producto
+                                </button>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
                       ))}
                     </div>

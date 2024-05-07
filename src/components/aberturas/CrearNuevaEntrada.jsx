@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { obtenerUnicoPerfil } from "../../api/aberturas.api";
 import { toast } from "react-toastify";
 import client from "../../api/axios";
+import { useAberturasContext } from "../../context/AluminioAberturas";
 
 export const CrearNuevaEntrada = ({
   isOpenEntrada,
@@ -11,6 +12,8 @@ export const CrearNuevaEntrada = ({
   obtenerId,
 }) => {
   const { register, handleSubmit, setValue } = useForm();
+
+  const { perfiles, setPerfiles } = useAberturasContext();
 
   useEffect(() => {
     async function loadData() {
@@ -25,25 +28,59 @@ export const CrearNuevaEntrada = ({
     loadData();
   }, [obtenerId]);
 
+  console.log(perfiles);
+
   const onSubmit = handleSubmit(async (data) => {
     const res = await client.post("/nueva-entrada-dos", data);
 
-    toast.success("¡Producto creado correctamente!", {
-      position: "top-right",
+    const tipoExistenteIndexTwo = perfiles.findIndex(
+      (tipo) => tipo.nombre === res.data.codigo
+    );
+
+    console.log(res.data);
+
+    setPerfiles((prevTipos) => {
+      const newTipos = [...prevTipos];
+      const updatedTipo = JSON.parse(res.config.data); // Convierte el JSON a objeto
+
+      newTipos[tipoExistenteIndexTwo] = {
+        id: newTipos[tipoExistenteIndexTwo]?.id,
+        nombre: newTipos[tipoExistenteIndexTwo].nombre,
+        descripcion: newTipos[tipoExistenteIndexTwo].descripcion,
+        stock: Number(
+          Number(newTipos[tipoExistenteIndexTwo].stock) +
+            Number(updatedTipo.stock)
+        ),
+        categoria: newTipos[tipoExistenteIndexTwo].categoria,
+        color: newTipos[tipoExistenteIndexTwo].color,
+        ancho: newTipos[tipoExistenteIndexTwo].ancho,
+        alto: newTipos[tipoExistenteIndexTwo].alto,
+      };
+      return newTipos;
+    });
+
+    toast.success("Entrada carga correctamente!", {
+      position: "top-center",
       autoClose: 1500,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
+      style: {
+        padding: "15px",
+        borderRadius: "15px",
+        boxShadow: "none",
+        border: "1px solid rgb(203 213 225)",
+      },
     });
 
     closeOpenEntrada();
 
-    setTimeout(() => {
-      location.reload();
-    }, 1000);
+    // setTimeout(() => {
+    //   location.reload();
+    // }, 1000);
   });
 
   return (

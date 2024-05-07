@@ -381,7 +381,7 @@ export const PedidosRealizados = () => {
                   </strong>
 
                   <p>
-                    <span class="text-2xl font-medium text-gray-900 max-md:text-base">
+                    <span class="text-2xl font-bold text-gray-900 max-md:text-base">
                       {" "}
                       {resultadoTwo}{" "}
                     </span>
