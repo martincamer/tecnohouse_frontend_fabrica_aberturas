@@ -11,7 +11,7 @@ export const IntroAberturasStock = ({ results }) => {
   console.log(results);
 
   return (
-    <div className="grid grid-cols-4 gap-5 max-md:grid-cols-1 max-md:px-5">
+    <div className="grid grid-cols-4 gap-5 max-md:grid-cols-1 max-md:px-5 max-md:hidden">
       <div className="flex flex-col gap-2 justify-center items-center bg-white shadow-xl rounded-xl py-6 px-6">
         <p className="font-bold text-md max-md:text-xs max-md:font-semibold max-md:uppercase text-slate-500 uppercase">
           Unidades en stock

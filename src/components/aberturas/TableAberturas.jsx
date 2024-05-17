@@ -92,8 +92,8 @@ export const TableAberturas = ({
 
   return (
     <div className="max-md:py-2">
-      <div className="rounded-xl shadow-xl md:block bg-white max-md:overflow-x-auto scrollbar-hidden">
-        <table className="w-full uppercase divide-y-[1px] divide-slate-300 table">
+      <div className="rounded-xl shadow-xl md:block bg-white max-md:overflow-x-auto scrollbar-hidden ">
+        <table className="w-full uppercase divide-y-[1px] divide-slate-300 table max-md:w-[900px]">
           <thead>
             <tr>
               <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">

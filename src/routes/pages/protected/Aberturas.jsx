@@ -33,7 +33,7 @@ export const Aberturas = () => {
 
   return (
     <>
-      <div className="max-md:hidden h-full w-full">
+      <div className="h-full w-full">
         <div className="w-full bg-white flex max-md:hidden">
           <Link className="text-slate-500 px-6 py-3.5 font-bold text-lg" to="/">
             Inicio
@@ -47,12 +47,12 @@ export const Aberturas = () => {
         </div>
 
         <div className="px-10 md:mt-6  max-md:pt-5 max-md:px-5">
-          <p className="font-bold text-2xl text-slate-600 max-md:text-lg">
+          <p className="font-bold text-2xl text-slate-600 max-md:text-lg max-md:text-center">
             Bienvenido a la parte de aberturas/stock/fabrica 🖐️🚀.
           </p>
         </div>
 
-        <section className="flex flex-col gap-10 px-10 mt-5 max-md:px-5 min-h-screen">
+        <section className="flex flex-col gap-10 px-10 mt-5 max-md:px-5 min-h-screen max-md:gap-5">
           <IntroAberturasStock results={results} />
 
           <CategoriasAberturas

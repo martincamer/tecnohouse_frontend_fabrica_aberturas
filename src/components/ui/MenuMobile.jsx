@@ -145,7 +145,7 @@ export const MenuMobile = () => {
   return (
     <div
       ref={menuRef} // Referencia para el menú
-      className={`md:hidden rounded-t-2xl fixed px-1 bottom-0 w-full bg-indigo-500 transition-all ease-in-out duration-500 z-[100] ${
+      className={`md:hidden rounded-t-2xl fixed px-1 bottom-0 w-full bg-indigo-500 transition-all ease-in-out duration-500 z-[110] ${
         visible ? "max-h-32 opacity-100" : "max-h-[20px] opacity-0"
       }`}
       onClick={handleToggleMenu} // Tocar en el menú para alternar su visibilidad
