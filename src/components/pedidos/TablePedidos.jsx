@@ -150,7 +150,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 text-left">
-            {resultadoFiltrados?.map((p) => (
+            {currentResults?.map((p) => (
               <tr
                 key={p.id}
                 className="cursor-pointer hover:bg-slate-100 transition-all"
