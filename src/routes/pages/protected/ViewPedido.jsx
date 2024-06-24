@@ -387,7 +387,7 @@ export const ViewPedido = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-4 gap-3 max-md:grid-cols-1">
+            <div className="grid grid-cols-4 gap-3 max-md:grid-cols-">
               {agruparPorCliente(currentResults).map((p) => (
                 <div
                   className="bg-white shadow-xl rounded-xl py-3 px-3"

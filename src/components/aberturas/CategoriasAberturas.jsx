@@ -44,7 +44,7 @@ export const CategoriasAberturas = ({
           onClick={openModalCrearCategoria}
           className="flex gap-2 items-center bg-indigo-500 font-semibold text-white text-sm max-md:px-2 max-md:text-xs py-2 px-4 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase justify-between"
         >
-          {/* <p className="max-md:hidden">Crear nueva categoria</p>{" "}
+          <p className="max-md:hidden">Crear nueva categoria</p>
           {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
