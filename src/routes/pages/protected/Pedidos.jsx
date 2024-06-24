@@ -119,6 +119,60 @@ export const Pedidos = () => {
     XLSX.writeFile(wb, "pedidos.xlsx");
   };
 
+  const [busqueda, setBusqueda] = useState("");
+
+  // Función para manejar cambios en el campo de búsqueda
+  const handleChangeBusqueda = (e) => {
+    setBusqueda(e.target.value);
+  };
+
+  function agruparPorDetalle(datos) {
+    const mapaProductos = {};
+
+    datos.forEach((pedido) => {
+      const productos = pedido.productos.respuesta;
+
+      productos.forEach((producto) => {
+        const clave = `${producto.detalle}-${producto.categoria}-${producto.ancho}-${producto.alto}-${producto.color}`;
+
+        if (mapaProductos[clave]) {
+          // If the product with this unique key already exists, increment the quantity
+          mapaProductos[clave].cantidad_total += parseInt(
+            producto.cantidad,
+            10
+          );
+        } else {
+          // If it's a new product, add it to the map
+          mapaProductos[clave] = {
+            detalle: producto.detalle,
+            categoria: producto.categoria,
+            ancho: producto.ancho,
+            alto: producto.alto,
+            color: producto.color,
+            cantidad_total: parseInt(producto.cantidad, 10),
+          };
+        }
+      });
+    });
+
+    // Convert the map to an array of unique products
+    const resultado = Object.values(mapaProductos);
+
+    return resultado;
+  }
+
+  const datosAgrupados = agruparPorDetalle(filteredByDateRange);
+
+  const datosFiltrados = datosAgrupados.filter((producto) =>
+    producto?.detalle?.toLowerCase()?.includes(busqueda.toLowerCase())
+  );
+
+  const totalCantidad = datosFiltrados?.reduce((sum, b) => {
+    return sum + Number(b.cantidad_total);
+  }, 0);
+
+  console.log("aberturas", datosFiltrados);
+
   return (
     <>
       <div className="h-full w-full">
@@ -387,6 +441,11 @@ export const Pedidos = () => {
                   onClick={handleDescargarExcel}
                 >
                   Descargar pedidos filtrados formato excel.
+                </button>
+              </div>
+              <div>
+                <button className="bg-indigo-500 py-1 text-white rounded-full font-semibold px-5">
+                  Ver aberturas/ventanas/realizadas.
                 </button>
               </div>
             </div>
