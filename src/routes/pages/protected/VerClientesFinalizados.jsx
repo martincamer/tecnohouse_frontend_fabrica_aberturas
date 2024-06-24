@@ -5,7 +5,6 @@ import * as XLSX from "xlsx";
 export const VerClientesFinalizados = () => {
   const { results } = usePedidoContext();
 
-  // Función para agrupar productos por cliente
   const agruparPorCliente = (pedidos) => {
     // Crear un objeto para agrupar por cliente
     const agrupadoPorCliente = {};
@@ -16,19 +15,23 @@ export const VerClientesFinalizados = () => {
 
         if (!agrupadoPorCliente[cliente]) {
           // Si no existe el cliente, inicializarlo como un arreglo de productos
-          agrupadoPorCliente[cliente] = [];
+          agrupadoPorCliente[cliente] = {
+            fabrica: pedido.cliente, // Agregar la fábrica al cliente
+            productos: [],
+          };
         }
 
         // Agregar el producto al cliente correspondiente
-        agrupadoPorCliente[cliente].push(producto);
+        agrupadoPorCliente[cliente].productos.push(producto);
       });
     });
 
     // Convertir el objeto a un arreglo de clientes con productos
     const arregloAgrupado = Object.entries(agrupadoPorCliente).map(
-      ([cliente, productos]) => ({
+      ([cliente, datos]) => ({
+        fabrica: datos.fabrica,
         cliente, // Nombre del cliente
-        productos, // Productos asociados al cliente
+        productos: datos.productos, // Productos asociados al cliente
       })
     );
 
@@ -41,8 +44,10 @@ export const VerClientesFinalizados = () => {
   const [clienteFilter, setClienteFilter] = useState("");
 
   // Filtrar clientes por el nombre ingresado en `clienteFilter`
-  const clientesFiltrados = clientesAgrupados.filter((cliente) =>
-    cliente.cliente.toLowerCase().includes(clienteFilter.toLowerCase())
+  const clientesFiltrados = clientesAgrupados.filter(
+    (cliente) =>
+      cliente.cliente.toLowerCase().includes(clienteFilter.toLowerCase()) ||
+      cliente.fabrica.toLowerCase().includes(clienteFilter.toLowerCase())
   );
 
   // Paginación
@@ -70,15 +75,12 @@ export const VerClientesFinalizados = () => {
 
   const descargarExcel = () => {
     const wsData = currentResults.map((producto) => ({
+      "FABRICA/SUCURSAL": producto.fabrica.toUpperCase(),
       CLIENTE: producto.cliente.toUpperCase(),
       DETALLE: producto.detalle.toUpperCase(),
       CATEGORIA: producto.categoria.toUpperCase(),
-      "CANTIDAD REALIZADA": producto.cantidadFaltante,
       COLOR: producto.color.toUpperCase(),
-      ESTADO:
-        producto.cantidad === producto.cantidadFaltante
-          ? "REALIZADO"
-          : "PENDIENTE",
+      "CANTIDAD/ENTREGADA": producto.cantidad,
     }));
 
     const ws = XLSX.utils.json_to_sheet(wsData);
@@ -90,9 +92,14 @@ export const VerClientesFinalizados = () => {
   };
 
   return (
-    <section className="w-full py-2 px-10">
-      <div className="mt-10 max-md:shadow-none max-md:border-none max-md:px-3">
-        <div className="mb-5">
+    <section className="w-full py-2 px-10 max-md:px-5">
+      <div className="mt-5">
+        <p className="font-bold text-2xl text-slate-600 max-md:text-lg max-md:text-center">
+          Bienvenido a la parte de clientes finalizados/entregados 🖐️🚀.
+        </p>
+      </div>
+      <div className="mt-5 max-md:shadow-none max-md:border-none">
+        <div className="mb-5 max-md:text-center">
           <button
             onClick={descargarExcel}
             type="button"
@@ -107,7 +114,7 @@ export const VerClientesFinalizados = () => {
             onChange={(e) => setClienteFilter(e.target.value)}
             type="text"
             className="outline-none text-slate-600 w-full uppercase text-sm"
-            placeholder="Buscar el cliente en especifico"
+            placeholder="Buscar el cliente en especifico o fabrica/sucursal"
           />
 
           <svg
@@ -133,6 +140,12 @@ export const VerClientesFinalizados = () => {
                 <div className="flex flex-col gap-1">
                   <p className="uppercase text-sm font-bold text-slate-700">
                     CLIENTE <span className="font-normal">{c.cliente}</span>
+                  </p>
+                  <p className="uppercase text-sm font-bold text-slate-700">
+                    FABRICA/SUC{" "}
+                    <span className="font-bold text-indigo-500">
+                      {c.fabrica}
+                    </span>
                   </p>
                 </div>
 
@@ -240,6 +253,7 @@ export const VerClientesFinalizados = () => {
                   }
                 );
               })()}
+
               <button
                 className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
                 onClick={() => handlePageChange(currentPage + 1)}

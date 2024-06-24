@@ -2,11 +2,11 @@ import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { crearPerfilNuevo } from "../../api/aberturas.api";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useAberturasContext } from "../../context/AluminioAberturas";
 
 export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
-  const { results, setPerfiles, categorias, colores } = useAberturasContext();
+  const { setPerfiles, categorias, colores } = useAberturasContext();
   const [error, setError] = useState("");
 
   const {
@@ -20,15 +20,8 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
     try {
       const res = await crearPerfilNuevo(data);
 
-      // Verificar si el tipo ya existe antes de agregarlo al estado
-      const tipoExistente = results.find((tipo) => tipo.id === res.data.id);
+      setPerfiles(res.data);
 
-      if (!tipoExistente) {
-        // Actualizar el estado de tipos agregando el nuevo tipo al final
-        setPerfiles((prevTipos) => [...prevTipos, res.data]);
-      }
-
-      // setPerfiles(proyectoActualizado);
       toast.success("¡Abertura creada correctamente!", {
         position: "top-center",
         autoClose: 1500,
@@ -144,6 +137,7 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                       {error}
                     </p>
                   )}
+
                   <div className="flex flex-col gap-2">
                     {errors.nombre && (
                       <span className=" text-sm bg-red-100 text-red-800 py-2 px-2 rounded w-1/2 text-center shadow border-[1px] border-red-200">
@@ -278,7 +272,6 @@ export const ModalCrearAberturas = ({ closeModal, isOpen }) => {
                       className="bg-indigo-100 hover:shadow-black/20 hover:shadow transition-all ease-in-out py-2 px-2 rounded-xl shadow shadow-black/10 outline-none text-indigo-600 hover:bg-indigo-500 hover:text-white text-sm text-center cursor-pointer uppercase max-md:text-xs"
                       type="submit"
                       value={"Crear producto"}
-                      // onClick={() => closeModal()}
                     />
                   </div>
                 </form>

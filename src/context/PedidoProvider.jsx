@@ -1,6 +1,5 @@
 //imports
 import { createContext, useContext, useEffect, useState } from "react";
-// import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import {
   crearFacturaNueva,
@@ -114,14 +113,7 @@ export const PedidoProvider = ({ children }) => {
       remito: remito,
     });
 
-    const tipoExistente = datosMensuales.find(
-      (tipo) => tipo.id === res.data.id
-    );
-
-    if (!tipoExistente) {
-      // Actualizar el estado de tipos agregando el nuevo tipo al final
-      setDatosMensuales((prevTipos) => [...prevTipos, res.data]);
-    }
+    setDatosMensuales(res.data);
 
     setProductoSeleccionado([]);
 
@@ -144,10 +136,6 @@ export const PedidoProvider = ({ children }) => {
 
     setCliente("");
     setFecha("");
-
-    // setTimeout(() => {
-    //   location.reload();
-    // }, 1500);
   };
 
   //fin crear factura
@@ -238,14 +226,12 @@ export const PedidoProvider = ({ children }) => {
   };
 
   //eliminar presupuesto
-  const handleDeletePresupuesto = (id) => {
-    deleteFactura(id);
+  const handleDeletePresupuesto = async (id) => {
+    const res = await deleteFactura(id);
 
-    const datos = datosMensuales.filter((pedido) => pedido.id !== id);
+    setDatosMensuales(res.data);
+    console.log("del", res.data);
 
-    setDatosMensuales(datos);
-
-    // setPerfiles(proyectoActualizado);
     toast.error("¡Pedido eliminado correctamente, crea otro pedido!", {
       position: "top-center",
       autoClose: 1500,

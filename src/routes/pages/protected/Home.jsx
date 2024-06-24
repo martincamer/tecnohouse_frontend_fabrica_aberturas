@@ -1,74 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { usePedidoContext } from "../../../context/PedidoProvider";
 import { useAberturasContext } from "../../../context/AluminioAberturas";
-import { obtenerFacturasMensual } from "../../../api/factura.api";
 import ApexChart from "../../../components/charts/ApextChart";
 import ApexChartColumn from "../../../components/charts/ApextChartColumn";
 import ApexChartPie from "../../../components/charts/ApexChartPie";
-import client from "../../../api/axios";
 
 export const Home = () => {
-  const [fechaInicio, setFechaInicio] = useState("");
-  const [fechaFin, setFechaFin] = useState("");
+  const { datosMensuales } = usePedidoContext();
+  const { perfiles } = useAberturasContext();
 
-  const [perfiles, setPerfiles] = useState([]);
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
-  const [datosMensuales, setDatosMensuales] = useState([]);
+  // Convertir las fechas en formato YYYY-MM-DD para los inputs tipo date
+  const fechaInicioPorDefecto = firstDayOfMonth.toISOString().split("T")[0];
+  const fechaFinPorDefecto = lastDayOfMonth.toISOString().split("T")[0];
 
-  useEffect(() => {
-    const loadData = async () => {
-      const res = await client.get("/productos");
+  const [startDate, setStartDate] = useState(fechaInicioPorDefecto);
+  const [endDate, setEndDate] = useState(fechaFinPorDefecto);
 
-      setPerfiles(res.data);
-    };
-
-    loadData();
-  }, []);
-
-  const obtenerIngresoRangoFechas = async (fechaInicio, fechaFin) => {
-    try {
-      // Validación de fechas
-      if (!fechaInicio || !fechaFin) {
-        console.error("Fechas no proporcionadas");
-        return;
-      }
-
-      // Verifica y formatea las fechas
-      fechaInicio = new Date(fechaInicio).toISOString().split("T")[0];
-      fechaFin = new Date(fechaFin).toISOString().split("T")[0];
-
-      const response = await client.post("/pedido/rango-fechas", {
-        fechaInicio,
-        fechaFin,
-      });
-
-      const responseEntradas = await client.post("/entrada-dos/rango-fechas", {
-        fechaInicio,
-        fechaFin,
-      });
-
-      setDatosMensuales(response.data); // Maneja la respuesta según tus necesidades
-      setPerfiles(responseEntradas.data);
-    } catch (error) {
-      console.error("Error al obtener ingresos:", error);
-    }
-  };
-
-  const buscarIngresosPorFecha = () => {
-    obtenerIngresoRangoFechas(fechaInicio, fechaFin);
-  };
-
-  useEffect(() => {
-    async function loadData() {
-      const res = await obtenerFacturasMensual();
-
-      setDatosMensuales(res.data);
-
-      console.log(res.data);
-    }
-
-    loadData();
-  }, []);
+  const filteredByDateRange = datosMensuales.filter((orden) => {
+    const createdAt = new Date(orden.created_at);
+    return (
+      (!startDate || createdAt >= new Date(startDate)) &&
+      (!endDate || createdAt <= new Date(endDate))
+    );
+  });
 
   const unidadesEnStockAberturas = () => {
     return perfiles.reduce((sum, b) => {
@@ -76,7 +35,7 @@ export const Home = () => {
     }, 0);
   };
 
-  const datos = datosMensuales.map((c) =>
+  const datos = filteredByDateRange.map((c) =>
     c.productos.respuesta.map((c) => c.cantidad)
   );
 
@@ -120,8 +79,6 @@ export const Home = () => {
 
   console.log(datosMensuales);
 
-  console.log(resultadoTwo, unidadesEnStockAberturas());
-
   return (
     <section className="w-full">
       <div className="w-full bg-white flex max-md:hidden">
@@ -148,8 +105,8 @@ export const Home = () => {
             <input
               className="text-sm bg-white py-1.5 font-bold uppercase px-3 rounded-xl shadow-xl cursor-pointer text-slate-700 outline-none"
               type="date"
-              value={fechaInicio}
-              onChange={(e) => setFechaInicio(e.target.value)}
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
             />
           </div>
           <div className="flex gap-2 items-center">
@@ -159,31 +116,10 @@ export const Home = () => {
             <input
               className="text-sm bg-white py-1.5 font-bold uppercase px-3 rounded-xl shadow-xl cursor-pointer text-slate-700 outline-none"
               type="date"
-              value={fechaFin}
-              onChange={(e) => setFechaFin(e.target.value)}
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
-
-          <button
-            onClick={buscarIngresosPorFecha}
-            className="bg-indigo-500 text-white text-sm  font-bold px-5 py-1 rounded-xl shadow flex items-center gap-2"
-          >
-            BUSCAR...
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-              />
-            </svg>
-          </button>
         </div>
       </div>
 

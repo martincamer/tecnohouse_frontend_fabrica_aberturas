@@ -4,7 +4,6 @@ import {
   deleteFacturaProducto,
   obtenerFactura,
 } from "../../../api/factura.api";
-import { ToastContainer, toast } from "react-toastify";
 import { ModalCrearProductoPedido } from "../../../components/pedidos/ModalCrearProductoPedido";
 import { ModalEditarProductoPedido } from "../../../components/pedidos/ModalEditarProductoPedido";
 import { Search } from "../../../components/ui/Search";
@@ -265,7 +264,7 @@ export const ViewPedido = () => {
 
   return (
     <>
-      <div className="w-full max-md:hidden flex flex-col gap-2">
+      <div className="w-full flex flex-col gap-2">
         <div className="w-full bg-white flex max-md:hidden">
           <Link
             className="text-slate-500 px-6 py-3.5 font-bold text-lg"
@@ -286,9 +285,9 @@ export const ViewPedido = () => {
             Bienvenido al pedido observa los datos y crea nuevas aberturas 🖐️🚀.
           </p>
         </div>
-        <section className="w-full py-2 px-10 max-md:py-0 max-md:px-4 flex flex-col gap-8 max-md:gap-5 max-md:pb-20">
+        <section className="w-full py-2 px-10 max-md:py-0 max-md:px-2 flex flex-col gap-8 max-md:gap-5 max-md:pb-20">
           <div className="max-md:shadow-none max-md:border-none max-md:px-2 max-md:py-0  rounded-2xl  transition-all ease-linear cursor-pointer">
-            <article className="max-md:gap-3 grid grid-cols-4 gap-4 max-md:w-[1000px]">
+            <article className="max-md:gap-3 grid grid-cols-4 gap-4 max-md:grid-cols-1">
               <div className="py-5 px-3 rounded-xl bg-white flex flex-row gap-1 font-semibold justify-center items-center shadow-lg">
                 <p className="text-sm max-md:text-sm uppercase">
                   Numero del pedido{" "}
@@ -315,10 +314,10 @@ export const ViewPedido = () => {
             </article>
           </div>
 
-          <div className="flex px-2">
+          <div className="flex px-2 max-md:justify-center">
             <button
               onClick={() => openModalCrearPedidos()}
-              className="max-md:uppercase bg-green-500 text-white text-sm font-bold uppercase rounded-full py-2.5 px-8 hover:bg-green-500 hover:text-white transtion-all ease-linear duration-300 max-md:text-sm flex gap-2 items-center"
+              className="max-md:uppercase bg-green-500 text-white text-sm font-bold uppercase rounded-full py-2.5 px-8 hover:bg-green-500 hover:text-white transtion-all ease-linear duration-300 max-md:text-xs flex gap-2 items-center"
             >
               Generar Nuevos Clientes
               <svg
@@ -388,7 +387,7 @@ export const ViewPedido = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-4 gap-3 max-md:grid-cols-1">
               {agruparPorCliente(currentResults).map((p) => (
                 <div
                   className="bg-white shadow-xl rounded-xl py-3 px-3"

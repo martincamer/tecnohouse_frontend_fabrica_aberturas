@@ -118,6 +118,7 @@ export const AberturasProvider = ({ children }) => {
   }
 
   let results = [];
+
   //función de búsqueda
   const searcher = (e) => {
     setSearch(e.target.value);
@@ -142,10 +143,9 @@ export const AberturasProvider = ({ children }) => {
   const eliminarPerfil = (id) => axios.delete(`/productos/${id}`);
 
   const handleEliminar = (id) => {
-    eliminarPerfil(id);
+    const res = eliminarPerfil(id);
 
-    const updatedTipos = perfiles.filter((tipo) => tipo.id !== id);
-    setPerfiles(updatedTipos);
+    setPerfiles(res.data);
 
     toast.error("¡Abertura eliminado correctamente!", {
       position: "top-center",
@@ -163,7 +163,6 @@ export const AberturasProvider = ({ children }) => {
         border: "1px solid rgb(203 213 225)",
       },
     });
-    setPerfiles(perfilActualizado);
   };
 
   useEffect(() => {
@@ -173,11 +172,9 @@ export const AberturasProvider = ({ children }) => {
   }, []);
 
   const handleEliminarCategoria = (id) => {
-    eliminarCategoria(id);
+    const res = eliminarCategoria(id);
 
-    const categoriaActualizada = categorias.filter(
-      (categoriaState) => categoriaState.id !== id
-    );
+    setCategorias(res.data);
 
     toast.error("¡Categoria eliminada correctamente!", {
       position: "top-center",
@@ -195,8 +192,6 @@ export const AberturasProvider = ({ children }) => {
         border: "1px solid rgb(203 213 225)",
       },
     });
-
-    setCategorias(categoriaActualizada);
   };
 
   useEffect(() => {
@@ -206,11 +201,9 @@ export const AberturasProvider = ({ children }) => {
   }, []);
 
   const handleEliminarColor = (id) => {
-    eliminarColor(id);
+    const res = eliminarColor(id);
 
-    const colorActualizado = colores.filter(
-      (colorState) => colorState.id !== id
-    );
+    setColores(res.data);
 
     toast.error("¡Color eliminado correctamente!", {
       position: "top-center",
@@ -228,8 +221,6 @@ export const AberturasProvider = ({ children }) => {
         border: "1px solid rgb(203 213 225)",
       },
     });
-
-    setColores(colorActualizado);
   };
 
   return (

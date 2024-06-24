@@ -1,6 +1,5 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { ToastContainer } from "react-toastify";
 import { usePedidoContext } from "../../context/PedidoProvider";
 import { ModalSeleccionarAberturas } from "./ModalSeleccionarAberturas";
 
@@ -9,13 +8,9 @@ export const ModalCrearPedido = ({ closeModal, isOpen }) => {
     openModalProductos,
     productoSeleccionado,
     setCliente,
-    setDetalle,
     cliente,
-    detalle,
     handlePedido,
     deleteProducto,
-    fecha,
-    setFecha,
     deleteToResetProductos,
   } = usePedidoContext();
 

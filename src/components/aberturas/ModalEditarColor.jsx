@@ -11,16 +11,10 @@ export const ModalEditarColor = () => {
     setColores,
     obtenerIdColores,
     closeModalEditarColor,
-    openModalEditarColor,
     isOpenEditarColor,
   } = useAberturasContext();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
     async function loadData() {
@@ -31,18 +25,12 @@ export const ModalEditarColor = () => {
     }
 
     loadData();
-  }, [openModalEditarColor]);
+  }, [obtenerIdColores]);
 
   const onSubmit = handleSubmit(async (data) => {
     const res = await editarColor(obtenerIdColores, data);
 
-    const objetEN = JSON.parse(res.config.data);
-
-    const coloresActualizados = colores.map((colorState) =>
-      colorState.id === objetEN.id ? objetEN : colorState
-    );
-
-    setColores(coloresActualizados);
+    setColores(res.data);
 
     // setPerfiles(proyectoActualizado);
     toast.success("¡Color editado correctamente!", {

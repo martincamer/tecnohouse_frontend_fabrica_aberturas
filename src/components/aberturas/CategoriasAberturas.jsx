@@ -16,15 +16,15 @@ export const CategoriasAberturas = ({
 
   return (
     <div className="bg-white shadow-xl cursor-pointer transition-all ease-linear px-4 rounded-xl max-md:border-none max-md:px-2 max-md:py-2 md:block max-md:shadow-lg">
-      <div className="grid-cols-5 grid gap-4 max-md:gap-2 max-md:py-0 py-4 max-md:grid-cols-none max-md:flex">
+      <div className="flex gap-3 max-md:gap-2 max-md:py-0 py-4 max-md:grid-cols-none max-md:flex max-md:justify-between max-md:px-3">
         <button
           onClick={openModal}
           className="flex gap-2 items-center bg-indigo-500 font-semibold text-white text-sm max-md:px-2 max-md:text-xs py-2 px-4 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase justify-between"
         >
           <p className="max-md:hidden md:block">
-            Crear nuevo producto o objeto
+            Crear nueva abertura del sistema
           </p>
-          <svg
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -37,15 +37,15 @@ export const CategoriasAberturas = ({
               strokeLinejoin="round"
               d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
             />
-          </svg>
+          </svg> */}
           <MdOutlineCreateNewFolder className="text-3xl max-md:block md:hidden" />
         </button>
         <button
           onClick={openModalCrearCategoria}
           className="flex gap-2 items-center bg-indigo-500 font-semibold text-white text-sm max-md:px-2 max-md:text-xs py-2 px-4 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase justify-between"
         >
-          <p className="max-md:hidden">Crear nueva categoria</p>{" "}
-          <svg
+          {/* <p className="max-md:hidden">Crear nueva categoria</p>{" "}
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -58,7 +58,7 @@ export const CategoriasAberturas = ({
               strokeLinejoin="round"
               d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
             />
-          </svg>
+          </svg> */}
           <TbCategory className="text-3xl max-md:block md:hidden" />
         </button>
         <button
@@ -66,7 +66,7 @@ export const CategoriasAberturas = ({
           className="flex gap-2 items-center bg-indigo-500 font-semibold text-white text-sm max-md:px-2 max-md:text-xs py-2 px-4 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase justify-between"
         >
           <p className="max-md:hidden"> Crear nuevo color</p>{" "}
-          <svg
+          {/* {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -79,7 +79,7 @@ export const CategoriasAberturas = ({
               strokeLinejoin="round"
               d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
             />
-          </svg>
+          </svg> */}
           <IoIosColorPalette className="text-3xl max-md:block md:hidden" />
         </button>
         <button
@@ -125,7 +125,7 @@ export const CategoriasAberturas = ({
           <CiViewTimeline className="text-3xl max-md:block md:hidden" />
         </button>
 
-        <Link
+        {/* <Link
           to={"/aberturas/entradas"}
           className="flex gap-2 items-center bg-white  border-[1px] border-slate-400 text-sm max-md:text-sm max-md:py-1 max-md:px-2  font-semibold py-2 px-3 rounded-full cursor-pointer hover:shadow hover:shadow-black/10 hover:translate-x-1 transition-all ease-in-out uppercase max-md:hover:translate-x-0 max-md:hidden justify-between"
         >
@@ -167,7 +167,7 @@ export const CategoriasAberturas = ({
             />
           </svg>
           <BsArrowDownSquareFill className="text-3xl max-md:block md:hidden" />
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

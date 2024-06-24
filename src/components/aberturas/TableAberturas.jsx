@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { useAberturasContext } from "../../context/AluminioAberturas";
 import { ModalEditaStock } from "./ModalEditarStock";
 import { ModalEliminarAberturas } from "./ModalEliminarAbertura";
-import { useState } from "react";
 import { ModalNuevaSalida } from "./ModalNuevaSalida";
 import { CrearNuevaEntrada } from "./CrearNuevaEntrada";
 import XLSX from "xlsx";
@@ -22,11 +22,15 @@ export const TableAberturas = ({
   const handleId = (id) => setObtenerId(id);
 
   const [isOpenEntrada, setIsOpenEntrada] = useState(false);
+
   const openEntrada = () => setIsOpenEntrada(true);
+
   const closeEntrada = () => setIsOpenEntrada(false);
 
   const [isOpenSalida, setIsOpenSalida] = useState(false);
+
   const openSalida = () => setIsOpenSalida(true);
+
   const closeSalida = () => setIsOpenSalida(false);
 
   const handleBorrarAccesorioOpen = () => {
@@ -68,13 +72,12 @@ export const TableAberturas = ({
 
   const handleDescargarExcel = () => {
     // Filtrar las aberturas con stock mayor que 0
-    const aberturasConStock = results.filter((abertura) => abertura.stock > 0);
+    const aberturasConStock = results?.filter((abertura) => abertura.stock > 0);
 
-    // Mapear los datos a un formato adecuado para el archivo Excel
     const dataToExport = aberturasConStock.map((abertura) => ({
-      DETALLE: abertura.descripcion,
-      CATEGORIA: abertura.categoria,
-      COLOR: abertura.color,
+      DETALLE: abertura.descripcion.toUpperCase(),
+      "CATEGORIA/COLOR":
+        abertura.categoria.toUpperCase() + "/" + abertura.color.toUpperCase(),
       "ANCHO X ALTO": `${abertura.ancho} x ${abertura.alto}`,
       "STOCK CARGADO": abertura.stock,
     }));
@@ -87,13 +90,13 @@ export const TableAberturas = ({
     XLSX.utils.book_append_sheet(wb, ws, "Datos");
 
     // Escribir el archivo Excel y descargarlo
-    XLSX.writeFile(wb, "datos.xlsx");
+    XLSX.writeFile(wb, "aberturas.xlsx");
   };
 
   return (
     <div className="max-md:py-2">
       <div className="rounded-xl shadow-xl md:block bg-white max-md:overflow-x-auto scrollbar-hidden ">
-        <table className="w-full uppercase divide-y-[1px] divide-slate-300 table max-md:w-[900px]">
+        <table className="w-full uppercase divide-y-[1px] divide-slate-300 table">
           <thead>
             <tr>
               <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
@@ -115,10 +118,7 @@ export const TableAberturas = ({
           </thead>
           <tbody className="divide-y divide-gray-100 text-left">
             {currentResults.map((p) => (
-              <tr
-                key={p.id}
-                className="cursor-pointer hover:bg-slate-100 transition-all"
-              >
+              <tr key={p.id} className="cursor-pointer">
                 <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {p.descripcion}
                 </th>

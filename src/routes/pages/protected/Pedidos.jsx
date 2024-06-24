@@ -1,18 +1,74 @@
-import { useEffect } from "react";
 import { ModalCrearPedido } from "../../../components/pedidos/ModalCrearPedido";
 import { TablePedidos } from "../../../components/pedidos/TablePedidos";
 import { usePedidoContext } from "../../../context/PedidoProvider";
 import { useState } from "react";
-import { Search } from "../../../components/ui/Search";
 import { Link } from "react-router-dom";
+import { CgSearch } from "react-icons/cg";
+import XLSX from "xlsx";
 
 export const Pedidos = () => {
   const { isOpen, openModal, closeModal, datosMensuales } = usePedidoContext();
 
-  const datos = datosMensuales.map((c) =>
+  let fechaActualNew = new Date();
+
+  let nombresMeses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
+  let indiceMes = fechaActualNew.getMonth();
+
+  let nombreMes = nombresMeses[indiceMes];
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Obtener el primer día del mes actual
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+  // Convertir las fechas en formato YYYY-MM-DD para los inputs tipo date
+  const fechaInicioPorDefecto = firstDayOfMonth.toISOString().split("T")[0];
+  const fechaFinPorDefecto = lastDayOfMonth.toISOString().split("T")[0];
+
+  const [startDate, setStartDate] = useState(fechaInicioPorDefecto);
+  const [endDate, setEndDate] = useState(fechaFinPorDefecto);
+
+  // Filtrar por fabrica_sucursal
+  const filteredPedidos = datosMensuales.filter((orden) =>
+    orden.cliente.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Filtrar pedidos del mes actual
+  const currentMonth = new Date().getMonth() + 1;
+
+  const filteredByMonth = datosMensuales.filter((orden) => {
+    const createdAtMonth = new Date(orden.created_at).getMonth() + 1;
+    return createdAtMonth === currentMonth;
+  });
+
+  const filteredByDateRange = filteredPedidos.filter((orden) => {
+    const createdAt = new Date(orden.created_at);
+    return (
+      (!startDate || createdAt >= new Date(startDate)) &&
+      (!endDate || createdAt <= new Date(endDate))
+    );
+  });
+
+  const datos = filteredByDateRange.map((c) =>
     c.productos.respuesta.map((c) => c.cantidad)
   );
-  const datosTwo = datosMensuales.map((c) =>
+  const datosTwo = filteredByDateRange.map((c) =>
     c.productos.respuesta.map((c) => c.cantidad)
   );
 
@@ -36,52 +92,36 @@ export const Pedidos = () => {
     return sum + Number(b);
   }, 0);
 
-  let fechaActualNew = new Date();
+  console.log("pedidos", filteredByDateRange);
 
-  let nombresMeses = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
+  const handleDescargarExcel = () => {
+    // Preparar datos para exportar a Excel
+    const dataToExport = filteredByDateRange.flatMap((pedido) => {
+      return pedido.productos.respuesta.map((producto) => ({
+        "FABRICA/PEDIDO": pedido.cliente.toUpperCase(),
+        CLIENTE: producto.cliente.toUpperCase(),
+        DETALLE: producto.detalle.toUpperCase(),
+        ANCHOXALTO: `${producto.ancho} x ${producto.alto}`,
+        "CATEGORIA/COLOR":
+          producto.categoria.toUpperCase() + "/" + producto.color.toUpperCase(),
+        CANTIDAD: producto.cantidad,
+      }));
+    });
 
-  let indiceMes = fechaActualNew.getMonth();
+    // Crear el libro de trabajo de Excel
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
 
-  let nombreMes = nombresMeses[indiceMes];
+    // Agregar la hoja de cálculo al libro de trabajo
+    XLSX.utils.book_append_sheet(wb, ws, "Pedidos");
 
-  const [search, setSearch] = useState("");
-  const [resultadoFiltrados, setResultadosFiltrados] = useState([]);
-
-  const searcher = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    setSearch(searchTerm);
-
-    // Filtrar los resultados por término de búsqueda y mes seleccionado
-    const filteredResults = datosMensuales.filter((dato) =>
-      dato?.cliente?.toLowerCase().includes(searchTerm)
-    );
-
-    setResultadosFiltrados(
-      searchTerm === "" ? datosMensuales : filteredResults
-    );
+    // Escribir el archivo Excel y descargarlo
+    XLSX.writeFile(wb, "pedidos.xlsx");
   };
-
-  // Use useEffect to update filtered results when the search term changes
-  useEffect(() => {
-    setResultadosFiltrados(search === "" ? datosMensuales : resultadoFiltrados);
-  }, [datosMensuales, search]);
 
   return (
     <>
-      <div className="max-md:hidden h-full w-full">
+      <div className="h-full w-full">
         <div className="w-full bg-white flex max-md:hidden">
           <Link className="text-slate-500 px-6 py-3.5 font-bold text-lg" to="/">
             Inicio
@@ -96,13 +136,13 @@ export const Pedidos = () => {
 
         <div className="px-10 md:mt-6  max-md:pt-5 max-md:px-5">
           <p className="font-bold text-2xl text-slate-600 max-md:text-lg">
-            Bienvenido a la parte de aberturas/stock/fabrica 🖐️🚀.
+            Bienvenido a la parte de pedidos 🖐️🚀.
           </p>
         </div>
-        <section className="flex flex-col gap-10 min-h-screen px-10">
+        <section className="flex flex-col gap-10 min-h-screen px-10 max-md:px-5">
           <div>
-            <div className="mt-5 max-md:overflow-x-scroll">
-              <div className="grid grid-cols-4 uppercase gap-3">
+            <div className="mt-5">
+              <div className="grid grid-cols-4 uppercase gap-3 max-md:grid-cols-1">
                 <article class="flex flex-col gap-4 rounded-xl bg-white p-5 shadow-xl">
                   <div class="inline-flex gap-2 self-end rounded-2xl bg-green-500/90 py-2 px-3 text-white">
                     <svg
@@ -295,10 +335,64 @@ export const Pedidos = () => {
               </button>
             </div>
 
-            <Search search={search} searcher={searcher} />
+            {/* <Search search={search} searcher={searcher} />
+             */}
+
+            <div className="max-md:w-full w-1/4 shadow rounded-xl mb-3 mt-3 bg-white py-2 px-3 text-sm font-semibold flex items-center justify-between">
+              <input
+                className="w-full outline-none"
+                type="text"
+                placeholder="Buscar por pedidos por el cliente/suc/fabrica..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <CgSearch className="text-indigo-500 text-lg" />
+            </div>
+
+            <div className="w-auto flex items-center max-md:w-full max-md:flex-col gap-2">
+              <div className="rounded-xl bg-white py-1.5 px-5 text-sm max-md:w-full max-md:overflow-x-scroll font-bold flex max-md:gap-2 scrollbar-hidden">
+                {/* Filtrador por fecha específica */}
+                <div className="flex gap-2 items-center">
+                  <div className="flex gap-2 items-center">
+                    Fecha anterior{" "}
+                    <input
+                      className="border border-indigo-500 py-1 px-3 outline-none rounded-md"
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    Fecha actual{" "}
+                    <input
+                      className="border border-indigo-500 py-1 px-3 outline-none rounded-md"
+                      type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                {/* <button
+                  className="bg-indigo-500 text-white px-4 py-1 ml-4 rounded-full text-xs hover:bg-orange-500 transition-all"
+                  onClick={() => setStartDate("")}
+                >
+                  Mostrar del mes actual
+                </button> */}
+              </div>
+
+              <div>
+                <button
+                  className="bg-green-500 py-1 text-white rounded-full font-semibold px-5"
+                  onClick={handleDescargarExcel}
+                >
+                  Descargar pedidos filtrados formato excel.
+                </button>
+              </div>
+            </div>
 
             <TablePedidos
-              resultadoFiltrados={resultadoFiltrados}
+              resultadoFiltrados={filteredByDateRange}
               datosMensuales={datosMensuales}
             />
 

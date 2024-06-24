@@ -9,23 +9,16 @@ export const ModalCrearNuevaCategoria = ({
   isOpenCrearCategoria,
   closeModalCrearCategoria,
 }) => {
-  const { categorias, setCategorias } = useAluminioContext();
+  const { setCategorias } = useAluminioContext();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = handleSubmit(async (data) => {
-    const { data: nuevoValor } = await crearCategorias(data);
+    const res = await crearCategorias(data);
 
-    const categoriasActualizadas = [...categorias, nuevoValor];
+    setCategorias(res.data);
 
-    setCategorias(categoriasActualizadas);
-
-    console.log(nuevoValor);
+    console.log("categorias", res.data);
 
     toast.success("¡Categoria creada correctamente!", {
       position: "top-right",

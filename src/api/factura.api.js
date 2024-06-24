@@ -27,4 +27,4 @@ export const crearValorPedidoUnico = (id, data) =>
 export const crearValorPedidoUnicos = (id, data) =>
   axios.post(`/pedido/${id}/crear-productos`, data);
 
-export const obtenerFacturasMensual = () => axios.get("/pedido-mensual");
+export const obtenerFacturasMensual = () => axios.get("/pedido");

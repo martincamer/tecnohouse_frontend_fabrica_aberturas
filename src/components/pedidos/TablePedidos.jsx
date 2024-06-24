@@ -35,23 +35,6 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
     setOpenBorrarAccesorio(false);
   };
 
-  const itemsPerPage = 10; // Cantidad de elementos por página
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-  const currentResults = datosMensuales?.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
-  const totalPages = Math.ceil(datosMensuales?.length / itemsPerPage);
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
-
   const [isClientes, setIsClientes] = useState(false);
   const [obtenerId, setObtenerId] = useState(null);
 
@@ -68,11 +51,11 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
   };
 
   return (
-    <div className="mt-10">
+    <div className="my-5">
       <div className="flex flex-col gap-3 max-md:flex md:hidden">
         {resultadoFiltrados.map((p, index) => (
           <div
-            className="border-slate-300 border-[1px] shadow rounded-xl py-3 px-2 flex justify-between items-center"
+            className="bg-white rounded-xl py-3 px-2 flex justify-between items-center"
             key={p.id}
           >
             <div className="w-full">
@@ -122,8 +105,8 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
           </div>
         ))}
       </div>
-      <div className="rounded-xl shadow-xl md:block bg-white max-md:overflow-x-auto scrollbar-hidden">
-        <table className="w-full uppercase divide-y-[1px] divide-slate-300 table">
+      <div className="max-md:hidden">
+        <table className="w-full uppercase table bg-white">
           <thead>
             <tr>
               <th className="py-6 px-3 font-bold uppercase text-sm text-indigo-600 text-left">
@@ -149,18 +132,17 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 text-left">
-            {currentResults?.map((p) => (
-              <tr
-                key={p.id}
-                className="cursor-pointer hover:bg-slate-100 transition-all"
-              >
+          <tbody className="">
+            {resultadoFiltrados?.map((p) => (
+              <tr key={p.id} className="cursor-pointer">
                 <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {p?.id}
                 </th>
+
                 <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase font-bold">
                   {p?.cliente}
                 </th>
+
                 <th className="py-3 px-3 text-sm text-left uppercase font-bold">
                   <span className="bg-green-500/90 text-white py-2 px-4 shadow-md rounded-xl">
                     {p?.productos.respuesta.reduce((sum, b) => {
@@ -168,6 +150,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
                     }, 0)}
                   </span>
                 </th>
+
                 <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   <div className="flex">
                     <button
@@ -195,6 +178,7 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
                     </button>
                   </div>
                 </th>
+
                 <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {new Date(p?.created_at).toLocaleDateString("es-AR")}
                 </th>
@@ -252,88 +236,6 @@ export const TablePedidos = ({ datosMensuales, resultadoFiltrados }) => {
           closeModal={closeClientes}
         />
       </div>
-
-      {totalPages > 1 && (
-        <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1 font-bold">
-          <button
-            className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-4 h-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 19.5 8.25 12l7.5-7.5"
-              />
-            </svg>
-          </button>
-          {(() => {
-            // Determina el rango de páginas visibles
-            const maxVisiblePages = 2; // Máximo de páginas a mostrar
-            const halfRange = Math.floor(maxVisiblePages / 2);
-
-            let startPage = Math.max(currentPage - halfRange, 1);
-            let endPage = Math.min(currentPage + halfRange, totalPages);
-
-            // Asegúrate de que el rango tenga 5 elementos
-            if (endPage - startPage < maxVisiblePages - 1) {
-              if (startPage === 1) {
-                endPage = Math.min(maxVisiblePages, totalPages);
-              } else if (endPage === totalPages) {
-                startPage = Math.max(totalPages - (maxVisiblePages - 1), 1);
-              }
-            }
-
-            return Array.from(
-              { length: endPage - startPage + 1 },
-              (_, index) => {
-                const pageIndex = startPage + index;
-                return (
-                  <button
-                    key={pageIndex}
-                    className={`mx-1 px-3 py-1 rounded-xl ${
-                      currentPage === pageIndex
-                        ? "bg-indigo-500 text-white transition-all border-[1px] border-indigo-500 ease-in-out shadow shadow-black/20 text-sm"
-                        : "bg-white border-slate-300 border-[1px] shadow shadow-black/20 text-sm"
-                    }`}
-                    onClick={() => handlePageChange(pageIndex)}
-                  >
-                    {pageIndex}
-                  </button>
-                );
-              }
-            );
-          })()}
-          <button
-            className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-4 h-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m8.25 4.5 7.5 7.5-7.5 7.5"
-              />
-            </svg>
-          </button>
-        </div>
-      )}
     </div>
   );
 };

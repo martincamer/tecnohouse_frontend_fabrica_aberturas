@@ -1,7 +1,7 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { crearCategorias } from "../../api/categoriasAberturas.api";
 import { useAberturasContext } from "../../context/AluminioAberturas";
 
@@ -9,23 +9,14 @@ export const ModalCrearNuevaCategoria = ({
   isOpenCrearCategoria,
   closeModalCrearCategoria,
 }) => {
-  const { categorias, setCategorias } = useAberturasContext();
+  const { setCategorias } = useAberturasContext();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = handleSubmit(async (data) => {
-    const { data: nuevoValor } = await crearCategorias(data);
+    const res = await crearCategorias(data);
 
-    const categoriasActualizadas = [...categorias, nuevoValor];
-
-    setCategorias(categoriasActualizadas);
-
-    console.log(nuevoValor);
+    setCategorias(res.data);
 
     toast.success("¡Categoria creada correctamente!", {
       position: "top-center",
@@ -43,6 +34,7 @@ export const ModalCrearNuevaCategoria = ({
         border: "1px solid rgb(203 213 225)",
       },
     });
+
     reset();
   });
 

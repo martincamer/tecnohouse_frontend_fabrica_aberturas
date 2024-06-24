@@ -5,8 +5,8 @@ import { TablePedidosRealizados } from "../../../components/pedidos/TablePedidos
 import { DescargarPedidoCompletoJefeFabrica } from "../../../components/pedidos/DescargarPedidoIncompletoJefeFabrica";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import client from "../../../api/axios";
-import "moment/locale/es";
 import * as XLSX from "xlsx";
+import "moment/locale/es";
 
 export const PedidosRealizados = () => {
   const [fechaInicio, setFechaInicio] = useState("");

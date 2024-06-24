@@ -6,15 +6,9 @@ import { ToastContainer, toast } from "react-toastify";
 import { useAberturasContext } from "../../context/AluminioAberturas";
 
 export const ModalEditaStock = ({ closeModalEditar, isOpenEditar }) => {
-  const { obtenerId, perfiles, setPerfiles, categorias, colores } =
-    useAberturasContext();
+  const { obtenerId, perfiles, setPerfiles } = useAberturasContext();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
     async function loadData() {
@@ -37,26 +31,8 @@ export const ModalEditaStock = ({ closeModalEditar, isOpenEditar }) => {
   const onSubmitEditar = handleSubmit(async (data) => {
     const res = await editarPerfil(obtenerId, data);
 
-    const tipoExistenteIndex = perfiles.findIndex(
-      (tipo) => tipo.id == obtenerId
-    );
+    setPerfiles(res.data);
 
-    setPerfiles((prevTipos) => {
-      const newTipos = [...prevTipos];
-      const updatePerfil = JSON.parse(res.config.data); // Convierte el JSON a objeto
-
-      newTipos[tipoExistenteIndex] = {
-        id: obtenerId,
-        nombre: updatePerfil.nombre,
-        stock: updatePerfil.stock,
-        descripcion: updatePerfil.descripcion,
-        categoria: updatePerfil.categoria,
-        color: updatePerfil.color,
-        ancho: updatePerfil.ancho,
-        alto: updatePerfil.alto,
-      };
-      return newTipos;
-    });
     toast.success("¡Stock editado correctamente!", {
       position: "top-center",
       autoClose: 1500,

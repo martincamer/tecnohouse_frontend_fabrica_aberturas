@@ -6,24 +6,18 @@ import { useAberturasContext } from "../../context/AluminioAberturas";
 import { toast } from "react-toastify";
 
 export const ModalCrearNuevoColor = () => {
-  const { colores, setColores, closeModalVerColores, isOpenVerColores } =
+  const { setColores, closeModalVerColores, isOpenVerColores } =
     useAberturasContext();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = handleSubmit(async (data) => {
-    const { data: nuevoValor } = await crearColor(data);
+    const res = await crearColor(data);
 
-    const coloresActualizadas = [...colores, nuevoValor];
+    setColores(res.data);
 
-    setColores(coloresActualizadas);
+    console.log("colores", res.data);
 
-    // setPerfiles(proyectoActualizado);
     toast.success("¡Color creado correctamente!", {
       position: "top-center",
       autoClose: 1500,
