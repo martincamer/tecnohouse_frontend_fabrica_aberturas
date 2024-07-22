@@ -135,7 +135,7 @@ export const VerClientesFinalizados = () => {
 
         <div className="cursor-pointer mt-5 ">
           <div className="grid grid-cols-5 gap-4 mb-10 max-md:grid-cols-1">
-            {currentResults?.map((c) => (
+            {clientesFiltrados?.map((c) => (
               <div className="border-slate-200 bg-white rounded-xl hover:shadow-md shadow-xl transition-all ease-linear py-5 px-5">
                 <div className="flex flex-col gap-1">
                   <p className="uppercase text-sm font-bold text-slate-700">
@@ -194,7 +194,7 @@ export const VerClientesFinalizados = () => {
               </div>
             ))}
           </div>
-          {totalPages > 1 && (
+          {/* {totalPages > 1 && (
             <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1 font-bold">
               <button
                 className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
@@ -275,7 +275,7 @@ export const VerClientesFinalizados = () => {
                 </svg>
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </section>

@@ -92,8 +92,6 @@ export const Pedidos = () => {
     return sum + Number(b);
   }, 0);
 
-  console.log("pedidos", filteredByDateRange);
-
   const handleDescargarExcel = () => {
     // Preparar datos para exportar a Excel
     const dataToExport = filteredByDateRange.flatMap((pedido) => {
@@ -216,7 +214,7 @@ export const Pedidos = () => {
 
                     <span class="text-xs font-bold">
                       {" "}
-                      {datosMensuales.length % 100}%
+                      {filteredByDateRange.length % 100}%
                     </span>
                   </div>
 
@@ -229,7 +227,7 @@ export const Pedidos = () => {
                     <p>
                       <span class="text-2xl font-bold text-gray-900 max-md:text-base uppercase">
                         {" "}
-                        {datosMensuales.length}{" "}
+                        {filteredByDateRange.length}{" "}
                       </span>
 
                       <span class="text-xs text-gray-500 max-md:text-xs">

@@ -77,11 +77,9 @@ export const Home = () => {
   const diaActual = diasSemana[fechaActual.getDay()];
   const mesActual = meses[fechaActual.getMonth()];
 
-  console.log(datosMensuales);
-
   return (
-    <section className="w-full">
-      <div className="w-full bg-white flex max-md:hidden">
+    <section className="w-full max-w-full">
+      <div className="bg-white flex max-md:hidden">
         <Link
           className="text-indigo-500 bg-indigo-100 px-6 py-3.5 font-bold text-lg"
           to="/"
@@ -222,10 +220,10 @@ export const Home = () => {
           </article>
         </div>
 
-        <ApexChart datos={datosMensuales} />
+        <ApexChart datos={filteredByDateRange} />
 
         <div className="grid grid-cols-2 max-md:grid-cols-1 gap-5">
-          <ApexChartColumn datos={datosMensuales} />
+          <ApexChartColumn datos={filteredByDateRange} />
           <ApexChartPie
             resultadosTwo={resultadoTwo}
             unidadesEnStockAberturas={unidadesEnStockAberturas}

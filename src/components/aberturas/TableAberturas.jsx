@@ -58,6 +58,7 @@ export const TableAberturas = ({
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   const currentResults = filteredResults?.slice(
     indexOfFirstItem,
     indexOfLastItem
@@ -117,7 +118,7 @@ export const TableAberturas = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 text-left">
-            {currentResults.map((p) => (
+            {filteredResults.map((p) => (
               <tr key={p.id} className="cursor-pointer">
                 <th className="py-3 px-3 text-sm text-left text-slate-700 uppercase">
                   {p.descripcion}
@@ -166,6 +167,17 @@ export const TableAberturas = ({
                     >
                       <li>
                         <button
+                          className="bg-green-500/10 hover:bg-green-500 hover:text-white text-green-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
+                          onClick={() => {
+                            handleModalEditarStockOpen(),
+                              handlePerfilSeleccionado(p.id);
+                          }}
+                        >
+                          Editar stock
+                        </button>
+                      </li>
+                      <li className="max-md:hidden">
+                        <button
                           className="bg-red-500/10 hover:bg-red-500 hover:text-white text-red-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
                           onClick={() => {
                             handleBorrarAccesorioOpen(), setGuardarId(p.id);
@@ -174,7 +186,7 @@ export const TableAberturas = ({
                           Eliminar
                         </button>
                       </li>
-                      <li>
+                      <li className="max-md:hidden">
                         <button
                           className="bg-indigo-500/10 hover:bg-indigo-500 hover:text-white text-indigo-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
                           onClick={() => {
@@ -195,7 +207,7 @@ export const TableAberturas = ({
                           Editar stock
                         </button>
                       </li>
-                      <li>
+                      <li className="max-md:hidden">
                         <button
                           className="bg-green-500/10 hover:bg-green-500 hover:text-white text-green-700 py-2 px-4 rounded-xl font-normal  cursor-pointer max-md:text-xs max-md:font-normal text-sm uppercase"
                           onClick={() => {
@@ -213,7 +225,7 @@ export const TableAberturas = ({
           </tbody>
         </table>
       </div>
-      {totalPages > 1 && (
+      {/* {totalPages > 1 && (
         <div className="flex flex-wrap justify-center mt-4 mb-4 gap-1 font-bold">
           <button
             className="mx-1 px-2 py-1 border-slate-300 border-[1px] rounded-xl bg-white shadow shadow-black/20 text-sm flex gap-1 items-center cursor-pointer max-md:px-2"
@@ -293,7 +305,7 @@ export const TableAberturas = ({
             </svg>
           </button>
         </div>
-      )}
+      )} */}
       <ModalEliminarAberturas
         p={guardarId}
         handleEliminar={handleEliminar}
@@ -315,12 +327,6 @@ export const TableAberturas = ({
         closeOpenEntrada={closeSalida}
         obtenerId={obtenerId}
       />
-      <button
-        className="bg-green-500/90 rounded-full shadow hover:shadow-gray-400/50 py-2.5 px-6 font-semibold text-white mt-10 uppercase max-md:hidden text-sm transition-all ease-in-out"
-        onClick={handleDescargarExcel}
-      >
-        Descargar aberturas en stock formato Excel
-      </button>{" "}
     </div>
   );
 };
